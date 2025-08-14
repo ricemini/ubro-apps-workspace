@@ -9,20 +9,53 @@
 - Week 3: Schematic blueprint creation
 - Future: Schematic development based on real experience
 
+## Application Context: Vendemás
+
+### Mission
+Empower street vendors and micro-retail microbusinesses in Mexico and LATAM to sell more with less friction—by giving them a fast, offline-friendly, mobile toolkit for QR/barcode checkout, live location, simple promos, and clear daily sales insights.
+
+### Vision
+Become the default mobile operating system for informal commerce in LATAM, where any puesto/tiendita can accept payments, manage inventory, broadcast its location, run promotions, and understand its business—regardless of device, connectivity, or technical skills.
+
+### Product Description
+Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Angular + Ionic + Capacitor (one codebase → Android/iOS + PWA dashboard). It's offline-first (local SQLite + sync queue) and integrates with Firebase (Auth, Cloud Messaging, Hosting) and a pluggable backend (start with Cloud Functions; upgradeable to NestJS + PostgreSQL).
+
+### Core Modules
+- **POS with QR/Barcode** (ML Kit) for instant checkout and inventory updates
+- **Catalog & Inventory** with low-stock alerts
+- **Location Broadcast** (opt-in GPS pin for customers to find the stand)
+- **Promotions & Notifications** (push + shareable cards/links)
+- **Sales Analytics** (daily totals, top items, trends)
+- **Customer Ledger** (optional tabs/fiado tracking)
+- **Roles & Devices** (owner + collaborators; multi-device sync)
+- **PWA Web Dashboard** for reporting and bulk edits
+
+### Technical Stack
+- **Frontend**: Angular + Ionic + Capacitor
+- **Backend**: Firebase (Auth, Cloud Messaging, Hosting) + Cloud Functions
+- **Database**: Local SQLite + Firebase Firestore
+- **Offline**: Sync queue for offline-first experience
+- **Mobile**: Android/iOS native apps + PWA dashboard
+
+### Market Focus
+- **Primary Market**: MX/LATAM (MXN currency, Spanish UX, low-end Android support)
+- **Key Features**: QR/barcode scanning, geolocation, push notifications, offline sync
+- **Non-goals**: Heavy accounting/ERP, complex loyalty systems, multi-warehouse
+
 ## Core Variables Template
 
 ```
-PRODUCT_NAME: <product-name>
-ORG_TS_IMPORT_PREFIX: @domain
+PRODUCT_NAME: vendemas
+ORG_TS_IMPORT_PREFIX: @vendemas
 DEFAULT_NODE_VERSION: 20
 
 # For future dual-app setup
-NEXT_APP_NAME: <name>-website
-ANG_APP_NAME: <angular-app-name>
-MAIN_DOMAIN: <firebase-main-domain> (e.g., example.com)
-SUBDOMAIN: app.<firebase-main-domain>
-FIREBASE_PROJECT_PROD: <MyFirebaseAppName>
-FIREBASE_PROJECT_DEV: <MyFirebaseAppName Dev>
+NEXT_APP_NAME: vendemas-dashboard
+ANG_APP_NAME: vendemas-mobile
+MAIN_DOMAIN: vendemas.com (or your domain)
+SUBDOMAIN: app.vendemas.com
+FIREBASE_PROJECT_PROD: vendemas-prod
+FIREBASE_PROJECT_DEV: vendemas-dev
 ```
 
 ## Quality Foundation Setup (Current Focus)
@@ -102,14 +135,15 @@ Create world-class foundation with enterprise-grade quality tools:
 ## Future Dual-App Setup (Schematic Blueprint)
 
 ### Mission
-Two empty apps with shared BFF authentication:
-- Next.js (App Router, SSR, SEO scaffold)
-- Angular v20 + Angular Material v20
+Two apps optimized for Vendemás requirements:
+- **vendemas-dashboard**: PWA Web Dashboard (Next.js + SSR for SEO)
+- **vendemas-mobile**: Mobile App (Angular + Ionic + Capacitor)
 - Shared BFF authentication (Firebase Functions)
-- Tailwind CSS with shared preset
-- Shared libraries (auth-shared, types)
+- Offline-first architecture with sync queue
+- Shared libraries (auth-shared, types, offline-sync)
 - Multi-environment deployment (DEV/PROD)
 - CI/CD with nx affected commands
+- Mobile-optimized for low-end Android devices
 
 ### Schematic Input Schema (Future)
 ```typescript
