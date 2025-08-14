@@ -55,10 +55,10 @@ Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Ang
 
 ### Technology Abbreviations
 
-- `next` = Next.js
 - `ng` = Angular
 - `nx` = Next.js
 - `rn` = React Native
+- `vue` = Vue.js
 
 ### App Naming Pattern
 
