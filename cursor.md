@@ -36,16 +36,17 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 
 - `ng` = Angular
 - `nx` = Next.js
+- `rn` = React Native
 
 **App Naming Pattern:**
 
 ```
-vendemas-ng-mobile      # Main mobile app (retail + POS)
-vendemas-nx-dashboard   # Business analytics dashboard
-vendemas-ng-admin       # Admin panel for business owners
-vendemas-nx-landing     # Marketing landing page
-vendemas-ng-pos         # Dedicated POS app (if needed)
-vendemas-nx-analytics   # Advanced analytics (if needed)
+vendemas-ng-mobile      # Angular mobile app (retail + POS)
+vendemas-nx-dashboard   # Next.js business dashboard
+vendemas-rn-mobile      # React Native mobile app
+vendemas-ng-admin       # Angular admin panel
+vendemas-nx-landing     # Next.js marketing landing
+vendemas-rn-pos         # React Native POS app
 ```
 
 **Library Naming Pattern:**
@@ -63,19 +64,22 @@ vendemas-shared-constants    # Shared constants
 
 ```
 apps/
-├── vendemas-ng-mobile/      # Main mobile app
-├── vendemas-nx-dashboard/   # Business dashboard
-├── vendemas-ng-admin/       # Admin interface
-└── vendemas-nx-landing/     # Marketing site
+├── vendemas-ng-mobile/      # Angular mobile app
+├── vendemas-nx-dashboard/   # Next.js business dashboard
+├── vendemas-rn-mobile/      # React Native mobile app
+├── vendemas-ng-admin/       # Angular admin interface
+└── vendemas-nx-landing/     # Next.js marketing site
+```
 
 libs/
-├── vendemas-shared-types/       # Shared TypeScript types
-├── vendemas-shared-auth/        # Authentication utilities
-├── vendemas-shared-ui/          # UI components
-├── vendemas-shared-utils/       # Utility functions
-├── vendemas-shared-api/         # API client utilities
-└── vendemas-shared-constants/   # Shared constants
-```
+├── vendemas-shared-types/ # Shared TypeScript types
+├── vendemas-shared-auth/ # Authentication utilities
+├── vendemas-shared-ui/ # UI components
+├── vendemas-shared-utils/ # Utility functions
+├── vendemas-shared-api/ # API client utilities
+└── vendemas-shared-constants/ # Shared constants
+
+````
 
 **Import Paths:**
 
@@ -88,7 +92,8 @@ import { Button } from '@vendemas/shared-ui';
 // App-specific imports
 import { RetailService } from '@vendemas/ng-mobile';
 import { DashboardService } from '@vendemas/nx-dashboard';
-```
+import { MobileService } from '@vendemas/rn-mobile';
+````
 
 ### Performance & Caching
 

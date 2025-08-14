@@ -57,16 +57,17 @@ Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Ang
 
 - `ng` = Angular
 - `nx` = Next.js
+- `rn` = React Native
 
 ### App Naming Pattern
 
 ```
-vendemas-ng-mobile      # Main mobile app (retail + POS)
-vendemas-nx-dashboard   # Business analytics dashboard
-vendemas-ng-admin       # Admin panel for business owners
-vendemas-nx-landing     # Marketing landing page
-vendemas-ng-pos         # Dedicated POS app (if needed)
-vendemas-nx-analytics   # Advanced analytics (if needed)
+vendemas-ng-mobile      # Angular mobile app (retail + POS)
+vendemas-nx-dashboard   # Next.js business dashboard
+vendemas-rn-mobile      # React Native mobile app
+vendemas-ng-admin       # Angular admin panel
+vendemas-nx-landing     # Next.js marketing landing
+vendemas-rn-pos         # React Native POS app
 ```
 
 ### Library Naming Pattern
@@ -84,10 +85,11 @@ vendemas-shared-constants    # Shared constants
 
 ```
 apps/
-├── vendemas-ng-mobile/      # Main mobile app
-├── vendemas-nx-dashboard/   # Business dashboard
-├── vendemas-ng-admin/       # Admin interface
-└── vendemas-nx-landing/     # Marketing site
+├── vendemas-ng-mobile/      # Angular mobile app
+├── vendemas-nx-dashboard/   # Next.js business dashboard
+├── vendemas-rn-mobile/      # React Native mobile app
+├── vendemas-ng-admin/       # Angular admin interface
+└── vendemas-nx-landing/     # Next.js marketing site
 ```
 
 libs/
@@ -111,6 +113,7 @@ import { Button } from '@vendemas/shared-ui';
 // App-specific imports
 import { RetailService } from '@vendemas/ng-mobile';
 import { DashboardService } from '@vendemas/nx-dashboard';
+import { MobileService } from '@vendemas/rn-mobile';
 ````
 
 ## Core Variables Template
@@ -721,16 +724,17 @@ time pnpm run format:check
 
 - `ng` = Angular
 - `nx` = Next.js
+- `rn` = React Native
 
 **Examples:**
 
 ```
-vendemas-ng-mobile      # Main mobile app (retail + POS)
-vendemas-nx-dashboard   # Business analytics dashboard
-vendemas-ng-admin       # Admin panel for business owners
-vendemas-nx-landing     # Marketing landing page
-vendemas-ng-pos         # Dedicated POS app (if needed)
-vendemas-nx-analytics   # Advanced analytics (if needed)
+vendemas-ng-mobile      # Angular mobile app (retail + POS)
+vendemas-nx-dashboard   # Next.js business dashboard
+vendemas-rn-mobile      # React Native mobile app
+vendemas-ng-admin       # Angular admin panel
+vendemas-nx-landing     # Next.js marketing landing
+vendemas-rn-pos         # React Native POS app
 ```
 
 ### App Creation Input Schema
@@ -739,7 +743,7 @@ vendemas-nx-analytics   # Advanced analytics (if needed)
 interface AppCreationSchema {
   // Core Configuration
   productName: string; // e.g., "vendemas"
-  technology: 'ng' | 'nx';
+  technology: 'ng' | 'nx' | 'rn';
   functionality: string; // e.g., "mobile", "dashboard", "admin"
 
   // App Configuration
@@ -760,6 +764,12 @@ interface AppCreationSchema {
     appRouter: boolean;
     typescript: boolean;
     tailwind: boolean;
+  };
+
+  rn?: {
+    typescript: boolean;
+    expo: boolean;
+    navigation: boolean;
   };
 
   // Features
@@ -800,6 +810,12 @@ interface AppCreationSchema {
   - If `nx.typescript`: Enable TypeScript
   - If `nx.tailwind`: Add Tailwind CSS
 
+- If `technology === 'rn'`:
+  - Create React Native app structure
+  - If `rn.typescript`: Enable TypeScript
+  - If `rn.expo`: Add Expo framework
+  - If `rn.navigation`: Add React Navigation
+
 - If `features.auth`: Add authentication setup
 - If `features.offline`: Add offline-first configuration
 - If `features.pushNotifications`: Add push notification setup
@@ -829,6 +845,15 @@ interface AppCreationSchema {
     "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
+  },
+  "rn": {
+    "react-native": "^0.73.0",
+    "react": "^18.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.73.0",
+    "expo": "^50.0.0",
+    "@react-navigation/native": "^6.0.0",
+    "@react-navigation/stack": "^6.0.0"
   }
 }
 ```

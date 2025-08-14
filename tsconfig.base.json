@@ -21,7 +21,8 @@
     "paths": {
       "@vendemas/*": ["libs/*"],
       "@vendemas/ng-mobile/*": ["apps/vendemas-ng-mobile/*"],
-      "@vendemas/nx-dashboard/*": ["apps/vendemas-nx-dashboard/*"]
+      "@vendemas/nx-dashboard/*": ["apps/vendemas-nx-dashboard/*"],
+      "@vendemas/rn-mobile/*": ["apps/vendemas-rn-mobile/*"]
     }
   }
 }
