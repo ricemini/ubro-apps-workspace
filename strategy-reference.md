@@ -57,8 +57,6 @@ Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Ang
 
 - `ng` = Angular
 - `nx` = Next.js
-- `rn` = React Native
-- `vue` = Vue.js
 
 ### App Naming Pattern
 
@@ -723,8 +721,6 @@ time pnpm run format:check
 
 - `ng` = Angular
 - `nx` = Next.js
-- `rn` = React Native
-- `vue` = Vue.js
 
 **Examples:**
 
@@ -743,7 +739,7 @@ vendemas-nx-analytics   # Advanced analytics (if needed)
 interface AppCreationSchema {
   // Core Configuration
   productName: string; // e.g., "vendemas"
-  technology: 'ng' | 'nx' | 'rn' | 'vue';
+  technology: 'ng' | 'nx';
   functionality: string; // e.g., "mobile", "dashboard", "admin"
 
   // App Configuration

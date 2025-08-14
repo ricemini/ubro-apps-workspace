@@ -36,8 +36,6 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 
 - `ng` = Angular
 - `nx` = Next.js
-- `rn` = React Native
-- `vue` = Vue.js
 
 **App Naming Pattern:**
 
