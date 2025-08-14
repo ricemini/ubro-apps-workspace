@@ -96,40 +96,42 @@ Create world-class foundation with enterprise-grade quality tools:
 10. **Phase J**: Team Setup & Automation
 11. **Phase K**: Documentation Structure
 
-### Required Dependencies
+### Required Dependencies (Validated Versions)
 
 ```json
 {
-  "@nx/eslint": "latest",
-  "@typescript-eslint/eslint-plugin": "latest",
-  "@typescript-eslint/parser": "latest",
-  "eslint": "latest",
-  "eslint-config-prettier": "latest",
-  "eslint-plugin-import": "latest",
-  "eslint-plugin-jsx-a11y": "latest",
-  "eslint-plugin-n": "latest",
-  "eslint-plugin-prettier": "latest",
-  "prettier": "latest",
-  "husky": "latest",
-  "lint-staged": "latest",
-  "@commitlint/cli": "latest",
-  "@commitlint/config-conventional": "latest"
+  "@nx/eslint": "21.3.11",
+  "@typescript-eslint/eslint-plugin": "8.39.1",
+  "@typescript-eslint/parser": "8.39.1",
+  "@eslint/js": "9.33.0",
+  "eslint": "9.33.0",
+  "eslint-config-prettier": "10.1.8",
+  "eslint-plugin-import": "2.32.0",
+  "eslint-plugin-jsx-a11y": "6.10.2",
+  "eslint-plugin-n": "17.21.3",
+  "eslint-plugin-prettier": "5.5.4",
+  "prettier": "3.6.2",
+  "husky": "9.1.7",
+  "lint-staged": "16.1.5",
+  "@commitlint/cli": "19.8.1",
+  "@commitlint/config-conventional": "19.8.1"
 }
 ```
 
-### Key Configuration Files
+### Key Configuration Files (Validated)
 
-- `.eslintrc.json` (with performance optimizations)
-- `.prettierrc`
-- `.editorconfig`
-- `.husky/pre-commit`
-- `.lintstagedrc.js`
-- `.npmrc`
-- `setup-dev.sh` (team setup script)
-- `.vscode/settings.json`
-- `.vscode/extensions.json`
+- `eslint.config.js` (ESLint v9 flat config with performance optimizations)
+- `.prettierrc` (Prettier v3 configuration)
+- `.editorconfig` (Editor consistency)
+- `.husky/pre-commit` (Git hooks)
+- `.husky/commit-msg` (Commit validation)
+- `.lintstagedrc.js` (Pre-commit automation)
+- `.commitlintrc.js` (Conventional commits)
+- `.npmrc` (pnpm configuration)
+- `.vscode/settings.json` (VSCode workspace settings)
+- `.vscode/extensions.json` (Recommended extensions)
 
-### Package.json Scripts
+### Package.json Scripts (Validated)
 
 ```json
 {
@@ -140,11 +142,511 @@ Create world-class foundation with enterprise-grade quality tools:
     "format:check": "prettier --check .",
     "typecheck": "nx typecheck",
     "prepare": "husky install",
-    "setup": "chmod +x setup-dev.sh && ./setup-dev.sh",
     "verify": "npm run lint && npm run format:check && npm run typecheck",
     "clean": "nx reset && rm -rf .eslintcache"
   }
 }
+```
+
+### Actual Configuration Files (For Schematic Templates)
+
+#### `eslint.config.js` (ESLint v9 Flat Config)
+
+```javascript
+import js from '@eslint/js';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsparser from '@typescript-eslint/parser';
+import prettier from 'eslint-config-prettier';
+
+export default [
+  js.configs.recommended,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'prefer-const': 'error',
+    },
+  },
+  {
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'build/',
+      '.next/',
+      '.nuxt/',
+      'coverage/',
+      '*.min.js',
+      '.pnpm-store/',
+      '.nx/',
+    ],
+  },
+  prettier,
+];
+```
+
+#### `.prettierrc` (Prettier v3)
+
+```json
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "avoid"
+}
+```
+
+#### `.prettierignore`
+
+```gitignore
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+coverage/
+*.min.js
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+.eslintcache
+.nx/
+.pnpm-store/
+```
+
+#### `.editorconfig`
+
+```ini
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{js,jsx,ts,tsx,json,md}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+```
+
+#### `.husky/pre-commit`
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx lint-staged
+```
+
+#### `.husky/commit-msg`
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx --no -- commitlint --edit $1
+```
+
+#### `.lintstagedrc.js`
+
+```javascript
+export default {
+  '*.{js,jsx,ts,tsx}': ['eslint --fix', 'prettier --write'],
+  '*.{json,md,yml,yaml}': ['prettier --write'],
+};
+```
+
+#### `.commitlintrc.js`
+
+```javascript
+export default {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'docs',
+        'style',
+        'refactor',
+        'test',
+        'chore',
+        'perf',
+        'ci',
+        'build',
+        'revert',
+      ],
+    ],
+  },
+};
+```
+
+#### `.npmrc` (pnpm Configuration)
+
+```ini
+# pnpm configuration
+save-exact=true
+package-lock=false
+auto-install-peers=true
+strict-peer-dependencies=false
+shamefully-hoist=false
+prefer-frozen-lockfile=true
+
+# Security
+audit=false
+fund=false
+
+# Performance
+cache-dir=.pnpm-store
+```
+
+#### `.vscode/settings.json`
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "eslint.workingDirectories": ["."],
+  "eslint.validate": ["javascript", "typescript"]
+}
+```
+
+#### `.vscode/extensions.json`
+
+```json
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-json",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-typescript-next"
+  ]
+}
+```
+
+#### `tsconfig.base.json` (Updated with Path Mapping)
+
+```json
+{
+  "compilerOptions": {
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "customConditions": ["development"],
+    "baseUrl": ".",
+    "paths": {
+      "@vendemas/*": ["libs/*"],
+      "@vendemas/mobile/*": ["apps/vendemas-mobile/*"],
+      "@vendemas/dashboard/*": ["apps/vendemas-dashboard/*"]
+    }
+  }
+}
+```
+
+#### `package.json` (Root Configuration)
+
+```json
+{
+  "name": "@vendemas/root",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "nx lint",
+    "lint:fix": "nx lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "nx typecheck",
+    "prepare": "husky install",
+    "verify": "npm run lint && npm run format:check && npm run typecheck",
+    "clean": "nx reset && rm -rf .eslintcache"
+  },
+  "devDependencies": {
+    "@nx/eslint": "21.3.11",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "8.39.1",
+    "@eslint/js": "9.33.0",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.21.3",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "3.6.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1"
+  }
+}
+```
+
+#### `pnpm-workspace.yaml`
+
+```yaml
+packages:
+  - 'apps/*'
+  - 'libs/*'
+  - 'packages/*'
+```
+
+## Implementation Steps (Validated)
+
+### Step 1: Install Dependencies
+
+```bash
+# Install ESLint dependencies
+pnpm add -D -w @nx/eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-n eslint-plugin-prettier
+
+# Install Husky and commit tools
+pnpm add -D -w husky lint-staged @commitlint/cli @commitlint/config-conventional
+
+# Install ESLint v9 core
+pnpm add -D -w @eslint/js
+
+# Update Prettier to v3
+pnpm add -D -w prettier@latest
+```
+
+### Step 2: Create Configuration Files
+
+1. Create `eslint.config.js` (ESLint v9 flat config)
+2. Create `.prettierrc` (Prettier v3 configuration)
+3. Create `.prettierignore` (Ignore patterns)
+4. Create `.editorconfig` (Editor consistency)
+5. Create `.npmrc` (pnpm configuration)
+6. Create `.vscode/settings.json` (VSCode workspace settings)
+7. Create `.vscode/extensions.json` (Recommended extensions)
+
+### Step 3: Setup Git Hooks
+
+```bash
+# Initialize Husky
+pnpm dlx husky init
+
+# Update pre-commit hook
+echo "npx lint-staged" > .husky/pre-commit
+
+# Create commit-msg hook
+echo '#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx --no -- commitlint --edit $1' > .husky/commit-msg
+
+# Make commit-msg executable
+chmod +x .husky/commit-msg
+```
+
+### Step 4: Update TypeScript Configuration
+
+- Update `tsconfig.base.json` with path mapping
+- Add `"type": "module"` to `package.json`
+
+### Step 5: Update Package Scripts
+
+- Add quality tool scripts to `package.json`
+- Remove `"prepare": "husky"` and add `"prepare": "husky install"`
+
+## Success Verification
+
+Run these commands to verify setup:
+
+```bash
+# Format code
+pnpm run format
+
+# Check formatting
+pnpm run format:check
+
+# Test ESLint
+npx eslint eslint.config.js .lintstagedrc.js .commitlintrc.js
+
+# Test git hooks
+git add .
+git commit -m "feat: configure quality tools for Vendemás"
+
+# Verify all tools work
+pnpm run verify
+```
+
+## Validation Checklist
+
+### Pre-Implementation
+
+- [ ] pnpm workspace configured
+- [ ] Node.js v20+ installed
+- [ ] Git repository initialized
+
+### Post-Implementation
+
+- [ ] ESLint v9 flat config working
+- [ ] Prettier v3 formatting correctly
+- [ ] Husky pre-commit hooks working
+- [ ] Commitlint validation working
+- [ ] TypeScript path mapping resolving
+- [ ] VSCode settings applied
+- [ ] All scripts working (`pnpm run verify`)
+- [ ] Git commit with conventional format succeeds
+
+### Performance Validation
+
+- [ ] ESLint runs in under 5 seconds
+- [ ] Prettier formats files quickly
+- [ ] pnpm install is 2-3x faster than npm
+- [ ] Git hooks don't significantly slow commits
+
+### Mobile Development Validation
+
+- [ ] TypeScript strict mode enabled
+- [ ] Path mapping works for mobile imports
+- [ ] ESLint catches mobile-specific issues
+- [ ] Prettier handles mobile code formatting
+
+## Schematic Blueprint for Quality Tools
+
+### Input Schema
+
+```typescript
+interface QualityToolsSchema {
+  // Core Configuration
+  productName: string;
+  orgTsImportPrefix: string;
+  defaultNodeVersion: number;
+
+  // Package Manager
+  usePnpm: boolean;
+
+  // Quality Tools
+  includeEslint: boolean;
+  includePrettier: boolean;
+  includeHusky: boolean;
+  includeCommitlint: boolean;
+
+  // Editor Configuration
+  includeVscode: boolean;
+  includeEditorconfig: boolean;
+
+  // TypeScript Configuration
+  strictMode: boolean;
+  pathMapping: boolean;
+}
+```
+
+### File Generation Matrix
+
+| File                      | Template | Variables           | Dependencies |
+| ------------------------- | -------- | ------------------- | ------------ |
+| `eslint.config.js`        | Complex  | `orgTsImportPrefix` | package.json |
+| `.prettierrc`             | Static   | -                   | -            |
+| `.prettierignore`         | Static   | -                   | -            |
+| `.editorconfig`           | Static   | -                   | -            |
+| `.husky/pre-commit`       | Static   | -                   | husky        |
+| `.husky/commit-msg`       | Static   | -                   | husky        |
+| `.lintstagedrc.js`        | Static   | -                   | -            |
+| `.commitlintrc.js`        | Static   | -                   | -            |
+| `.npmrc`                  | Static   | -                   | -            |
+| `.vscode/settings.json`   | Static   | -                   | -            |
+| `.vscode/extensions.json` | Static   | -                   | -            |
+| `tsconfig.base.json`      | Complex  | `orgTsImportPrefix` | -            |
+| `package.json`            | Complex  | All                 | -            |
+| `pnpm-workspace.yaml`     | Static   | -                   | -            |
+
+### Conditional Logic
+
+- If `usePnpm`: Use pnpm workspace configuration
+- If `includeEslint`: Install ESLint dependencies and create config
+- If `includePrettier`: Install Prettier and create config
+- If `includeHusky`: Install Husky and setup git hooks
+- If `includeCommitlint`: Install commitlint and create config
+- If `includeVscode`: Create VSCode workspace settings
+- If `includeEditorconfig`: Create .editorconfig
+- If `strictMode`: Enable TypeScript strict mode
+- If `pathMapping`: Add path mapping to tsconfig.base.json
+
+### Dependencies to Install
+
+```json
+{
+  "devDependencies": {
+    "@nx/eslint": "21.3.11",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "8.39.1",
+    "@eslint/js": "9.33.0",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.21.3",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "3.6.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1"
+  }
+}
+```
+
+### Validation Commands
+
+```bash
+# Verify all tools work
+pnpm run verify
+
+# Test git hooks
+git commit -m "feat: test quality tools"
+
+# Performance check
+time pnpm run lint
+time pnpm run format:check
 ```
 
 ## Future Dual-App Setup (Schematic Blueprint)
