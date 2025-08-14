@@ -1,21 +1,41 @@
 {
-  "name": "@ubro-apps-org/source",
+  "name": "@vendemas/root",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
   "private": true,
-  "dependencies": {},
+  "type": "module",
+  "scripts": {
+    "lint": "nx lint",
+    "lint:fix": "nx lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "nx typecheck",
+    "prepare": "husky install",
+    "verify": "npm run lint && npm run format:check && npm run typecheck",
+    "clean": "nx reset && rm -rf .eslintcache"
+  },
   "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@eslint/js": "9.33.0",
+    "@nx/eslint": "21.3.11",
     "@nx/js": "21.3.11",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "8.39.1",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.21.3",
+    "eslint-plugin-prettier": "5.5.4",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
     "nx": "21.3.11",
-    "prettier": "^2.6.2",
+    "prettier": "^3.6.2",
     "tslib": "^2.3.0",
     "typescript": "~5.8.2"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
