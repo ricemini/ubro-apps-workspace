@@ -51,6 +51,70 @@ Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Ang
 - **Key Features**: QR/barcode scanning, geolocation, push notifications, offline sync
 - **Non-goals**: Heavy accounting/ERP, complex loyalty systems, multi-warehouse
 
+## Naming Convention: `<product-name>-<tech>-<functionality>`
+
+### Technology Abbreviations
+
+- `next` = Next.js
+- `ng` = Angular
+- `nx` = Next.js
+- `rn` = React Native
+
+### App Naming Pattern
+
+```
+vendemas-ng-mobile      # Main mobile app (retail + POS)
+vendemas-nx-dashboard   # Business analytics dashboard
+vendemas-ng-admin       # Admin panel for business owners
+vendemas-nx-landing     # Marketing landing page
+vendemas-ng-pos         # Dedicated POS app (if needed)
+vendemas-nx-analytics   # Advanced analytics (if needed)
+```
+
+### Library Naming Pattern
+
+```
+vendemas-shared-types        # Shared TypeScript types
+vendemas-shared-auth         # Authentication utilities
+vendemas-shared-ui           # UI components
+vendemas-shared-utils        # Utility functions
+vendemas-shared-api          # API client utilities
+vendemas-shared-constants    # Shared constants
+```
+
+### Directory Structure
+
+```
+apps/
+├── vendemas-ng-mobile/      # Main mobile app
+├── vendemas-nx-dashboard/   # Business dashboard
+├── vendemas-ng-admin/       # Admin interface
+└── vendemas-nx-landing/     # Marketing site
+```
+
+libs/
+├── vendemas-shared-types/ # Shared TypeScript types
+├── vendemas-shared-auth/ # Authentication utilities
+├── vendemas-shared-ui/ # UI components
+├── vendemas-shared-utils/ # Utility functions
+├── vendemas-shared-api/ # API client utilities
+└── vendemas-shared-constants/ # Shared constants
+
+````
+
+### Import Paths
+
+```typescript
+// Clean, descriptive imports
+import { Product } from '@vendemas/shared-types';
+import { AuthService } from '@vendemas/shared-auth';
+import { Button } from '@vendemas/shared-ui';
+
+// App-specific imports
+import { RetailService } from '@vendemas/ng-mobile';
+import { DashboardService } from '@vendemas/nx-dashboard';
+````
+
 ## Core Variables Template
 
 ```
@@ -59,8 +123,8 @@ ORG_TS_IMPORT_PREFIX: @vendemas
 DEFAULT_NODE_VERSION: 20
 
 # For future dual-app setup
-NEXT_APP_NAME: vendemas-dashboard
-ANG_APP_NAME: vendemas-mobile
+NEXT_APP_NAME: vendemas-nx-dashboard
+ANG_APP_NAME: vendemas-ng-mobile
 MAIN_DOMAIN: vendemas.com (or your domain)
 SUBDOMAIN: app.vendemas.com
 FIREBASE_PROJECT_PROD: vendemas-prod
@@ -649,6 +713,149 @@ time pnpm run lint
 time pnpm run format:check
 ```
 
+## App Creation Schematic Blueprint
+
+### App Naming Convention
+
+**Pattern**: `<product-name>-<tech>-<functionality>`
+
+**Technology Abbreviations:**
+
+- `ng` = Angular
+- `nx` = Next.js
+- `rn` = React Native
+- `vue` = Vue.js
+
+**Examples:**
+
+```
+vendemas-ng-mobile      # Main mobile app (retail + POS)
+vendemas-nx-dashboard   # Business analytics dashboard
+vendemas-ng-admin       # Admin panel for business owners
+vendemas-nx-landing     # Marketing landing page
+vendemas-ng-pos         # Dedicated POS app (if needed)
+vendemas-nx-analytics   # Advanced analytics (if needed)
+```
+
+### App Creation Input Schema
+
+```typescript
+interface AppCreationSchema {
+  // Core Configuration
+  productName: string; // e.g., "vendemas"
+  technology: 'ng' | 'nx' | 'rn' | 'vue';
+  functionality: string; // e.g., "mobile", "dashboard", "admin"
+
+  // App Configuration
+  appName: string; // Auto-generated: `${productName}-${technology}-${functionality}`
+  routing: boolean;
+  testing: boolean;
+  e2e: boolean;
+
+  // Technology-Specific
+  ng?: {
+    standalone: boolean;
+    material: boolean;
+    ionic: boolean;
+    capacitor: boolean;
+  };
+
+  nx?: {
+    appRouter: boolean;
+    typescript: boolean;
+    tailwind: boolean;
+  };
+
+  // Features
+  features: {
+    auth: boolean;
+    offline: boolean;
+    pushNotifications: boolean;
+    analytics: boolean;
+  };
+}
+```
+
+### App Creation File Generation Matrix
+
+| File                                 | Template | Variables         | Dependencies |
+| ------------------------------------ | -------- | ----------------- | ------------ |
+| `apps/{{appName}}/package.json`      | Complex  | All app vars      | -            |
+| `apps/{{appName}}/project.json`      | Complex  | App-specific vars | -            |
+| `apps/{{appName}}/tsconfig.json`     | Complex  | Path mapping      | -            |
+| `apps/{{appName}}/src/main.ts`       | Complex  | App-specific vars | -            |
+| `apps/{{appName}}/src/app/`          | Complex  | App structure     | -            |
+| `apps/{{appName}}/src/styles/`       | Complex  | Styling setup     | -            |
+| `apps/{{appName}}/src/assets/`       | Static   | -                 | -            |
+| `apps/{{appName}}/src/environments/` | Complex  | Environment vars  | -            |
+
+### App Creation Conditional Logic
+
+- If `technology === 'ng'`:
+  - Create Angular app structure
+  - If `ng.standalone`: Use standalone components
+  - If `ng.material`: Add Angular Material
+  - If `ng.ionic`: Add Ionic framework
+  - If `ng.capacitor`: Add Capacitor for mobile
+
+- If `technology === 'nx'`:
+  - Create Next.js app structure
+  - If `nx.appRouter`: Use App Router
+  - If `nx.typescript`: Enable TypeScript
+  - If `nx.tailwind`: Add Tailwind CSS
+
+- If `features.auth`: Add authentication setup
+- If `features.offline`: Add offline-first configuration
+- If `features.pushNotifications`: Add push notification setup
+- If `features.analytics`: Add analytics configuration
+
+### App Creation Dependencies
+
+```json
+{
+  "ng": {
+    "@angular/core": "^20.0.0",
+    "@angular/common": "^20.0.0",
+    "@angular/router": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/platform-browser-dynamic": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/material": "^20.0.0",
+    "@ionic/angular": "^8.0.0",
+    "@capacitor/core": "^6.0.0"
+  },
+  "nx": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwindcss": "^3.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}
+```
+
+### App Creation Validation Commands
+
+```bash
+# Build the app
+nx build {{appName}}
+
+# Test the app
+nx test {{appName}}
+
+# Lint the app
+nx lint {{appName}}
+
+# E2E test (if configured)
+nx e2e {{appName}}-e2e
+
+# Serve the app
+nx serve {{appName}}
+```
+
 ## Future Dual-App Setup (Schematic Blueprint)
 
 ### Mission
@@ -677,8 +884,8 @@ interface ProductScaffoldSchema {
   // App Configuration
   includeNextJs: boolean;
   includeAngular: boolean;
-  nextAppName?: string;
-  angularAppName?: string;
+  nextAppName?: string; // e.g., "vendemas-nx-dashboard"
+  angularAppName?: string; // e.g., "vendemas-ng-mobile"
 
   // Domain Configuration
   mainDomain?: string;
@@ -848,7 +1055,7 @@ docs/
 
 ### Phase 2: First App Creation (Week 2)
 
-- Day 1-2: Create vendemas-mobile (Angular + Ionic)
+- Day 1-2: Create vendemas-ng-mobile (Angular + Ionic + Capacitor)
 - Day 3-4: Basic app structure + routing
 - Day 5: App-specific package.json + dependencies
 

@@ -30,6 +30,68 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 - **Shared Libraries**: Extract common functionality into shared libraries with clear APIs
 - **Dependency Management**: Minimize cross-project dependencies and avoid circular dependencies
 
+### Naming Convention: `<product-name>-<tech>-<functionality>`
+
+**Technology Abbreviations:**
+
+- `ng` = Angular
+- `nx` = Next.js
+- `rn` = React Native
+- `vue` = Vue.js
+
+**App Naming Pattern:**
+
+```
+vendemas-ng-mobile      # Main mobile app (retail + POS)
+vendemas-nx-dashboard   # Business analytics dashboard
+vendemas-ng-admin       # Admin panel for business owners
+vendemas-nx-landing     # Marketing landing page
+vendemas-ng-pos         # Dedicated POS app (if needed)
+vendemas-nx-analytics   # Advanced analytics (if needed)
+```
+
+**Library Naming Pattern:**
+
+```
+vendemas-shared-types        # Shared TypeScript types
+vendemas-shared-auth         # Authentication utilities
+vendemas-shared-ui           # UI components
+vendemas-shared-utils        # Utility functions
+vendemas-shared-api          # API client utilities
+vendemas-shared-constants    # Shared constants
+```
+
+**Directory Structure:**
+
+```
+apps/
+├── vendemas-ng-mobile/      # Main mobile app
+├── vendemas-nx-dashboard/   # Business dashboard
+├── vendemas-ng-admin/       # Admin interface
+└── vendemas-nx-landing/     # Marketing site
+
+libs/
+├── vendemas-shared-types/       # Shared TypeScript types
+├── vendemas-shared-auth/        # Authentication utilities
+├── vendemas-shared-ui/          # UI components
+├── vendemas-shared-utils/       # Utility functions
+├── vendemas-shared-api/         # API client utilities
+└── vendemas-shared-constants/   # Shared constants
+```
+
+**Import Paths:**
+
+```typescript
+// Clean, descriptive imports
+import { Product } from '@vendemas/shared-types';
+import { AuthService } from '@vendemas/shared-auth';
+import { Button } from '@vendemas/shared-ui';
+
+// App-specific imports
+import { RetailService } from '@vendemas/ng-mobile';
+import { DashboardService } from '@vendemas/nx-dashboard';
+```
+
 ### Performance & Caching
 
 - **Incremental Builds**: Leverage Nx's intelligent caching for faster builds

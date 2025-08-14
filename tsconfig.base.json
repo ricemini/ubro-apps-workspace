@@ -20,8 +20,8 @@
     "baseUrl": ".",
     "paths": {
       "@vendemas/*": ["libs/*"],
-      "@vendemas/mobile/*": ["apps/vendemas-mobile/*"],
-      "@vendemas/dashboard/*": ["apps/vendemas-dashboard/*"]
+      "@vendemas/ng-mobile/*": ["apps/vendemas-ng-mobile/*"],
+      "@vendemas/nx-dashboard/*": ["apps/vendemas-nx-dashboard/*"]
     }
   }
 }
