@@ -22,9 +22,9 @@ Empower street vendors to sell more with less friction—by giving them a fast, 
 
 ```
 apps/
-├── vendemas-ng-mobile/      # Angular mobile app (staff)
-├── vendemas-ng-admin/       # Angular admin panel (owners)
-└── vendemas-nx-website/     # Next.js landing/marketing
+├── vendemas-caja-mobile/    # Staff mobile app (Ionic/Capacitor)
+├── vendemas-admin-web/      # Admin web dashboard (Angular PWA)
+└── vendemas-website/        # Marketing website (Next.js SSR)
 
 libs/
 ├── vendemas-shared-types/   # Shared TypeScript types
@@ -94,14 +94,15 @@ pnpm run clean             # Clean cache and build artifacts
 
 ```bash
 # Generate new app/library
-nx generate @nx/angular:app vendemas-ng-mobile
-nx generate @nx/next:app vendemas-nx-website
+nx generate @nx/angular:app vendemas-caja-mobile
+nx generate @nx/angular:app vendemas-admin-web
+nx generate @nx/next:app vendemas-website
 nx generate @nx/js:lib vendemas-shared-auth
 
 # Run tasks for specific projects
-nx build vendemas-ng-mobile
+nx build vendemas-caja-mobile
 nx test vendemas-shared-auth
-nx lint vendemas-nx-website
+nx lint vendemas-website
 
 # View project graph
 nx graph
@@ -129,7 +130,7 @@ nx graph
 pnpm add -D -w <package-name>
 
 # Add to specific project
-pnpm add <package-name> --filter @vendemas/ng-mobile
+pnpm add <package-name> --filter @vendemas/caja-mobile
 ```
 
 ## 🎨 Quality Standards
@@ -193,6 +194,7 @@ pnpm add <package-name> --filter @vendemas/ng-mobile
 
 - `docs/` - Project documentation
 - `cursor.md` - Engineering principles and best practices
+- `docs/naming-conventions.md` - Naming conventions and project structure
 - `docs/scaffolding-schematic-development-strategy-reference.md` - Development strategy
 - `docs/authentication-library-architecture-reference.md` - Auth library architecture
 - `docs/vendemas-nx-website-implementation-plan.md` - Website implementation plan

@@ -27,7 +27,10 @@
       "@vendemas/shared-api": ["libs/vendemas-shared-api/src/index.ts"],
       "@vendemas/shared-constants": [
         "libs/vendemas-shared-constants/src/index.ts"
-      ]
+      ],
+      "@vendemas/caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
+      "@vendemas/admin-web": ["apps/vendemas-admin-web/src/index.ts"],
+      "@vendemas/website": ["apps/vendemas-website/src/index.ts"]
     }
   },
   "exclude": [

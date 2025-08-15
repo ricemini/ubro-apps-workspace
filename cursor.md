@@ -61,23 +61,25 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 - Ensure each project's dependencies are self-contained
 - Maintain clean separation between workspace tools and project dependencies
 
-### Naming Convention: `<product-name>-<tech>-<functionality>`
+### Naming Convention: `<product-name>-<role>-<platform>`
 
-**Technology Abbreviations:**
+**Role-Based Naming:**
 
-- `ng` = Angular
-- `nx` = Next.js
-- `rn` = React Native
+- `caja` = Staff/POS operators (cashiers, sales staff)
+- `admin` = Business owners and managers
+- `website` = Marketing and public-facing content
+
+**Platform Abbreviations:**
+
+- `mobile` = Mobile applications (Ionic/Capacitor, React Native)
+- `web` = Web applications (PWA, SSR, SPA)
 
 **App Naming Pattern:**
 
 ```
-vendemas-ng-mobile      # Angular mobile app (retail + POS)
-vendemas-nx-dashboard   # Next.js business dashboard
-vendemas-rn-mobile      # React Native mobile app
-vendemas-ng-admin       # Angular admin panel
-vendemas-nx-landing     # Next.js marketing landing
-vendemas-rn-pos         # React Native POS app
+vendemas-caja-mobile     # Staff mobile app (Ionic/Capacitor)
+vendemas-admin-web       # Admin web dashboard (Angular PWA)
+vendemas-website         # Marketing website (Next.js SSR)
 ```
 
 **Library Naming Pattern:**
@@ -95,11 +97,9 @@ vendemas-shared-constants    # Shared constants
 
 ```
 apps/
-├── vendemas-ng-mobile/      # Angular mobile app
-├── vendemas-nx-dashboard/   # Next.js business dashboard
-├── vendemas-rn-mobile/      # React Native mobile app
-├── vendemas-ng-admin/       # Angular admin interface
-└── vendemas-nx-landing/     # Next.js marketing site
+├── vendemas-caja-mobile/    # Staff mobile app (Ionic/Capacitor)
+├── vendemas-admin-web/      # Admin web dashboard (Angular PWA)
+└── vendemas-website/        # Marketing website (Next.js SSR)
 ```
 
 libs/
@@ -121,9 +121,9 @@ import { AuthService } from '@vendemas/shared-auth';
 import { Button } from '@vendemas/shared-ui';
 
 // App-specific imports
-import { RetailService } from '@vendemas/ng-mobile';
-import { DashboardService } from '@vendemas/nx-dashboard';
-import { MobileService } from '@vendemas/rn-mobile';
+import { CajaService } from '@vendemas/caja-mobile';
+import { AdminService } from '@vendemas/admin-web';
+import { WebsiteService } from '@vendemas/website';
 ````
 
 ### Performance & Caching
