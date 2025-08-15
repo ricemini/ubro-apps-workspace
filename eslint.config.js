@@ -78,6 +78,8 @@ export default [
       'www/',
       '.expo/',
       'web-build/',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
     ],
   },
   prettier,

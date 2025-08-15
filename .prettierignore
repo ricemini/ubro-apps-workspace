@@ -41,3 +41,5 @@ web-build/
 # OS files
 .DS_Store
 Thumbs.db
+
+.angular
