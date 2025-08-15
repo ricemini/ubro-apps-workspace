@@ -1,0 +1,59 @@
+{
+  "name": "vendemas-landing-web",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/vendemas-landing-web/src",
+  "projectType": "application",
+  "tags": ["scope:vendemas", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/vendemas-landing-web"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/vendemas-landing-web"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "vendemas-landing-web:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "vendemas-landing-web:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "vendemas-landing-web:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "vendemas-landing-web:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/vendemas-landing-web"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}
