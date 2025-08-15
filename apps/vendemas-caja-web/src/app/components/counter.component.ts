@@ -6,40 +6,37 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="counter-container">
-      <h2>Zoneless Counter Demo</h2>
-      <p>Count: {{ count() }}</p>
-      <p>Doubled: {{ doubled() }}</p>
-      <button (click)="increment()">Increment</button>
-      <button (click)="decrement()">Decrement</button>
-      <button (click)="reset()">Reset</button>
+    <div class="space-y-4">
+      <div class="text-center">
+        <h3 class="text-display text-2xl font-bold text-secondary mb-2">
+          Counter: {{ count() }}
+        </h3>
+        <p class="text-body text-gray-600">Double: {{ doubled() }}</p>
+      </div>
+
+      <div class="flex justify-center space-x-3">
+        <button
+          (click)="increment()"
+          class="bg-primary hover:bg-primary-600 text-primary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+        >
+          +
+        </button>
+        <button
+          (click)="decrement()"
+          class="bg-secondary hover:bg-secondary-600 text-secondary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2"
+        >
+          -
+        </button>
+        <button
+          (click)="reset()"
+          class="bg-tertiary hover:bg-tertiary-600 text-tertiary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-2"
+        >
+          Reset
+        </button>
+      </div>
     </div>
   `,
-  styles: [
-    `
-      .counter-container {
-        padding: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin: 1rem 0;
-        text-align: center;
-      }
-
-      button {
-        margin: 0 0.5rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid #007bff;
-        background: #007bff;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background: #0056b3;
-      }
-    `,
-  ],
+  styles: [],
 })
 export class CounterComponent {
   // Signal for reactive state

@@ -1,0 +1,21 @@
+{
+  "name": "vendemas-shared-design",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/vendemas-shared-design/src",
+  "prefix": "vendemas",
+  "tags": ["scope:vendemas", "type:lib", "domain:design"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../coverage/libs/vendemas-shared-design"
+      }
+    }
+  }
+}
