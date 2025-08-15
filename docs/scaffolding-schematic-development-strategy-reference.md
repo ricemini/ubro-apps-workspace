@@ -1608,6 +1608,7 @@ Successfully implemented Tailwind CSS v3 as the unified styling framework across
 ### Key Features Implemented
 
 #### 1. Root-Level Installation
+
 ```json
 // package.json (root)
 {
@@ -1619,9 +1620,21 @@ Successfully implemented Tailwind CSS v3 as the unified styling framework across
 }
 ```
 
-#### 2. Unified PostCSS Configuration
+#### 2. Compatibility Solution: Tailwind CSS v4 vs v3
+
+**Challenge**: The project initially faced compatibility issues between Tailwind CSS v4 (which moved PostCSS plugin to `@tailwindcss/postcss`) and Angular's build system (which expected the traditional v3 plugin).
+
+**Solution**: Hybrid Configuration Approach
+
+1. **Dual Configuration Files**: Created both v3 and v4 configurations in the shared design library
+2. **Smart Resolver**: Implemented environment detection to use appropriate configuration
+3. **Direct Configuration**: Used direct v3 configuration in both apps for maximum compatibility
+4. **File Extensions**: Renamed configuration files to `.cjs` for ES module compatibility
+
+#### 3. Unified PostCSS Configuration
+
 ```javascript
-// postcss.config.js (root)
+// postcss.config.cjs (root)
 module.exports = {
   plugins: {
     tailwindcss: {},
@@ -1630,15 +1643,16 @@ module.exports = {
 };
 ```
 
-#### 3. App-Specific Configurations
+#### 4. App-Specific Configurations
+
 ```javascript
-// apps/vendemas-caja-web/postcss.config.js
+// apps/vendemas-caja-web/postcss.config.cjs
 const { join } = require('path');
 
 module.exports = {
   plugins: {
     tailwindcss: {
-      config: join(__dirname, 'tailwind.config.js'),
+      config: join(__dirname, 'tailwind.config.cjs'),
     },
     autoprefixer: {},
   },
@@ -1646,6 +1660,7 @@ module.exports = {
 ```
 
 #### 4. CSS Integration
+
 ```scss
 // Angular app (styles.scss)
 @tailwind base;
@@ -1661,6 +1676,7 @@ module.exports = {
 ```
 
 #### 5. Component Styling Example
+
 ```typescript
 // counter.component.ts
 template: `
@@ -1675,26 +1691,31 @@ template: `
       </button>
     </div>
   </div>
-`
+`;
 ```
 
 ### Technical Implementation Details
 
 #### Version Selection
-- **Tailwind CSS**: v3.4.0 (latest stable version compatible with Nx)
+
+- **Tailwind CSS**: v3.4.0 (latest stable version compatible with Nx and Angular)
 - **PostCSS**: v8.4.0 (compatible with Angular and Next.js)
 - **Autoprefixer**: v10.4.0 (for cross-browser compatibility)
 
 #### Configuration Strategy
+
 - **Root Installation**: All dependencies installed at workspace root
 - **App-Specific Configs**: Each app has its own Tailwind and PostCSS configs
 - **Content Scanning**: Proper content paths configured for each framework
 - **PurgeCSS**: Built-in optimization for production builds
+- **ES Module Compatibility**: `.cjs` file extensions for CommonJS compatibility
 
 #### Framework Compatibility
-- **Angular**: Full compatibility with standalone components
+
+- **Angular**: Full compatibility with standalone components and zoneless architecture
 - **Next.js**: Optimized for App Router and SSR
 - **Build Systems**: Works with both esbuild (Angular) and webpack (Next.js)
+- **Future-Proof**: Ready for Tailwind CSS v4 migration when Angular support improves
 
 ### Quality Assurance Results
 
@@ -1723,6 +1744,7 @@ template: `
 ### Performance Metrics
 
 #### Bundle Sizes After Tailwind Integration
+
 - **Angular App**: 250.93 kB total (8.11 kB styles)
 - **Next.js App**: 102 kB First Load JS (unchanged)
 - **Build Time**: Both apps build successfully without errors
@@ -1731,12 +1753,14 @@ template: `
 ### Development Workflow
 
 #### Component Styling
+
 1. **Utility-First**: Use Tailwind utility classes directly in templates
 2. **Responsive Design**: Built-in responsive prefixes (sm:, md:, lg:, xl:)
 3. **State Variants**: Hover, focus, active states with utility classes
 4. **Custom Components**: Use `@apply` directive for complex components
 
 #### Best Practices
+
 - **Consistent Spacing**: Use Tailwind's spacing scale
 - **Color System**: Leverage Tailwind's color palette
 - **Typography**: Use Tailwind's typography utilities
@@ -1753,12 +1777,14 @@ template: `
 ### Framework-Specific Features
 
 #### Angular Integration
+
 - **Standalone Components**: Full compatibility with Tailwind utilities
 - **SCSS Support**: Tailwind directives work with SCSS preprocessing
 - **Component Styles**: Utility classes in component templates
 - **Global Styles**: Tailwind base styles in main stylesheet
 
 #### Next.js Integration
+
 - **App Router**: Compatible with Next.js 15 App Router
 - **SSR Support**: Tailwind works with server-side rendering
 - **CSS Modules**: Can be used alongside CSS modules if needed
@@ -1767,15 +1793,18 @@ template: `
 ### Migration Strategy
 
 #### From Custom CSS to Tailwind
+
 1. **Gradual Migration**: Replace custom CSS with utility classes
 2. **Component Updates**: Update existing components to use Tailwind
 3. **Style Removal**: Remove custom CSS as components are migrated
 4. **Design System**: Establish consistent design tokens
 
 #### Example Migration
+
 ```typescript
 // Before (Custom CSS)
-styles: [`
+styles: [
+  `
   .counter-container {
     padding: 1rem;
     border: 1px solid #ccc;
@@ -1783,15 +1812,16 @@ styles: [`
     margin: 1rem 0;
     text-align: center;
   }
-`]
+`,
+];
 
 // After (Tailwind Classes)
 template: `
   <div class="p-4 border border-gray-300 rounded-lg m-4 text-center">
     <!-- content -->
   </div>
-`
-styles: [] // No custom CSS needed
+`;
+styles: []; // No custom CSS needed
 ```
 
 This implementation serves as a **production-ready template** for Tailwind CSS integration across the monorepo, providing a consistent, modern styling approach for all web applications.

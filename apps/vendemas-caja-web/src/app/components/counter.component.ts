@@ -6,35 +6,30 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div
-      class="p-6 border border-gray-300 rounded-lg m-4 text-center bg-white shadow-md"
-    >
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        Zoneless Counter Demo
-      </h2>
-      <p class="text-lg text-gray-600 mb-2">
-        Count: <span class="font-semibold text-blue-600">{{ count() }}</span>
-      </p>
-      <p class="text-lg text-gray-600 mb-4">
-        Doubled:
-        <span class="font-semibold text-green-600">{{ doubled() }}</span>
-      </p>
-      <div class="space-x-2">
+    <div class="space-y-4">
+      <div class="text-center">
+        <h3 class="text-display text-2xl font-bold text-secondary mb-2">
+          Counter: {{ count() }}
+        </h3>
+        <p class="text-body text-gray-600">Double: {{ doubled() }}</p>
+      </div>
+
+      <div class="flex justify-center space-x-3">
         <button
           (click)="increment()"
-          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          class="bg-primary hover:bg-primary-600 text-primary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
-          Increment
+          +
         </button>
         <button
           (click)="decrement()"
-          class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+          class="bg-secondary hover:bg-secondary-600 text-secondary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2"
         >
-          Decrement
+          -
         </button>
         <button
           (click)="reset()"
-          class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+          class="bg-tertiary hover:bg-tertiary-600 text-tertiary-on font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-2"
         >
           Reset
         </button>
