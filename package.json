@@ -1,0 +1,45 @@
+{
+  "name": "@vendemas/root",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "lint": "nx lint",
+    "lint:fix": "nx lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "nx typecheck",
+    "prepare": "husky install",
+    "verify": "npm run lint && npm run format:check && npm run typecheck",
+    "clean": "nx reset && rm -rf .eslintcache",
+    "build": "nx build",
+    "test": "nx test",
+    "affected:build": "nx affected --target=build",
+    "affected:test": "nx affected --target=test",
+    "affected:lint": "nx affected --target=lint"
+  },
+  "devDependencies": {
+    "@nx/eslint": "21.3.11",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "8.39.1",
+    "@eslint/js": "9.33.0",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.21.3",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "3.6.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "nx": "21.3.11"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

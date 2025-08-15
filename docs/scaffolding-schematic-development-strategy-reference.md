@@ -163,25 +163,31 @@ Create world-class foundation with enterprise-grade quality tools:
 
 ### Required Dependencies (Validated Versions)
 
+**Root package.json Dependencies (Monorepo-wide tools):**
+
 ```json
 {
-  "@nx/eslint": "21.3.11",
-  "@typescript-eslint/eslint-plugin": "8.39.1",
-  "@typescript-eslint/parser": "8.39.1",
-  "@eslint/js": "9.33.0",
-  "eslint": "9.33.0",
-  "eslint-config-prettier": "10.1.8",
-  "eslint-plugin-import": "2.32.0",
-  "eslint-plugin-jsx-a11y": "6.10.2",
-  "eslint-plugin-n": "17.21.3",
-  "eslint-plugin-prettier": "5.5.4",
-  "prettier": "3.6.2",
-  "husky": "9.1.7",
-  "lint-staged": "16.1.5",
-  "@commitlint/cli": "19.8.1",
-  "@commitlint/config-conventional": "19.8.1"
+  "devDependencies": {
+    "@nx/eslint": "21.3.11",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "8.39.1",
+    "@eslint/js": "9.33.0",
+    "eslint": "9.33.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.21.3",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "3.6.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1"
+  }
 }
 ```
+
+**Note:** These dependencies belong in the root package.json as they are monorepo-wide development tools and quality standards.
 
 ### Key Configuration Files (Validated)
 
@@ -505,21 +511,23 @@ packages:
 
 ## Implementation Steps (Validated)
 
-### Step 1: Install Dependencies
+### Step 1: Install Root Dependencies
 
 ```bash
-# Install ESLint dependencies
+# Install ESLint dependencies (root - monorepo-wide)
 pnpm add -D -w @nx/eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-n eslint-plugin-prettier
 
-# Install Husky and commit tools
+# Install Husky and commit tools (root - monorepo-wide)
 pnpm add -D -w husky lint-staged @commitlint/cli @commitlint/config-conventional
 
-# Install ESLint v9 core
+# Install ESLint v9 core (root - monorepo-wide)
 pnpm add -D -w @eslint/js
 
-# Update Prettier to v3
+# Update Prettier to v3 (root - monorepo-wide)
 pnpm add -D -w prettier@latest
 ```
+
+**Note:** All dependencies are installed with `-w` flag (workspace root) as they are monorepo-wide development tools.
 
 ### Step 2: Create Configuration Files
 
@@ -823,6 +831,8 @@ interface AppCreationSchema {
 
 ### App Creation Dependencies
 
+**Project-Specific Dependencies (to be added to individual app package.json files):**
+
 ```json
 {
   "ng": {
@@ -857,6 +867,8 @@ interface AppCreationSchema {
   }
 }
 ```
+
+**Note:** These dependencies belong in individual app package.json files, not the root package.json, as they are project-specific.
 
 ### App Creation Validation Commands
 
@@ -1121,6 +1133,58 @@ docs/
 - Week 9-11: Quality Foundation Schematic
 - Week 12-14: App Generation Schematics
 - Week 15-16: Integration and Testing
+
+## Dependency Management Strategy
+
+### Root package.json Rules
+- Use exclusively for dependencies shared across the entire monorepo
+- Include core development tools: Jest, Playwright, ESLint, Prettier, TypeScript
+- Include Nx plugins: @nx/angular, @nx/react, @nx/next, @nx/eslint
+- Include workspace management tools: pnpm, husky, lint-staged, commitlint
+- **Never** add project-specific dependencies here
+
+### Project package.json Rules
+- Each app and library must have its own package.json file
+- List only direct, specific dependencies required by that particular project
+- Examples: @angular/material for Angular apps, @next/font for Next.js apps
+- Keep dependencies self-contained and minimal
+
+### Dependency Management Workflow
+1. Determine if dependency is monorepo-wide tool or project-specific library
+2. Place in appropriate package.json file (root vs project)
+3. Run `pnpm install` from root to update pnpm-lock.yaml correctly
+4. Always prioritize keeping root package.json clean
+
+### Enforcement Guidelines
+- If asked to add project-specific dependency to root, redirect to project package.json
+- Remind of these rules when dependencies seem misplaced
+- Ensure each project's dependencies are self-contained
+- Maintain clean separation between workspace tools and project dependencies
+
+### Examples
+
+**Root package.json (monorepo-wide tools):**
+```json
+{
+  "devDependencies": {
+    "@nx/eslint": "21.3.11",
+    "eslint": "9.33.0",
+    "prettier": "3.6.2",
+    "husky": "9.1.7",
+    "typescript": "^5.0.0"
+  }
+}
+```
+
+**App package.json (project-specific):**
+```json
+{
+  "dependencies": {
+    "@angular/material": "^20.0.0",
+    "@ionic/angular": "^8.0.0"
+  }
+}
+```
 
 ## Benefits of Hybrid Approach
 

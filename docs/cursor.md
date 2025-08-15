@@ -30,6 +30,33 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 - **Shared Libraries**: Extract common functionality into shared libraries with clear APIs
 - **Dependency Management**: Minimize cross-project dependencies and avoid circular dependencies
 
+### Dependency Management Strategy
+
+**Root package.json Rules:**
+- Use exclusively for dependencies shared across the entire monorepo
+- Include core development tools: Jest, Playwright, ESLint, Prettier, TypeScript
+- Include Nx plugins: @nx/angular, @nx/react, @nx/next, @nx/eslint
+- Include workspace management tools: pnpm, husky, lint-staged, commitlint
+- **Never** add project-specific dependencies here
+
+**Project package.json Rules:**
+- Each app and library must have its own package.json file
+- List only direct, specific dependencies required by that particular project
+- Examples: @angular/material for Angular apps, @next/font for Next.js apps
+- Keep dependencies self-contained and minimal
+
+**Dependency Management Workflow:**
+1. Determine if dependency is monorepo-wide tool or project-specific library
+2. Place in appropriate package.json file (root vs project)
+3. Run `pnpm install` from root to update pnpm-lock.yaml correctly
+4. Always prioritize keeping root package.json clean
+
+**Enforcement Guidelines:**
+- If asked to add project-specific dependency to root, redirect to project package.json
+- Remind of these rules when dependencies seem misplaced
+- Ensure each project's dependencies are self-contained
+- Maintain clean separation between workspace tools and project dependencies
+
 ### Naming Convention: `<product-name>-<tech>-<functionality>`
 
 **Technology Abbreviations:**
