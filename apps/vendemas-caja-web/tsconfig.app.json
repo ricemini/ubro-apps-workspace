@@ -6,7 +6,12 @@
     "target": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "declaration": true,
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": false,
     "composite": false,
     "emitDeclarationOnly": false,
     "declarationMap": false
