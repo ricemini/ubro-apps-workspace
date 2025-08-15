@@ -3,25 +3,41 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-6">
         <h1 class="app-name">Vendemás</h1>
-        <div class="text-sm text-gray-500">{{ title() }}</div>
+        <div class="flex items-center gap-4">
+          <div class="text-sm text-gray-500">{{ title() }}</div>
+          <app-theme-toggle />
+        </div>
       </div>
     </div>
   </header>
-  
+
   <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 py-6 sm:px-0">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="bg-white overflow-hidden shadow rounded-lg">
           <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-display text-lg font-medium text-gray-900 mb-4">Counter Component</h2>
+            <h2 class="text-display text-lg font-medium text-gray-900 mb-4">
+              Counter Component
+            </h2>
             <app-counter></app-counter>
           </div>
         </div>
-        
+
         <div class="bg-white overflow-hidden shadow rounded-lg">
           <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-display text-lg font-medium text-gray-900 mb-4">POS System</h2>
+            <h2 class="text-display text-lg font-medium text-gray-900 mb-4">
+              POS System
+            </h2>
             <app-pos></app-pos>
+          </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h2 class="text-display text-lg font-medium text-gray-900 mb-4">
+              Theme Demo
+            </h2>
+            <app-theme-demo></app-theme-demo>
           </div>
         </div>
       </div>

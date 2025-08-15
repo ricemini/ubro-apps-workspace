@@ -48,7 +48,7 @@ export class CounterComponent {
   constructor() {
     // Effect to demonstrate reactivity
     effect(() => {
-      console.log(`Count changed to: ${this.count()}`);
+      // Count changed - effect demonstrates reactivity
     });
   }
 
