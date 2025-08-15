@@ -18,7 +18,13 @@
     "verify": "npm run lint && npm run format:check",
     "clean": "nx reset && rm -rf .eslintcache",
     "build": "echo 'Build will be available when projects are created'",
-    "test": "echo 'Tests will be available when projects are created'",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:install": "playwright install",
     "affected:build": "echo 'Affected builds will be available when projects are created'",
     "affected:test": "echo 'Affected tests will be available when projects are created'",
     "affected:lint": "echo 'Affected linting will be available when projects are created'"
@@ -39,7 +45,12 @@
     "lint-staged": "16.1.5",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
-    "nx": "21.3.11"
+    "nx": "21.3.11",
+    "vitest": "^2.1.8",
+    "@vitest/ui": "^2.1.8",
+    "@vitest/coverage-v8": "^2.1.8",
+    "playwright": "^1.48.0",
+    "@playwright/test": "^1.48.0"
   },
   "packageManager": "pnpm@8.15.0"
 }

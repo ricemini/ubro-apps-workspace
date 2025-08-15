@@ -35,7 +35,7 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 **Root package.json Rules:**
 
 - Use exclusively for dependencies shared across the entire monorepo
-- Include core development tools: Jest, Playwright, ESLint, Prettier, TypeScript
+- Include core development tools: Vitest, Playwright, ESLint, Prettier, TypeScript
 - Include Nx plugins: @nx/angular, @nx/react, @nx/next, @nx/eslint
 - Include workspace management tools: pnpm, husky, lint-staged, commitlint
 - **Never** add project-specific dependencies here
