@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "customConditions": ["development"],
+    "baseUrl": ".",
+    "paths": {
+      "@vendemas/*": ["libs/*"],
+      "@vendemas/shared-types": ["libs/vendemas-shared-types/src/index.ts"],
+      "@vendemas/shared-auth": ["libs/vendemas-shared-auth/src/index.ts"],
+      "@vendemas/shared-ui": ["libs/vendemas-shared-ui/src/index.ts"],
+      "@vendemas/shared-utils": ["libs/vendemas-shared-utils/src/index.ts"],
+      "@vendemas/shared-api": ["libs/vendemas-shared-api/src/index.ts"],
+      "@vendemas/shared-constants": [
+        "libs/vendemas-shared-constants/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    ".nuxt",
+    "coverage",
+    "android",
+    "ios",
+    "www",
+    ".expo",
+    "web-build"
+  ]
+}

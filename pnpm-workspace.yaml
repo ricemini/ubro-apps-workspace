@@ -1,12 +1,12 @@
 packages:
   # Applications
   - 'apps/*'
-  
+
   # Libraries
   - 'libs/*'
-  
+
   # Shared packages (if needed)
   - 'packages/*'
-  
+
   # Tools and scripts
   - 'tools/*'
