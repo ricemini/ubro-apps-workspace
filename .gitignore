@@ -415,3 +415,7 @@ lighthouse-report.json
 
 # Local development
 .local/
+.angular
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
