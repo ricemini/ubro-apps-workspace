@@ -192,7 +192,7 @@ pnpm add <package-name> --filter @vendemas/ng-mobile
 ## 📚 Documentation
 
 - `docs/` - Project documentation
-- `docs/cursor.md` - Engineering principles and best practices
+- `cursor.md` - Engineering principles and best practices
 - `docs/scaffolding-schematic-development-strategy-reference.md` - Development strategy
 - `docs/authentication-library-architecture-reference.md` - Auth library architecture
 - `docs/vendemas-nx-website-implementation-plan.md` - Website implementation plan
