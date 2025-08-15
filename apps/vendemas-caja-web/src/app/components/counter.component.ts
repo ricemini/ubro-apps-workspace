@@ -6,40 +6,42 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="counter-container">
-      <h2>Zoneless Counter Demo</h2>
-      <p>Count: {{ count() }}</p>
-      <p>Doubled: {{ doubled() }}</p>
-      <button (click)="increment()">Increment</button>
-      <button (click)="decrement()">Decrement</button>
-      <button (click)="reset()">Reset</button>
+    <div
+      class="p-6 border border-gray-300 rounded-lg m-4 text-center bg-white shadow-md"
+    >
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">
+        Zoneless Counter Demo
+      </h2>
+      <p class="text-lg text-gray-600 mb-2">
+        Count: <span class="font-semibold text-blue-600">{{ count() }}</span>
+      </p>
+      <p class="text-lg text-gray-600 mb-4">
+        Doubled:
+        <span class="font-semibold text-green-600">{{ doubled() }}</span>
+      </p>
+      <div class="space-x-2">
+        <button
+          (click)="increment()"
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+          Increment
+        </button>
+        <button
+          (click)="decrement()"
+          class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+        >
+          Decrement
+        </button>
+        <button
+          (click)="reset()"
+          class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+        >
+          Reset
+        </button>
+      </div>
     </div>
   `,
-  styles: [
-    `
-      .counter-container {
-        padding: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin: 1rem 0;
-        text-align: center;
-      }
-
-      button {
-        margin: 0 0.5rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid #007bff;
-        background: #007bff;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background: #0056b3;
-      }
-    `,
-  ],
+  styles: [],
 })
 export class CounterComponent {
   // Signal for reactive state
