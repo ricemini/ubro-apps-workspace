@@ -1,1 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Vendemás Design System */
+/* Note: Design tokens are imported via TypeScript, not SCSS */
+
+/* Font loading */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* CSS Variables for theming */
+:root {
+  /* Colors */
+  --vendemas-primary: #4caf50;
+  --vendemas-primary-on: #000000;
+  --vendemas-secondary: #1e3a5f;
+  --vendemas-secondary-on: #ffffff;
+  --vendemas-tertiary: #f4b942;
+  --vendemas-tertiary-on: #000000;
+  --vendemas-error: #c23b4b;
+  --vendemas-error-on: #ffffff;
+
+  /* Typography */
+  --vendemas-font-family-body: 'Inter', sans-serif;
+  --vendemas-font-family-display: 'Montserrat', sans-serif;
+  --vendemas-font-weight-normal: 400;
+  --vendemas-font-weight-medium: 500;
+  --vendemas-font-weight-bold: 700;
+
+  /* Spacing */
+  --vendemas-spacing-xs: 0.25rem;
+  --vendemas-spacing-sm: 0.5rem;
+  --vendemas-spacing-md: 1rem;
+  --vendemas-spacing-lg: 1.5rem;
+  --vendemas-spacing-xl: 2rem;
+
+  /* Border Radius */
+  --vendemas-radius-sm: 0.25rem;
+  --vendemas-radius-md: 0.5rem;
+  --vendemas-radius-lg: 1rem;
+  --vendemas-radius-full: 9999px;
+}
+
+/* Application name styles */
+.app-name {
+  font-family: var(--vendemas-font-family-display);
+  font-weight: var(--vendemas-font-weight-bold);
+  font-style: italic;
+  font-size: 2.5rem;
+  color: var(--vendemas-secondary);
+}
+
+/* Base styles */
+body {
+  font-family: var(--vendemas-font-family-body);
+  font-weight: var(--vendemas-font-weight-normal);
+  line-height: 1.5;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* Typography utilities */
+.text-body {
+  font-family: var(--vendemas-font-family-body);
+  font-weight: var(--vendemas-font-weight-normal);
+}
+
+.text-display {
+  font-family: var(--vendemas-font-family-display);
+  font-weight: var(--vendemas-font-weight-bold);
+}
+
 /* You can add global styles to this file, and also import other style files */
