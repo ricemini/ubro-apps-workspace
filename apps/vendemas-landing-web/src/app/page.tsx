@@ -1,24 +1,61 @@
-'use client';
-
 import React from 'react';
+import { Metadata } from 'next';
 import styles from './page.module.css';
+import ContactForm from './components/ContactForm';
+import VendorStats from './components/VendorStats';
 
-export default function Index(): JSX.Element {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.css file.
-   */
+export const metadata: Metadata = {
+  title: 'Home',
+  description:
+    'Vendemás - Empowering street vendors with modern mobile sales technology. QR payments, live tracking, and daily insights.',
+  openGraph: {
+    title: 'Vendemás - Mobile Sales Toolkit for Street Vendors',
+    description: 'Empower street vendors to sell more with less friction.',
+  },
+};
+
+// Server Component - No 'use client' directive for better SSR
+export default async function HomePage(): Promise<React.JSX.Element> {
   return (
     <div className={styles.page}>
       <div className='wrapper'>
         <div className='container'>
-          <div id='welcome'>
-            <h1>
-              <span> Hello there, </span>
-              Welcome vendemas-landing-web 👋
-            </h1>
-          </div>
+          {/* Hero Section */}
+          <section className={styles.hero}>
+            <div className={styles.heroContent}>
+              <h1 className={styles.heroTitle}>
+                <span className={styles.heroGreeting}>Hello there,</span>
+                Welcome to Vendemás 👋
+              </h1>
+              <p className={styles.heroSubtitle}>
+                Mobile-first sales toolkit for street vendors in Mexico/LATAM
+              </p>
+              <div className={styles.heroFeatures}>
+                <div className={styles.feature}>
+                  <span className={styles.featureIcon}>📱</span>
+                  <span>QR/Barcode Checkout</span>
+                </div>
+                <div className={styles.feature}>
+                  <span className={styles.featureIcon}>📍</span>
+                  <span>Live Location Tracking</span>
+                </div>
+                <div className={styles.feature}>
+                  <span className={styles.featureIcon}>📊</span>
+                  <span>Daily Sales Insights</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Vendor Statistics Section */}
+          <section className={styles.statsSection}>
+            <VendorStats />
+          </section>
+
+          {/* Contact Form Section */}
+          <section className={styles.contactSection}>
+            <ContactForm />
+          </section>
 
           <div id='hero' className='rounded'>
             <div className='text-container'>
