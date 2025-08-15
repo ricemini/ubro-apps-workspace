@@ -12,7 +12,6 @@
       "options": {
         "outputPath": "dist/vendemas-caja-web",
         "browser": "apps/vendemas-caja-web/src/main.ts",
-        "polyfills": ["zone.js"],
         "tsConfig": "apps/vendemas-caja-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

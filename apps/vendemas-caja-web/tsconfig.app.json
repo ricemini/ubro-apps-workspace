@@ -11,6 +11,13 @@
     "emitDeclarationOnly": false,
     "declarationMap": false
   },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
+    "strictTemplates": true
+  },
   "include": ["src/**/*.ts"],
   "exclude": [
     "jest.config.ts",

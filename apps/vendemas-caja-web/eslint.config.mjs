@@ -40,6 +40,7 @@ export default [
         it: 'readonly',
         expect: 'readonly',
         vi: 'readonly',
+        HTMLElement: 'readonly',
       },
     },
   },
