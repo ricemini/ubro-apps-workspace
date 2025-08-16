@@ -18,6 +18,7 @@ The [Schematic Scaffolding](./schematic-scaffolding/) folder contains comprehens
 - **[Design System Setup](./schematic-scaffolding/07-design-system-setup.md)** - Shared styles and design tokens
 - **[i18n Setup](./schematic-scaffolding/10-i18n-setup.md)** - Multi-language support configuration
 - **[Import Path Configuration](./schematic-scaffolding/19-import-path-configuration.md)** - Short @ imports and path aliases
+- **[Monorepo Constraint Tags](./schematic-scaffolding/20-monorepo-constraint-tags.md)** - Architecture enforcement and dependency rules
 
 For the complete reference, see [Complete Reference](./schematic-scaffolding/00-complete-reference.md).
 
