@@ -4,6 +4,22 @@
 
 ✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
 
+## 📚 Documentation
+
+### **Schematic Scaffolding**
+
+The [Schematic Scaffolding](./schematic-scaffolding/) folder contains comprehensive documentation for the VendeMás ecosystem, organized by specific tasks and potential mini-schematics:
+
+- **[Strategy Overview](./schematic-scaffolding/01-strategy-overview.md)** - High-level approach and timeline
+- **[Application Context](./schematic-scaffolding/02-application-context.md)** - VendeMás mission, vision, and technical stack
+- **[Naming Conventions](./schematic-scaffolding/03-naming-conventions.md)** - Project and library naming patterns
+- **[Angular App Setup](./schematic-scaffolding/04-angular-app-setup.md)** - Creating new Angular applications
+- **[Next.js App Setup](./schematic-scaffolding/05-nextjs-app-setup.md)** - Creating new Next.js applications
+- **[Design System Setup](./schematic-scaffolding/07-design-system-setup.md)** - Shared styles and design tokens
+- **[i18n Setup](./schematic-scaffolding/10-i18n-setup.md)** - Multi-language support configuration
+
+For the complete reference, see [Complete Reference](./schematic-scaffolding/00-complete-reference.md).
+
 [Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
 ## Finish your CI setup
