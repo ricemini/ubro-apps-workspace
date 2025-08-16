@@ -4,8 +4,24 @@
   "projectType": "library",
   "sourceRoot": "libs/vendemas-shared-design/src",
   "prefix": "vendemas",
-  "tags": ["scope:vendemas", "type:lib", "domain:design"],
+  "tags": [
+    "scope:design",
+    "type:lib",
+    "category:design",
+    "domain:design-system",
+    "framework:agnostic"
+  ],
   "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/vendemas-shared-design",
+        "main": "libs/vendemas-shared-design/src/index.ts",
+        "tsConfig": "libs/vendemas-shared-design/tsconfig.lib.json",
+        "assets": ["libs/vendemas-shared-design/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
@@ -14,7 +30,8 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../coverage/libs/vendemas-shared-design"
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/vendemas-shared-design"
       }
     }
   }

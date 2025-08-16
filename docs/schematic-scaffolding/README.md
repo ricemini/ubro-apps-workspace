@@ -46,6 +46,7 @@ This folder contains the comprehensive documentation for the VendeMás schematic
 ### **Development Experience**
 
 - **[Import Path Configuration](./19-import-path-configuration.md)** - Short @ imports and path aliases
+- **[Monorepo Constraint Tags](./20-monorepo-constraint-tags.md)** - Architecture enforcement and dependency rules
 
 ## 🎯 Usage Guidelines
 

@@ -114,5 +114,84 @@
         "watchDepsTargetName": "watch-deps"
       }
     }
-  ]
+  ],
+  "constraints": {
+    "vendemas-apps": {
+      "rules": [
+        {
+          "sourceTag": "scope:app",
+          "onlyDependOnLibsWithTags": [
+            "scope:shared",
+            "scope:design",
+            "scope:auth",
+            "scope:api"
+          ]
+        },
+        {
+          "sourceTag": "scope:app",
+          "notDependOnLibsWithTags": ["scope:internal", "scope:test"]
+        }
+      ]
+    },
+    "vendemas-libs": {
+      "rules": [
+        {
+          "sourceTag": "scope:shared",
+          "onlyDependOnLibsWithTags": ["scope:types", "scope:utils"]
+        },
+        {
+          "sourceTag": "scope:design",
+          "onlyDependOnLibsWithTags": ["scope:types", "scope:utils"]
+        },
+        {
+          "sourceTag": "scope:auth",
+          "onlyDependOnLibsWithTags": [
+            "scope:types",
+            "scope:utils",
+            "scope:api"
+          ]
+        },
+        {
+          "sourceTag": "scope:api",
+          "onlyDependOnLibsWithTags": ["scope:types", "scope:utils"]
+        },
+        {
+          "sourceTag": "scope:types",
+          "notDependOnLibsWithTags": [
+            "scope:app",
+            "scope:shared",
+            "scope:design",
+            "scope:auth",
+            "scope:api"
+          ]
+        },
+        {
+          "sourceTag": "scope:utils",
+          "notDependOnLibsWithTags": [
+            "scope:app",
+            "scope:shared",
+            "scope:design",
+            "scope:auth",
+            "scope:api"
+          ]
+        }
+      ]
+    },
+    "vendemas-architecture": {
+      "rules": [
+        {
+          "sourceTag": "type:app",
+          "onlyDependOnLibsWithTags": ["type:lib"]
+        },
+        {
+          "sourceTag": "type:lib",
+          "notDependOnLibsWithTags": ["type:app"]
+        },
+        {
+          "sourceTag": "type:e2e",
+          "onlyDependOnLibsWithTags": ["type:app", "type:lib"]
+        }
+      ]
+    }
+  }
 }
