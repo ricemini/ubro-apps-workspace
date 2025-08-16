@@ -1,0 +1,141 @@
+// =============================================================================
+// VendeMás Design System - Main Entry Point
+// =============================================================================
+//
+// This file imports all design system layers in the correct dependency order.
+// Import this file in your app's main stylesheet to get the complete design system.
+//
+// Usage:
+// @use '@vendemas/shared-styles';
+//
+// Or import specific layers:
+// @use '@vendemas/shared-styles/foundation';
+// @use '@vendemas/shared-styles/themes';
+// @use '@vendemas/shared-styles/components';
+// @use '@vendemas/shared-styles/utilities';
+
+// 1. Foundation Layer (variables, mixins, breakpoints)
+@use 'foundation' as *;
+
+// 2. Themes Layer (Material Design 3, light/dark themes)
+@use 'themes' as *;
+
+// 3. Components Layer (shared UI components)
+@use 'components';
+
+// 4. Commerce Layer (payment, inventory, cart)
+@use 'commerce';
+
+// 5. Vendor Layer (dashboard, business management)
+@use 'vendor';
+
+// 6. Location Layer (maps, geolocation, search)
+@use 'location';
+
+// 7. Mobile Layer (touch, responsive, offline)
+@use 'mobile';
+
+// 8. Accessibility Layer (focus, contrast, motion)
+@use 'accessibility';
+
+// 9. Utilities Layer (helper classes, spacing, display)
+@use 'utilities';
+
+// =============================================================================
+// CSS Custom Properties for Theme Switching
+// =============================================================================
+
+:root {
+  // Light theme (default)
+  --vendemas-primary: #{$vendemas-light-primary};
+  --vendemas-primary-on: #{$vendemas-light-primary-on};
+  --vendemas-secondary: #{$vendemas-light-secondary};
+  --vendemas-secondary-on: #{$vendemas-light-secondary-on};
+  --vendemas-tertiary: #{$vendemas-light-tertiary};
+  --vendemas-tertiary-on: #{$vendemas-light-tertiary-on};
+  --vendemas-error: #{$vendemas-light-error};
+  --vendemas-error-on: #{$vendemas-light-error-on};
+
+  --vendemas-surface: #{$vendemas-light-surface};
+  --vendemas-surface-variant: #{$vendemas-light-surface-variant};
+  --vendemas-on-surface: #{$vendemas-light-on-surface};
+  --vendemas-on-surface-variant: #{$vendemas-light-on-surface-variant};
+  --vendemas-background: #{$vendemas-light-background};
+  --vendemas-on-background: #{$vendemas-light-on-background};
+  --vendemas-outline: #{$vendemas-light-outline};
+  --vendemas-outline-variant: #{$vendemas-light-outline-variant};
+
+  --vendemas-state-hover: #{$vendemas-light-state-hover};
+  --vendemas-state-focus: #{$vendemas-light-state-focus};
+  --vendemas-state-selected: #{$vendemas-light-state-selected};
+  --vendemas-state-activated: #{$vendemas-light-state-activated};
+  --vendemas-state-dragged: #{$vendemas-light-state-dragged};
+
+  --vendemas-shadow: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-1: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-2: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-3: #{$vendemas-light-shadow};
+}
+
+.dark-theme {
+  // Dark theme
+  --vendemas-primary: #{$vendemas-dark-primary};
+  --vendemas-primary-on: #{$vendemas-dark-primary-on};
+  --vendemas-secondary: #{$vendemas-dark-secondary};
+  --vendemas-secondary-on: #{$vendemas-dark-secondary-on};
+  --vendemas-tertiary: #{$vendemas-dark-tertiary};
+  --vendemas-tertiary-on: #{$vendemas-dark-tertiary-on};
+  --vendemas-error: #{$vendemas-dark-error};
+  --vendemas-error-on: #{$vendemas-dark-error-on};
+
+  --vendemas-surface: #{$vendemas-dark-surface};
+  --vendemas-surface-variant: #{$vendemas-dark-surface-variant};
+  --vendemas-on-surface: #{$vendemas-dark-on-surface};
+  --vendemas-on-surface-variant: #{$vendemas-dark-on-surface-variant};
+  --vendemas-background: #{$vendemas-dark-background};
+  --vendemas-on-background: #{$vendemas-dark-on-background};
+  --vendemas-outline: #{$vendemas-dark-outline};
+  --vendemas-outline-variant: #{$vendemas-dark-outline-variant};
+
+  --vendemas-state-hover: #{$vendemas-dark-state-hover};
+  --vendemas-state-focus: #{$vendemas-dark-state-focus};
+  --vendemas-state-selected: #{$vendemas-dark-state-selected};
+  --vendemas-state-activated: #{$vendemas-dark-state-activated};
+  --vendemas-state-dragged: #{$vendemas-dark-state-dragged};
+
+  --vendemas-shadow: #{$vendemas-dark-shadow};
+  --vendemas-shadow-elevation-1: #{$vendemas-dark-shadow};
+  --vendemas-shadow-elevation-2: #{$vendemas-dark-shadow};
+  --vendemas-shadow-elevation-3: #{$vendemas-dark-shadow};
+}
+
+// =============================================================================
+// Global Base Styles
+// =============================================================================
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  font-family: $vendemas-font-family-body;
+  font-size: $vendemas-font-size-base;
+  font-weight: $vendemas-font-weight-normal;
+  line-height: $vendemas-line-height-normal;
+  color: var(--vendemas-on-background);
+  background-color: var(--vendemas-background);
+  margin: 0;
+  padding: 0;
+}
+
+// =============================================================================
+// Font Loading
+// =============================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
