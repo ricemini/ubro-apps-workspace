@@ -14,18 +14,34 @@
     "customConditions": ["development"],
     "baseUrl": ".",
     "paths": {
+      /* Short imports for apps */
+      "@caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
+      "@negocio-web": ["apps/vendemas-negocio-web/src/index.ts"],
+      "@landing-web": ["apps/vendemas-landing-web/src/index.ts"],
+
+      /* Short imports for libs */
+      "@shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
+      "@shared-design": ["libs/vendemas-shared-design/src/index.ts"],
+      "@shared-i18n": ["libs/vendemas-shared-i18n/src/index.ts"],
+
+      /* Full vendor imports for apps */
+      "@vendemas/caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
+      "@vendemas/negocio-web": ["apps/vendemas-negocio-web/src/index.ts"],
+      "@vendemas/landing-web": ["apps/vendemas-landing-web/src/index.ts"],
+
+      /* Full vendor imports for libs */
+      "@vendemas/shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
+      "@vendemas/shared-design": ["libs/vendemas-shared-design/src/index.ts"],
+      "@vendemas/shared-i18n": ["libs/vendemas-shared-i18n/src/index.ts"],
+
+      /* Legacy imports for backward compatibility */
       "@vendemas/*": ["libs/*"],
       "@vendemas/admin-web": ["apps/vendemas-admin-web/src/index.ts"],
-      "@vendemas/caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
-      "@vendemas/landing-web": ["apps/vendemas-landing-web/src/index.ts"],
-      "@vendemas/negocio-web": ["apps/vendemas-negocio-web/src/index.ts"],
       "@vendemas/shared-api": ["libs/vendemas-shared-api/src/index.ts"],
       "@vendemas/shared-auth": ["libs/vendemas-shared-auth/src/index.ts"],
       "@vendemas/shared-constants": [
         "libs/vendemas-shared-constants/src/index.ts"
       ],
-      "@vendemas/shared-design": ["libs/vendemas-shared-design/src/index.ts"],
-      "@vendemas/shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
       "@vendemas/shared-types": ["libs/vendemas-shared-types/src/index.ts"],
       "@vendemas/shared-ui": ["libs/vendemas-shared-ui/src/index.ts"],
       "@vendemas/shared-utils": ["libs/vendemas-shared-utils/src/index.ts"],
