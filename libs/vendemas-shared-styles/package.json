@@ -1,0 +1,23 @@
+{
+  "name": "@vendemas/shared-styles",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.scss",
+    "./foundation": "./src/foundation/index.scss",
+    "./themes": "./src/themes/index.scss",
+    "./commerce": "./src/commerce/index.scss",
+    "./vendor": "./src/vendor/index.scss",
+    "./location": "./src/location/index.scss",
+    "./mobile": "./src/mobile/index.scss",
+    "./components": "./src/components/index.scss",
+    "./accessibility": "./src/accessibility/index.scss",
+    "./utilities": "./src/utilities/index.scss"
+  },
+  "peerDependencies": {
+    "sass": "^1.69.0"
+  },
+  "devDependencies": {
+    "sass": "^1.69.0"
+  }
+}

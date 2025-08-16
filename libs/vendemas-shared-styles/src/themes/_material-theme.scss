@@ -1,0 +1,73 @@
+// =============================================================================
+// VendeMás Design System - Material Design 3 Theme
+// =============================================================================
+
+// Light Theme Colors
+$vendemas-light-primary: #4caf50;
+$vendemas-light-primary-on: #000000;
+$vendemas-light-secondary: #1e3a5f;
+$vendemas-light-secondary-on: #ffffff;
+$vendemas-light-tertiary: #f4b942;
+$vendemas-light-tertiary-on: #000000;
+$vendemas-light-error: #c23b4b;
+$vendemas-light-error-on: #ffffff;
+
+// Dark Theme Colors
+$vendemas-dark-primary: #a5d6a7;
+$vendemas-dark-primary-on: #0c3d0f;
+$vendemas-dark-secondary: #99b3d4;
+$vendemas-dark-secondary-on: #0b1a2c;
+$vendemas-dark-tertiary: #fad77d;
+$vendemas-dark-tertiary-on: #3e2c00;
+$vendemas-dark-error: #f2a7b1;
+$vendemas-dark-error-on: #5a1220;
+
+// Light Theme Surface Colors
+$vendemas-light-surface: #ffffff;
+$vendemas-light-surface-variant: #f5f5f5;
+$vendemas-light-on-surface: rgba(0, 0, 0, 0.87);
+$vendemas-light-on-surface-variant: rgba(0, 0, 0, 0.6);
+$vendemas-light-background: #ffffff;
+$vendemas-light-on-background: rgba(0, 0, 0, 0.87);
+$vendemas-light-outline: rgba(0, 0, 0, 0.12);
+$vendemas-light-outline-variant: rgba(0, 0, 0, 0.08);
+
+// Dark Theme Surface Colors
+$vendemas-dark-surface: #1e1e1e;
+$vendemas-dark-surface-variant: #2d2d2d;
+$vendemas-dark-on-surface: rgba(255, 255, 255, 0.87);
+$vendemas-dark-on-surface-variant: rgba(255, 255, 255, 0.6);
+$vendemas-dark-background: #121212;
+$vendemas-dark-on-background: rgba(255, 255, 255, 0.87);
+$vendemas-dark-outline: rgba(255, 255, 255, 0.12);
+$vendemas-dark-outline-variant: rgba(255, 255, 255, 0.08);
+
+// Light Theme State Colors
+$vendemas-light-state-hover: rgba(0, 0, 0, 0.04);
+$vendemas-light-state-focus: rgba(76, 175, 80, 0.12);
+$vendemas-light-state-selected: rgba(76, 175, 80, 0.08);
+$vendemas-light-state-activated: rgba(76, 175, 80, 0.12);
+$vendemas-light-state-dragged: rgba(0, 0, 0, 0.08);
+
+// Dark Theme State Colors
+$vendemas-dark-state-hover: rgba(255, 255, 255, 0.04);
+$vendemas-dark-state-focus: rgba(165, 214, 167, 0.12);
+$vendemas-dark-state-selected: rgba(165, 214, 167, 0.08);
+$vendemas-dark-state-activated: rgba(165, 214, 167, 0.12);
+$vendemas-dark-state-dragged: rgba(255, 255, 255, 0.08);
+
+// Shadow Colors
+$vendemas-light-shadow: rgba(0, 0, 0, 0.12);
+$vendemas-dark-shadow: rgba(0, 0, 0, 0.4);
+
+// Material Design 3 Color Tokens
+$vendemas-mdc-filled-button-container-color: var(--vendemas-primary);
+$vendemas-mdc-filled-button-label-text-color: var(--vendemas-primary-on);
+$vendemas-mdc-outlined-button-outline-color: var(--vendemas-primary);
+$vendemas-mdc-outlined-button-label-text-color: var(--vendemas-primary);
+$vendemas-mdc-text-button-label-text-color: var(--vendemas-primary);
+$vendemas-mdc-elevated-button-container-color: var(--vendemas-surface);
+$vendemas-mdc-elevated-button-label-text-color: var(--vendemas-on-surface);
+$vendemas-mdc-elevated-button-container-elevation: 1;
+$vendemas-mdc-elevated-button-hover-container-elevation: 2;
+$vendemas-mdc-elevated-button-pressed-container-elevation: 1;

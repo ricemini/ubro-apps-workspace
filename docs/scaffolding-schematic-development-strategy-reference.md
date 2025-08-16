@@ -85,6 +85,8 @@ vendemas-shared-ui           # UI components
 vendemas-shared-utils        # Utility functions
 vendemas-shared-api          # API client utilities
 vendemas-shared-constants    # Shared constants
+vendemas-shared-styles       # Design system and shared styles - IMPLEMENTED
+vendemas-shared-i18n         # Internationalization - IMPLEMENTED
 ```
 
 ### Directory Structure
@@ -2280,6 +2282,464 @@ The application runs at **http://localhost:4200** with:
 - Team collaboration features
 
 This implementation serves as a **production-ready template** for Angular Material 3 theming across the monorepo, demonstrating enterprise-grade accessibility, performance, and maintainability standards.
+
+## VendeMás Design System Implementation: Centralized Styling Architecture
+
+### Overview
+
+Successfully implemented a comprehensive design system for the VendeMás product ecosystem, providing centralized styling across all applications. The design system follows a layered architecture approach with semantic design tokens, ensuring consistency, maintainability, and accessibility across `vendemas-caja-web`, `vendemas-landing-web`, and future mobile applications.
+
+### Architecture & Structure
+
+#### Design System Library: `libs/vendemas-shared-styles/`
+
+```
+vendemas-shared-styles/
+├── foundation/          # Core design tokens, variables, mixins
+│   ├── _variables.scss  # Colors, typography, spacing, breakpoints
+│   ├── _mixins.scss     # Responsive, typography, layout, interactive mixins
+│   └── index.scss       # Foundation layer exports
+├── themes/              # Material Design 3, light/dark themes
+│   ├── _material-theme.scss  # Color palettes and theme variables
+│   └── index.scss       # Theme layer exports
+├── components/          # Shared UI components
+│   ├── _buttons.scss    # Button variants and styles
+│   └── index.scss       # Component layer exports
+├── commerce/            # Commerce-specific styles (payment, inventory, cart)
+├── vendor/              # Vendor management styles (dashboard, analytics)
+├── location/            # Location and discovery styles (maps, geolocation)
+├── mobile/              # Mobile-first responsive patterns
+├── accessibility/       # Accessibility and inclusive design
+├── utilities/           # Helper classes and utilities
+└── index.scss           # Main entry point with all layers
+```
+
+#### Layer Dependencies
+
+```scss
+// Main entry point - imports in correct order
+@use 'foundation' as *; // 1. Variables and mixins
+@use 'themes' as *; // 2. Material Design 3 themes
+@use 'components'; // 3. Shared UI components
+@use 'commerce'; // 4. Commerce functionality
+@use 'vendor'; // 5. Vendor management
+@use 'location'; // 6. Location services
+@use 'mobile'; // 7. Mobile patterns
+@use 'accessibility'; // 8. Accessibility features
+@use 'utilities'; // 9. Helper classes
+```
+
+### Key Features Implemented
+
+#### 1. Foundation Layer - Design Tokens
+
+**Color System:**
+
+```scss
+// Primary colors
+$vendemas-primary: #4caf50;
+$vendemas-secondary: #1e3a5f;
+$vendemas-tertiary: #f4b942;
+$vendemas-error: #c23b4b;
+
+// Surface colors
+$vendemas-surface: #ffffff;
+$vendemas-background: #ffffff;
+$vendemas-outline: rgba(0, 0, 0, 0.12);
+
+// Neutral scale
+$vendemas-neutral-50: #fafafa;
+$vendemas-neutral-100: #f5f5f5;
+// ... through $vendemas-neutral-900: #212121;
+```
+
+**Typography System:**
+
+```scss
+// Font families
+$vendemas-font-family-body: 'Inter', sans-serif;
+$vendemas-font-family-display: 'Montserrat', sans-serif;
+
+// Font sizes
+$vendemas-font-size-xs: 0.75rem; // 12px
+$vendemas-font-size-sm: 0.875rem; // 14px
+$vendemas-font-size-base: 1rem; // 16px
+$vendemas-font-size-lg: 1.125rem; // 18px
+$vendemas-font-size-xl: 1.25rem; // 20px
+$vendemas-font-size-2xl: 1.5rem; // 24px
+$vendemas-font-size-3xl: 1.875rem; // 30px
+$vendemas-font-size-4xl: 2.25rem; // 36px
+```
+
+**Spacing Scale:**
+
+```scss
+$vendemas-spacing-xs: 0.25rem; // 4px
+$vendemas-spacing-sm: 0.5rem; // 8px
+$vendemas-spacing-md: 1rem; // 16px
+$vendemas-spacing-lg: 1.5rem; // 24px
+$vendemas-spacing-xl: 2rem; // 32px
+$vendemas-spacing-2xl: 3rem; // 48px
+$vendemas-spacing-3xl: 4rem; // 64px
+```
+
+#### 2. Responsive Mixins
+
+```scss
+// Mobile-first responsive design
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin mobile-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+```
+
+#### 3. Typography Mixins
+
+```scss
+@mixin heading($level: 1) {
+  font-family: $vendemas-font-family-display;
+  font-weight: $vendemas-font-weight-bold;
+
+  @if $level == 1 {
+    font-size: $vendemas-font-size-4xl;
+    line-height: $vendemas-line-height-tight;
+  } @else if $level == 2 {
+    font-size: $vendemas-font-size-3xl;
+    line-height: $vendemas-line-height-tight;
+  }
+  // ... through level 6
+}
+
+@mixin body-text($size: base) {
+  font-family: $vendemas-font-family-body;
+  font-weight: $vendemas-font-weight-normal;
+  line-height: $vendemas-line-height-normal;
+
+  @if $size == xs {
+    font-size: $vendemas-font-size-xs;
+  } @else if $size == sm {
+    font-size: $vendemas-font-size-sm;
+  }
+  // ... through xl
+}
+```
+
+#### 4. Interactive Mixins
+
+```scss
+@mixin interactive {
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $vendemas-shadow-elevation-2;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $vendemas-shadow-elevation-1;
+  }
+}
+
+@mixin focus-ring($color: $vendemas-primary) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+@mixin elevation($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px 0 $vendemas-shadow-elevation-1;
+  } @else if $level == 2 {
+    box-shadow: 0 4px 6px -1px $vendemas-shadow-elevation-2;
+  } @else if $level == 3 {
+    box-shadow: 0 10px 15px -3px $vendemas-shadow-elevation-3;
+  }
+}
+```
+
+#### 5. Accessibility Mixins
+
+```scss
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin high-contrast {
+  @media (prefers-contrast: high) {
+    @content;
+  }
+}
+```
+
+#### 6. Component Examples - Button System
+
+```scss
+// Primary Button
+.vendemas-btn-primary {
+  @include heading(6);
+  @include interactive;
+  @include focus-ring;
+  @include border-radius;
+  @include elevation(1);
+
+  background-color: var(--vendemas-primary);
+  color: var(--vendemas-primary-on);
+  border: none;
+  padding: $vendemas-spacing-sm $vendemas-spacing-lg;
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    @include elevation(2);
+    background-color: var(--vendemas-primary);
+    opacity: 0.9;
+  }
+
+  &:active {
+    @include elevation(1);
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Secondary and Outline variants also implemented
+```
+
+### Theme System Integration
+
+#### CSS Custom Properties for Theme Switching
+
+```scss
+:root {
+  // Light theme (default)
+  --vendemas-primary: #{$vendemas-light-primary};
+  --vendemas-primary-on: #{$vendemas-light-primary-on};
+  --vendemas-secondary: #{$vendemas-light-secondary};
+  --vendemas-secondary-on: #{$vendemas-light-secondary-on};
+  --vendemas-tertiary: #{$vendemas-light-tertiary};
+  --vendemas-tertiary-on: #{$vendemas-light-tertiary-on};
+  --vendemas-error: #{$vendemas-light-error};
+  --vendemas-error-on: #{$vendemas-light-error-on};
+
+  --vendemas-surface: #{$vendemas-light-surface};
+  --vendemas-surface-variant: #{$vendemas-light-surface-variant};
+  --vendemas-on-surface: #{$vendemas-light-on-surface};
+  --vendemas-on-surface-variant: #{$vendemas-light-on-surface-variant};
+  --vendemas-background: #{$vendemas-light-background};
+  --vendemas-on-background: #{$vendemas-light-on-background};
+  --vendemas-outline: #{$vendemas-light-outline};
+  --vendemas-outline-variant: #{$vendemas-light-outline-variant};
+
+  --vendemas-state-hover: #{$vendemas-light-state-hover};
+  --vendemas-state-focus: #{$vendemas-light-state-focus};
+  --vendemas-state-selected: #{$vendemas-light-state-selected};
+  --vendemas-state-activated: #{$vendemas-light-state-activated};
+  --vendemas-state-dragged: #{$vendemas-light-state-dragged};
+
+  --vendemas-shadow: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-1: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-2: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-3: #{$vendemas-light-shadow};
+}
+
+.dark-theme {
+  // Dark theme variables
+  --vendemas-primary: #{$vendemas-dark-primary};
+  --vendemas-primary-on: #{$vendemas-dark-primary-on};
+  // ... all other dark theme variables
+}
+```
+
+### Usage Patterns
+
+#### In Angular Applications (`vendemas-caja-web`)
+
+```scss
+// styles.scss
+@use '@vendemas/shared-styles';
+
+// Component-specific styles
+.pos-component {
+  @include heading(2);
+  @include flex-center;
+  padding: $vendemas-spacing-lg;
+  background-color: var(--vendemas-surface);
+  color: var(--vendemas-on-surface);
+}
+```
+
+#### In Next.js Applications (`vendemas-landing-web`)
+
+```scss
+// globals.css
+@use '@vendemas/shared-styles/foundation';
+@use '@vendemas/shared-styles/components';
+
+.hero-section {
+  @include heading(1);
+  @include elevation(3);
+  padding: $vendemas-spacing-2xl;
+  background-color: var(--vendemas-primary);
+  color: var(--vendemas-primary-on);
+}
+```
+
+#### Component Usage Examples
+
+```html
+<!-- Using design system classes -->
+<button class="vendemas-btn-primary">Primary Action</button>
+<button class="vendemas-btn-secondary">Secondary Action</button>
+<button class="vendemas-btn-outline">Outline Action</button>
+
+<!-- Using semantic design tokens -->
+<div class="bg-success text-success-on p-4 rounded-lg">
+  ✓ Success message using semantic tokens
+</div>
+
+<div class="bg-warning text-warning-on p-4 rounded-lg">
+  ⚠️ Warning message using semantic tokens
+</div>
+
+<div class="bg-error text-error-on p-4 rounded-lg">
+  ❌ Error message using semantic tokens
+</div>
+```
+
+### Integration with Existing Theme System
+
+The design system seamlessly integrates with the existing Angular Material 3 theme system:
+
+```scss
+// In vendemas-caja-web/src/styles.scss
+/* VendeMás Design System */
+@use '@vendemas/shared-styles';
+
+/* Angular Material 3 Theme System */
+@use './theme/theme-styles.scss';
+```
+
+This provides:
+
+- **Foundation**: Design tokens and mixins from the shared system
+- **Components**: Shared UI components across all apps
+- **Themes**: Material Design 3 integration with light/dark support
+- **Accessibility**: Built-in accessibility features
+- **Responsive**: Mobile-first responsive design
+
+### Quality Assurance Results
+
+- ✅ **Build**: Production build successful with design system integration
+- ✅ **Linting**: All SCSS files pass linting standards
+- ✅ **Architecture**: Layered structure with proper dependencies
+- ✅ **Documentation**: Comprehensive README and usage examples
+- ✅ **Integration**: Seamless integration with existing Angular Material theme
+- ✅ **Accessibility**: Built-in accessibility mixins and features
+- ✅ **Responsive**: Mobile-first responsive design patterns
+
+### Development Commands
+
+```bash
+# Lint design system
+nx lint vendemas-shared-styles
+
+# Test design system
+nx test vendemas-shared-styles
+
+# Build app with design system
+nx build vendemas-caja-web
+
+# Serve app with design system
+nx serve vendemas-caja-web
+```
+
+### Benefits Achieved
+
+1. **Consistency**: Unified design language across all VendeMás applications
+2. **Maintainability**: Single source of truth for all design decisions
+3. **Scalability**: Easy to add new apps that inherit the same design system
+4. **Performance**: Efficient CSS with semantic tokens and minimal overhead
+5. **Accessibility**: Built-in accessibility features and compliance
+6. **Developer Experience**: Clear organization and easy-to-use mixins
+7. **Product Alignment**: Structure directly maps to business domains
+
+### Future Enhancements
+
+#### 1. Component Library Expansion
+
+- Form components (inputs, selects, checkboxes)
+- Navigation components (menus, breadcrumbs, pagination)
+- Feedback components (alerts, notifications, loading states)
+- Data display components (tables, lists, cards)
+
+#### 2. Domain-Specific Styles
+
+- **Commerce Layer**: Payment forms, inventory management, shopping cart
+- **Vendor Layer**: Dashboard analytics, business insights, reporting
+- **Location Layer**: Map components, geolocation services, search
+- **Mobile Layer**: Touch interactions, offline states, progressive enhancement
+
+#### 3. Advanced Features
+
+- CSS-in-JS integration for dynamic theming
+- Design token validation and testing
+- Automated accessibility testing
+- Performance monitoring and optimization
+
+### Design System Rules (Added to cursor.md)
+
+The following rules have been added to `cursor.md` to ensure consistent usage:
+
+1. **NEVER use hardcoded colors, fonts, or spacing values** - Always use design tokens
+2. **ALWAYS import the design system** - Use `@use '@vendemas/shared-styles';`
+3. **Use semantic mixins** - Leverage `@include heading(1)`, `@include flex-center`, etc.
+4. **Follow the layer organization** - Add new styles to appropriate layers
+5. **Maintain accessibility** - Use `@include focus-ring`, `@include reduced-motion`
+6. **Mobile-first approach** - Write mobile styles first, then enhance
+
+This implementation serves as a **production-ready foundation** for consistent styling across the entire VendeMás product ecosystem, demonstrating enterprise-grade design system architecture and maintainability standards.
 
 ## Next Steps
 

@@ -1,0 +1,115 @@
+// =============================================================================
+// VendeMás Design System - Foundation Variables
+// =============================================================================
+
+// Color Palette - Material Design 3
+$vendemas-primary: #4caf50;
+$vendemas-primary-on: #000000;
+$vendemas-secondary: #1e3a5f;
+$vendemas-secondary-on: #ffffff;
+$vendemas-tertiary: #f4b942;
+$vendemas-tertiary-on: #000000;
+$vendemas-error: #c23b4b;
+$vendemas-error-on: #ffffff;
+
+// Neutral Colors
+$vendemas-neutral-50: #fafafa;
+$vendemas-neutral-100: #f5f5f5;
+$vendemas-neutral-200: #eeeeee;
+$vendemas-neutral-300: #e0e0e0;
+$vendemas-neutral-400: #bdbdbd;
+$vendemas-neutral-500: #9e9e9e;
+$vendemas-neutral-600: #757575;
+$vendemas-neutral-700: #616161;
+$vendemas-neutral-800: #424242;
+$vendemas-neutral-900: #212121;
+
+// Surface Colors
+$vendemas-surface: #ffffff;
+$vendemas-surface-variant: #f5f5f5;
+$vendemas-on-surface: rgba(0, 0, 0, 0.87);
+$vendemas-on-surface-variant: rgba(0, 0, 0, 0.6);
+$vendemas-background: #ffffff;
+$vendemas-on-background: rgba(0, 0, 0, 0.87);
+
+// Outline Colors
+$vendemas-outline: rgba(0, 0, 0, 0.12);
+$vendemas-outline-variant: rgba(0, 0, 0, 0.08);
+
+// Shadow Colors
+$vendemas-shadow: rgba(0, 0, 0, 0.12);
+$vendemas-shadow-elevation-1: rgba(0, 0, 0, 0.12);
+$vendemas-shadow-elevation-2: rgba(0, 0, 0, 0.16);
+$vendemas-shadow-elevation-3: rgba(0, 0, 0, 0.2);
+
+// State Colors
+$vendemas-state-hover: rgba(0, 0, 0, 0.04);
+$vendemas-state-focus: rgba(76, 175, 80, 0.12);
+$vendemas-state-selected: rgba(76, 175, 80, 0.08);
+$vendemas-state-activated: rgba(76, 175, 80, 0.12);
+$vendemas-state-dragged: rgba(0, 0, 0, 0.08);
+
+// Typography
+$vendemas-font-family-body:
+  'Inter',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$vendemas-font-family-display:
+  'Montserrat',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$vendemas-font-weight-normal: 400;
+$vendemas-font-weight-medium: 500;
+$vendemas-font-weight-semibold: 600;
+$vendemas-font-weight-bold: 700;
+
+// Font Sizes
+$vendemas-font-size-xs: 0.75rem; // 12px
+$vendemas-font-size-sm: 0.875rem; // 14px
+$vendemas-font-size-base: 1rem; // 16px
+$vendemas-font-size-lg: 1.125rem; // 18px
+$vendemas-font-size-xl: 1.25rem; // 20px
+$vendemas-font-size-2xl: 1.5rem; // 24px
+$vendemas-font-size-3xl: 1.875rem; // 30px
+$vendemas-font-size-4xl: 2.25rem; // 36px
+
+// Line Heights
+$vendemas-line-height-tight: 1.25;
+$vendemas-line-height-normal: 1.5;
+$vendemas-line-height-relaxed: 1.75;
+
+// Spacing Scale
+$vendemas-spacing-xs: 0.25rem; // 4px
+$vendemas-spacing-sm: 0.5rem; // 8px
+$vendemas-spacing-md: 1rem; // 16px
+$vendemas-spacing-lg: 1.5rem; // 24px
+$vendemas-spacing-xl: 2rem; // 32px
+$vendemas-spacing-2xl: 3rem; // 48px
+$vendemas-spacing-3xl: 4rem; // 64px
+
+// Border Radius
+$vendemas-radius-sm: 0.25rem; // 4px
+$vendemas-radius-md: 0.5rem; // 8px
+$vendemas-radius-lg: 0.75rem; // 12px
+$vendemas-radius-xl: 1rem; // 16px
+$vendemas-radius-full: 9999px; // Full rounded
+
+// Transitions
+$vendemas-transition-fast: 150ms ease-in-out;
+$vendemas-transition-normal: 250ms ease-in-out;
+$vendemas-transition-slow: 350ms ease-in-out;
+
+// Z-Index Scale
+$vendemas-z-dropdown: 1000;
+$vendemas-z-sticky: 1020;
+$vendemas-z-fixed: 1030;
+$vendemas-z-modal-backdrop: 1040;
+$vendemas-z-modal: 1050;
+$vendemas-z-popover: 1060;
+$vendemas-z-tooltip: 1070;
