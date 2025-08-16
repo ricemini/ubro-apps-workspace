@@ -1,26 +1,31 @@
 {
-  "name": "vendemas-caja-web",
+  "name": "vendemas-caja-mobile",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/vendemas-caja-web/src",
+  "sourceRoot": "apps/vendemas-caja-mobile/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/vendemas-caja-web",
-        "browser": "apps/vendemas-caja-web/src/main.ts",
-        "tsConfig": "apps/vendemas-caja-web/tsconfig.app.json",
+        "outputPath": "dist/vendemas-caja-mobile",
+        "browser": "apps/vendemas-caja-mobile/src/main.ts",
+        "tsConfig": "apps/vendemas-caja-mobile/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/vendemas-caja-web/public"
+            "input": "apps/vendemas-caja-mobile/public"
+          },
+          {
+            "glob": "index.html",
+            "input": "apps/vendemas-caja-mobile/src",
+            "output": "."
           }
         ],
-        "styles": ["apps/vendemas-caja-web/src/styles.scss"]
+        "styles": ["apps/vendemas-caja-mobile/src/styles.scss"]
       },
       "configurations": {
         "production": {
@@ -51,10 +56,10 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "vendemas-caja-web:build:production"
+          "buildTarget": "vendemas-caja-mobile:build:production"
         },
         "development": {
-          "buildTarget": "vendemas-caja-web:build:development"
+          "buildTarget": "vendemas-caja-mobile:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -62,7 +67,7 @@
     "extract-i18n": {
       "executor": "@angular/build:extract-i18n",
       "options": {
-        "buildTarget": "vendemas-caja-web:build"
+        "buildTarget": "vendemas-caja-mobile:build"
       }
     },
     "lint": {
@@ -72,16 +77,16 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../coverage/vendemas-caja-web"
+        "reportsDirectory": "../coverage/vendemas-caja-mobile"
       }
     },
     "serve-static": {
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "vendemas-caja-web:build",
+        "buildTarget": "vendemas-caja-mobile:build",
         "port": 4200,
-        "staticFilePath": "dist/vendemas-caja-web/browser",
+        "staticFilePath": "dist/vendemas-caja-mobile/browser",
         "spa": true
       }
     }

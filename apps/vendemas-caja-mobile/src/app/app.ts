@@ -21,5 +21,5 @@ import { ThemeDemoComponent } from '../theme/theme-demo.component';
   standalone: true,
 })
 export class App {
-  protected title = signal('vendemas-caja-web');
+  protected title = signal('vendemas-caja-mobile');
 }

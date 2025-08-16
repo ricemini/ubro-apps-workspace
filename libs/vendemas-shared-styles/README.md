@@ -6,7 +6,7 @@ A comprehensive design system for the VendeMás product ecosystem, providing con
 
 The VendeMás Shared Styles library is a centralized design system that ensures consistency across:
 
-- **vendemas-caja-web** (Angular POS system)
+- **vendemas-caja-mobile** (Angular POS system)
 - **vendemas-landing-web** (Next.js marketing site)
 - **Future mobile app** (React Native/Flutter)
 
@@ -188,7 +188,7 @@ Built-in accessibility features:
 
 ## 🔄 **Usage in Apps**
 
-### **vendemas-caja-web (Angular)**
+### **vendemas-caja-mobile (Angular)**
 
 ```scss
 // styles.scss

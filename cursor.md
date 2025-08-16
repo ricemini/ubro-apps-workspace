@@ -36,7 +36,7 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 
 The VendeMás product has a centralized design system located at `libs/vendemas-shared-styles/` that **MUST** be used for all styling decisions across:
 
-- **vendemas-caja-web** (Angular POS system)
+- **vendemas-caja-mobile** (Angular POS system)
 - **vendemas-landing-web** (Next.js marketing site)
 - **Future mobile app** (React Native/Flutter)
 
