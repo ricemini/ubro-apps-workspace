@@ -68,7 +68,7 @@ Vendemás (system name: Vendemas) is a mobile-first sales toolkit built with Ang
 
 ```
 vendemas-caja-mobile     # Staff mobile app (Ionic/Capacitor)
-vendemas-caja-web        # Staff web app (Angular v20 Zoneless) - IMPLEMENTED
+vendemas-caja-mobile        # Staff mobile app (Angular v20 Zoneless) - IMPLEMENTED
 vendemas-admin-web       # Admin web dashboard (Angular PWA)
 vendemas-website         # Marketing website (Next.js SSR)
 vendemas-landing-web     # Landing/marketing website (Next.js SSR) - IMPLEMENTED
@@ -94,7 +94,7 @@ vendemas-shared-i18n         # Internationalization - IMPLEMENTED
 ```
 apps/
 ├── vendemas-caja-mobile/    # Staff mobile app (Ionic/Capacitor)
-├── vendemas-caja-web/       # Staff web app (Angular v20 Zoneless) - IMPLEMENTED
+├── vendemas-caja-mobile/       # Staff mobile app (Angular v20 Zoneless) - IMPLEMENTED
 ├── vendemas-admin-web/      # Admin web dashboard (Angular PWA)
 ├── vendemas-website/        # Marketing website (Next.js SSR)
 └── vendemas-landing-web/    # Landing/marketing website (Next.js SSR) - IMPLEMENTED
@@ -135,7 +135,7 @@ DEFAULT_NODE_VERSION: 20
 
 # App naming convention: product + role + platform
 CAJA_APP_NAME: vendemas-caja-mobile
-CAJA_WEB_APP_NAME: vendemas-caja-web
+CAJA_MOBILE_APP_NAME: vendemas-caja-mobile
 ADMIN_APP_NAME: vendemas-admin-web
 WEBSITE_APP_NAME: vendemas-website
 LANDING_APP_NAME: vendemas-landing-web
@@ -1399,7 +1399,7 @@ This implementation serves as a **production-ready template** for future Next.js
 
 ### Overview
 
-Successfully implemented `vendemas-caja-web` with modern Angular v20 zoneless architecture, demonstrating the monorepo's capability to handle enterprise-grade Angular applications with standalone components and signal-based state management.
+Successfully implemented `vendemas-caja-mobile` with modern Angular v20 zoneless architecture, demonstrating the monorepo's capability to handle enterprise-grade Angular applications with standalone components and signal-based state management.
 
 ### Key Features Implemented
 
@@ -1428,7 +1428,7 @@ export const appConfig: ApplicationConfig = {
   standalone: true,
 })
 export class App {
-  protected title = signal('vendemas-caja-web');
+  protected title = signal('vendemas-caja-mobile');
 }
 ```
 
@@ -1526,7 +1526,7 @@ export class CounterComponent {
 ### File Structure
 
 ```
-apps/vendemas-caja-web/
+apps/vendemas-caja-mobile/
 ├── src/
 │   ├── app/
 │   │   ├── components/
@@ -1554,16 +1554,16 @@ apps/vendemas-caja-web/
 
 ```bash
 # Development
-npx nx serve vendemas-caja-web --port 4200
+npx nx serve vendemas-caja-mobile --port 4200
 
 # Build
-npx nx build vendemas-caja-web
+npx nx build vendemas-caja-mobile
 
 # Test
-npx nx test vendemas-caja-web
+npx nx test vendemas-caja-mobile
 
 # Lint
-npx nx lint vendemas-caja-web
+npx nx lint vendemas-caja-mobile
 ```
 
 ### Live Demo
@@ -1605,7 +1605,7 @@ This implementation serves as a **production-ready template** for future Angular
 
 ### Overview
 
-Successfully implemented Tailwind CSS v3 as the unified styling framework across both web applications (`vendemas-caja-web` and `vendemas-landing-web`), providing a consistent, utility-first CSS approach for rapid development and maintainable styling.
+Successfully implemented Tailwind CSS v3 as the unified styling framework across both web applications (`vendemas-caja-mobile` and `vendemas-landing-web`), providing a consistent, utility-first CSS approach for rapid development and maintainable styling.
 
 ### Key Features Implemented
 
@@ -1648,7 +1648,7 @@ module.exports = {
 #### 4. App-Specific Configurations
 
 ```javascript
-// apps/vendemas-caja-web/postcss.config.cjs
+// apps/vendemas-caja-mobile/postcss.config.cjs
 const { join } = require('path');
 
 module.exports = {
@@ -1733,7 +1733,7 @@ template: `
 ├── postcss.config.js                    # Root PostCSS configuration
 ├── package.json                         # Root dependencies (tailwindcss, postcss, autoprefixer)
 ├── apps/
-│   ├── vendemas-caja-web/
+│   ├── vendemas-caja-mobile/
 │   │   ├── postcss.config.js            # Angular PostCSS config
 │   │   ├── tailwind.config.js           # Angular Tailwind config
 │   │   └── src/styles.scss              # Tailwind directives
@@ -1832,7 +1832,7 @@ This implementation serves as a **production-ready template** for Tailwind CSS i
 
 ### Overview
 
-Successfully implemented a comprehensive Angular Material 3 theme system for `vendemas-caja-web` with semantic design tokens, full accessibility compliance (WCAG AA/AAA), and seamless Tailwind CSS integration. This system provides a production-ready foundation for consistent theming across all Angular applications in the monorepo.
+Successfully implemented a comprehensive Angular Material 3 theme system for `vendemas-caja-mobile` with semantic design tokens, full accessibility compliance (WCAG AA/AAA), and seamless Tailwind CSS integration. This system provides a production-ready foundation for consistent theming across all Angular applications in the monorepo.
 
 ### Key Features Implemented
 
@@ -2232,16 +2232,16 @@ readonly themeMode = this.themeService.themeMode;
 
 ```bash
 # Development
-npx nx serve vendemas-caja-web --port 4200
+npx nx serve vendemas-caja-mobile --port 4200
 
 # Build
-npx nx build vendemas-caja-web
+npx nx build vendemas-caja-mobile
 
 # Test
-npx nx test vendemas-caja-web
+npx nx test vendemas-caja-mobile
 
 # Lint
-npx nx lint vendemas-caja-web
+npx nx lint vendemas-caja-mobile
 ```
 
 ### Live Demo
@@ -2287,7 +2287,7 @@ This implementation serves as a **production-ready template** for Angular Materi
 
 ### Overview
 
-Successfully implemented a comprehensive design system for the VendeMás product ecosystem, providing centralized styling across all applications. The design system follows a layered architecture approach with semantic design tokens, ensuring consistency, maintainability, and accessibility across `vendemas-caja-web`, `vendemas-landing-web`, and future mobile applications.
+Successfully implemented a comprehensive design system for the VendeMás product ecosystem, providing centralized styling across all applications. The design system follows a layered architecture approach with semantic design tokens, ensuring consistency, maintainability, and accessibility across `vendemas-caja-mobile`, `vendemas-landing-web`, and future mobile applications.
 
 ### Architecture & Structure
 
@@ -2594,7 +2594,7 @@ $vendemas-spacing-3xl: 4rem; // 64px
 
 ### Usage Patterns
 
-#### In Angular Applications (`vendemas-caja-web`)
+#### In Angular Applications (`vendemas-caja-mobile`)
 
 ```scss
 // styles.scss
@@ -2653,7 +2653,7 @@ $vendemas-spacing-3xl: 4rem; // 64px
 The design system seamlessly integrates with the existing Angular Material 3 theme system:
 
 ```scss
-// In vendemas-caja-web/src/styles.scss
+// In vendemas-caja-mobile/src/styles.scss
 /* VendeMás Design System */
 @use '@vendemas/shared-styles';
 
@@ -2689,10 +2689,10 @@ nx lint vendemas-shared-styles
 nx test vendemas-shared-styles
 
 # Build app with design system
-nx build vendemas-caja-web
+nx build vendemas-caja-mobile
 
 # Serve app with design system
-nx serve vendemas-caja-web
+nx serve vendemas-caja-mobile
 ```
 
 ### Benefits Achieved

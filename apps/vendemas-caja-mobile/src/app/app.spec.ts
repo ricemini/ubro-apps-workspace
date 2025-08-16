@@ -15,7 +15,7 @@ describe('App', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as unknown as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome vendemas-caja-web'
+      'Welcome vendemas-caja-mobile'
     );
   });
 });
