@@ -1,0 +1,134 @@
+// =============================================================================
+// VendeMás Design System - Button Components
+// =============================================================================
+
+// Primary Button
+.vendemas-btn-primary {
+  @include heading(6);
+  @include interactive;
+  @include focus-ring;
+  @include border-radius;
+  @include elevation(1);
+
+  background-color: var(--vendemas-primary);
+  color: var(--vendemas-primary-on);
+  border: none;
+  padding: $vendemas-spacing-sm $vendemas-spacing-lg;
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    @include elevation(2);
+    background-color: var(--vendemas-primary);
+    opacity: 0.9;
+  }
+
+  &:active {
+    @include elevation(1);
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Secondary Button
+.vendemas-btn-secondary {
+  @include heading(6);
+  @include interactive;
+  @include focus-ring($vendemas-secondary);
+  @include border-radius;
+  @include elevation(1);
+
+  background-color: var(--vendemas-secondary);
+  color: var(--vendemas-secondary-on);
+  border: none;
+  padding: $vendemas-spacing-sm $vendemas-spacing-lg;
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    @include elevation(2);
+    opacity: 0.9;
+  }
+
+  &:active {
+    @include elevation(1);
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Outline Button
+.vendemas-btn-outline {
+  @include heading(6);
+  @include interactive;
+  @include focus-ring;
+  @include border-radius;
+
+  background-color: transparent;
+  color: var(--vendemas-primary);
+  border: 2px solid var(--vendemas-primary);
+  padding: $vendemas-spacing-sm $vendemas-spacing-lg;
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    background-color: var(--vendemas-primary);
+    color: var(--vendemas-primary-on);
+    @include elevation(1);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Button Sizes
+.vendemas-btn-sm {
+  padding: $vendemas-spacing-xs $vendemas-spacing-md;
+  @include text-style($vendemas-font-size-sm);
+}
+
+.vendemas-btn-lg {
+  padding: $vendemas-spacing-md $vendemas-spacing-xl;
+  @include text-style($vendemas-font-size-lg);
+}
+
+// Button Group
+.vendemas-btn-group {
+  @include flex-start;
+  gap: $vendemas-spacing-sm;
+
+  .vendemas-btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: $vendemas-radius-md;
+      border-bottom-left-radius: $vendemas-radius-md;
+    }
+
+    &:last-child {
+      border-top-right-radius: $vendemas-radius-md;
+      border-bottom-right-radius: $vendemas-radius-md;
+    }
+  }
+}
