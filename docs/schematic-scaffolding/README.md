@@ -43,6 +43,10 @@ This folder contains the comprehensive documentation for the VendeMás schematic
 - **[API Integration](./17-api-integration.md)** - Backend service integration
 - **[Authentication](./18-authentication.md)** - Auth system setup
 
+### **Development Experience**
+
+- **[Import Path Configuration](./19-import-path-configuration.md)** - Short @ imports and path aliases
+
 ## 🎯 Usage Guidelines
 
 ### **For Developers**
