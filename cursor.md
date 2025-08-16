@@ -37,6 +37,7 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 The VendeMás product has a centralized design system located at `libs/vendemas-shared-styles/` that **MUST** be used for all styling decisions across:
 
 - **vendemas-caja-mobile** (Angular POS system)
+- **vendemas-negocio-web** (Angular Business Dashboard)
 - **vendemas-landing-web** (Next.js marketing site)
 - **Future mobile app** (React Native/Flutter)
 
@@ -152,6 +153,7 @@ vendemas-shared-styles/
 
 ```
 vendemas-caja-mobile     # Staff mobile app (Ionic/Capacitor)
+vendemas-negocio-web     # Business dashboard (Angular PWA)
 vendemas-admin-web       # Admin web dashboard (Angular PWA)
 vendemas-website         # Marketing website (Next.js SSR)
 ```
@@ -172,6 +174,7 @@ vendemas-shared-constants    # Shared constants
 ```
 apps/
 ├── vendemas-caja-mobile/    # Staff mobile app (Ionic/Capacitor)
+├── vendemas-negocio-web/    # Business dashboard (Angular PWA)
 ├── vendemas-admin-web/      # Admin web dashboard (Angular PWA)
 └── vendemas-website/        # Marketing website (Next.js SSR)
 ```
@@ -196,6 +199,7 @@ import { Button } from '@vendemas/shared-ui';
 
 // App-specific imports
 import { CajaService } from '@vendemas/caja-mobile';
+import { NegocioService } from '@vendemas/negocio-web';
 import { AdminService } from '@vendemas/admin-web';
 import { WebsiteService } from '@vendemas/website';
 ````
