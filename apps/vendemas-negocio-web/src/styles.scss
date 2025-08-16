@@ -1,0 +1,12 @@
+/* VendeMás Design System */
+/* Note: Shared styles temporarily disabled during setup */
+/* @use '@vendemas/shared-styles'; */
+
+/* Angular Material 3 Theme System */
+@use './theme/theme-styles.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add global styles to this file, and also import other style files */

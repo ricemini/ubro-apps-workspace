@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="app.title" datatype="html">
+        <source>VendeMás Negocio</source>
+        <target>VendeMás Negocio</target>
+      </trans-unit>
+      <trans-unit id="app.welcome" datatype="html">
+        <source>Welcome to VendeMás Business Dashboard</source>
+        <target>Welcome to VendeMás Business Dashboard</target>
+      </trans-unit>
+      <trans-unit id="app.dashboard" datatype="html">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="app.analytics" datatype="html">
+        <source>Analytics</source>
+        <target>Analytics</target>
+      </trans-unit>
+      <trans-unit id="app.inventory" datatype="html">
+        <source>Inventory</source>
+        <target>Inventory</target>
+      </trans-unit>
+      <trans-unit id="app.sales" datatype="html">
+        <source>Sales</source>
+        <target>Sales</target>
+      </trans-unit>
+      <trans-unit id="app.customers" datatype="html">
+        <source>Customers</source>
+        <target>Customers</target>
+      </trans-unit>
+      <trans-unit id="app.settings" datatype="html">
+        <source>Settings</source>
+        <target>Settings</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
