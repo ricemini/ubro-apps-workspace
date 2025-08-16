@@ -7,7 +7,7 @@ import { PosService } from '../services/pos.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pos.component.html',
-  styleUrl: './pos.component.scss'
+  styleUrl: './pos.component.scss',
 })
 export class PosComponent {
   protected readonly posService = inject(PosService);

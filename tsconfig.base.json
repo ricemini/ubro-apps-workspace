@@ -17,7 +17,6 @@
       "@vendemas/*": ["libs/*"],
       "@vendemas/admin-web": ["apps/vendemas-admin-web/src/index.ts"],
       "@vendemas/caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
-      "@vendemas/caja-web": ["apps/vendemas-caja-web/src/index.ts"],
       "@vendemas/landing-web": ["apps/vendemas-landing-web/src/index.ts"],
       "@vendemas/shared-api": ["libs/vendemas-shared-api/src/index.ts"],
       "@vendemas/shared-auth": ["libs/vendemas-shared-auth/src/index.ts"],
