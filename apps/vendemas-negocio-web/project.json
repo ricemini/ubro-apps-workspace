@@ -4,7 +4,13 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/vendemas-negocio-web/src",
-  "tags": [],
+  "tags": [
+    "scope:app",
+    "type:app",
+    "platform:web",
+    "role:negocio",
+    "framework:angular"
+  ],
   "targets": {
     "build": {
       "executor": "@angular/build:application",

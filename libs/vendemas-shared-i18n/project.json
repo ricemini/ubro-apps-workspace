@@ -1,14 +1,14 @@
 {
-  "name": "vendemas-shared-styles",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "vendemas-shared-i18n",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/vendemas-shared-styles/src",
+  "sourceRoot": "libs/vendemas-shared-i18n/src",
   "prefix": "vendemas",
   "tags": [
     "scope:shared",
     "type:lib",
-    "category:styles",
-    "domain:design-system",
+    "category:i18n",
+    "domain:internationalization",
     "framework:agnostic"
   ],
   "targets": {
@@ -16,10 +16,10 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/vendemas-shared-styles",
-        "main": "libs/vendemas-shared-styles/src/index.ts",
-        "tsConfig": "libs/vendemas-shared-styles/tsconfig.lib.json",
-        "assets": ["libs/vendemas-shared-styles/*.md"]
+        "outputPath": "dist/libs/vendemas-shared-i18n",
+        "main": "libs/vendemas-shared-i18n/src/index.ts",
+        "tsConfig": "libs/vendemas-shared-i18n/tsconfig.lib.json",
+        "assets": ["libs/vendemas-shared-i18n/*.md"]
       }
     },
     "lint": {
@@ -31,7 +31,7 @@
       "outputs": ["{options.reportsDirectory}"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/vendemas-shared-styles"
+        "reportsDirectory": "../../coverage/libs/vendemas-shared-i18n"
       }
     }
   }

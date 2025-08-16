@@ -4,7 +4,13 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/vendemas-caja-mobile/src",
-  "tags": [],
+  "tags": [
+    "scope:app",
+    "type:app",
+    "platform:mobile",
+    "role:caja",
+    "framework:angular"
+  ],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
