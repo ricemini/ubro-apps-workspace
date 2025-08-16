@@ -13,7 +13,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Vendemás Design System Colors
+        // Vendemás Design System Colors (Material Design 3 compatible)
         primary: {
           50: 'rgb(76 175 80 / 0.05)',
           100: 'rgb(76 175 80 / 0.1)',
@@ -70,6 +70,45 @@ module.exports = {
           DEFAULT: '#C23B4B',
           on: '#FFFFFF',
         },
+        // Material Design 3 additional colors
+        surface: {
+          DEFAULT: 'var(--vendemas-surface)',
+          variant: 'var(--vendemas-surface-variant)',
+          on: 'var(--vendemas-on-surface)',
+          'on-variant': 'var(--vendemas-on-surface-variant)',
+        },
+        background: {
+          DEFAULT: 'var(--vendemas-background)',
+          on: 'var(--vendemas-on-background)',
+        },
+        outline: {
+          DEFAULT: 'var(--vendemas-outline)',
+          variant: 'var(--vendemas-outline-variant)',
+        },
+        state: {
+          hover: 'var(--vendemas-state-hover)',
+          focus: 'var(--vendemas-state-focus)',
+          selected: 'var(--vendemas-state-selected)',
+          activated: 'var(--vendemas-state-activated)',
+          dragged: 'var(--vendemas-state-dragged)',
+        },
+        shadow: {
+          DEFAULT: 'var(--vendemas-shadow)',
+          'elevation-1': 'var(--vendemas-shadow-elevation-1)',
+          'elevation-2': 'var(--vendemas-shadow-elevation-2)',
+          'elevation-3': 'var(--vendemas-shadow-elevation-3)',
+        },
+        // Semantic design tokens
+        semantic: {
+          success: 'var(--vendemas-primary)',
+          'success-on': 'var(--vendemas-primary-on)',
+          warning: 'var(--vendemas-tertiary)',
+          'warning-on': 'var(--vendemas-tertiary-on)',
+          error: 'var(--vendemas-error)',
+          'error-on': 'var(--vendemas-error-on)',
+          info: 'var(--vendemas-secondary)',
+          'info-on': 'var(--vendemas-secondary-on)',
+        },
       },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
@@ -118,6 +157,80 @@ module.exports = {
         '.text-display': {
           fontFamily: theme('fontFamily.display'),
           fontWeight: theme('fontWeight.bold'),
+        },
+        // Material Design 3 utilities
+        '.elevation-1': {
+          boxShadow: theme('boxShadow.shadow.elevation-1'),
+        },
+        '.elevation-2': {
+          boxShadow: theme('boxShadow.shadow.elevation-2'),
+        },
+        '.elevation-3': {
+          boxShadow: theme('boxShadow.shadow.elevation-3'),
+        },
+        '.surface': {
+          backgroundColor: theme('colors.surface.DEFAULT'),
+          color: theme('colors.surface.on'),
+        },
+        '.surface-variant': {
+          backgroundColor: theme('colors.surface.variant'),
+          color: theme('colors.surface.on-variant'),
+        },
+        '.state-hover': {
+          backgroundColor: theme('colors.state.hover'),
+        },
+        '.state-focus': {
+          backgroundColor: theme('colors.state.focus'),
+        },
+        '.state-selected': {
+          backgroundColor: theme('colors.state.selected'),
+        },
+        '.state-activated': {
+          backgroundColor: theme('colors.state.activated'),
+        },
+        '.outline': {
+          borderColor: theme('colors.outline.DEFAULT'),
+        },
+        '.outline-variant': {
+          borderColor: theme('colors.outline.variant'),
+        },
+        // Semantic design token utilities
+        '.bg-success': {
+          backgroundColor: theme('colors.semantic.success'),
+        },
+        '.text-success-on': {
+          color: theme('colors.semantic.success-on'),
+        },
+        '.bg-warning': {
+          backgroundColor: theme('colors.semantic.warning'),
+        },
+        '.text-warning-on': {
+          color: theme('colors.semantic.warning-on'),
+        },
+        '.bg-error': {
+          backgroundColor: theme('colors.semantic.error'),
+        },
+        '.text-error-on': {
+          color: theme('colors.semantic.error-on'),
+        },
+        '.bg-info': {
+          backgroundColor: theme('colors.semantic.info'),
+        },
+        '.text-info-on': {
+          color: theme('colors.semantic.info-on'),
+        },
+        // Interactive state utilities
+        '.interactive': {
+          cursor: 'pointer',
+          transition: 'all 0.2s ease-in-out',
+        },
+        '.interactive:hover': {
+          transform: 'translateY(-1px)',
+          boxShadow: theme('boxShadow.shadow.elevation-2'),
+        },
+        '.interactive:active': {
+          transform: 'translateY(0)',
+          boxShadow: theme('boxShadow.shadow.elevation-1'),
         },
       };
       addUtilities(newUtilities);

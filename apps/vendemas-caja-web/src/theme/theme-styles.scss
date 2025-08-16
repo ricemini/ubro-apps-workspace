@@ -1,0 +1,614 @@
+@use './material-theme' as *;
+
+// Import Material themes
+@use '@angular/material' as mat;
+
+// Apply core Material styles
+@include mat.core();
+
+// CSS Custom Properties for Tailwind integration
+:root {
+  // Light theme colors (default)
+  --vendemas-primary: #{$vendemas-light-primary};
+  --vendemas-primary-on: #{$vendemas-light-primary-on};
+  --vendemas-secondary: #{$vendemas-light-secondary};
+  --vendemas-secondary-on: #{$vendemas-light-secondary-on};
+  --vendemas-tertiary: #{$vendemas-light-tertiary};
+  --vendemas-tertiary-on: #{$vendemas-light-tertiary-on};
+  --vendemas-error: #{$vendemas-light-error};
+  --vendemas-error-on: #{$vendemas-light-error-on};
+
+  // Material Design 3 color tokens
+  --mdc-filled-button-container-color: var(--vendemas-primary);
+  --mdc-filled-button-label-text-color: var(--vendemas-primary-on);
+  --mdc-outlined-button-label-text-color: var(--vendemas-primary);
+  --mdc-outlined-button-outline-color: var(--vendemas-primary);
+  --mdc-text-button-label-text-color: var(--vendemas-primary);
+
+  --mdc-elevated-card-container-color: #ffffff;
+  --mdc-outlined-card-container-color: #ffffff;
+  --mdc-outlined-card-outline-color: rgba(0, 0, 0, 0.12);
+
+  --mdc-text-field-outline-color: rgba(0, 0, 0, 0.38);
+  --mdc-text-field-label-text-color: rgba(0, 0, 0, 0.6);
+  --mdc-text-field-input-text-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-chip-elevated-container-color: rgba(0, 0, 0, 0.08);
+  --mdc-chip-elevated-label-text-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-snackbar-container-color: #323232;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+
+  --mdc-dialog-container-color: #ffffff;
+  --mdc-dialog-headline-color: rgba(0, 0, 0, 0.87);
+  --mdc-dialog-supporting-text-color: rgba(0, 0, 0, 0.6);
+
+  --mdc-menu-container-color: #ffffff;
+  --mdc-menu-item-label-text-color: rgba(0, 0, 0, 0.87);
+  --mdc-menu-item-icon-color: rgba(0, 0, 0, 0.6);
+
+  --mdc-tooltip-container-color: #616161;
+  --mdc-tooltip-supporting-text-color: #ffffff;
+
+  --mdc-ripple-color: rgba(0, 0, 0, 0.12);
+
+  // Surface colors
+  --vendemas-surface: #{$vendemas-light-surface};
+  --vendemas-surface-variant: #{$vendemas-light-surface-variant};
+  --vendemas-on-surface: #{$vendemas-light-on-surface};
+  --vendemas-on-surface-variant: #{$vendemas-light-on-surface-variant};
+
+  // Background colors
+  --vendemas-background: #{$vendemas-light-background};
+  --vendemas-on-background: #{$vendemas-light-on-background};
+
+  // Outline colors
+  --vendemas-outline: #{$vendemas-light-outline};
+  --vendemas-outline-variant: #{$vendemas-light-outline-variant};
+
+  // Shadow colors
+  --vendemas-shadow: #{$vendemas-light-shadow};
+  --vendemas-shadow-elevation-1: 0 1px 3px 1px var(--vendemas-shadow);
+  --vendemas-shadow-elevation-2: 0 2px 6px 2px var(--vendemas-shadow);
+  --vendemas-shadow-elevation-3: 0 4px 8px 3px var(--vendemas-shadow);
+
+  // State colors
+  --vendemas-state-hover: #{$vendemas-light-state-hover};
+  --vendemas-state-focus: #{$vendemas-light-state-focus};
+  --vendemas-state-selected: #{$vendemas-light-state-selected};
+  --vendemas-state-activated: #{$vendemas-light-state-activated};
+  --vendemas-state-dragged: #{$vendemas-light-state-dragged};
+}
+
+// Dark theme
+.dark-theme {
+  // Dark theme colors
+  --vendemas-primary: #{$vendemas-dark-primary};
+  --vendemas-primary-on: #{$vendemas-dark-primary-on};
+  --vendemas-secondary: #{$vendemas-dark-secondary};
+  --vendemas-secondary-on: #{$vendemas-dark-secondary-on};
+  --vendemas-tertiary: #{$vendemas-dark-tertiary};
+  --vendemas-tertiary-on: #{$vendemas-dark-tertiary-on};
+  --vendemas-error: #{$vendemas-dark-error};
+  --vendemas-error-on: #{$vendemas-dark-error-on};
+
+  // Material Design 3 color tokens for dark theme
+  --mdc-filled-button-container-color: var(--vendemas-primary);
+  --mdc-filled-button-label-text-color: var(--vendemas-primary-on);
+  --mdc-outlined-button-label-text-color: var(--vendemas-primary);
+  --mdc-outlined-button-outline-color: var(--vendemas-primary);
+  --mdc-text-button-label-text-color: var(--vendemas-primary);
+
+  --mdc-elevated-card-container-color: #1e1e1e;
+  --mdc-outlined-card-container-color: #1e1e1e;
+  --mdc-outlined-card-outline-color: rgba(255, 255, 255, 0.12);
+
+  --mdc-text-field-outline-color: rgba(255, 255, 255, 0.38);
+  --mdc-text-field-label-text-color: rgba(255, 255, 255, 0.6);
+  --mdc-text-field-input-text-color: rgba(255, 255, 255, 0.87);
+
+  --mdc-chip-elevated-container-color: rgba(255, 255, 255, 0.08);
+  --mdc-chip-elevated-label-text-color: rgba(255, 255, 255, 0.87);
+
+  --mdc-snackbar-container-color: #e0e0e0;
+  --mdc-snackbar-supporting-text-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-dialog-container-color: #1e1e1e;
+  --mdc-dialog-headline-color: rgba(255, 255, 255, 0.87);
+  --mdc-dialog-supporting-text-color: rgba(255, 255, 255, 0.6);
+
+  --mdc-menu-container-color: #1e1e1e;
+  --mdc-menu-item-label-text-color: rgba(255, 255, 255, 0.87);
+  --mdc-menu-item-icon-color: rgba(255, 255, 255, 0.6);
+
+  --mdc-tooltip-container-color: #e0e0e0;
+  --mdc-tooltip-supporting-text-color: rgba(0, 0, 0, 0.87);
+
+  --mdc-ripple-color: rgba(255, 255, 255, 0.12);
+
+  // Surface colors for dark theme
+  --vendemas-surface: #{$vendemas-dark-surface};
+  --vendemas-surface-variant: #{$vendemas-dark-surface-variant};
+  --vendemas-on-surface: #{$vendemas-dark-on-surface};
+  --vendemas-on-surface-variant: #{$vendemas-dark-on-surface-variant};
+
+  // Background colors for dark theme
+  --vendemas-background: #{$vendemas-dark-background};
+  --vendemas-on-background: #{$vendemas-dark-on-background};
+
+  // Outline colors for dark theme
+  --vendemas-outline: #{$vendemas-dark-outline};
+  --vendemas-outline-variant: #{$vendemas-dark-outline-variant};
+
+  // Shadow colors for dark theme
+  --vendemas-shadow: #{$vendemas-dark-shadow};
+  --vendemas-shadow-elevation-1: 0 1px 3px 1px var(--vendemas-shadow);
+  --vendemas-shadow-elevation-2: 0 2px 6px 2px var(--vendemas-shadow);
+  --vendemas-shadow-elevation-3: 0 4px 8px 3px var(--vendemas-shadow);
+
+  // State colors for dark theme
+  --vendemas-state-hover: #{$vendemas-dark-state-hover};
+  --vendemas-state-focus: #{$vendemas-dark-state-focus};
+  --vendemas-state-selected: #{$vendemas-dark-state-selected};
+  --vendemas-state-activated: #{$vendemas-dark-state-activated};
+  --vendemas-state-dragged: #{$vendemas-dark-state-dragged};
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  :root {
+    --vendemas-outline: #000000;
+    --vendemas-outline-variant: #000000;
+    --mdc-outlined-button-outline-color: #000000;
+    --mdc-outlined-card-outline-color: #000000;
+    --mdc-text-field-outline-color: #000000;
+  }
+
+  .dark-theme {
+    --vendemas-outline: #ffffff;
+    --vendemas-outline-variant: #ffffff;
+    --mdc-outlined-button-outline-color: #ffffff;
+    --mdc-outlined-card-outline-color: #ffffff;
+    --mdc-text-field-outline-color: #ffffff;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Focus indicators for accessibility
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-icon-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  &:focus-visible {
+    outline: 2px solid var(--vendemas-primary);
+    outline-offset: 2px;
+  }
+}
+
+.mat-mdc-card {
+  &:focus-visible {
+    outline: 2px solid var(--vendemas-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Custom Material component overrides
+.mat-mdc-card {
+  border-radius: 12px;
+  box-shadow: var(--vendemas-shadow-elevation-1);
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: var(--vendemas-shadow-elevation-2);
+  }
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  border-radius: 20px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.mat-mdc-icon-button {
+  border-radius: 50%;
+}
+
+// Form field styling
+.mat-mdc-form-field {
+  .mat-mdc-form-field-flex {
+    border-radius: 8px;
+  }
+
+  &.mat-focused .mat-mdc-form-field-flex {
+    border-color: var(--vendemas-primary);
+  }
+}
+
+// Snackbar styling
+.mat-mdc-snack-bar-container {
+  border-radius: 8px;
+
+  &.success {
+    --mdc-snackbar-container-color: var(--vendemas-primary);
+    --mdc-snackbar-supporting-text-color: var(--vendemas-primary-on);
+  }
+
+  &.error {
+    --mdc-snackbar-container-color: var(--vendemas-error);
+    --mdc-snackbar-supporting-text-color: var(--vendemas-error-on);
+  }
+
+  &.warning {
+    --mdc-snackbar-container-color: var(--vendemas-tertiary);
+    --mdc-snackbar-supporting-text-color: var(--vendemas-tertiary-on);
+  }
+}
+
+// Dialog styling
+.mat-mdc-dialog-container {
+  border-radius: 16px;
+
+  .mat-mdc-dialog-surface {
+    border-radius: 16px;
+  }
+}
+
+// Menu styling
+.mat-mdc-menu-panel {
+  border-radius: 8px;
+  box-shadow: var(--vendemas-shadow-elevation-2);
+}
+
+// Tooltip styling
+.mat-mdc-tooltip {
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+// Chip styling
+.mat-mdc-chip {
+  border-radius: 16px;
+  font-weight: 500;
+
+  &.mat-mdc-chip-selected {
+    background-color: var(--vendemas-state-selected);
+    color: var(--vendemas-primary);
+  }
+}
+
+// Progress bar styling
+.mat-mdc-progress-bar {
+  border-radius: 4px;
+
+  .mdc-linear-progress__bar-inner {
+    border-radius: 4px;
+  }
+}
+
+// Slider styling
+.mat-mdc-slider {
+  .mdc-slider__thumb {
+    border-radius: 50%;
+  }
+
+  .mdc-slider__track {
+    border-radius: 2px;
+  }
+}
+
+// Checkbox styling
+.mat-mdc-checkbox {
+  .mdc-checkbox__background {
+    border-radius: 2px;
+  }
+}
+
+// Radio button styling
+.mat-mdc-radio-button {
+  .mdc-radio__background {
+    border-radius: 50%;
+  }
+}
+
+// Switch styling
+.mat-mdc-switch {
+  .mdc-switch__track {
+    border-radius: 8px;
+  }
+
+  .mdc-switch__handle-track {
+    border-radius: 8px;
+  }
+}
+
+// Tab styling
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid var(--vendemas-outline);
+  }
+
+  .mat-mdc-tab-label-container {
+    border-radius: 8px 8px 0 0;
+  }
+}
+
+// Table styling
+.mat-mdc-table {
+  border-radius: 8px;
+  overflow: hidden;
+
+  .mat-mdc-header-row {
+    background-color: var(--vendemas-surface-variant);
+  }
+
+  .mat-mdc-row:hover {
+    background-color: var(--vendemas-state-hover);
+  }
+}
+
+// Paginator styling
+.mat-mdc-paginator {
+  border-radius: 0 0 8px 8px;
+}
+
+// Expansion panel styling
+.mat-mdc-expansion-panel {
+  border-radius: 8px;
+  margin-bottom: 8px;
+
+  .mat-mdc-expansion-panel-header {
+    border-radius: 8px;
+  }
+
+  .mat-mdc-expansion-panel-content {
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+// Bottom sheet styling
+.mat-mdc-bottom-sheet-container {
+  border-radius: 16px 16px 0 0;
+}
+
+// Toolbar styling
+.mat-mdc-toolbar {
+  border-radius: 0;
+
+  &.mat-mdc-toolbar-single-row {
+    height: 64px;
+  }
+}
+
+// Sidenav styling
+.mat-mdc-sidenav {
+  border-radius: 0;
+
+  .mat-mdc-sidenav-content {
+    border-radius: 0;
+  }
+}
+
+// List styling
+.mat-mdc-list {
+  .mat-mdc-list-item {
+    border-radius: 8px;
+    margin: 2px 8px;
+
+    &:hover {
+      background-color: var(--vendemas-state-hover);
+    }
+
+    &.mat-mdc-list-item-selected {
+      background-color: var(--vendemas-state-selected);
+    }
+  }
+}
+
+// Divider styling
+.mat-mdc-divider {
+  border-color: var(--vendemas-outline);
+}
+
+// Icon styling
+.mat-mdc-icon {
+  color: inherit;
+}
+
+// Badge styling
+.mat-mdc-badge {
+  .mdc-badge__badge {
+    border-radius: 12px;
+    font-weight: 500;
+  }
+}
+
+// Date picker styling
+.mat-mdc-datepicker {
+  .mat-mdc-calendar {
+    border-radius: 8px;
+  }
+
+  .mat-mdc-calendar-body-cell {
+    border-radius: 50%;
+  }
+}
+
+// Time picker styling
+.mat-mdc-timepicker {
+  .mat-mdc-clock {
+    border-radius: 50%;
+  }
+}
+
+// File input styling
+.mat-mdc-file-input {
+  .mat-mdc-file-input-wrapper {
+    border-radius: 8px;
+    border: 2px dashed var(--vendemas-outline);
+
+    &:hover {
+      border-color: var(--vendemas-primary);
+    }
+  }
+}
+
+// Tree styling
+.mat-mdc-tree {
+  .mat-mdc-tree-node {
+    border-radius: 4px;
+
+    &:hover {
+      background-color: var(--vendemas-state-hover);
+    }
+  }
+}
+
+// Stepper styling
+.mat-mdc-stepper {
+  .mat-mdc-step-header {
+    border-radius: 50%;
+
+    &.mat-mdc-step-header-selected {
+      background-color: var(--vendemas-primary);
+      color: var(--vendemas-primary-on);
+    }
+  }
+
+  .mat-mdc-step-content {
+    border-radius: 8px;
+  }
+}
+
+// Grid list styling
+.mat-mdc-grid-list {
+  .mat-mdc-grid-tile {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}
+
+// Card actions styling
+.mat-mdc-card-actions {
+  padding: 16px;
+
+  .mat-mdc-button {
+    margin-right: 8px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Card content styling
+.mat-mdc-card-content {
+  padding: 16px;
+}
+
+// Card header styling
+.mat-mdc-card-header {
+  padding: 16px 16px 0;
+
+  .mat-mdc-card-header-text {
+    margin: 0;
+  }
+}
+
+// Card subtitle styling
+.mat-mdc-card-subtitle {
+  color: var(--vendemas-on-surface-variant);
+  margin-bottom: 8px;
+}
+
+// Card title styling
+.mat-mdc-card-title {
+  color: var(--vendemas-on-surface);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+// Card media styling
+.mat-mdc-card-media {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+// Card avatar styling
+.mat-mdc-card-avatar {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+// Card image styling
+.mat-mdc-card-image {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+// Card footer styling
+.mat-mdc-card-footer {
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--vendemas-outline);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .mat-mdc-card {
+    border-radius: 8px;
+    margin: 8px;
+  }
+
+  .mat-mdc-button,
+  .mat-mdc-raised-button,
+  .mat-mdc-outlined-button {
+    border-radius: 16px;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .mat-mdc-dialog-container {
+    border-radius: 8px;
+
+    .mat-mdc-dialog-surface {
+      border-radius: 8px;
+    }
+  }
+
+  .mat-mdc-bottom-sheet-container {
+    border-radius: 8px 8px 0 0;
+  }
+}
+
+// Print styles
+@media print {
+  .mat-mdc-card {
+    box-shadow: none;
+    border: 1px solid var(--vendemas-outline);
+  }
+
+  .mat-mdc-button,
+  .mat-mdc-raised-button,
+  .mat-mdc-outlined-button {
+    background: none !important;
+    color: var(--vendemas-on-surface) !important;
+    border: 1px solid var(--vendemas-outline) !important;
+  }
+}
