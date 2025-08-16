@@ -30,6 +30,80 @@ You are an expert in TypeScript, Angular, Nx, and scalable web application devel
 - **Shared Libraries**: Extract common functionality into shared libraries with clear APIs
 - **Dependency Management**: Minimize cross-project dependencies and avoid circular dependencies
 
+### VendeMás Design System Guidelines
+
+**IMPORTANT: Always follow the VendeMás Design System when working on VendeMás products**
+
+The VendeMás product has a centralized design system located at `libs/vendemas-shared-styles/` that **MUST** be used for all styling decisions across:
+
+- **vendemas-caja-web** (Angular POS system)
+- **vendemas-landing-web** (Next.js marketing site)
+- **Future mobile app** (React Native/Flutter)
+
+**Design System Structure:**
+
+```
+vendemas-shared-styles/
+├── foundation/          # Core design tokens, variables, mixins
+├── themes/             # Material Design 3, light/dark themes
+├── components/         # Shared UI components
+├── commerce/           # Commerce-specific styles
+├── vendor/             # Vendor management styles
+├── location/           # Location and discovery styles
+├── mobile/             # Mobile-first responsive patterns
+├── accessibility/      # Accessibility and inclusive design
+└── utilities/          # Helper classes and utilities
+```
+
+**Design System Rules:**
+
+1. **NEVER use hardcoded colors, fonts, or spacing values** - Always use design tokens from the foundation layer
+2. **ALWAYS import the design system** - Use `@use '@vendemas/shared-styles';` in your main stylesheets
+3. **Use semantic mixins** - Leverage `@include heading(1)`, `@include flex-center`, `@include interactive` etc.
+4. **Follow the layer organization** - Add new styles to the appropriate layer based on their purpose
+5. **Maintain accessibility** - Use `@include focus-ring`, `@include reduced-motion`, `@include high-contrast`
+6. **Mobile-first approach** - Write mobile styles first, then enhance with `@include tablet-up` and `@include desktop-up`
+
+**When Adding New Styles:**
+
+- **Foundation**: Add variables and mixins to `foundation/`
+- **Components**: Add component styles to `components/`
+- **Domain-specific**: Add to appropriate layer (`commerce/`, `vendor/`, `location/`, etc.)
+- **Update index files**: Ensure new files are exported properly
+
+**Design Tokens to Use:**
+
+- Colors: `$vendemas-primary`, `$vendemas-secondary`, `$vendemas-surface`, etc.
+- Typography: `$vendemas-font-family-body`, `$vendemas-font-size-lg`, etc.
+- Spacing: `$vendemas-spacing-md`, `$vendemas-spacing-lg`, etc.
+- Breakpoints: `@include mobile`, `@include tablet`, `@include desktop`
+
+**Example Usage:**
+
+```scss
+// ✅ CORRECT - Using design system
+@use '@vendemas/shared-styles';
+
+.my-component {
+  @include heading(2);
+  @include flex-center;
+  padding: $vendemas-spacing-lg;
+  color: var(--vendemas-primary);
+}
+
+// ❌ WRONG - Hardcoded values
+.my-component {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: #4caf50;
+}
+```
+
+**Remember:** The design system ensures consistency, maintainability, and accessibility across all VendeMás applications. Deviating from it creates inconsistencies and technical debt.
+
 ### Dependency Management Strategy
 
 **Root package.json Rules:**

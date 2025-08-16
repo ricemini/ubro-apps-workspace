@@ -17,14 +17,15 @@
       "@vendemas/*": ["libs/*"],
       "@vendemas/admin-web": ["apps/vendemas-admin-web/src/index.ts"],
       "@vendemas/caja-mobile": ["apps/vendemas-caja-mobile/src/index.ts"],
-      "@vendemas/landing-web": ["apps/vendemas-landing-web/src/index.ts"],
       "@vendemas/caja-web": ["apps/vendemas-caja-web/src/index.ts"],
+      "@vendemas/landing-web": ["apps/vendemas-landing-web/src/index.ts"],
       "@vendemas/shared-api": ["libs/vendemas-shared-api/src/index.ts"],
       "@vendemas/shared-auth": ["libs/vendemas-shared-auth/src/index.ts"],
       "@vendemas/shared-constants": [
         "libs/vendemas-shared-constants/src/index.ts"
       ],
       "@vendemas/shared-design": ["libs/vendemas-shared-design/src/index.ts"],
+      "@vendemas/shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
       "@vendemas/shared-types": ["libs/vendemas-shared-types/src/index.ts"],
       "@vendemas/shared-ui": ["libs/vendemas-shared-ui/src/index.ts"],
       "@vendemas/shared-utils": ["libs/vendemas-shared-utils/src/index.ts"],

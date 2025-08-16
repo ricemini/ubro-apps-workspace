@@ -1,0 +1,206 @@
+// =============================================================================
+// VendeMás Design System - Foundation Mixins
+// =============================================================================
+
+// Responsive Breakpoints
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin mobile-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+// Typography Mixins
+@mixin text-style($size, $weight: normal, $line-height: normal) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+@mixin heading($level: 1) {
+  font-family: $vendemas-font-family-display;
+  font-weight: $vendemas-font-weight-bold;
+
+  @if $level == 1 {
+    font-size: $vendemas-font-size-4xl;
+    line-height: $vendemas-line-height-tight;
+  } @else if $level == 2 {
+    font-size: $vendemas-font-size-3xl;
+    line-height: $vendemas-line-height-tight;
+  } @else if $level == 3 {
+    font-size: $vendemas-font-size-2xl;
+    line-height: $vendemas-line-height-tight;
+  } @else if $level == 4 {
+    font-size: $vendemas-font-size-xl;
+    line-height: $vendemas-line-height-normal;
+  } @else if $level == 5 {
+    font-size: $vendemas-font-size-lg;
+    line-height: $vendemas-line-height-normal;
+  } @else if $level == 6 {
+    font-size: $vendemas-font-size-base;
+    line-height: $vendemas-line-height-normal;
+  }
+}
+
+@mixin body-text($size: base) {
+  font-family: $vendemas-font-family-body;
+  font-weight: $vendemas-font-weight-normal;
+  line-height: $vendemas-line-height-normal;
+
+  @if $size == xs {
+    font-size: $vendemas-font-size-xs;
+  } @else if $size == sm {
+    font-size: $vendemas-font-size-sm;
+  } @else if $size == base {
+    font-size: $vendemas-font-size-base;
+  } @else if $size == lg {
+    font-size: $vendemas-font-size-lg;
+  } @else if $size == xl {
+    font-size: $vendemas-font-size-xl;
+  }
+}
+
+// Spacing Mixins
+@mixin spacing($property, $size) {
+  #{$property}: $size;
+}
+
+@mixin margin($size) {
+  margin: $size;
+}
+
+@mixin padding($size) {
+  padding: $size;
+}
+
+@mixin gap($size) {
+  gap: $size;
+}
+
+// Layout Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+// Interactive Mixins
+@mixin interactive {
+  cursor: pointer;
+  transition: all $vendemas-transition-normal;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $vendemas-shadow-elevation-2;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $vendemas-shadow-elevation-1;
+  }
+}
+
+@mixin focus-ring($color: $vendemas-primary) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+// Accessibility Mixins
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin high-contrast {
+  @media (prefers-contrast: high) {
+    @content;
+  }
+}
+
+// Shadow Mixins
+@mixin elevation($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px 0 $vendemas-shadow-elevation-1;
+  } @else if $level == 2 {
+    box-shadow: 0 4px 6px -1px $vendemas-shadow-elevation-2;
+  } @else if $level == 3 {
+    box-shadow: 0 10px 15px -3px $vendemas-shadow-elevation-3;
+  }
+}
+
+// Border Mixins
+@mixin border($width: 1px, $style: solid, $color: $vendemas-outline) {
+  border: $width $style $color;
+}
+
+@mixin border-radius($radius: $vendemas-radius-md) {
+  border-radius: $radius;
+}
+
+// Transition Mixins
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append(
+      $transitions,
+      $property $vendemas-transition-normal,
+      comma
+    );
+  }
+  transition: $transitions;
+}

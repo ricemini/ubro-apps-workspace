@@ -43,7 +43,7 @@ export class PosService {
   });
 
   // Actions
-  addToCart(product: Product, quantity: number = 1): void {
+  addToCart(product: Product, quantity = 1): void {
     const currentCart = this._cart();
     const existingItem = currentCart.find(
       item => item.product.id === product.id
@@ -133,12 +133,7 @@ export class PosService {
 
   checkout(): void {
     // In a real app, this would send the order to the backend
-    console.log('Processing checkout:', {
-      items: this._cart(),
-      total: this.cartTotal(),
-      timestamp: new Date().toISOString(),
-    });
-
+    // Processing checkout with cart items and total
     this.clearCart();
   }
 
