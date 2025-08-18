@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Vendemás</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <h1>¡Hola! Vendemás está funcionando</h1>
+    <p>Si puedes ver esto, la app está cargando correctamente.</p>
+
+    <ion-button (click)="onQuickAction({title: 'Test'})">
+      Test Button
+    </ion-button>
+
+    <div style="margin-top: 20px">
+      <h2>Debug Info:</h2>
+      <p>Current time: {{ currentTime }}</p>
+      <p>Quick actions count: {{ quickActions.length }}</p>
+    </div>
+  </div>
+</ion-content>

@@ -95,6 +95,48 @@
         "staticFilePath": "dist/vendemas-caja-mobile/browser",
         "spa": true
       }
+    },
+    "cap:add": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap add",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
+    },
+    "cap:sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap sync",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
+    },
+    "cap:open:android": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap open android",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
+    },
+    "cap:open:ios": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap open ios",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
+    },
+    "cap:run:android": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap run android",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
+    },
+    "cap:run:ios": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cap run ios",
+        "cwd": "apps/vendemas-caja-mobile"
+      }
     }
   }
 }
