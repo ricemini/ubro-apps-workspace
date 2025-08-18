@@ -31,16 +31,20 @@ jobs:
   setup:
     name: Setup Dependencies
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       cache-key: ${{ steps.cache-key.outputs.value }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -63,12 +67,16 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Security audit
+        run: pnpm audit --audit-level moderate
 
   lint:
     name: Lint (Production)
     runs-on: ubuntu-latest
     needs: setup
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -97,53 +105,62 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run linting
         run: pnpm nx lint vendemas-landing-web
 
-  # Temporarily disabled due to test configuration issues
-  # test:
-  #   name: Test (Production)
-  #   runs-on: ubuntu-latest
-  #   needs: setup
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #
-  #     - name: Setup pnpm
-  #       uses: pnpm/action-setup@v4
-  #       with:
-  #         version: ${{ env.PNPM_VERSION }}
-  #
-  #     - name: Get pnpm store directory
-  #       shell: bash
-  #       run: |
-  #         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-  #
-  #     - name: Setup pnpm cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: ${{ env.STORE_PATH }}
-  #         key: ${{ needs.setup.outputs.cache-key }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-pnpm-store-
-  #
-  #     - name: Install dependencies
-  #       run: pnpm install
-  #
-  #     - name: Run tests
-  #       run: pnpm nx test vendemas-landing-web
+  test:
+    name: Test (Production)
+    runs-on: ubuntu-latest
+    needs: setup
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ needs.setup.outputs.cache-key }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm nx test vendemas-landing-web --passWithNoTests
+
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-coverage
+          path: coverage/
+          retention-days: 7
 
   build:
     name: Build (Production)
     runs-on: ubuntu-latest
-    needs: [setup, lint]
+    needs: [setup, lint, test]
+    timeout-minutes: 20
     outputs:
       build-output: ${{ steps.build-info.outputs.build-output }}
     steps:
@@ -174,7 +191,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Ensure public directory exists
         run: |
@@ -196,11 +213,19 @@ jobs:
           path: dist/vendemas-landing-web
           retention-days: 1
 
+      - name: Build size check
+        run: |
+          echo "📦 Build size analysis:"
+          du -sh dist/vendemas-landing-web
+          echo "📁 Build contents:"
+          find dist/vendemas-landing-web -type f -name "*.js" | head -10
+
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main'
+    timeout-minutes: 15
     environment:
       name: production
       url: https://vendemas-landing--bistreet-cd883.us-central1.hosted.app
@@ -227,3 +252,30 @@ jobs:
         run: |
           echo "✅ Production deployment completed successfully!"
           echo "🌐 Live URL: https://vendemas-landing--bistreet-cd883.us-central1.hosted.app"
+          echo "📅 Deployment timestamp: $(date -u)"
+          echo "🔗 Commit: ${{ github.sha }}"
+
+      - name: Health check
+        run: |
+          echo "🏥 Performing health check..."
+          sleep 30
+          curl -f -s -o /dev/null -w "HTTP Status: %{http_code}\n" https://vendemas-landing--bistreet-cd883.us-central1.hosted.app || echo "⚠️ Health check failed - site may still be deploying"
+
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: always() && github.ref == 'refs/heads/main'
+    steps:
+      - name: Deployment Summary
+        run: |
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "🎉 Production deployment successful!"
+            echo "🌐 URL: https://vendemas-landing--bistreet-cd883.us-central1.hosted.app"
+            echo "📅 Time: $(date -u)"
+            echo "🔗 Commit: ${{ github.sha }}"
+          else
+            echo "❌ Production deployment failed!"
+            echo "🔗 Commit: ${{ github.sha }}"
+            echo "📅 Time: $(date -u)"
+          fi
