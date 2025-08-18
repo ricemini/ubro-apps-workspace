@@ -15,11 +15,21 @@ vi.mock('./actions', () => ({
 
 // Mock the components
 vi.mock('./components/VendorStats', () => ({
-  default: () => <div data-testid='vendor-stats'>Vendor Stats</div>,
+  default: () =>
+    React.createElement(
+      'div',
+      { 'data-testid': 'vendor-stats' },
+      'Vendor Stats'
+    ),
 }));
 
 vi.mock('./components/ContactForm', () => ({
-  default: () => <div data-testid='contact-form'>Contact Form</div>,
+  default: () =>
+    React.createElement(
+      'div',
+      { 'data-testid': 'contact-form' },
+      'Contact Form'
+    ),
 }));
 
 describe('Page', () => {
