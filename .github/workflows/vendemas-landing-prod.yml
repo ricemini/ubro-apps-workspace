@@ -176,6 +176,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Ensure public directory exists
+        run: |
+          mkdir -p apps/vendemas-landing-web/public
+          ls -la apps/vendemas-landing-web/public
+
       - name: Build application (Production)
         id: build-info
         run: |
