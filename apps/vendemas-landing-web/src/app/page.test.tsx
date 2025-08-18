@@ -35,7 +35,12 @@ vi.mock('./components/ContactForm', () => ({
 describe('Page', () => {
   it('renders without crashing', async () => {
     render(await Page());
-    expect(screen.getByText(/Welcome to Vendemás/i)).toBeInTheDocument();
+    // Use a more flexible text matcher that can handle text split across elements
+    expect(
+      screen.getByText((content, element) => {
+        return element?.textContent?.includes('Welcome to Vendemás') ?? false;
+      })
+    ).toBeInTheDocument();
   });
 
   it('renders vendor stats component', async () => {
