@@ -1,25 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
-import { CounterComponent } from './components/counter.component';
-import { PosComponent } from './components/pos.component';
-import { ThemeToggleComponent } from '../theme/theme-toggle.component';
-import { ThemeDemoComponent } from '../theme/theme-demo.component';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 
 @Component({
-  imports: [
-    NxWelcome,
-    RouterModule,
-    CounterComponent,
-    PosComponent,
-    ThemeToggleComponent,
-    ThemeDemoComponent,
-  ],
+  imports: [IonApp, IonRouterOutlet, RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
   standalone: true,
 })
 export class App {
-  protected title = signal('vendemas-caja-mobile');
+  protected title = 'vendemas-caja-mobile';
+
+  constructor() {
+    console.log('App component initialized');
+    console.log('Title:', this.title);
+  }
 }
