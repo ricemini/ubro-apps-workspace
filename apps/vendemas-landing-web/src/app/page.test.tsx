@@ -15,17 +15,32 @@ vi.mock('./actions', () => ({
 
 // Mock the components
 vi.mock('./components/VendorStats', () => ({
-  default: () => <div data-testid='vendor-stats'>Vendor Stats</div>,
+  default: () =>
+    React.createElement(
+      'div',
+      { 'data-testid': 'vendor-stats' },
+      'Vendor Stats'
+    ),
 }));
 
 vi.mock('./components/ContactForm', () => ({
-  default: () => <div data-testid='contact-form'>Contact Form</div>,
+  default: () =>
+    React.createElement(
+      'div',
+      { 'data-testid': 'contact-form' },
+      'Contact Form'
+    ),
 }));
 
 describe('Page', () => {
   it('renders without crashing', async () => {
     render(await Page());
-    expect(screen.getByText(/Welcome to Vendemás/i)).toBeInTheDocument();
+    // Use a more flexible text matcher that can handle text split across elements
+    expect(
+      screen.getByText((content, element) => {
+        return element?.textContent?.includes('Welcome to Vendemás') ?? false;
+      })
+    ).toBeInTheDocument();
   });
 
   it('renders vendor stats component', async () => {
