@@ -17,7 +17,7 @@
     "prepare": "husky install",
     "verify": "npm run lint && npm run format:check",
     "clean": "nx reset && rm -rf .eslintcache",
-    "build": "echo 'Build will be available when projects are created'",
+    "build": "pnpm nx build vendemas-landing-web",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",

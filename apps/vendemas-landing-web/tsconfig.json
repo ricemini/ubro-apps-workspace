@@ -27,9 +27,10 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
+    "../../dist/apps/vendemas-landing-web/.next/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "../../dist/apps/vendemas-landing-web/.next/types/**/*.ts"
+    "../../dist/vendemas-landing-web/.next/types/**/*.ts"
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

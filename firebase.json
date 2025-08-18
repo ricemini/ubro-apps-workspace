@@ -1,0 +1,16 @@
+{
+  "apphosting": [
+    {
+      "backendId": "vendemas-landing",
+      "rootDir": "dist/vendemas-landing-web",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ],
+      "alwaysDeployFromSource": true
+    }
+  ]
+}
