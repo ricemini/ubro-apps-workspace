@@ -3,6 +3,8 @@ const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
 // Direct v3 configuration for Next.js compatibility
+
+/* eslint-disable no-undef */
 module.exports = {
   content: [
     join(
