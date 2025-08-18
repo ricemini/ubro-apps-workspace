@@ -1,8 +1,18 @@
+/* Ionic CSS */
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+
+/* Basic styles for testing */
+
 /* VendeMás Design System */
 /* Note: Shared styles temporarily disabled during rename */
-
-/* Angular Material 3 Theme System */
-@use './theme/theme-styles.scss';
 
 @tailwind base;
 @tailwind components;
