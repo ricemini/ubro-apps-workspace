@@ -91,9 +91,19 @@ jobs:
       - name: Check if vendemas-landing-web is affected
         id: check-affected
         run: |
-          AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
+          # Debug: Check Nx version and available commands
+          echo "🔍 Debugging Nx setup..."
+          pnpm nx --version
+          pnpm nx show projects --help
+          
+          # Try the affected command with pnpm
+          AFFECTED_PROJECTS=$(pnpm nx show projects --affected --plain)
+          echo "Raw affected projects output: '$AFFECTED_PROJECTS'"
+          
           # Convert newlines to spaces and then to commas for GitHub Actions output
           AFFECTED_PROJECTS_COMMA=$(echo "$AFFECTED_PROJECTS" | tr '\n' ' ' | sed 's/ *$//' | sed 's/ /,/g')
+          echo "Comma-separated projects: '$AFFECTED_PROJECTS_COMMA'"
+          
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
             echo "affected=true" >> $GITHUB_OUTPUT
             echo "projects=$AFFECTED_PROJECTS_COMMA" >> $GITHUB_OUTPUT
