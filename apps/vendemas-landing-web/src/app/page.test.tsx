@@ -14,11 +14,11 @@ vi.mock('./actions', () => ({
 }));
 
 // Mock the components
-vi.mock('./components/VendorStats', () => ({
+vi.mock('./components/VendorStats', (): { default: React.ComponentType } => ({
   default: () => <div data-testid='vendor-stats'>Vendor Stats</div>,
 }));
 
-vi.mock('./components/ContactForm', () => ({
+vi.mock('./components/ContactForm', (): { default: React.ComponentType } => ({
   default: () => <div data-testid='contact-form'>Contact Form</div>,
 }));
 
