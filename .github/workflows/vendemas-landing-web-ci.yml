@@ -84,7 +84,7 @@ jobs:
       - name: Check if vendemas-landing-web is affected
         id: affected
         run: |
-          AFFECTED_PROJECTS=$(npx nx affected --plain --select=projects)
+          AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
             echo "affected=true" >> $GITHUB_OUTPUT
             echo "projects=$AFFECTED_PROJECTS" >> $GITHUB_OUTPUT
