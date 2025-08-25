@@ -1,6 +1,11 @@
 {
   "buildCommand": "pnpm nx build vendemas-landing-web",
-  "outputDirectory": "apps/vendemas-landing-web/.next",
+  "outputDirectory": "dist/vendemas-landing-web",
   "installCommand": "pnpm install --frozen-lockfile",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "functions": {
+    "dist/vendemas-landing-web/.next/server/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
 }
