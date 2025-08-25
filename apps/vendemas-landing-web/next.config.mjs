@@ -11,6 +11,9 @@ const nextConfig = {
 
   // Output configuration for Vercel
   output: 'standalone',
+  
+  // Ensure proper build output
+  distDir: '.next',
 
   // SSR and Performance Configuration
   experimental: {
