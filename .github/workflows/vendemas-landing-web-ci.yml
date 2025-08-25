@@ -248,8 +248,8 @@ jobs:
           # Change to the prepared directory for Vercel deployment
           cd .vercel-temp
           
-          # Deploy using the prepared structure
-          vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes
+          # Deploy using the prepared structure with --prebuilt flag
+          vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt
         env:
           VERCEL_TOKEN: ${{ env.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
