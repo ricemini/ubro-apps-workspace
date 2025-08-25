@@ -37,8 +37,8 @@ jobs:
     name: Setup & Affected Detection
     runs-on: ubuntu-latest
     outputs:
-      affected: ${{ steps.affected.outputs.affected }}
-      affected-projects: ${{ steps.affected.outputs.projects }}
+      affected: ${{ steps.check-affected.outputs.affected }}
+      affected-projects: ${{ steps.check-affected.outputs.projects }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,8 +81,14 @@ jobs:
           restore-keys: |
             nx-${{ runner.os }}-
 
-      - name: Check if vendemas-landing-web is affected
+      - name: Set Nx affected projects
         id: affected
+        uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: main
+
+      - name: Check if vendemas-landing-web is affected
+        id: check-affected
         run: |
           AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
