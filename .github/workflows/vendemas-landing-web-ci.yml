@@ -82,6 +82,12 @@ jobs:
           restore-keys: |
             nx-${{ runner.os }}-
 
+      - name: Set Nx affected projects
+        id: affected
+        uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: main
+
       - name: Check if vendemas-landing-web is affected
         id: check-affected
         run: |
