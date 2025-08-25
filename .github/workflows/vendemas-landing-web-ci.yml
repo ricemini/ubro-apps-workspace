@@ -230,8 +230,14 @@ jobs:
               cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
             fi
             
+            # Create Vercel config.json file
+            echo "📝 Creating Vercel config.json..."
+            echo '{"version":3,"functions":{"app/page.js":{"runtime":"nodejs20.x"},"app/layout.js":{"runtime":"nodejs20.x"}},"routes":[{"src":"/(.*)","dest":"/app/$1"}]}' > .vercel/output/config.json
+            
             echo "📁 Vercel output structure created in .vercel/output/"
             ls -la .vercel/output/
+            echo "📄 Vercel config.json content:"
+            cat .vercel/output/config.json
           else
             echo "❌ vendemas-landing-web build output not found"
             echo "📁 Available files in dist/:"
