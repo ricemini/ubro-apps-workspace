@@ -1,11 +1,11 @@
 const { join } = require('path');
 
 // Next.js PostCSS configuration
-// Uses Tailwind CSS v3 for consistency across the monorepo
+// Uses Tailwind CSS v4 for consistency across the monorepo
 
 module.exports = {
   plugins: {
-    tailwindcss: {
+    '@tailwindcss/postcss': {
       config: join(__dirname, 'tailwind.config.cjs'),
     },
     autoprefixer: {},
