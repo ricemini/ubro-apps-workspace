@@ -10,6 +10,8 @@ on:
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'nx.json'
+      - 'vitest.config.ts'
+      - 'vitest.setup.ts'
       - '.github/workflows/vendemas-landing-web-ci.yml'
   pull_request:
     branches: [main, feature/ci-cd]
@@ -20,6 +22,8 @@ on:
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'nx.json'
+      - 'vitest.config.ts'
+      - 'vitest.setup.ts'
       - '.github/workflows/vendemas-landing-web-ci.yml'
 
 env:
