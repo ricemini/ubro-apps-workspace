@@ -1,0 +1,386 @@
+name: VendeMás Landing Web - CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, feature/ci-cd]
+    paths:
+      - 'apps/vendemas-landing-web/**'
+      - 'libs/vendemas-shared-design/**'
+      - 'libs/vendemas-shared-styles/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'nx.json'
+      - 'vitest.config.ts'
+      - 'vitest.setup.ts'
+      - '.github/workflows/vendemas-landing-web-ci.yml'
+  pull_request:
+    branches: [main, feature/ci-cd]
+    paths:
+      - 'apps/vendemas-landing-web/**'
+      - 'libs/vendemas-shared-design/**'
+      - 'libs/vendemas-shared-styles/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'nx.json'
+      - 'vitest.config.ts'
+      - 'vitest.setup.ts'
+      - '.github/workflows/vendemas-landing-web-ci.yml'
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8.15.0'
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  # =============================================================================
+  # SETUP & AFFECTED DETECTION
+  # =============================================================================
+  setup:
+    name: Setup & Affected Detection
+    runs-on: ubuntu-latest
+    outputs:
+      affected: ${{ steps.check-affected.outputs.affected }}
+      affected-projects: ${{ steps.check-affected.outputs.projects }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
+      - name: Set Nx affected projects
+        id: affected
+        uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: main
+
+      - name: Check if vendemas-landing-web is affected
+        id: check-affected
+        run: |
+          AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
+          # Convert newlines to spaces and then to commas for GitHub Actions output
+          AFFECTED_PROJECTS_COMMA=$(echo "$AFFECTED_PROJECTS" | tr '\n' ' ' | sed 's/ *$//' | sed 's/ /,/g')
+          if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
+            echo "affected=true" >> $GITHUB_OUTPUT
+            echo "projects=$AFFECTED_PROJECTS_COMMA" >> $GITHUB_OUTPUT
+            echo "✅ vendemas-landing-web is affected"
+            echo "Affected projects: $AFFECTED_PROJECTS"
+          else
+            echo "affected=false" >> $GITHUB_OUTPUT
+            echo "projects=$AFFECTED_PROJECTS_COMMA" >> $GITHUB_OUTPUT
+            echo "⏭️ vendemas-landing-web is not affected, skipping pipeline"
+            echo "Affected projects: $AFFECTED_PROJECTS"
+          fi
+
+  # =============================================================================
+  # LINT (PARALLEL)
+  # =============================================================================
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: setup
+    if: needs.setup.outputs.affected == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
+      - name: Lint vendemas-landing-web
+        run: npx nx run vendemas-landing-web:lint
+
+  # =============================================================================
+  # TEST (PARALLEL)
+  # =============================================================================
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: setup
+    if: needs.setup.outputs.affected == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
+      - name: Test vendemas-landing-web
+        run: npx nx run vendemas-landing-web:test
+
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: test-coverage
+          path: coverage/
+          retention-days: 30
+
+  # =============================================================================
+  # BUILD (SEQUENTIAL - AFTER LINT & TEST)
+  # =============================================================================
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [setup, lint, test]
+    if: needs.setup.outputs.affected == 'true' && needs.lint.result == 'success' && needs.test.result == 'success'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
+      - name: Build vendemas-landing-web
+        run: npx nx run vendemas-landing-web:build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+          retention-days: 7
+
+  # =============================================================================
+  # DEPLOY TO VERCEL (SEQUENTIAL - AFTER BUILD)
+  # =============================================================================
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    needs: [setup, build]
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/ci-cd') && needs.build.result == 'success'
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        run: npm install -g pnpm@${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+      - name: Prepare for Vercel
+        run: |
+          echo "🔧 Preparing build artifacts for Vercel deployment..."
+          
+          # Create Vercel output directory structure
+          mkdir -p .vercel/output
+          
+          # Check what's actually in the build output
+          echo "📁 Available files in dist/vendemas-landing-web/:"
+          ls -la dist/vendemas-landing-web/
+          
+          # For standalone output, we need to copy the entire directory structure
+          if [ -d "dist/vendemas-landing-web" ]; then
+            echo "✅ Found vendemas-landing-web build output"
+            
+            # Copy the entire build output to .vercel/output
+            cp -r dist/vendemas-landing-web/* .vercel/output/
+            
+            # Ensure we have the necessary files for Vercel
+            if [ ! -f ".vercel/output/package.json" ]; then
+              echo "⚠️ package.json not found, copying from source"
+              cp apps/vendemas-landing-web/package.json .vercel/output/
+            fi
+            
+            if [ ! -d ".vercel/output/public" ]; then
+              echo "⚠️ public directory not found, copying from source"
+              cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
+            fi
+            
+            # Create Vercel config.json file
+            echo "📝 Creating Vercel config.json..."
+            echo '{"version":3,"functions":{"app/page.js":{"runtime":"nodejs20.x"},"app/layout.js":{"runtime":"nodejs20.x"}},"routes":[{"src":"/(.*)","dest":"/app/$1"}]}' > .vercel/output/config.json
+            
+            echo "📁 Vercel output structure created in .vercel/output/"
+            ls -la .vercel/output/
+            echo "📄 Vercel config.json content:"
+            cat .vercel/output/config.json
+          else
+            echo "❌ vendemas-landing-web build output not found"
+            echo "📁 Available files in dist/:"
+            ls -la dist/
+            exit 1
+          fi
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: |
+          # Deploy using the prepared structure with --prebuilt flag
+          vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt
+        env:
+          VERCEL_TOKEN: ${{ env.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ env.VERCEL_PROJECT_ID }}
+
+      - name: Comment deployment URL
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 **Deployment successful!**\n\n**Production URL:** ${{ steps.deploy.outputs.url }}\n\n**Preview URL:** ${{ steps.deploy.outputs.preview-url }}`
+            })

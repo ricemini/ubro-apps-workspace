@@ -18,6 +18,14 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/vendemas-landing-web"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "dist/vendemas-landing-web"
+        },
+        "production": {
+          "outputPath": "dist/vendemas-landing-web"
+        }
       }
     },
     "serve": {

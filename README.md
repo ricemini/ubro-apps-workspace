@@ -6,6 +6,19 @@ A mobile-first sales toolkit for street vendors and micro-retail businesses in M
 
 Empower street vendors to sell more with less friction—by giving them a fast, offline-friendly, mobile toolkit for QR/barcode checkout, live location, simple promos, and clear daily sales insights.
 
+## 📊 Current Development Status
+
+### 🚀 Active Development
+- **vendemas-landing-web**: ✅ CI/CD pipeline implemented and tested
+- **vendemas-caja-mobile**: 🔄 In development (Ionic/Capacitor mobile app)
+- **vendemas-negocio-web**: 🔄 In development (Angular admin dashboard)
+
+### 🎯 Next Milestones
+- Complete mobile app MVP features
+- Implement authentication system
+- Set up Firebase backend integration
+- Launch beta testing program
+
 ## 🏗️ Architecture
 
 ### Tech Stack
@@ -176,7 +189,49 @@ pnpm add <package-name> --filter @vendemas/caja-mobile
 - `tsconfig.base.json` - Base TypeScript configuration
 - Path mapping for `@vendemas/*` imports
 
-## 🚀 Deployment
+## 🚀 Deployment & CI/CD
+
+### Automated CI/CD Pipeline
+
+Our CI/CD pipeline is powered by GitHub Actions and Nx Cloud, providing:
+
+- **Smart Builds**: Only rebuilds affected projects using Nx affected commands
+- **Quality Gates**: Automated linting, testing, and security scanning
+- **Parallel Execution**: Lint and test run simultaneously for faster feedback
+- **Zero-Downtime Deployments**: Prebuilt artifacts deployed to Vercel
+- **Performance Monitoring**: Ready for Lighthouse CI integration
+- **Security Scanning**: Ready for Snyk integration
+
+#### Current Pipeline Status
+
+- ✅ **Setup & Affected Detection**: Nx Cloud integration with intelligent caching
+- ✅ **Lint** (Parallel): ESLint checks with caching
+- ✅ **Test** (Parallel): Unit tests with coverage reporting
+- ✅ **Build** (Sequential): Optimized builds with artifact management
+- ✅ **Deploy to Vercel**: Production deployment using prebuilt artifacts
+- 🔄 **Nx Cloud**: Remote caching and distributed task execution
+
+#### Pipeline Architecture
+
+```
+Setup & Affected Detection → [Lint + Test] (parallel) → Build → Deploy
+```
+
+#### Pipeline Configuration
+
+```yaml
+# Triggered on changes to:
+- apps/vendemas-landing-web/**
+- libs/vendemas-shared-design/**
+- libs/vendemas-shared-styles/**
+- package.json, pnpm-lock.yaml, nx.json
+- vitest.config.ts, vitest.setup.ts
+```
+
+### 📚 Documentation
+
+For detailed CI/CD implementation guide, troubleshooting, and replication instructions, see:
+- **[CI/CD Pipeline Reference](docs/ci-cd-pipeline-reference.md)** - Comprehensive guide for implementing similar pipelines
 
 ### Firebase Hosting
 

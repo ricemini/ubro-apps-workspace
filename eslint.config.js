@@ -34,6 +34,22 @@ export default [
     },
   },
   {
+    files: ['**/*.cjs'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        global: 'readonly',
+        Buffer: 'readonly',
+        console: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       parser: tsparser,

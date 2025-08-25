@@ -6,10 +6,8 @@
   "targets": {
     "e2e": {
       "executor": "@nx/playwright:playwright",
-      "outputs": ["{options.reportsPath}"],
       "options": {
-        "config": "apps/vendemas-landing-web-e2e/playwright.config.ts",
-        "reportsPath": "dist/playwright/vendemas-landing-web-e2e"
+        "config": "apps/vendemas-landing-web-e2e/playwright.config.ts"
       }
     },
     "lint": {
