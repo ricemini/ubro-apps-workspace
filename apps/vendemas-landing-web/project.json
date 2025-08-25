@@ -17,8 +17,10 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/vendemas-landing-web"
+        "outputPath": "dist/vendemas-landing-web",
+        "standalone": true
       },
+      "postTargetCommand": "node scripts/fix-vercel-build.js"
       "configurations": {
         "development": {
           "outputPath": "dist/vendemas-landing-web"
