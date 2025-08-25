@@ -197,16 +197,25 @@ Our CI/CD pipeline is powered by GitHub Actions and Nx Cloud, providing:
 
 - **Smart Builds**: Only rebuilds affected projects using Nx affected commands
 - **Quality Gates**: Automated linting, testing, and security scanning
-- **Zero-Downtime Deployments**: Blue-green deployment strategy
-- **Performance Monitoring**: Lighthouse CI for Core Web Vitals
-- **Security Scanning**: Automated vulnerability detection with Snyk
+- **Parallel Execution**: Lint and test run simultaneously for faster feedback
+- **Zero-Downtime Deployments**: Prebuilt artifacts deployed to Vercel
+- **Performance Monitoring**: Ready for Lighthouse CI integration
+- **Security Scanning**: Ready for Snyk integration
 
 #### Current Pipeline Status
 
-- ✅ **Setup & Cache**: Nx Cloud integration with intelligent caching
-- ✅ **Build & Test**: Automated linting and building
-- ✅ **Deploy to Vercel**: Production deployment for landing website
+- ✅ **Setup & Affected Detection**: Nx Cloud integration with intelligent caching
+- ✅ **Lint** (Parallel): ESLint checks with caching
+- ✅ **Test** (Parallel): Unit tests with coverage reporting
+- ✅ **Build** (Sequential): Optimized builds with artifact management
+- ✅ **Deploy to Vercel**: Production deployment using prebuilt artifacts
 - 🔄 **Nx Cloud**: Remote caching and distributed task execution
+
+#### Pipeline Architecture
+
+```
+Setup & Affected Detection → [Lint + Test] (parallel) → Build → Deploy
+```
 
 #### Pipeline Configuration
 
@@ -216,7 +225,13 @@ Our CI/CD pipeline is powered by GitHub Actions and Nx Cloud, providing:
 - libs/vendemas-shared-design/**
 - libs/vendemas-shared-styles/**
 - package.json, pnpm-lock.yaml, nx.json
+- vitest.config.ts, vitest.setup.ts
 ```
+
+### 📚 Documentation
+
+For detailed CI/CD implementation guide, troubleshooting, and replication instructions, see:
+- **[CI/CD Pipeline Reference](docs/ci-cd-pipeline-reference.md)** - Comprehensive guide for implementing similar pipelines
 
 ### Firebase Hosting
 
