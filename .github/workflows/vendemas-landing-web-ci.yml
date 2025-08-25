@@ -170,60 +170,12 @@ jobs:
           retention-days: 7
 
   # =============================================================================
-  # PREPARE FOR VERCEL
-  # =============================================================================
-  prepare-for-vercel:
-    name: Prepare for Vercel
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    if: needs.build-and-test.result == 'success'
-    steps:
-      - name: Download Vercel-ready artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: vercel-deploy-artifacts
-          path: ./
-
-      - name: Create Vercel-ready structure
-        run: |
-          # Create a clean directory for Vercel
-          mkdir -p vercel-deploy
-          
-          # Copy the Next.js standalone build to Vercel structure
-          cp -r dist/vendemas-landing-web/* vercel-deploy/
-          
-          # Ensure the routes-manifest.json is in the expected location
-          if [ -f "vercel-deploy/.next/routes-manifest.json" ]; then
-            echo "✅ routes-manifest.json found in .next directory"
-          elif [ -f "vercel-deploy/routes-manifest.json" ]; then
-            echo "✅ routes-manifest.json found in root directory"
-          else
-            echo "⚠️ routes-manifest.json not found, listing contents:"
-            find vercel-deploy -name "*.json" -type f
-          fi
-          
-          # List the structure for debugging
-          echo "📁 Vercel deployment structure:"
-          ls -la vercel-deploy/
-          if [ -d "vercel-deploy/.next" ]; then
-            echo "📁 .next directory contents:"
-            ls -la vercel-deploy/.next/
-          fi
-
-      - name: Upload Vercel-ready artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: vercel-deploy-artifacts
-          path: vercel-deploy/
-          retention-days: 7
-
-  # =============================================================================
   # DEPLOY TO VERCEL
   # =============================================================================
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    needs: [setup, build-and-test, prepare-for-vercel]
+    needs: [setup, build-and-test]
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/ci-cd') && needs.build-and-test.result == 'success'
     environment:
       name: production
@@ -249,12 +201,44 @@ jobs:
           name: build-artifacts
           path: dist/
 
+      - name: Prepare for Vercel
+        run: |
+          echo "🔧 Preparing build artifacts for Vercel deployment..."
+          
+          # Create a temporary directory for Vercel-compatible structure
+          mkdir -p .vercel-temp
+          
+          # Copy the Next.js build output to the expected location
+          if [ -d "dist/vendemas-landing-web/.next" ]; then
+            echo "✅ Found Next.js build output"
+            cp -r dist/vendemas-landing-web/.next .vercel-temp/
+            cp -r dist/vendemas-landing-web/public .vercel-temp/ 2>/dev/null || echo "⚠️ No public directory found"
+            cp dist/vendemas-landing-web/package.json .vercel-temp/ 2>/dev/null || echo "⚠️ No package.json found"
+            
+            # Copy any other necessary files
+            cp -r dist/vendemas-landing-web/* .vercel-temp/ 2>/dev/null || true
+            
+            echo "📁 Vercel-compatible structure created in .vercel-temp/"
+            ls -la .vercel-temp/
+          else
+            echo "❌ Next.js build output not found at dist/vendemas-landing-web/.next"
+            echo "📁 Available files in dist/:"
+            ls -la dist/
+            echo "📁 Available files in dist/vendemas-landing-web/:"
+            ls -la dist/vendemas-landing-web/ || echo "Directory not found"
+            exit 1
+          fi
+
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Deploy to Vercel
         id: deploy
         run: |
+          # Change to the prepared directory for Vercel deployment
+          cd .vercel-temp
+          
+          # Deploy using the prepared structure
           vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes
         env:
           VERCEL_TOKEN: ${{ env.VERCEL_TOKEN }}

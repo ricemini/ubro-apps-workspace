@@ -1,6 +1,3 @@
 {
-  "buildCommand": "echo 'Build already completed in previous step'",
-  "outputDirectory": ".",
-  "installCommand": "echo 'Dependencies already installed'",
   "framework": "nextjs"
 }
