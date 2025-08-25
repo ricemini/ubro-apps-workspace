@@ -208,24 +208,34 @@ jobs:
           # Create a temporary directory for Vercel-compatible structure
           mkdir -p .vercel-temp
           
-          # Copy the Next.js build output to the expected location
-          if [ -d "dist/vendemas-landing-web/.next" ]; then
-            echo "✅ Found Next.js build output"
-            cp -r dist/vendemas-landing-web/.next .vercel-temp/
-            cp -r dist/vendemas-landing-web/public .vercel-temp/ 2>/dev/null || echo "⚠️ No public directory found"
-            cp dist/vendemas-landing-web/package.json .vercel-temp/ 2>/dev/null || echo "⚠️ No package.json found"
+          # Check what's actually in the build output
+          echo "📁 Available files in dist/vendemas-landing-web/:"
+          ls -la dist/vendemas-landing-web/
+          
+          # For standalone output, we need to copy the entire directory structure
+          if [ -d "dist/vendemas-landing-web" ]; then
+            echo "✅ Found vendemas-landing-web build output"
             
-            # Copy any other necessary files
-            cp -r dist/vendemas-landing-web/* .vercel-temp/ 2>/dev/null || true
+            # Copy the entire build output to .vercel-temp
+            cp -r dist/vendemas-landing-web/* .vercel-temp/
+            
+            # Ensure we have the necessary files for Vercel
+            if [ ! -f ".vercel-temp/package.json" ]; then
+              echo "⚠️ package.json not found, copying from source"
+              cp apps/vendemas-landing-web/package.json .vercel-temp/
+            fi
+            
+            if [ ! -d ".vercel-temp/public" ]; then
+              echo "⚠️ public directory not found, copying from source"
+              cp -r apps/vendemas-landing-web/public .vercel-temp/ 2>/dev/null || echo "⚠️ No public directory in source"
+            fi
             
             echo "📁 Vercel-compatible structure created in .vercel-temp/"
             ls -la .vercel-temp/
           else
-            echo "❌ Next.js build output not found at dist/vendemas-landing-web/.next"
+            echo "❌ vendemas-landing-web build output not found"
             echo "📁 Available files in dist/:"
             ls -la dist/
-            echo "📁 Available files in dist/vendemas-landing-web/:"
-            ls -la dist/vendemas-landing-web/ || echo "Directory not found"
             exit 1
           fi
 
