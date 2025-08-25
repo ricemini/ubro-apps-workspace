@@ -1,8 +1,8 @@
-name: VendeMás Landing Web - Simple CI/CD
+name: Vendemás Landing Web CI/CD
 
 on:
   push:
-    branches: [main, feature/ci-cd]
+    branches: [main, develop, feature/ci-cd]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/vendemas-shared-design/**'
@@ -12,7 +12,7 @@ on:
       - 'nx.json'
       - '.github/workflows/vendemas-landing-web-ci.yml'
   pull_request:
-    branches: [main, feature/ci-cd]
+    branches: [main, develop]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/vendemas-shared-design/**'
@@ -23,8 +23,8 @@ on:
       - '.github/workflows/vendemas-landing-web-ci.yml'
 
 env:
-  NODE_VERSION: '20'
-  PNPM_VERSION: '8.15.0'
+  NODE_VERSION: 20
+  PNPM_VERSION: 8.15.0
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       affected: ${{ steps.check-affected.outputs.affected }}
-      affected-projects: ${{ steps.check-affected.outputs.projects }}
+      projects: ${{ steps.check-affected.outputs.projects }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -178,16 +178,16 @@ jobs:
     needs: build-and-test
     if: needs.build-and-test.result == 'success'
     steps:
-      - name: Download Vercel-ready artifacts
+      - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: vercel-artifacts
+          name: build-artifacts
           path: dist/
 
       - name: Prepare Vercel build structure
         run: |
           echo "🔧 Preparing Vercel build structure..."
-
+          
           # Copy routes-manifest.json to the root of the output directory
           if [ -f "dist/vendemas-landing-web/.next/routes-manifest.json" ]; then
             cp dist/vendemas-landing-web/.next/routes-manifest.json dist/vendemas-landing-web/
@@ -196,7 +196,7 @@ jobs:
             echo "❌ routes-manifest.json not found in .next directory"
             exit 1
           fi
-
+          
           # Ensure public directory is in the right place
           if [ -d "dist/vendemas-landing-web/public" ]; then
             echo "✅ Public directory found"
@@ -204,7 +204,7 @@ jobs:
             echo "❌ Public directory not found"
             exit 1
           fi
-
+          
           echo "✅ Vercel build structure prepared successfully!"
 
       - name: Upload Vercel-ready artifacts
@@ -240,10 +240,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Download build artifacts
+      - name: Download Vercel-ready artifacts
         uses: actions/download-artifact@v4
         with:
-          name: build-artifacts
+          name: vercel-artifacts
           path: dist/
 
       - name: Install Vercel CLI
