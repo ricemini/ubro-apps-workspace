@@ -205,8 +205,8 @@ jobs:
         run: |
           echo "🔧 Preparing build artifacts for Vercel deployment..."
           
-          # Create a temporary directory for Vercel-compatible structure
-          mkdir -p .vercel-temp
+          # Create Vercel output directory structure
+          mkdir -p .vercel/output
           
           # Check what's actually in the build output
           echo "📁 Available files in dist/vendemas-landing-web/:"
@@ -216,22 +216,22 @@ jobs:
           if [ -d "dist/vendemas-landing-web" ]; then
             echo "✅ Found vendemas-landing-web build output"
             
-            # Copy the entire build output to .vercel-temp
-            cp -r dist/vendemas-landing-web/* .vercel-temp/
+            # Copy the entire build output to .vercel/output
+            cp -r dist/vendemas-landing-web/* .vercel/output/
             
             # Ensure we have the necessary files for Vercel
-            if [ ! -f ".vercel-temp/package.json" ]; then
+            if [ ! -f ".vercel/output/package.json" ]; then
               echo "⚠️ package.json not found, copying from source"
-              cp apps/vendemas-landing-web/package.json .vercel-temp/
+              cp apps/vendemas-landing-web/package.json .vercel/output/
             fi
             
-            if [ ! -d ".vercel-temp/public" ]; then
+            if [ ! -d ".vercel/output/public" ]; then
               echo "⚠️ public directory not found, copying from source"
-              cp -r apps/vendemas-landing-web/public .vercel-temp/ 2>/dev/null || echo "⚠️ No public directory in source"
+              cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
             fi
             
-            echo "📁 Vercel-compatible structure created in .vercel-temp/"
-            ls -la .vercel-temp/
+            echo "📁 Vercel output structure created in .vercel/output/"
+            ls -la .vercel/output/
           else
             echo "❌ vendemas-landing-web build output not found"
             echo "📁 Available files in dist/:"
@@ -245,9 +245,6 @@ jobs:
       - name: Deploy to Vercel
         id: deploy
         run: |
-          # Change to the prepared directory for Vercel deployment
-          cd .vercel-temp
-          
           # Deploy using the prepared structure with --prebuilt flag
           vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt
         env:
