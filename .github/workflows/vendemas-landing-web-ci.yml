@@ -223,7 +223,7 @@ jobs:
           vercel-token: ${{ env.VERCEL_TOKEN }}
           vercel-org-id: ${{ env.VERCEL_ORG_ID }}
           vercel-project-id: ${{ env.VERCEL_PROJECT_ID }}
-          working-directory: ./apps/vendemas-landing-web
+          working-directory: ./
           vercel-args: '--prod'
 
       - name: Comment deployment URL
