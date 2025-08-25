@@ -9,6 +9,9 @@ const nextConfig = {
   // Nx-specific options
   nx: {},
 
+  // Output configuration for Vercel
+  output: 'standalone',
+
   // SSR and Performance Configuration
   experimental: {
     // Enable server actions
