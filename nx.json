@@ -1,7 +1,5 @@
 {
-  "installation": {
-    "version": "21.3.11"
-  },
+  "installation": { "version": "21.3.11" },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -25,18 +23,13 @@
     "test": {
       "inputs": ["default", "^production", "{workspaceRoot}/vitest.config.ts"]
     },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/eslint.config.js"]
-    },
+    "lint": { "inputs": ["default", "{workspaceRoot}/eslint.config.js"] },
     "@angular/build:application": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "@nx/vite:test": {
-      "cache": true,
-      "inputs": ["default", "^production"]
-    },
+    "@nx/vite:test": { "cache": true, "inputs": ["default", "^production"] },
     "@nx/js:tsc": {
       "cache": true,
       "dependsOn": ["^build"],
@@ -63,20 +56,10 @@
       "unitTestRunner": "vitest",
       "strict": true
     },
-    "@nx/next": {
-      "application": {
-        "style": "css",
-        "linter": "eslint"
-      }
-    }
+    "@nx/next": { "application": { "style": "css", "linter": "eslint" } }
   },
   "plugins": [
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "lintTargetName": "lint"
-      }
-    },
+    { "plugin": "@nx/eslint/plugin", "options": { "lintTargetName": "lint" } },
     {
       "plugin": "@nx/next/plugin",
       "options": {
@@ -88,18 +71,8 @@
         "watchDepsTargetName": "watch-deps"
       }
     },
-    {
-      "plugin": "@nx/playwright/plugin",
-      "options": {
-        "targetName": "e2e"
-      }
-    },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
+    { "plugin": "@nx/playwright/plugin", "options": { "targetName": "e2e" } },
+    { "plugin": "@nx/jest/plugin", "options": { "targetName": "test" } },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
@@ -179,19 +152,14 @@
     },
     "vendemas-architecture": {
       "rules": [
-        {
-          "sourceTag": "type:app",
-          "onlyDependOnLibsWithTags": ["type:lib"]
-        },
-        {
-          "sourceTag": "type:lib",
-          "notDependOnLibsWithTags": ["type:app"]
-        },
+        { "sourceTag": "type:app", "onlyDependOnLibsWithTags": ["type:lib"] },
+        { "sourceTag": "type:lib", "notDependOnLibsWithTags": ["type:app"] },
         {
           "sourceTag": "type:e2e",
           "onlyDependOnLibsWithTags": ["type:app", "type:lib"]
         }
       ]
     }
-  }
+  },
+  "nxCloudId": "68ac34e1547cde0a50c477c9"
 }
