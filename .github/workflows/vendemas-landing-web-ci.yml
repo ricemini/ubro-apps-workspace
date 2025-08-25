@@ -97,8 +97,15 @@ jobs:
           pnpm nx show projects --help
           
           # Try the affected command with pnpm
-          AFFECTED_PROJECTS=$(pnpm nx show projects --affected --plain)
+          AFFECTED_PROJECTS=$(pnpm nx affected --plain --select=projects)
           echo "Raw affected projects output: '$AFFECTED_PROJECTS'"
+          
+          # If the command fails, try a fallback approach
+          if [ $? -ne 0 ] || [ -z "$AFFECTED_PROJECTS" ]; then
+            echo "⚠️ Primary affected command failed, trying fallback..."
+            AFFECTED_PROJECTS=$(pnpm nx show projects --affected --plain)
+            echo "Fallback output: '$AFFECTED_PROJECTS'"
+          fi
           
           # Convert newlines to spaces and then to commas for GitHub Actions output
           AFFECTED_PROJECTS_COMMA=$(echo "$AFFECTED_PROJECTS" | tr '\n' ' ' | sed 's/ *$//' | sed 's/ /,/g')
