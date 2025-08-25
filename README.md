@@ -176,7 +176,34 @@ pnpm add <package-name> --filter @vendemas/caja-mobile
 - `tsconfig.base.json` - Base TypeScript configuration
 - Path mapping for `@vendemas/*` imports
 
-## 🚀 Deployment
+## 🚀 Deployment & CI/CD
+
+### Automated CI/CD Pipeline
+
+Our CI/CD pipeline is powered by GitHub Actions and Nx Cloud, providing:
+
+- **Smart Builds**: Only rebuilds affected projects using Nx affected commands
+- **Quality Gates**: Automated linting, testing, and security scanning
+- **Zero-Downtime Deployments**: Blue-green deployment strategy
+- **Performance Monitoring**: Lighthouse CI for Core Web Vitals
+- **Security Scanning**: Automated vulnerability detection with Snyk
+
+#### Current Pipeline Status
+
+- ✅ **Setup & Cache**: Nx Cloud integration with intelligent caching
+- ✅ **Build & Test**: Automated linting and building
+- ✅ **Deploy to Vercel**: Production deployment for landing website
+- 🔄 **Nx Cloud**: Remote caching and distributed task execution
+
+#### Pipeline Configuration
+
+```yaml
+# Triggered on changes to:
+- apps/vendemas-landing-web/**
+- libs/vendemas-shared-design/**
+- libs/vendemas-shared-styles/**
+- package.json, pnpm-lock.yaml, nx.json
+```
 
 ### Firebase Hosting
 
