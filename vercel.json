@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm nx build vendemas-landing-web",
-  "outputDirectory": "dist/vendemas-landing-web",
-  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "echo 'Build already completed in previous step'",
+  "outputDirectory": ".",
+  "installCommand": "echo 'Dependencies already installed'",
   "framework": "nextjs"
 }
