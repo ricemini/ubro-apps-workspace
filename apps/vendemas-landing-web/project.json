@@ -17,9 +17,8 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/vendemas-landing-web",
-        "standalone": true
-      }
+        "outputPath": "dist/vendemas-landing-web"
+      },
       "configurations": {
         "development": {
           "outputPath": "dist/vendemas-landing-web"

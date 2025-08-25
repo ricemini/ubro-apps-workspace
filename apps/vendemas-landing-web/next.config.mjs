@@ -11,19 +11,6 @@ const nextConfig = {
 
   // Output configuration for Vercel
   output: 'standalone',
-  
-  // Ensure proper build output for Vercel
-  distDir: '.next',
-  
-  // Vercel-specific configuration
-  experimental: {
-    // Enable server actions
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
-    // Ensure proper output structure
-    outputFileTracingRoot: process.cwd(),
-  },
 
   // SSR and Performance Configuration
   experimental: {
