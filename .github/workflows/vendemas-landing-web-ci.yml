@@ -82,12 +82,6 @@ jobs:
           restore-keys: |
             nx-${{ runner.os }}-
 
-      - name: Set Nx affected projects
-        id: affected
-        uses: nrwl/nx-set-shas@v4
-        with:
-          main-branch-name: main
-
       - name: Check if vendemas-landing-web is affected
         id: check-affected
         run: |
@@ -189,23 +183,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+      - name: Install pnpm
+        run: npm install -g pnpm@${{ env.PNPM_VERSION }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
