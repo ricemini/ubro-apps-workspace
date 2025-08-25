@@ -6,6 +6,19 @@ A mobile-first sales toolkit for street vendors and micro-retail businesses in M
 
 Empower street vendors to sell more with less friction—by giving them a fast, offline-friendly, mobile toolkit for QR/barcode checkout, live location, simple promos, and clear daily sales insights.
 
+## 📊 Current Development Status
+
+### 🚀 Active Development
+- **vendemas-landing-web**: ✅ CI/CD pipeline implemented and tested
+- **vendemas-caja-mobile**: 🔄 In development (Ionic/Capacitor mobile app)
+- **vendemas-negocio-web**: 🔄 In development (Angular admin dashboard)
+
+### 🎯 Next Milestones
+- Complete mobile app MVP features
+- Implement authentication system
+- Set up Firebase backend integration
+- Launch beta testing program
+
 ## 🏗️ Architecture
 
 ### Tech Stack

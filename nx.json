@@ -3,7 +3,7 @@
     "version": "21.3.11"
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  // "nxCloudAccessToken": "process.env.NX_CLOUD_ACCESS_TOKEN",
+  "nxCloudAccessToken": "process.env.NX_CLOUD_ACCESS_TOKEN",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
