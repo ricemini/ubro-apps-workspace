@@ -93,12 +93,14 @@ jobs:
           AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
             echo "affected=true" >> $GITHUB_OUTPUT
-            echo "projects=$AFFECTED_PROJECTS" >> $GITHUB_OUTPUT
+            echo "projects=${AFFECTED_PROJECTS// /,}" >> $GITHUB_OUTPUT
             echo "✅ vendemas-landing-web is affected"
+            echo "Affected projects: $AFFECTED_PROJECTS"
           else
             echo "affected=false" >> $GITHUB_OUTPUT
-            echo "projects=$AFFECTED_PROJECTS" >> $GITHUB_OUTPUT
+            echo "projects=${AFFECTED_PROJECTS// /,}" >> $GITHUB_OUTPUT
             echo "⏭️ vendemas-landing-web is not affected, skipping pipeline"
+            echo "Affected projects: $AFFECTED_PROJECTS"
           fi
 
   # =============================================================================
