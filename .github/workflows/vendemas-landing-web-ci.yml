@@ -91,14 +91,16 @@ jobs:
         id: check-affected
         run: |
           AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
+          # Convert newlines to spaces and then to commas for GitHub Actions output
+          AFFECTED_PROJECTS_COMMA=$(echo "$AFFECTED_PROJECTS" | tr '\n' ' ' | sed 's/ *$//' | sed 's/ /,/g')
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
             echo "affected=true" >> $GITHUB_OUTPUT
-            echo "projects=${AFFECTED_PROJECTS// /,}" >> $GITHUB_OUTPUT
+            echo "projects=$AFFECTED_PROJECTS_COMMA" >> $GITHUB_OUTPUT
             echo "✅ vendemas-landing-web is affected"
             echo "Affected projects: $AFFECTED_PROJECTS"
           else
             echo "affected=false" >> $GITHUB_OUTPUT
-            echo "projects=${AFFECTED_PROJECTS// /,}" >> $GITHUB_OUTPUT
+            echo "projects=$AFFECTED_PROJECTS_COMMA" >> $GITHUB_OUTPUT
             echo "⏭️ vendemas-landing-web is not affected, skipping pipeline"
             echo "Affected projects: $AFFECTED_PROJECTS"
           fi
