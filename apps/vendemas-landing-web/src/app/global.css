@@ -182,20 +182,33 @@ html {
 h1 { letter-spacing: -0.01em; }
 h2, h3 { letter-spacing: -0.005em; }
 
-/* Gradient text animation */
+/* Smooth, GPU-friendly-ish background animation */
 @keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Help the browser plan ahead */
+.gradient-text,
+.motion-safe\:animate-\[gradient-shift_4s_cubic-bezier\(\.22\,\.61\,\.36\,1\)_infinite\] {
+  will-change: background-position;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient-text,
+  .motion-safe\:animate-\[gradient-shift_4s_cubic-bezier\(\.22\,\.61\,\.36\,1\)_infinite\] {
+    animation: none !important;
+    background-position: 50% 50%;
   }
 }
 
-.animate-gradient-text {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease-in-out infinite;
+/* High-contrast mode fallback */
+@media (forced-colors: active) {
+  .gradient-text {
+    color: CanvasText;             /* solid text in HCM */
+    -webkit-text-fill-color: currentColor;
+    background: none !important;
+  }
 }

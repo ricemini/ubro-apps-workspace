@@ -23,7 +23,17 @@ export default function Hero() {
         <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
             <span>Todo tu negocio, </span>
-            <span className='bg-gradient-to-r from-secondary-700 via-secondary-600 to-tertiary-600 bg-clip-text text-transparent animate-gradient-text ml-6'>
+            <span
+              className='
+                relative inline-block font-display tracking-tight
+                bg-[linear-gradient(90deg,theme(colors.secondary.800),theme(colors.secondary.600),theme(colors.tertiary.700))]
+                bg-[length:300%_300%]
+                bg-clip-text text-transparent
+                drop-shadow-[0_1px_0_rgba(0,0,0,0.22)]
+                motion-safe:animate-[gradient-shift_4s_cubic-bezier(.22,.61,.36,1)_infinite]
+                ml-10
+              '
+            >
               impulsado por IA
             </span>
           </h1>
