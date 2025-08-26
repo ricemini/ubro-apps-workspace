@@ -13,55 +13,54 @@ import {
   PopoverPanel,
 } from '@headlessui/react';
 import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import {
-  ChevronDownIcon,
-  RectangleGroupIcon,
-  PlayCircleIcon,
-} from '@heroicons/react/20/solid';
+  RotateCcw,
+  Menu,
+  BarChart3,
+  MousePointer2,
+  Shield,
+  Layers,
+  X,
+  ChevronDown,
+  Blocks,
+  PlayCircle,
+  Blocks,
+} from 'lucide-react';
 
 const products = [
   {
     name: 'Analytics',
     description: 'Get a better understanding of your traffic',
     href: '#',
-    icon: ChartPieIcon,
+    icon: BarChart3,
   },
   {
     name: 'Engagement',
     description: 'Speak directly to your customers',
     href: '#',
-    icon: CursorArrowRaysIcon,
+    icon: MousePointer2,
   },
   {
     name: 'Security',
     description: 'Your customers’ data will be safe and secure',
     href: '#',
-    icon: FingerPrintIcon,
+    icon: Shield,
   },
   {
     name: 'Integrations',
     description: 'Connect with third-party tools',
     href: '#',
-    icon: SquaresPlusIcon,
+    icon: Layers,
   },
   {
     name: 'Automations',
     description: 'Build strategic funnels that will convert',
     href: '#',
-    icon: ArrowPathIcon,
+    icon: RotateCcw,
   },
 ];
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: RectangleGroupIcon },
+  { name: 'Watch demo', href: '#', icon: PlayCircle },
+  { name: 'Contact sales', href: '#', icon: Blocks },
 ];
 const company = [
   { name: 'About us', href: '#' },
@@ -102,14 +101,14 @@ export default function Example() {
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
           >
             <span className='sr-only'>Open main menu</span>
-            <Bars3Icon aria-hidden='true' className='size-6' />
+            <Menu aria-hidden='true' className='size-6' />
           </button>
         </div>
         <PopoverGroup className='hidden lg:flex lg:gap-x-12'>
           <Popover className='relative'>
             <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
               Product
-              <ChevronDownIcon
+              <ChevronDown
                 aria-hidden='true'
                 className='size-5 flex-none text-gray-400 dark:text-gray-500'
               />
@@ -125,10 +124,10 @@ export default function Example() {
                     key={item.name}
                     className='group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
                   >
-                    <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-secondary-700/50 dark:group-hover:bg-secondary-700'>
+                    <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                       <item.icon
                         aria-hidden='true'
-                        className='size-6 text-gray-600 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-white'
+                        className='size-6 text-secondary-600 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-white'
                       />
                     </div>
                     <div className='flex-auto'>
@@ -180,7 +179,7 @@ export default function Example() {
           <Popover className='relative'>
             <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
               Company
-              <ChevronDownIcon
+              <ChevronDown
                 aria-hidden='true'
                 className='size-5 flex-none text-gray-400 dark:text-gray-500'
               />
@@ -241,7 +240,7 @@ export default function Example() {
               className='-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
             >
               <span className='sr-only'>Close menu</span>
-              <XMarkIcon aria-hidden='true' className='size-6' />
+              <X aria-hidden='true' className='size-6' />
             </button>
           </div>
           <div className='mt-6 flow-root'>
@@ -250,7 +249,7 @@ export default function Example() {
                 <Disclosure as='div' className='-mx-3'>
                   <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
                     Product
-                    <ChevronDownIcon
+                    <ChevronDown
                       aria-hidden='true'
                       className='size-5 flex-none group-data-open:rotate-180'
                     />
@@ -288,7 +287,7 @@ export default function Example() {
                 <Disclosure as='div' className='-mx-3'>
                   <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
                     Company
-                    <ChevronDownIcon
+                    <ChevronDown
                       aria-hidden='true'
                       className='size-5 flex-none group-data-open:rotate-180'
                     />
