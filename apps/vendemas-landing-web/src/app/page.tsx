@@ -1,6 +1,6 @@
 import React from 'react';
 import Hero from './(site)/components/Hero';
-import Navigation from './components/Navigation';
+import Navbar from './(site)/components/Navbar';
 import ValueProps from './components/ValueProps';
 import HowItWorks from './components/HowItWorks';
 import Features from './components/Features';
@@ -12,8 +12,8 @@ import Footer from './components/Footer';
 export default function Home(): React.JSX.Element {
   return (
     <>
-      <Navigation />
-      <main>
+      <Navbar />
+      <main id="main">
         <Hero />
         <ValueProps />
         <HowItWorks />
