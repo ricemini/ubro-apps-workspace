@@ -126,9 +126,10 @@ module.exports = {
         'float-slow': 'float-slow 7s ease-in-out infinite',
       },
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        display: ['var(--font-jakarta)', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        // keep "sans" for legacy components
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       fontWeight: {
         normal: '400',
@@ -155,18 +156,23 @@ module.exports = {
       const newUtilities = {
         '.app-name': {
           fontFamily: theme('fontFamily.display'),
-          fontWeight: theme('fontWeight.bold'),
-          fontStyle: 'italic',
-          fontSize: '2.5rem',
-          color: theme('colors.secondary.500'),
+          fontWeight: '800',
+          fontStyle: 'normal',
+          fontSize: '2rem',
+          letterSpacing: '-0.02em',
+          color: theme('colors.secondary.DEFAULT'),
         },
         '.text-body': {
           fontFamily: theme('fontFamily.body'),
-          fontWeight: theme('fontWeight.normal'),
+          fontWeight: '400',
         },
         '.text-display': {
           fontFamily: theme('fontFamily.display'),
-          fontWeight: theme('fontWeight.bold'),
+          fontWeight: '700',
+          letterSpacing: '-0.01em',
+        },
+        '.nums-tabular': {
+          fontVariantNumeric: 'tabular-nums',
         },
       };
       addUtilities(newUtilities);

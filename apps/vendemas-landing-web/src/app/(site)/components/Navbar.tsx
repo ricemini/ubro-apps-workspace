@@ -70,7 +70,7 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className='hidden lg:flex items-center gap-6'>
-            <ul className='flex items-center gap-5'>
+            <ul className='flex items-center gap-5 font-body'>
               {NAV.map(item => {
                 const active = item.exact
                   ? pathname === item.href
@@ -122,7 +122,7 @@ export default function Navbar() {
 
               <Link
                 href='/signup'
-                className='rounded-lg bg-primary-500 text-primary-on px-4 py-2 shadow hover:shadow-md transition'
+                className='font-display rounded-lg bg-primary-500 text-primary-on px-4 py-2 shadow hover:shadow-md transition'
                 data-analytics='nav_signup'
               >
                 Comenzar gratis

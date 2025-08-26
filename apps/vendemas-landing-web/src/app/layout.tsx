@@ -1,5 +1,6 @@
 import React from 'react';
 import './global.css';
+import { inter, jakarta } from './fonts';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -65,23 +66,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.JSX.Element {
   return (
-    <html lang='es-MX' className='scroll-smooth'>
+    <html lang='es-MX' className={`${inter.variable} ${jakarta.variable} scroll-smooth`}>
       <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:ital,wght@1,700&display=swap'
-          rel='stylesheet'
-        />
         <link rel='sitemap' type='application/xml' href='/sitemap.xml' />
         <link rel='canonical' href='https://vendemas.mx' />
         <meta name='theme-color' content='#4CAF50' />
       </head>
-      <body className='font-body text-body bg-white text-gray-900 antialiased'>
+      <body className='font-body antialiased'>
         {children}
       </body>
     </html>

@@ -171,3 +171,13 @@ html {
     }
   }
 }
+
+/* Align prices/KPIs across columns */
+.price, .kpi, .nums { font-variant-numeric: tabular-nums; }
+
+/* Better paragraph readability */
+.prose p { line-height: 1.65; }
+
+/* Headings scale (fallback if not using component classes) */
+h1 { letter-spacing: -0.01em; }
+h2, h3 { letter-spacing: -0.005em; }

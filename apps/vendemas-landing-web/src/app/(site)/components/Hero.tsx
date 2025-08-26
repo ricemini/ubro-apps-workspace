@@ -27,27 +27,27 @@ export default function Hero() {
         {/* TEXT column must be above */}
         <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
-            <span className='text-black font-bold'>Todo tu negocio, </span>
-            <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent drop-shadow-[0_2px_0_rgba(0,0,0,0.1)]'>
+            <span>Todo tu negocio, </span>
+            <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent'>
               impulsado por IA
             </span>
           </h1>
 
-          <p className='mt-2 text-3xl font-bold text-primary-600'>
+          <p className='mt-2 font-display text-3xl font-semibold text-primary-600'>
             Vende más, sin complicarte
           </p>
 
-          <p className='mt-2 text-black/90 font-medium'>
+          <p className='mt-2 font-body text-secondary/90'>
             Hecho para MiPyMEs y negocios ambulantes. Funciona sin internet.
           </p>
 
           {/* Feature chips */}
-          <div className='flex flex-wrap gap-2 text-sm text-black/80 font-medium'>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Catálogo desde una foto</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Cobros por CoDi</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Funciona sin internet</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Promos con IA</span>
-          </div>
+          <ul className='mt-3 flex flex-wrap gap-2'>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Catálogo desde una foto</li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Cobros por CoDi</li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Funciona sin internet</li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Promos con IA</li>
+          </ul>
 
           {/* CTAs */}
           <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-2'>
