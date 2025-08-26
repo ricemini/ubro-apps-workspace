@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables for dark mode support */
 :root {
   --background: 0 0% 100%;
   --foreground: 0 0% 3.9%;
@@ -59,7 +60,8 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 
@@ -173,20 +175,37 @@ html {
 }
 
 /* Align prices/KPIs across columns */
-.price, .kpi, .nums { font-variant-numeric: tabular-nums; }
+.price,
+.kpi,
+.nums {
+  font-variant-numeric: tabular-nums;
+}
 
 /* Better paragraph readability */
-.prose p { line-height: 1.65; }
+.prose p {
+  line-height: 1.65;
+}
 
 /* Headings scale (fallback if not using component classes) */
-h1 { letter-spacing: -0.01em; }
-h2, h3 { letter-spacing: -0.005em; }
+h1 {
+  letter-spacing: -0.01em;
+}
+h2,
+h3 {
+  letter-spacing: -0.005em;
+}
 
 /* Smooth, GPU-friendly-ish background animation */
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Help the browser plan ahead */
@@ -207,7 +226,7 @@ h2, h3 { letter-spacing: -0.005em; }
 /* High-contrast mode fallback */
 @media (forced-colors: active) {
   .gradient-text {
-    color: CanvasText;             /* solid text in HCM */
+    color: CanvasText; /* solid text in HCM */
     -webkit-text-fill-color: currentColor;
     background: none !important;
   }

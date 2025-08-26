@@ -126,10 +126,10 @@ module.exports = {
         'float-slow': 'float-slow 7s ease-in-out infinite',
       },
       fontFamily: {
-        display: ['var(--font-jakarta)', 'Inter', 'system-ui', 'sans-serif'],
-        body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-jakarta)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
         // keep "sans" for legacy components
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
       },
       fontWeight: {
         normal: '400',
