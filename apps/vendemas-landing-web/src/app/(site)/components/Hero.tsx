@@ -28,7 +28,7 @@ export default function Hero() {
         <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
             <span>Todo tu negocio, </span>
-            <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent'>
+            <span className='bg-gradient-to-r from-tertiary-700 via-primary-600 to-secondary-800 bg-clip-text text-transparent animate-gradient-text'>
               impulsado por IA
             </span>
           </h1>
