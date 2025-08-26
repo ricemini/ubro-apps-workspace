@@ -12,15 +12,10 @@ export default function Hero() {
 
   return (
     <header className='relative isolate overflow-hidden'>
-      {/* ALL backgrounds go here, behind everything */}
+      {/* Clean background - no gradients */}
       <div aria-hidden className='pointer-events-none absolute inset-0 -z-10'>
-        {/* blobs/meshes/noise — keep them here only */}
-        <div className='absolute -top-24 -left-32 size-[520px] rounded-full blur-3xl opacity-30 bg-primary-500' />
-        <div className='absolute -bottom-32 -right-24 size-[560px] rounded-full blur-3xl opacity-20 bg-secondary-500' />
-        <div className='absolute top-1/3 left-1/2 -translate-x-1/2 size-[420px] rounded-full blur-2xl opacity-15 bg-tertiary-500' />
-        <div className='absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-white via-white/95 to-white/0' />
-        {/* if you keep noise, keep it behind too */}
-        {/* <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')]" /> */}
+        {/* Simple white background */}
+        <div className='absolute inset-0 bg-white' />
       </div>
 
       <div className='mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16'>
