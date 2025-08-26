@@ -8,7 +8,7 @@ import Pricing from './components/Pricing';
 import CTABanner from './components/CTABanner';
 import Footer from './components/Footer';
 
-export default function Home() {
+export default function Home(): React.JSX.Element {
   return (
     <>
       <Navigation />
