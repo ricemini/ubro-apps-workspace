@@ -20,18 +20,18 @@ export default function Hero() {
     <header className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16">
       {/* Copy block */}
       <div className="space-y-6">
-        <h1 className="text-display text-5xl leading-tight text-secondary">
+        <h1 className="text-display text-5xl md:text-6xl leading-tight">
           <span className="text-secondary">Todo tu negocio, </span>
-          <span className="bg-gradient-to-r from-tertiary-500 to-secondary-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-tertiary-500 to-secondary-500 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.05)]">
             impulsado por IA
           </span>
         </h1>
 
-        <p className="text-3xl font-semibold text-primary-500 mt-2">
+        <p className="mt-2 text-3xl font-semibold text-primary-500">
           Vende más, sin complicarte
         </p>
 
-        <p className="text-body text-secondary/80 mt-1">
+        <p className="mt-2 text-body text-secondary/90">
           Enfocado para MiPyMEs y negocios ambulantes.
         </p>
 
@@ -70,7 +70,7 @@ export default function Hero() {
           </a>
           <a
             href="/caracteristicas"
-            className="text-secondary/80 hover:text-secondary underline"
+            className="text-secondary/90 hover:text-secondary underline"
             data-analytics="hero_all_features"
           >
             Todas las funciones
