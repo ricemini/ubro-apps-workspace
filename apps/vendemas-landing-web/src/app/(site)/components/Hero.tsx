@@ -12,21 +12,20 @@ export default function Hero() {
 
   return (
     <header className='relative isolate overflow-hidden'>
-      {/* put backgrounds UNDER content */}
-      <div aria-hidden className='absolute inset-0 -z-10'>
-        {/* Mesh gradient background */}
+      {/* ALL backgrounds go here, behind everything */}
+      <div aria-hidden className='pointer-events-none absolute inset-0 -z-10'>
+        {/* blobs/meshes/noise — keep them here only */}
         <div className='absolute -top-24 -left-32 size-[520px] rounded-full blur-3xl opacity-30 bg-primary-500' />
         <div className='absolute -bottom-32 -right-24 size-[560px] rounded-full blur-3xl opacity-20 bg-secondary-500' />
         <div className='absolute top-1/3 left-1/2 -translate-x-1/2 size-[420px] rounded-full blur-2xl opacity-15 bg-tertiary-500' />
-        {/* subtle grain (safe, tiny) */}
-        <div className="absolute inset-0 mix-blend-soft-light bg-[url('/noise.png')] opacity-[0.04]" />
-        {/* left scrim: guarantees readability */}
         <div className='absolute inset-y-0 left-0 w-[62%] bg-gradient-to-r from-white via-white/90 to-white/0' />
+        {/* if you keep noise, keep it behind too */}
+        {/* <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')]" /> */}
       </div>
 
       <div className='mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16'>
-        {/* Copy */}
-        <div className='relative z-10 space-y-5'>
+        {/* TEXT column must be above */}
+        <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
             <span className='text-secondary'>Todo tu negocio, </span>
             <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.08)]'>
@@ -100,8 +99,8 @@ export default function Hero() {
           {/* <p className="text-xs text-secondary/70 pt-1">★★★★★ 4.9/5 en reseñas · Más de 1,000 vendedores en MX</p> */}
         </div>
 
-        {/* Visual */}
-        <div className='relative z-0'>
+        {/* VISUAL column can be lower */}
+        <div className='relative z-10'>
           <AiScanCard />
         </div>
       </div>
