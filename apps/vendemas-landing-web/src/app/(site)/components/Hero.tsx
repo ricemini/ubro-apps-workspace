@@ -17,75 +17,79 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16">
-      {/* Copy block */}
-      <div className="space-y-6">
-        <h1 className="text-display text-5xl md:text-6xl leading-tight">
-          <span className="text-secondary">Todo tu negocio, </span>
-          <span className="bg-gradient-to-r from-tertiary-500 to-secondary-500 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.05)]">
-            impulsado por IA
-          </span>
-        </h1>
+    <header className="relative isolate overflow-hidden">
+      {/* Decorative background moves BEHIND content */}
+      <div aria-hidden
+           className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white to-primary-50" />
 
-        <p className="mt-2 text-3xl font-semibold text-primary-500">
-          Vende más, sin complicarte
-        </p>
+      <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16">
+        {/* TEXT COLUMN */}
+        <div className="relative z-10">
+          <h1 className="text-display text-5xl md:text-6xl leading-tight !opacity-100">
+            <span className="!text-secondary">Todo tu negocio, </span>
+            <span className="bg-gradient-to-r from-tertiary-600 to-secondary-700 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.06)]">
+              impulsado por IA
+            </span>
+          </h1>
 
-        <p className="mt-2 text-body text-secondary/90">
-          Enfocado para MiPyMEs y negocios ambulantes.
-        </p>
+          <p className="mt-2 text-3xl font-semibold text-primary-600 !opacity-100">
+            Vende más, sin complicarte
+          </p>
 
-        {/* Primary CTAs */}
-        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          <a
-            href="/signup"
-            className="rounded-lg bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition"
-            data-analytics="cta_primary_hero"
-          >
-            Comenzar gratis
-          </a>
+          <p className="mt-2 text-body text-secondary/90">
+            Enfocado para MiPyMEs y negocios ambulantes.
+          </p>
 
-          <button
-            onClick={() => setOpen(true)}
-            className="rounded-lg px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 transition inline-flex items-center gap-2 bg-white"
-            data-analytics="cta_demo_hero"
-            aria-haspopup="dialog"
-            aria-controls="demo-ia-modal"
-          >
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            Ver demo de IA
-          </button>
+          <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <a
+              href="/signup"
+              className="rounded-lg bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition"
+              data-analytics="cta_primary_hero"
+            >
+              Comenzar gratis
+            </a>
+            <button
+              onClick={() => setOpen(true)}
+              className="rounded-lg px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 bg-white/95 backdrop-blur
+                         inline-flex items-center gap-2 transition"
+              data-analytics="cta_demo_hero"
+              aria-haspopup="dialog"
+              aria-controls="demo-ia-modal"
+            >
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Ver demo de IA
+            </button>
+          </div>
+
+          <nav className="mt-3 flex gap-6 text-sm">
+            <a
+              href="#como-funciona"
+              className="text-secondary underline decoration-dotted hover:decoration-solid"
+              data-analytics="hero_scroll_how"
+            >
+              Ver cómo funciona →
+            </a>
+            <a
+              href="/caracteristicas"
+              className="text-secondary/90 hover:text-secondary underline"
+              data-analytics="hero_all_features"
+            >
+              Todas las funciones
+            </a>
+          </nav>
         </div>
 
-        {/* Tertiary links */}
-        <nav className="mt-3 flex gap-6 text-sm">
-          <a
-            href="#como-funciona"
-            className="text-secondary underline decoration-dotted hover:decoration-solid"
-            data-analytics="hero_scroll_how"
+        {/* MOCKUP COLUMN */}
+        <div className="relative z-0">
+          <div
+            className={[
+              'relative isolate',
+              reduce ? '' : 'motion-safe:animate-float-slow',
+            ].join(' ')}
+            aria-hidden
           >
-            Ver cómo funciona →
-          </a>
-          <a
-            href="/caracteristicas"
-            className="text-secondary/90 hover:text-secondary underline"
-            data-analytics="hero_all_features"
-          >
-            Todas las funciones
-          </a>
-        </nav>
-      </div>
-
-      {/* Device mockup (scan → catalog) */}
-      <div
-        className={[
-          'relative isolate',
-          reduce ? '' : 'motion-safe:animate-float-slow',
-        ].join(' ')}
-        aria-hidden
-      >
         {/* Badge */}
         <span className="absolute -top-3 right-6 z-10 rounded-full bg-tertiary-500 text-tertiary-on text-xs px-2 py-1 shadow">
           Importando menú con IA
@@ -136,6 +140,8 @@ export default function Hero() {
 
         {/* Soft drop shadow */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-8 w-[80%] rounded-full bg-black/10 blur-2xl" />
+          </div>
+        </div>
       </div>
 
       {open && <DemoModal onClose={() => setOpen(false)} />}
