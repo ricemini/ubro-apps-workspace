@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 export default function Hero(): React.JSX.Element {
@@ -133,7 +133,7 @@ export default function Hero(): React.JSX.Element {
 }
 
 // Lightweight demo modal
-function DemoModal({ onClose }: { onClose: () => void }) {
+function DemoModal({ onClose }: { onClose: () => void }): React.JSX.Element {
   return (
     <div
       role='dialog'

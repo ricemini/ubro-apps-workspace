@@ -90,7 +90,7 @@ nx.json                              # Nx workspace configuration
 ```yaml
 paths:
   - 'apps/vendemas-landing-web/**'
-  - 'libs/vendemas-shared-design/**'
+  - 'libs/vendemas-shared-styles/**'
   - 'libs/vendemas-shared-styles/**'
   - 'package.json'
   - 'pnpm-lock.yaml'

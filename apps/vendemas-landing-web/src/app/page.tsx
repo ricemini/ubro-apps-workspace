@@ -1,3 +1,4 @@
+import React from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import ValueProps from './components/ValueProps';

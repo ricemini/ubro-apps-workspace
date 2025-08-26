@@ -56,7 +56,7 @@ import { AuthService } from '@vendemas/shared-auth';
 
       /* Short imports for libs */
       "@shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
-      "@shared-design": ["libs/vendemas-shared-design/src/index.ts"],
+      "@shared-styles": ["libs/vendemas-shared-styles/src/index.ts"],
       "@shared-i18n": ["libs/vendemas-shared-i18n/src/index.ts"],
 
       /* Full vendor imports for apps */
@@ -66,7 +66,7 @@ import { AuthService } from '@vendemas/shared-auth';
 
       /* Full vendor imports for libs */
       "@vendemas/shared-styles": ["libs/vendemas-shared-styles/src/index.scss"],
-      "@vendemas/shared-design": ["libs/vendemas-shared-design/src/index.ts"],
+      "@vendemas/shared-styles": ["libs/vendemas-shared-styles/src/index.ts"],
       "@vendemas/shared-i18n": ["libs/vendemas-shared-i18n/src/index.ts"],
 
       /* Legacy imports for backward compatibility */
@@ -92,7 +92,7 @@ import { AuthService } from '@vendemas/shared-auth';
 
 ```
 @shared-styles        → libs/vendemas-shared-styles/src/index.scss
-@shared-design        → libs/vendemas-shared-design/src/index.ts
+@shared-styles        → libs/vendemas-shared-styles/src/index.ts
 @shared-i18n          → libs/vendemas-shared-i18n/src/index.ts
 @shared-types         → libs/vendemas-shared-types/src/index.ts
 @shared-ui            → libs/vendemas-shared-ui/src/index.ts
