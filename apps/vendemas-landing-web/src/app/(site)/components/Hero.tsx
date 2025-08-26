@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import { Check } from 'lucide-react';
 
 const DemoModal = dynamic(() => import('./DemoModal'), { ssr: false });
 
@@ -22,22 +21,22 @@ export default function Hero() {
       {/* Copy block */}
       <div className="space-y-6">
         <h1 className="text-display text-5xl leading-tight text-secondary">
-          Todo tu negocio,{' '}
+          <span className="text-secondary">Todo tu negocio, </span>
           <span className="bg-gradient-to-r from-tertiary-500 to-secondary-500 bg-clip-text text-transparent">
             impulsado por IA
           </span>
         </h1>
 
-        <p className="text-3xl font-semibold text-primary-500">
+        <p className="text-3xl font-semibold text-primary-500 mt-2">
           Vende más, sin complicarte
         </p>
 
-        <p className="text-body text-secondary/80">
+        <p className="text-body text-secondary/80 mt-1">
           Enfocado para MiPyMEs y negocios ambulantes.
         </p>
 
         {/* Primary CTAs */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
           <a
             href="/signup"
             className="rounded-lg bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition"
@@ -47,12 +46,15 @@ export default function Hero() {
           </a>
 
           <button
-            className="rounded-lg px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 transition"
-            data-analytics="cta_demo_hero"
             onClick={() => setOpen(true)}
+            className="rounded-lg px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 transition inline-flex items-center gap-2 bg-white"
+            data-analytics="cta_demo_hero"
             aria-haspopup="dialog"
             aria-controls="demo-ia-modal"
           >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M8 5v14l11-7z"/>
+            </svg>
             Ver demo de IA
           </button>
         </div>
@@ -61,14 +63,14 @@ export default function Hero() {
         <nav className="mt-3 flex gap-6 text-sm">
           <a
             href="#como-funciona"
-            className="inline-flex items-center gap-1 text-secondary underline decoration-dotted hover:decoration-solid"
+            className="text-secondary underline decoration-dotted hover:decoration-solid"
             data-analytics="hero_scroll_how"
           >
             Ver cómo funciona →
           </a>
           <a
             href="/caracteristicas"
-            className="inline-flex items-center gap-1 text-secondary/80 hover:text-secondary"
+            className="text-secondary/80 hover:text-secondary underline"
             data-analytics="hero_all_features"
           >
             Todas las funciones
@@ -114,7 +116,7 @@ export default function Hero() {
                   >
                     <span className="text-secondary">{name}</span>
                     <span className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-primary-500" aria-hidden />
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary-500 text-white text-[10px]">✓</span>
                       <span className="font-medium text-secondary">{price}</span>
                     </span>
                   </li>
