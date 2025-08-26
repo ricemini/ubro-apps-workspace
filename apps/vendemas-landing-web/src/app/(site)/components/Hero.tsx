@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import AiScanCard from './AiScanCard';
+import HeroBackground from './HeroBackground';
 
 const DemoModal = dynamic(() => import('./DemoModal'), { ssr: false });
 
@@ -12,11 +13,7 @@ export default function Hero() {
 
   return (
     <header className='relative isolate overflow-hidden'>
-      {/* Clean background - no gradients */}
-      <div aria-hidden className='pointer-events-none absolute inset-0 -z-10'>
-        {/* Simple white background */}
-        <div className='absolute inset-0 bg-white' />
-      </div>
+      <HeroBackground />
 
       <div className='mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16'>
         {/* TEXT column must be above */}
