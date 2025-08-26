@@ -23,7 +23,7 @@ export default function Hero() {
         <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
             <span>Todo tu negocio, </span>
-            <span className='bg-gradient-to-r from-tertiary-700 via-primary-600 to-secondary-800 bg-clip-text text-transparent animate-gradient-text'>
+            <span className='bg-gradient-to-r from-secondary-700 via-secondary-600 to-tertiary-600 bg-clip-text text-transparent animate-gradient-text ml-6'>
               impulsado por IA
             </span>
           </h1>
@@ -38,10 +38,18 @@ export default function Hero() {
 
           {/* Feature chips */}
           <ul className='mt-3 flex flex-wrap gap-2'>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Catálogo desde una foto</li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Cobros por CoDi</li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Funciona sin internet</li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>Promos con IA</li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
+              Catálogo desde una foto
+            </li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
+              Cobros por CoDi
+            </li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
+              Funciona sin internet
+            </li>
+            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
+              Promos con IA
+            </li>
           </ul>
 
           {/* CTAs */}
