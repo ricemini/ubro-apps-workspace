@@ -15,7 +15,7 @@ This document provides a comprehensive reference for the CI/CD pipeline implemen
 - ✅ **Error Handling**: Comprehensive troubleshooting and debugging
 - ✅ **Documentation**: Complete implementation and replication guides
 
-**Last Tested**: August 2024  
+**Last Tested**: August 2024
 **Status**: Production Ready ✅
 
 ## 🏗️ Architecture
@@ -80,6 +80,7 @@ nx.json                              # Nx workspace configuration
 **File:** `.github/workflows/vendemas-landing-web-ci.yml`
 
 **Key Features:**
+
 - Path-based triggers for efficient execution
 - Parallel job execution (lint + test)
 - Nx Cloud integration for caching
@@ -87,6 +88,7 @@ nx.json                              # Nx workspace configuration
 - Artifact management for build outputs
 
 **Path Filters:**
+
 ```yaml
 paths:
   - 'apps/vendemas-landing-web/**'
@@ -105,6 +107,7 @@ paths:
 **File:** `nx.json`
 
 **Key Settings:**
+
 ```json
 {
   "nxCloudAccessToken": "process.env.NX_CLOUD_ACCESS_TOKEN",
@@ -117,6 +120,7 @@ paths:
 **File:** `vercel.json`
 
 **Key Settings:**
+
 ```json
 {
   "framework": "nextjs"
@@ -126,11 +130,12 @@ paths:
 ### 4. Test Configuration
 
 **Root:** `vitest.config.ts`
+
 ```typescript
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'jsdom',  // Required for React component testing
+    environment: 'jsdom', // Required for React component testing
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
       provider: 'v8',
@@ -159,6 +164,7 @@ export default defineConfig({
 ```
 
 **App-specific:** `apps/vendemas-landing-web/vitest.config.ts`
+
 ```typescript
 export default defineConfig({
   test: {
@@ -178,17 +184,17 @@ export default defineConfig({
 
 ### Required GitHub Secrets
 
-| Secret Name | Description | Source |
-|-------------|-------------|---------|
+| Secret Name             | Description                      | Source             |
+| ----------------------- | -------------------------------- | ------------------ |
 | `NX_CLOUD_ACCESS_TOKEN` | Nx Cloud read-write access token | Nx Cloud Dashboard |
-| `VERCEL_TOKEN` | Vercel deployment token | Vercel Dashboard |
-| `VERCEL_ORG_ID` | Vercel organization ID | Vercel Dashboard |
-| `VERCEL_PROJECT_ID` | Vercel project ID | Vercel Dashboard |
+| `VERCEL_TOKEN`          | Vercel deployment token          | Vercel Dashboard   |
+| `VERCEL_ORG_ID`         | Vercel organization ID           | Vercel Dashboard   |
+| `VERCEL_PROJECT_ID`     | Vercel project ID                | Vercel Dashboard   |
 
 ### Required Vercel Environment Variables
 
-| Variable Name | Description | Value |
-|---------------|-------------|-------|
+| Variable Name           | Description                      | Value                 |
+| ----------------------- | -------------------------------- | --------------------- |
 | `NX_CLOUD_ACCESS_TOKEN` | Nx Cloud access token for builds | Same as GitHub secret |
 
 ## 🚀 Deployment Strategy
@@ -254,8 +260,12 @@ vi.mock('./actions', () => ({
 describe('Page Component', () => {
   it('should have proper metadata', async () => {
     const { metadata } = await import('./page');
-    expect(metadata.title).toBe('Vendemás - Mobile Sales Toolkit for Street Vendors');
-    expect(metadata.description).toContain('Vendemás - Empowering street vendors');
+    expect(metadata.title).toBe(
+      'Vendemás - Mobile Sales Toolkit for Street Vendors'
+    );
+    expect(metadata.description).toContain(
+      'Vendemás - Empowering street vendors'
+    );
   });
 
   it('should export a default function', async () => {
@@ -281,6 +291,7 @@ describe('Page Component', () => {
 **Problem:** `Invalid Nx Cloud access token. Token: process.env.NX_CLOUD_ACCESS_TOKEN. (code: 401)`
 
 **Solution:**
+
 - Generate a **CI access token** (read-write) in Nx Cloud Dashboard
 - Update both GitHub Secrets and Vercel Environment Variables
 - Ensure token format is correct (starts with `nx_cloud_`)
@@ -290,6 +301,7 @@ describe('Page Component', () => {
 **Problem:** React version conflicts in tests
 
 **Solution:**
+
 - Use `environment: 'jsdom'` in vitest config
 - Simplify tests to avoid complex component rendering
 - Mock components instead of rendering them
@@ -299,6 +311,7 @@ describe('Page Component', () => {
 **Problem:** `routes-manifest.json` not found
 
 **Solution:**
+
 - Use `output: 'standalone'` in Next.js config
 - Prepare build artifacts in `.vercel/output` structure
 - Use `--prebuilt` flag for deployment
@@ -308,6 +321,7 @@ describe('Page Component', () => {
 **Problem:** Changes don't trigger the pipeline
 
 **Solution:**
+
 - Ensure files are in monitored paths
 - Check path filters in workflow configuration
 - Add new file types to path filters if needed
@@ -333,6 +347,7 @@ npx nx run vendemas-landing-web:build --verbose
 ### For New Applications
 
 1. **Create Workflow File**
+
    ```bash
    cp .github/workflows/vendemas-landing-web-ci.yml .github/workflows/[app-name]-ci.yml
    ```
@@ -357,6 +372,7 @@ npx nx run vendemas-landing-web:build --verbose
 ### Template Variables
 
 Replace these in the workflow file:
+
 - `vendemas-landing-web` → `[your-app-name]`
 - `VendeMás Landing Web` → `[Your App Name]`
 - Update path filters for your app's dependencies
@@ -410,6 +426,6 @@ Replace these in the workflow file:
 
 ---
 
-**Last Updated:** August 2024  
-**Version:** 1.0  
+**Last Updated:** August 2024
+**Version:** 1.0
 **Status:** Production Ready ✅
