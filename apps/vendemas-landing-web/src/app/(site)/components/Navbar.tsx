@@ -23,7 +23,7 @@ import {
 } from '@heroicons/react/24/outline';
 import {
   ChevronDownIcon,
-  PhoneIcon,
+  RectangleGroupIcon,
   PlayCircleIcon,
 } from '@heroicons/react/20/solid';
 
@@ -61,7 +61,7 @@ const products = [
 ];
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  { name: 'Contact sales', href: '#', icon: RectangleGroupIcon },
 ];
 const company = [
   { name: 'About us', href: '#' },
@@ -81,8 +81,18 @@ export default function Example() {
         className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'
       >
         <div className='flex lg:flex-1'>
-          <a href='/' className='-m-1.5 p-1.5'>
-            <img src='/logo.svg' alt='VendeMás' className='h-8 w-auto' />
+          <a href='#' className='-m-1.5 p-1.5'>
+            <span className='sr-only'>Your Company</span>
+            <img
+              alt=''
+              src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600'
+              className='h-8 w-auto dark:hidden'
+            />
+            <img
+              alt=''
+              src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500'
+              className='h-8 w-auto not-dark:hidden'
+            />
           </a>
         </div>
         <div className='flex lg:hidden'>
@@ -115,10 +125,10 @@ export default function Example() {
                     key={item.name}
                     className='group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
                   >
-                    <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
+                    <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-secondary-700/50 dark:group-hover:bg-secondary-700'>
                       <item.icon
                         aria-hidden='true'
-                        className='size-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-400 dark:group-hover:text-white'
+                        className='size-6 text-gray-600 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-white'
                       />
                     </div>
                     <div className='flex-auto'>
@@ -206,7 +216,10 @@ export default function Example() {
         onClose={setMobileMenuOpen}
         className='lg:hidden'
       >
-        <div className='fixed inset-0 z-50' />
+        <div
+          className='fixed inset-0 z-50'
+          onClick={() => setMobileMenuOpen(false)}
+        />
         <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
           <div className='flex items-center justify-between'>
             <a href='#' className='-m-1.5 p-1.5'>
@@ -248,6 +261,7 @@ export default function Example() {
                         key={item.name}
                         as='a'
                         href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
                         className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                       >
                         {item.name}
@@ -258,12 +272,14 @@ export default function Example() {
 
                 <a
                   href='#'
+                  onClick={() => setMobileMenuOpen(false)}
                   className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                 >
                   Features
                 </a>
                 <a
                   href='#'
+                  onClick={() => setMobileMenuOpen(false)}
                   className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                 >
                   Marketplace
@@ -283,6 +299,7 @@ export default function Example() {
                         key={item.name}
                         as='a'
                         href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
                         className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                       >
                         {item.name}
@@ -294,6 +311,7 @@ export default function Example() {
               <div className='py-6'>
                 <a
                   href='#'
+                  onClick={() => setMobileMenuOpen(false)}
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                 >
                   Log in
