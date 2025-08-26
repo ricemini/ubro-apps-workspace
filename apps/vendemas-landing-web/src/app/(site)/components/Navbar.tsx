@@ -21,7 +21,6 @@ import {
   Layers,
   X,
   ChevronDown,
-  Blocks,
   PlayCircle,
   Blocks,
 } from 'lucide-react';

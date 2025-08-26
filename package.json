@@ -155,6 +155,7 @@
     "embla-carousel-react": "^8.3.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
+    "@headlessui/react": "^2.2.7",
     "next": "~15.2.4",
     "next-themes": "^0.3.0",
     "react": "19.0.0",

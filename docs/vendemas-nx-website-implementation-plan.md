@@ -281,7 +281,7 @@ firebase init hosting
 - **Styling**: Tailwind CSS
 - **UI Components**: Custom components
 - **Forms**: React Hook Form + Zod validation
-- **Icons**: Lucide React or Heroicons
+- **Icons**: Lucide React
 
 ### Backend
 
