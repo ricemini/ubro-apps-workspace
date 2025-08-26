@@ -37,7 +37,6 @@ export default function DemoModal({ onClose }: { onClose: () => void }) {
         <video controls className="w-full rounded-xl" poster="/mockups/demo-poster.webp">
           <source src="/demo/demo-ia.webm" type="video/webm" />
           <source src="/demo/demo-ia.mp4" type="video/mp4" />
-          Tu navegador no soporta video HTML5.
         </video>
       </div>
     </div>

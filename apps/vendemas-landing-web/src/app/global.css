@@ -105,10 +105,34 @@ html {
 /* Float animation for hero device mockup */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes float-slow {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
   }
-  .animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(140%);
+      opacity: 0;
+    }
+  }
+  .animate-scan {
+    animation: scan 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
 }
 /* Custom gradient text animation */
 .gradient-text {

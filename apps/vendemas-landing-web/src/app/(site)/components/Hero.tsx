@@ -1,57 +1,59 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import AiScanCard from './AiScanCard';
 
 const DemoModal = dynamic(() => import('./DemoModal'), { ssr: false });
+
+import { useState } from 'react';
 
 export default function Hero() {
   const [open, setOpen] = useState(false);
 
-  // Respect reduced motion (disable float/tilt anim)
-  const [reduce, setReduce] = useState(false);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setReduce(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    }
-  }, []);
-
   return (
     <header className="relative isolate overflow-hidden">
-      {/* Decorative background moves BEHIND content */}
-      <div aria-hidden
-           className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white to-primary-50" />
+      {/* Mesh gradient background */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+      >
+        <div className="absolute -top-24 -left-32 size-[520px] rounded-full blur-3xl opacity-30 bg-primary-500" />
+        <div className="absolute -bottom-32 -right-24 size-[560px] rounded-full blur-3xl opacity-20 bg-secondary-500" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 size-[420px] rounded-full blur-2xl opacity-15 bg-tertiary-500" />
+        {/* subtle grain (safe, tiny) */}
+        <div className="absolute inset-0 mix-blend-soft-light bg-[url('/noise.png')] opacity-[0.04]" />
+      </div>
 
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16">
-        {/* TEXT COLUMN */}
-        <div className="relative z-10">
-          <h1 className="text-display text-5xl md:text-6xl leading-tight !opacity-100">
-            <span className="!text-secondary">Todo tu negocio, </span>
+        {/* Copy */}
+        <div className="relative z-10 space-y-5">
+          <h1 className="text-display text-5xl md:text-6xl leading-tight text-secondary">
+            <span className="">Todo tu negocio, </span>
             <span className="bg-gradient-to-r from-tertiary-600 to-secondary-700 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.06)]">
               impulsado por IA
             </span>
           </h1>
 
-          <p className="mt-2 text-3xl font-semibold text-primary-600 !opacity-100">
+          <p className="text-3xl font-semibold text-primary-600">
             Vende más, sin complicarte
           </p>
 
-          <p className="mt-2 text-body text-secondary/90">
+          <p className="text-body text-secondary/90 max-w-prose">
             Enfocado para MiPyMEs y negocios ambulantes.
           </p>
 
-          <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-2">
             <a
               href="/signup"
-              className="rounded-lg bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition"
+              className="rounded-xl bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition"
               data-analytics="cta_primary_hero"
             >
               Comenzar gratis
             </a>
             <button
               onClick={() => setOpen(true)}
-              className="rounded-lg px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 bg-white/95 backdrop-blur
-                         inline-flex items-center gap-2 transition"
+              className="rounded-xl px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 bg-white/90 backdrop-blur transition inline-flex items-center gap-2"
               data-analytics="cta_demo_hero"
               aria-haspopup="dialog"
               aria-controls="demo-ia-modal"
@@ -63,84 +65,23 @@ export default function Hero() {
             </button>
           </div>
 
-          <nav className="mt-3 flex gap-6 text-sm">
-            <a
-              href="#como-funciona"
-              className="text-secondary underline decoration-dotted hover:decoration-solid"
-              data-analytics="hero_scroll_how"
-            >
+          {/* Tertiary links */}
+          <nav className="flex gap-6 text-sm">
+            <a href="#como-funciona" className="text-secondary underline decoration-dotted hover:decoration-solid" data-analytics="hero_scroll_how">
               Ver cómo funciona →
             </a>
-            <a
-              href="/caracteristicas"
-              className="text-secondary/90 hover:text-secondary underline"
-              data-analytics="hero_all_features"
-            >
+            <a href="/caracteristicas" className="text-secondary/90 hover:text-secondary underline" data-analytics="hero_all_features">
               Todas las funciones
             </a>
           </nav>
+
+          {/* Trust micro-strip (only if true; else remove) */}
+          {/* <p className="text-xs text-secondary/70 pt-1">★★★★★ 4.9/5 en reseñas · Más de 1,000 vendedores en MX</p> */}
         </div>
 
-        {/* MOCKUP COLUMN */}
+        {/* Visual */}
         <div className="relative z-0">
-          <div
-            className={[
-              'relative isolate',
-              reduce ? '' : 'motion-safe:animate-float-slow',
-            ].join(' ')}
-            aria-hidden
-          >
-        {/* Badge */}
-        <span className="absolute -top-3 right-6 z-10 rounded-full bg-tertiary-500 text-tertiary-on text-xs px-2 py-1 shadow">
-          Importando menú con IA
-        </span>
-
-        {/* Tilted card */}
-        <div className="rotate-3">
-          <div className="rounded-[1.5rem] p-[1px] bg-gradient-to-br from-primary-500 to-secondary-500 shadow-2xl">
-            <div className="rounded-[1.45rem] bg-white p-5 sm:p-6">
-              <div className="mb-3 flex items-center justify-between text-xs text-secondary/60">
-                <span className="font-medium text-secondary">VendeMás IA</span>
-                <span>Escaneando menú <span aria-hidden>✓</span></span>
-              </div>
-
-              <h3 className="text-lg font-bold text-secondary mb-3">
-                Catálogo detectado
-              </h3>
-
-              <ul className="space-y-2 text-sm">
-                {[
-                  ['Tacos al pastor', '$15'],
-                  ['Quesadillas', '$20'],
-                  ['Refrescos', '$12'],
-                ].map(([name, price]) => (
-                  <li
-                    key={name}
-                    className="flex items-center justify-between rounded-lg bg-secondary/5 px-3 py-2"
-                  >
-                    <span className="text-secondary">{name}</span>
-                    <span className="flex items-center gap-2">
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary-500 text-white text-[10px]">✓</span>
-                      <span className="font-medium text-secondary">{price}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                type="button"
-                className="mt-4 w-full rounded-lg bg-primary-500 text-primary-on px-4 py-3 hover:brightness-[1.05] transition"
-                tabIndex={-1}
-              >
-                Importar productos
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Soft drop shadow */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-8 w-[80%] rounded-full bg-black/10 blur-2xl" />
-          </div>
+          <AiScanCard />
         </div>
       </div>
 
