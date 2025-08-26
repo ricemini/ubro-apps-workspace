@@ -18,7 +18,7 @@ export default function Hero() {
         <div className='absolute -top-24 -left-32 size-[520px] rounded-full blur-3xl opacity-30 bg-primary-500' />
         <div className='absolute -bottom-32 -right-24 size-[560px] rounded-full blur-3xl opacity-20 bg-secondary-500' />
         <div className='absolute top-1/3 left-1/2 -translate-x-1/2 size-[420px] rounded-full blur-2xl opacity-15 bg-tertiary-500' />
-        <div className='absolute inset-y-0 left-0 w-[62%] bg-gradient-to-r from-white via-white/90 to-white/0' />
+        <div className='absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-white via-white/95 to-white/0' />
         {/* if you keep noise, keep it behind too */}
         {/* <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')]" /> */}
       </div>
@@ -27,26 +27,26 @@ export default function Hero() {
         {/* TEXT column must be above */}
         <div className='relative z-20 space-y-5'>
           <h1 className='text-display text-5xl md:text-6xl leading-tight'>
-            <span className='text-secondary'>Todo tu negocio, </span>
-            <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent drop-shadow-[0_1px_0_rgba(0,0,0,0.08)]'>
+            <span className='text-black font-bold'>Todo tu negocio, </span>
+            <span className='bg-gradient-to-r from-tertiary-700 to-secondary-800 bg-clip-text text-transparent drop-shadow-[0_2px_0_rgba(0,0,0,0.1)]'>
               impulsado por IA
             </span>
           </h1>
 
-          <p className='mt-2 text-3xl font-semibold text-primary-600'>
+          <p className='mt-2 text-3xl font-bold text-primary-600'>
             Vende más, sin complicarte
           </p>
 
-          <p className='mt-2 text-secondary/90'>
+          <p className='mt-2 text-black/90 font-medium'>
             Hecho para MiPyMEs y negocios ambulantes. Funciona sin internet.
           </p>
 
           {/* Feature chips */}
-          <div className='flex flex-wrap gap-2 text-sm text-secondary/80'>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-secondary/5'>Catálogo desde una foto</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-secondary/5'>Cobros por CoDi</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-secondary/5'>Funciona sin internet</span>
-            <span className='inline-flex items-center px-2 py-1 rounded-full bg-secondary/5'>Promos con IA</span>
+          <div className='flex flex-wrap gap-2 text-sm text-black/80 font-medium'>
+            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Catálogo desde una foto</span>
+            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Cobros por CoDi</span>
+            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Funciona sin internet</span>
+            <span className='inline-flex items-center px-2 py-1 rounded-full bg-black/5'>Promos con IA</span>
           </div>
 
           {/* CTAs */}
@@ -81,14 +81,14 @@ export default function Hero() {
           <nav className='flex gap-6 text-sm'>
             <a
               href='#como-funciona'
-              className='text-secondary underline decoration-dotted hover:decoration-solid'
+              className='text-black underline decoration-dotted hover:decoration-solid font-medium'
               data-analytics='hero_scroll_how'
             >
               Ver cómo funciona →
             </a>
             <a
               href='/caracteristicas'
-              className='text-secondary/90 hover:text-secondary underline'
+              className='text-black/90 hover:text-black underline font-medium'
               data-analytics='hero_all_features'
             >
               Todas las funciones
