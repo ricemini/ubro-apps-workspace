@@ -2,22 +2,33 @@ const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
-// Direct v3 configuration for Next.js compatibility
 module.exports = {
+  darkMode: ['class'],
   content: [
     join(
       __dirname,
       '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
     ),
     ...createGlobPatternsForDependencies(__dirname),
-    '../../libs/vendemas-shared-design/src/**/*.{html,ts}',
   ],
-  darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
       colors: {
-        // Vendemás Design System Colors
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
           50: 'rgb(76 175 80 / 0.05)',
           100: 'rgb(76 175 80 / 0.1)',
           200: 'rgb(76 175 80 / 0.2)',
@@ -28,10 +39,11 @@ module.exports = {
           700: 'rgb(76 175 80 / 0.9)',
           800: 'rgb(76 175 80 / 0.95)',
           900: 'rgb(76 175 80 / 0.98)',
-          DEFAULT: '#4CAF50',
           on: '#000000',
         },
         secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
           50: 'rgb(30 58 95 / 0.05)',
           100: 'rgb(30 58 95 / 0.1)',
           200: 'rgb(30 58 95 / 0.2)',
@@ -42,7 +54,6 @@ module.exports = {
           700: 'rgb(30 58 95 / 0.9)',
           800: 'rgb(30 58 95 / 0.95)',
           900: 'rgb(30 58 95 / 0.98)',
-          DEFAULT: '#1E3A5F',
           on: '#FFFFFF',
         },
         tertiary: {
@@ -59,6 +70,26 @@ module.exports = {
           DEFAULT: '#F4B942',
           on: '#000000',
         },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
         error: {
           50: 'rgb(194 59 75 / 0.05)',
           100: 'rgb(194 59 75 / 0.1)',
@@ -73,6 +104,25 @@ module.exports = {
           DEFAULT: '#C23B4B',
           on: '#FFFFFF',
         },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
@@ -91,12 +141,6 @@ module.exports = {
         lg: '1.5rem',
         xl: '2rem',
       },
-      borderRadius: {
-        sm: '0.25rem',
-        md: '0.5rem',
-        lg: '1rem',
-        full: '9999px',
-      },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #4CAF50 0%, #1E3A5F 100%)',
         'gradient-secondary':
@@ -105,6 +149,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('tailwindcss-animate'),
     function ({ addUtilities, theme }) {
       const newUtilities = {
         '.app-name': {
@@ -112,7 +157,7 @@ module.exports = {
           fontWeight: theme('fontWeight.bold'),
           fontStyle: 'italic',
           fontSize: '2.5rem',
-          color: theme('colors.secondary.DEFAULT'),
+          color: theme('colors.secondary.500'),
         },
         '.text-body': {
           fontFamily: theme('fontFamily.body'),

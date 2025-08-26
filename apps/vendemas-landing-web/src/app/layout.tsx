@@ -1,62 +1,41 @@
-import React from 'react';
-import type { Metadata, Viewport } from 'next';
 import './global.css';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Vendemás - Mobile Sales Toolkit for Street Vendors',
-    template: '%s | Vendemás',
-  },
-  description:
-    'Empower street vendors to sell more with less friction. Mobile-first sales toolkit with QR/barcode checkout, live location, and daily sales insights.',
-  keywords: [
-    'street vendors',
-    'mobile sales',
-    'POS system',
-    'QR payments',
-    'Mexico',
-    'LATAM',
-    'micro-retail',
-  ],
-  authors: [{ name: 'Vendemás Team' }],
-  creator: 'Vendemás',
-  publisher: 'Vendemás',
+  title: 'VendeMás - POS Móvil para Vendedores Ambulantes | México y LATAM',
+  description: 'Sistema de punto de venta móvil diseñado especialmente para vendedores ambulantes en México y Latinoamérica. Pagos CoDi, funciona sin internet, fácil de usar.',
+  keywords: 'POS móvil, vendedores ambulantes, CoDi, punto de venta, México, LATAM, sin internet, comercio ambulante',
+  authors: [{ name: 'VendeMás' }],
+  creator: 'VendeMás',
+  publisher: 'VendeMás',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://vendemas.com'),
-  alternates: {
-    canonical: '/',
-    languages: {
-      'en-US': '/en-US',
-      'es-MX': '/es-MX',
-    },
-  },
+  metadataBase: new URL('https://vendemas.mx'),
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://vendemas.com',
-    title: 'Vendemás - Mobile Sales Toolkit for Street Vendors',
-    description:
-      'Empower street vendors to sell more with less friction. Mobile-first sales toolkit with QR/barcode checkout, live location, and daily sales insights.',
-    siteName: 'Vendemás',
+    title: 'VendeMás - POS Móvil para Vendedores Ambulantes',
+    description: 'Sistema de punto de venta móvil diseñado especialmente para vendedores ambulantes en México y Latinoamérica. Pagos CoDi, funciona sin internet, fácil de usar.',
+    url: 'https://vendemas.mx',
+    siteName: 'VendeMás',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Vendemás - Mobile Sales Toolkit',
+        alt: 'VendeMás - POS Móvil para Vendedores Ambulantes',
       },
     ],
+    locale: 'es_MX',
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vendemás - Mobile Sales Toolkit for Street Vendors',
-    description: 'Empower street vendors to sell more with less friction.',
-    images: ['/og-image.jpg'],
-    creator: '@vendemas',
+    title: 'VendeMás - POS Móvil para Vendedores Ambulantes',
+    description: 'Sistema de punto de venta móvil diseñado especialmente para vendedores ambulantes en México y Latinoamérica.',
+    images: ['/twitter-card.jpg'],
+    creator: '@VendeMas',
   },
   robots: {
     index: true,
@@ -69,46 +48,32 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-    yahoo: 'your-yahoo-verification-code',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
   },
-};
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: 'cover',
 };
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): React.JSX.Element {
+}) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="es-MX" className="scroll-smooth">
       <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:ital,wght@1,700&display=swap"
+          rel="stylesheet"
         />
-        <link rel='dns-prefetch' href='//fonts.googleapis.com' />
-        <link rel='dns-prefetch' href='//fonts.gstatic.com' />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="canonical" href="https://vendemas.mx" />
+        <meta name="theme-color" content="#4CAF50" />
       </head>
-      <body>
-        <div className='wrapper'>
-          <div className='container'>{children}</div>
-        </div>
+      <body className="font-body text-body bg-white text-gray-900 antialiased">
+        {children}
       </body>
     </html>
   );
