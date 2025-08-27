@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -12,7 +12,9 @@ import {
   PopoverGroup,
   PopoverPanel,
 } from '@headlessui/react';
-import VendeMasLogo from './branding/VendeMasLogo';
+import { motion } from 'framer-motion';
+import AnimatedLogo from './branding/AnimatedLogo';
+import { useScrollState } from '../hooks/useScrollState';
 import {
   RotateCcw,
   Menu,
@@ -72,40 +74,43 @@ const company = [
 
 export default function Example(): React.JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 0);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Use the custom scroll state hook
+  const { scrollState, isAtTop } = useScrollState({
+    threshold: 100,
+    throttleMs: 16,
+  });
 
   return (
-    <header
-      className={`transition-all duration-300 ${
-        isScrolled
-          ? 'fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm dark:bg-gray-900/95'
-          : 'bg-transparent'
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isAtTop
+          ? 'bg-transparent'
+          : 'bg-white/95 backdrop-blur-sm shadow-sm dark:bg-gray-900/95'
       }`}
+      initial={{ y: 0 }}
+      animate={{
+        y: isAtTop ? 0 : 0,
+      }}
+      transition={{
+        duration: 0.4,
+        ease: [0.2, 0.8, 0.2, 1],
+      }}
     >
       <nav
         aria-label='Global'
         className='mx-auto flex max-w-7xl items-center justify-between p-6 md:px-8'
       >
         <div className='flex md:flex-1'>
-          <VendeMasLogo size='md' asLink />
+          <AnimatedLogo scrollState={scrollState} asLink />
         </div>
         <div className='flex md:hidden'>
           <button
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 transition-colors duration-300 ${
-              isScrolled
-                ? 'text-gray-700 dark:text-gray-400'
+              isAtTop
+                ? 'text-gray-900 dark:text-white'
                 : 'text-gray-900 dark:text-white'
             }`}
           >
@@ -117,18 +122,18 @@ export default function Example(): React.JSX.Element {
           <Popover className='relative'>
             <PopoverButton
               className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
-                isScrolled
+                isAtTop
                   ? 'text-gray-900 dark:text-white'
-                  : 'text-white dark:text-gray-200'
+                  : 'text-gray-900 dark:text-white'
               }`}
             >
               Product
               <ChevronDown
                 aria-hidden='true'
                 className={`size-5 flex-none transition-colors duration-300 ${
-                  isScrolled
-                    ? 'text-gray-400 dark:text-gray-500'
-                    : 'text-white/70 dark:text-gray-300'
+                  isAtTop
+                    ? 'text-white/70 dark:text-gray-300'
+                    : 'text-gray-400 dark:text-gray-500'
                 }`}
               />
             </PopoverButton>
@@ -185,7 +190,7 @@ export default function Example(): React.JSX.Element {
           <a
             href='#'
             className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isScrolled
+              isAtTop
                 ? 'text-gray-900 dark:text-white'
                 : 'text-gray-900 dark:text-white'
             }`}
@@ -195,7 +200,7 @@ export default function Example(): React.JSX.Element {
           <a
             href='#'
             className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isScrolled
+              isAtTop
                 ? 'text-gray-900 dark:text-white'
                 : 'text-gray-900 dark:text-white'
             }`}
@@ -206,7 +211,7 @@ export default function Example(): React.JSX.Element {
           <Popover className='relative'>
             <PopoverButton
               className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
-                isScrolled
+                isAtTop
                   ? 'text-gray-900 dark:text-white'
                   : 'text-gray-900 dark:text-white'
               }`}
@@ -215,9 +220,9 @@ export default function Example(): React.JSX.Element {
               <ChevronDown
                 aria-hidden='true'
                 className={`size-5 flex-none transition-colors duration-300 ${
-                  isScrolled
-                    ? 'text-gray-400 dark:text-gray-500'
-                    : 'text-white/70 dark:text-gray-300'
+                  isAtTop
+                    ? 'text-white/70 dark:text-gray-300'
+                    : 'text-gray-400 dark:text-gray-500'
                 }`}
               />
             </PopoverButton>
@@ -242,7 +247,7 @@ export default function Example(): React.JSX.Element {
           <a
             href='#'
             className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isScrolled
+              isAtTop
                 ? 'text-gray-900 dark:text-white'
                 : 'text-gray-900 dark:text-white'
             }`}
@@ -262,7 +267,7 @@ export default function Example(): React.JSX.Element {
         />
         <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
           <div className='flex items-center justify-between'>
-            <VendeMasLogo size='xs' asLink />
+            <AnimatedLogo scrollState={scrollState} asLink />
             <button
               type='button'
               onClick={() => setMobileMenuOpen(false)}
@@ -349,6 +354,6 @@ export default function Example(): React.JSX.Element {
           </div>
         </DialogPanel>
       </Dialog>
-    </header>
+    </motion.header>
   );
 }

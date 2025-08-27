@@ -11,7 +11,7 @@ export default function Hero(): React.JSX.Element {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className='relative isolate overflow-hidden'>
+    <header className='relative isolate overflow-hidden pt-20'>
       <HeroBackground />
 
       <div className='mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16'>
