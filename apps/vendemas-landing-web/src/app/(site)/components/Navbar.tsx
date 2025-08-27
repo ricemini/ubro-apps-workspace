@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -12,6 +12,7 @@ import {
   PopoverGroup,
   PopoverPanel,
 } from '@headlessui/react';
+import VendeMasLogo from './branding/VendeMasLogo';
 import {
   RotateCcw,
   Menu,
@@ -69,47 +70,66 @@ const company = [
   { name: 'Blog', href: '#' },
 ];
 
-export default function Example() {
+export default function Example(): React.JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className='bg-white dark:bg-gray-900'>
+    <header
+      className={`transition-all duration-300 ${
+        isScrolled
+          ? 'fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm dark:bg-gray-900/95'
+          : 'bg-transparent'
+      }`}
+    >
       <nav
         aria-label='Global'
-        className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'
+        className='mx-auto flex max-w-7xl items-center justify-between p-6 md:px-8'
       >
-        <div className='flex lg:flex-1'>
-          <a href='#' className='-m-1.5 p-1.5'>
-            <span className='sr-only'>Your Company</span>
-            <img
-              alt=''
-              src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600'
-              className='h-8 w-auto dark:hidden'
-            />
-            <img
-              alt=''
-              src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500'
-              className='h-8 w-auto not-dark:hidden'
-            />
-          </a>
+        <div className='flex md:flex-1'>
+          <VendeMasLogo size='sm' withIcon iconVariant='inline' asLink />
         </div>
-        <div className='flex lg:hidden'>
+        <div className='flex md:hidden'>
           <button
             type='button'
             onClick={() => setMobileMenuOpen(true)}
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+            className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 transition-colors duration-300 ${
+              isScrolled
+                ? 'text-gray-700 dark:text-gray-400'
+                : 'text-gray-900 dark:text-white'
+            }`}
           >
             <span className='sr-only'>Open main menu</span>
             <Menu aria-hidden='true' className='size-6' />
           </button>
         </div>
-        <PopoverGroup className='hidden lg:flex lg:gap-x-12'>
+        <PopoverGroup className='hidden md:flex md:gap-x-12'>
           <Popover className='relative'>
-            <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
+            <PopoverButton
+              className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
+                isScrolled
+                  ? 'text-gray-900 dark:text-white'
+                  : 'text-white dark:text-gray-200'
+              }`}
+            >
               Product
               <ChevronDown
                 aria-hidden='true'
-                className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                className={`size-5 flex-none transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-gray-400 dark:text-gray-500'
+                    : 'text-white/70 dark:text-gray-300'
+                }`}
               />
             </PopoverButton>
 
@@ -164,23 +184,41 @@ export default function Example() {
 
           <a
             href='#'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className={`text-sm/6 font-semibold transition-colors duration-300 ${
+              isScrolled
+                ? 'text-gray-900 dark:text-white'
+                : 'text-gray-900 dark:text-white'
+            }`}
           >
             Features
           </a>
           <a
             href='#'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className={`text-sm/6 font-semibold transition-colors duration-300 ${
+              isScrolled
+                ? 'text-gray-900 dark:text-white'
+                : 'text-gray-900 dark:text-white'
+            }`}
           >
             Marketplace
           </a>
 
           <Popover className='relative'>
-            <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
+            <PopoverButton
+              className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
+                isScrolled
+                  ? 'text-gray-900 dark:text-white'
+                  : 'text-gray-900 dark:text-white'
+              }`}
+            >
               Company
               <ChevronDown
                 aria-hidden='true'
-                className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                className={`size-5 flex-none transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-gray-400 dark:text-gray-500'
+                    : 'text-white/70 dark:text-gray-300'
+                }`}
               />
             </PopoverButton>
 
@@ -203,7 +241,11 @@ export default function Example() {
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
           <a
             href='#'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className={`text-sm/6 font-semibold transition-colors duration-300 ${
+              isScrolled
+                ? 'text-gray-900 dark:text-white'
+                : 'text-gray-900 dark:text-white'
+            }`}
           >
             Log in <span aria-hidden='true'>&rarr;</span>
           </a>
@@ -220,19 +262,7 @@ export default function Example() {
         />
         <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
           <div className='flex items-center justify-between'>
-            <a href='#' className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Your Company</span>
-              <img
-                alt=''
-                src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600'
-                className='h-8 w-auto dark:hidden'
-              />
-              <img
-                alt=''
-                src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500'
-                className='h-8 w-auto not-dark:hidden'
-              />
-            </a>
+            <VendeMasLogo size='xs' withIcon iconVariant='lucide' asLink />
             <button
               type='button'
               onClick={() => setMobileMenuOpen(false)}

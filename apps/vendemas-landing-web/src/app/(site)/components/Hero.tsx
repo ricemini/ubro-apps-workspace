@@ -1,14 +1,13 @@
 'use client';
 
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import AiScanCard from './AiScanCard';
 import HeroBackground from './HeroBackground';
 
 const DemoModal = dynamic(() => import('./DemoModal'), { ssr: false });
 
-import { useState } from 'react';
-
-export default function Hero() {
+export default function Hero(): React.JSX.Element {
   const [open, setOpen] = useState(false);
 
   return (

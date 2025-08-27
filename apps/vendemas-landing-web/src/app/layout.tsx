@@ -66,16 +66,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }): React.JSX.Element {
   return (
-    <html lang='es-MX' className={`${inter.variable} ${jakarta.variable} scroll-smooth bg-white dark:bg-gray-950 scheme-light dark:scheme-dark`}>
+    <html
+      lang='es-MX'
+      className={`${inter.variable} ${jakarta.variable} scroll-smooth bg-white dark:bg-gray-950 scheme-light dark:scheme-dark`}
+    >
       <head>
         <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
         <link rel='sitemap' type='application/xml' href='/sitemap.xml' />
         <link rel='canonical' href='https://vendemas.mx' />
         <meta name='theme-color' content='#4CAF50' />
       </head>
-      <body className='font-body antialiased'>
-        {children}
-      </body>
+      <body className='font-body antialiased'>{children}</body>
     </html>
   );
 }

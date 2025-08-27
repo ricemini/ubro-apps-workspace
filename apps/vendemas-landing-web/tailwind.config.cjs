@@ -19,6 +19,13 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1400px',
+    },
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -126,10 +133,28 @@ module.exports = {
         'float-slow': 'float-slow 7s ease-in-out infinite',
       },
       fontFamily: {
-        display: ['var(--font-jakarta)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
-        body: ['var(--font-inter)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
+        display: [
+          'var(--font-jakarta)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
+        body: [
+          'var(--font-inter)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
         // keep "sans" for legacy components
-        sans: ['var(--font-inter)', 'InterVariable', 'Inter', 'system-ui', 'sans-serif'],
+        sans: [
+          'var(--font-inter)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
       },
       fontWeight: {
         normal: '400',
@@ -170,6 +195,9 @@ module.exports = {
           fontFamily: theme('fontFamily.display'),
           fontWeight: '700',
           letterSpacing: '-0.01em',
+        },
+        '.font-display': {
+          fontFamily: theme('fontFamily.display'),
         },
         '.nums-tabular': {
           fontVariantNumeric: 'tabular-nums',
