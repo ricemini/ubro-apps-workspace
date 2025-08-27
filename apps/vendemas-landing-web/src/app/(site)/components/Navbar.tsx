@@ -97,7 +97,7 @@ export default function Example(): React.JSX.Element {
         className='mx-auto flex max-w-7xl items-center justify-between p-6 md:px-8'
       >
         <div className='flex md:flex-1'>
-          <VendeMasLogo size='sm' withIcon iconVariant='inline' asLink />
+          <VendeMasLogo size='sm' asLink />
         </div>
         <div className='flex md:hidden'>
           <button
@@ -262,7 +262,7 @@ export default function Example(): React.JSX.Element {
         />
         <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
           <div className='flex items-center justify-between'>
-            <VendeMasLogo size='xs' withIcon iconVariant='lucide' asLink />
+            <VendeMasLogo size='xs' asLink />
             <button
               type='button'
               onClick={() => setMobileMenuOpen(false)}

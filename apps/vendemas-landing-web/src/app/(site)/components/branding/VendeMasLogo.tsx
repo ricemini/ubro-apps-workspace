@@ -2,20 +2,14 @@
 
 import * as React from 'react';
 import clsx from 'clsx';
-import { Store } from 'lucide-react';
 
 // Remove empty interface declaration
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-type IconVariant = 'inline' | 'lucide';
 
 export interface VendeMasLogoProps extends React.HTMLAttributes<any> {
   /** Overall scale */
   size?: Size;
-  /** Show the little shop icon */
-  withIcon?: boolean;
-  /** Which shop icon to render */
-  iconVariant?: IconVariant;
   /** Wrap in a link to "/" for nav usage */
   asLink?: boolean;
   /** Override aria-label if needed */
@@ -33,60 +27,12 @@ const SIZE_MAP: Record<
   Size,
   { vende: number; mas: number; dollar: number; icon: number }
 > = {
-  xs: { vende: 20, mas: 18, dollar: 28, icon: 32 },
+  xs: { vende: 28, mas: 26, dollar: 40, icon: 34 },
   sm: { vende: 28, mas: 26, dollar: 40, icon: 34 },
   md: { vende: 40, mas: 36, dollar: 56, icon: 48 },
   lg: { vende: 56, mas: 50, dollar: 80, icon: 68 },
   xl: { vende: 72, mas: 64, dollar: 96, icon: 84 },
 };
-
-/** Inline SVG awning with scalloped bottom and side supports */
-function ShopInlineSVG(): React.JSX.Element {
-  return (
-    <svg
-      viewBox='0 0 100 40'
-      width='100%'
-      height='auto'
-      role='img'
-      aria-label='Tienda'
-      className='pointer-events-none'
-    >
-      {/* Main awning shape with straight top and wavy bottom */}
-      <path
-        d='M10 8 L90 8
-           C85 8, 80 12, 75 12
-           C70 12, 65 8, 60 8
-           C55 8, 50 12, 45 12
-           C40 12, 35 8, 30 8
-           C25 8, 20 12, 15 12
-           C10 12, 5 8, 10 8 Z'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='3'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-
-      {/* Left side vertical support */}
-      <path
-        d='M10 8 L10 20'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-      />
-
-      {/* Right side vertical support */}
-      <path
-        d='M90 8 L90 20'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-      />
-    </svg>
-  );
-}
 
 /**
  * VendeMás brand logo – text + optional shop icon.
@@ -94,8 +40,6 @@ function ShopInlineSVG(): React.JSX.Element {
  */
 export function VendeMasLogo({
   size = 'md',
-  withIcon = true,
-  iconVariant = 'lucide',
   asLink = false,
   label = 'VendeMás — inicio',
   className,
@@ -108,52 +52,36 @@ export function VendeMasLogo({
     const xsContent = (
       <div
         className={clsx(
-          'flex items-center gap-2 select-none leading-none',
+          'inline-block select-none leading-none',
           '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
           className
         )}
         aria-label={label}
         {...rest}
       >
-        {/* Left side: Store icon with $ overlay */}
-        <div className='relative'>
-          {withIcon && (
-            <div className={COLORS.tertiary}>
-              <Store
-                width={s.icon}
-                height={s.icon}
-                stroke='currentColor'
-                strokeWidth={1.5}
-                className='pointer-events-none'
-              />
-            </div>
-          )}
-          {/* Green $ in front of store icon */}
-          <span
-            aria-hidden
-            className={clsx(
-              'absolute inset-0 flex items-center justify-center font-quicksand font-bold italic mt-1',
-              COLORS.primary
-            )}
-            style={{
-              fontSize: `${s.dollar * 0.6}px`,
-              lineHeight: 0.9,
-              textShadow: '0 1px 0 rgba(0,0,0,0.15)',
-            }}
-          >
-            $
-          </span>
-        </div>
-
-        {/* Right side: VendeMás text */}
+        {/* Single line: V$ */}
         <span
           className={clsx(
             'font-avenir-next-rounded font-extrabold',
-            COLORS.secondary
+            COLORS.tertiary
           )}
-          style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+          style={{
+            fontSize: `${SIZE_MAP.sm.vende}px`,
+            letterSpacing: '-0.02em',
+          }}
         >
-          VendeMás
+          V
+        </span>
+        <span
+          aria-hidden
+          className={clsx('font-quicksand font-bold italic', COLORS.primary)}
+          style={{
+            fontSize: `${SIZE_MAP.sm.vende * 1.4}px`,
+            lineHeight: 0.9,
+            textShadow: '0 1px 0 rgba(0,0,0,0.15)',
+          }}
+        >
+          $
         </span>
       </div>
     );
@@ -168,7 +96,62 @@ export function VendeMasLogo({
     return xsContent;
   }
 
-  // Original layout for other sizes
+  // Layout for sm size (single line)
+  if (size === 'sm') {
+    const smContent = (
+      <div
+        className={clsx(
+          'inline-block select-none leading-none',
+          '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
+          className
+        )}
+        aria-label={label}
+        {...rest}
+      >
+        {/* Single line: VendeMá$ */}
+        <span
+          className={clsx(
+            'font-avenir-next-rounded font-extrabold',
+            COLORS.tertiary
+          )}
+          style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+        >
+          V
+        </span>
+        <span
+          className={clsx(
+            'font-avenir-next-rounded font-extrabold',
+            COLORS.secondary
+          )}
+          style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+        >
+          endeMá
+        </span>
+        <span
+          aria-hidden
+          className={clsx('font-quicksand font-bold italic', COLORS.primary)}
+          style={{
+            fontSize: `${s.vende * 1.4}px`,
+            lineHeight: 0.9,
+            textShadow: '0 1px 0 rgba(0,0,0,0.15)',
+          }}
+        >
+          $
+        </span>
+      </div>
+    );
+
+    if (asLink) {
+      return (
+        <a href='/' aria-label={label} className='inline-block'>
+          {smContent}
+        </a>
+      );
+    }
+    return smContent;
+  }
+
+  // Original layout for other sizes (md, lg, xl)
   const content = (
     <div
       className={clsx(
@@ -180,34 +163,19 @@ export function VendeMasLogo({
       aria-label={label}
       {...rest}
     >
-      {/* Store icon roof - absolutely positioned */}
-      {withIcon && (
-        <div className='absolute top-0 left-0 w-full z-0'>
-          {iconVariant === 'inline' ? (
-            <div className={COLORS.tertiary} style={{ width: '100%' }}>
-              <ShopInlineSVG />
-            </div>
-          ) : (
-            <div className={COLORS.tertiary} style={{ width: '100%' }}>
-              <Store
-                width={s.icon}
-                height={s.icon}
-                stroke='currentColor'
-                strokeWidth={1.5}
-                className='pointer-events-none'
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Second row: Two columns */}
-      <div
-        className='flex items-end w-full relative z-10 px-10 mt-8'
-        style={{ paddingTop: withIcon ? `${s.icon * 0.3}px` : '0px' }}
-      >
+      {/* Text content */}
+      <div className='flex items-end w-full relative z-10 px-10'>
         {/* First column: Vende and Más stacked vertically */}
         <div className='flex flex-col flex-1'>
+          <span
+            className={clsx(
+              'block font-avenir-next-rounded font-extrabold',
+              COLORS.tertiary
+            )}
+            style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+          >
+            V
+          </span>
           <span
             className={clsx(
               'block font-avenir-next-rounded font-extrabold',
@@ -215,7 +183,7 @@ export function VendeMasLogo({
             )}
             style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
           >
-            Vende
+            ende
           </span>
           <div className='flex justify-end'>
             <span
@@ -238,7 +206,7 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${s.dollar}px`,
+            fontSize: `${s.vende * 1.4}px`,
             lineHeight: 0.9,
             // tiny shadow for edge crispness on light BGs
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
