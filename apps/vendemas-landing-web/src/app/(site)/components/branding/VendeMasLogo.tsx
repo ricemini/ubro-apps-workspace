@@ -167,24 +167,26 @@ export function VendeMasLogo({
       <div className='flex items-end w-full relative z-10 px-10'>
         {/* First column: Vende and Más stacked vertically */}
         <div className='flex flex-col flex-1'>
-          <span
-            className={clsx(
-              'block font-avenir-next-rounded font-extrabold',
-              COLORS.tertiary
-            )}
-            style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
-          >
-            V
-          </span>
-          <span
-            className={clsx(
-              'block font-avenir-next-rounded font-extrabold',
-              COLORS.secondary
-            )}
-            style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
-          >
-            ende
-          </span>
+          <div className='flex'>
+            <span
+              className={clsx(
+                'font-avenir-next-rounded font-extrabold',
+                COLORS.tertiary
+              )}
+              style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+            >
+              V
+            </span>
+            <span
+              className={clsx(
+                'font-avenir-next-rounded font-extrabold',
+                COLORS.secondary
+              )}
+              style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+            >
+              ende
+            </span>
+          </div>
           <div className='flex justify-end'>
             <span
               className={clsx(

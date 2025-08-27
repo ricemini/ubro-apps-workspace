@@ -97,7 +97,7 @@ export default function Example(): React.JSX.Element {
         className='mx-auto flex max-w-7xl items-center justify-between p-6 md:px-8'
       >
         <div className='flex md:flex-1'>
-          <VendeMasLogo size='sm' asLink />
+          <VendeMasLogo size='md' asLink />
         </div>
         <div className='flex md:hidden'>
           <button
