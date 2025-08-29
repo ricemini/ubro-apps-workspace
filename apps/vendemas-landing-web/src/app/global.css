@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Variables for dark mode support */
-:root {
+/* CSS Variables for theme support */
+:root,
+.light {
   --background: 0 0% 100%;
   --foreground: 0 0% 3.9%;
   --card: 0 0% 100%;
@@ -65,7 +66,7 @@
   }
 }
 
-/* Custom focus styles for accessibility */
+/* Utilities */
 @layer utilities {
   .focus-visible {
     @apply outline-none ring-2 ring-primary-500 ring-offset-2;
@@ -73,6 +74,18 @@
 
   .btn-focus {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  /* === Single source of truth for gradient motion === */
+  .animate-vm-gradient {
+    --vm-glow: 0;
+    will-change: background-position, filter;
+    /* Returns to original state each loop (alternate) */
+    animation:
+      vm-pan 6s linear infinite alternate,
+      vm-glow 12s ease-in-out infinite;
+    filter: saturate(calc(1 + var(--vm-glow)))
+      brightness(calc(1 + var(--vm-glow)));
   }
 }
 
@@ -82,18 +95,49 @@ html {
   font-display: swap;
 }
 
+/* Custom pulse animation for CTA button */
+.animate-pulse-custom {
+  animation: pulse-custom 4s infinite;
+}
+
+@keyframes pulse-custom {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(103, 203, 106, 0.7);
+  }
+  10% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(103, 203, 106, 0);
+  }
+  20% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(103, 203, 106, 0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Prevent flash of unstyled content during theme loading */
+.theme-loading {
+  visibility: hidden;
+}
+
+.theme-loaded {
+  visibility: visible;
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .text-body {
     @apply text-black;
   }
-
   .bg-primary-500 {
     @apply bg-primary-700;
   }
 }
 
-/* Reduced motion support */
+/* Reduced motion: clamp all animations */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -102,10 +146,15 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .animate-vm-gradient {
+    animation: none !important;
+    filter: none !important;
+  }
 }
 
-/* Float animation for hero device mockup */
+/* Motion keyframes (non-gradient helpers kept) */
 @media (prefers-reduced-motion: no-preference) {
+  /* Float animation for hero device mockup */
   @keyframes float-slow {
     0%,
     100% {
@@ -119,6 +168,7 @@ html {
     animation: float-slow 7s ease-in-out infinite;
   }
 
+  /* Scan line (optional overlay) */
   @keyframes scan {
     0% {
       transform: translateY(-100%);
@@ -135,43 +185,37 @@ html {
   .animate-scan {
     animation: scan 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
   }
-}
-/* Custom gradient text animation */
-.gradient-text {
-  --bg-size: 300%;
-  --color-one: #1e3a5f;
-  --color-two: #4caf50;
-  --color-three: #f4b942;
-  background: linear-gradient(
-      90deg,
-      var(--color-one),
-      var(--color-two),
-      var(--color-three),
-      var(--color-three),
-      var(--color-two),
-      var(--color-one)
-    )
-    0 0 / var(--bg-size) 100%;
-  color: transparent;
-  background-clip: text;
-  height: 64px;
-}
-.animate-text.animated {
-  animation:
-    slideInText 0.2s forwards,
-    move-bg 10s linear infinite;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .gradient-text {
-    animation: move-bg 20s linear infinite;
-  }
-
-  @keyframes move-bg {
+  /* === Gradient animations (final + only) === */
+  /* Pan left→right then right→left (alternate) */
+  @keyframes vm-pan {
+    from {
+      background-position: 0% 50%;
+    }
     to {
-      background-position: 100% 0;
+      background-position: 100% 50%;
     }
   }
+  /* Gentle saturation/brightness breath */
+  @keyframes vm-glow {
+    0%,
+    100% {
+      --vm-glow: 0;
+    }
+    50% {
+      --vm-glow: 0.06;
+    } /* keep subtle */
+  }
+}
+
+/* Gradient text helper (no animation here; add .animate-vm-gradient when needed) */
+.gradient-text {
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Example: set your gradient via inline class or here */
+  /* background-image: linear-gradient(90deg,#1E3A5F,#2B4E86,#365FA6,#1F7BB6,#C08E2B,#A87411); */
+  /* background-size: 320% 320%; */
 }
 
 /* Align prices/KPIs across columns */
@@ -186,7 +230,7 @@ html {
   line-height: 1.65;
 }
 
-/* Headings scale (fallback if not using component classes) */
+/* Heading letter-spacing */
 h1 {
   letter-spacing: -0.01em;
 }
@@ -195,38 +239,10 @@ h3 {
   letter-spacing: -0.005em;
 }
 
-/* Smooth, GPU-friendly-ish background animation */
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Help the browser plan ahead */
-.gradient-text,
-.motion-safe\:animate-\[gradient-shift_4s_cubic-bezier\(\.22\,\.61\,\.36\,1\)_infinite\] {
-  will-change: background-position;
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .animate-gradient-text,
-  .motion-safe\:animate-\[gradient-shift_4s_cubic-bezier\(\.22\,\.61\,\.36\,1\)_infinite\] {
-    animation: none !important;
-    background-position: 50% 50%;
-  }
-}
-
-/* High-contrast mode fallback */
+/* High-contrast mode fallback for gradient text */
 @media (forced-colors: active) {
   .gradient-text {
-    color: CanvasText; /* solid text in HCM */
+    color: CanvasText;
     -webkit-text-fill-color: currentColor;
     background: none !important;
   }

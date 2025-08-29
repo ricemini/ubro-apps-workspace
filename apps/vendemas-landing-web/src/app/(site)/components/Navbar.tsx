@@ -1,359 +1,93 @@
 'use client';
 
-import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from '@headlessui/react';
-import { motion } from 'framer-motion';
-import AnimatedLogo from './branding/AnimatedLogo';
-import { useScrollState } from '../hooks/useScrollState';
-import {
-  RotateCcw,
-  Menu,
-  BarChart3,
-  MousePointer2,
-  Shield,
-  Layers,
-  X,
-  ChevronDown,
-  PlayCircle,
-  Blocks,
-} from 'lucide-react';
+import * as React from 'react';
+import Link from 'next/link';
+import { Menu, ChevronDown } from 'lucide-react';
+import { PRIMARY, SECONDARY } from '../data/nav';
+import VendeMasLogo from './branding/VendeMasLogo';
+import MobileMenu from './layout/MobileMenu';
+import ThemeToggle from './theme/ThemeToggle';
 
-const products = [
-  {
-    name: 'Analytics',
-    description: 'Get a better understanding of your traffic',
-    href: '#',
-    icon: BarChart3,
-  },
-  {
-    name: 'Engagement',
-    description: 'Speak directly to your customers',
-    href: '#',
-    icon: MousePointer2,
-  },
-  {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
-    icon: Shield,
-  },
-  {
-    name: 'Integrations',
-    description: 'Connect with third-party tools',
-    href: '#',
-    icon: Layers,
-  },
-  {
-    name: 'Automations',
-    description: 'Build strategic funnels that will convert',
-    href: '#',
-    icon: RotateCcw,
-  },
-];
-const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircle },
-  { name: 'Contact sales', href: '#', icon: Blocks },
-];
-const company = [
-  { name: 'About us', href: '#' },
-  { name: 'Careers', href: '#' },
-  { name: 'Support', href: '#' },
-  { name: 'Press', href: '#' },
-  { name: 'Blog', href: '#' },
-];
+export default function Navbar(): React.JSX.Element {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-export default function Example(): React.JSX.Element {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Use the custom scroll state hook
-  const { scrollState, isAtTop } = useScrollState({
-    threshold: 100,
-    throttleMs: 16,
-  });
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 6);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isAtTop
-          ? 'bg-transparent'
-          : 'bg-white/95 backdrop-blur-sm shadow-sm dark:bg-gray-900/95'
+    <header
+      className={`sticky top-0 z-40 transition-all duration-300 ${
+        scrolled
+          ? 'backdrop-blur-md supports-[backdrop-filter]:bg-white/80 border-b border-secondary/10 dark:supports-[backdrop-filter]:bg-gray-900/80 dark:border-secondary/20'
+          : 'bg-transparent'
       }`}
-      initial={{ y: 0 }}
-      animate={{
-        y: isAtTop ? 0 : 0,
-      }}
-      transition={{
-        duration: 0.4,
-        ease: [0.2, 0.8, 0.2, 1],
-      }}
     >
-      <nav
-        aria-label='Global'
-        className='mx-auto flex max-w-7xl items-center justify-between p-6 md:px-8'
-      >
-        <div className='flex md:flex-1'>
-          <AnimatedLogo scrollState={scrollState} asLink />
+      <div className='mx-auto flex max-w-7xl items-center justify-between px-4 py-3'>
+        {/* Logo */}
+        <div className='flex lg:flex-1'>
+          <VendeMasLogo size='sm' className='lg:hidden' asLink />
+          <VendeMasLogo size='md' className='hidden lg:block' asLink />
         </div>
-        <div className='flex md:hidden'>
-          <button
-            type='button'
-            onClick={() => setMobileMenuOpen(true)}
-            className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 transition-colors duration-300 ${
-              isAtTop
-                ? 'text-gray-900 dark:text-white'
-                : 'text-gray-900 dark:text-white'
-            }`}
-          >
-            <span className='sr-only'>Open main menu</span>
-            <Menu aria-hidden='true' className='size-6' />
-          </button>
-        </div>
-        <PopoverGroup className='hidden md:flex md:gap-x-12'>
-          <Popover className='relative'>
-            <PopoverButton
-              className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
-                isAtTop
-                  ? 'text-gray-900 dark:text-white'
-                  : 'text-gray-900 dark:text-white'
-              }`}
-            >
-              Product
-              <ChevronDown
-                aria-hidden='true'
-                className={`size-5 flex-none transition-colors duration-300 ${
-                  isAtTop
-                    ? 'text-white/70 dark:text-gray-300'
-                    : 'text-gray-400 dark:text-gray-500'
-                }`}
-              />
-            </PopoverButton>
 
-            <PopoverPanel
-              transition
-              className='absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-white shadow-lg outline-1 outline-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10'
+        {/* Desktop nav */}
+        <nav className='hidden items-center gap-6 md:flex'>
+          {PRIMARY.map(item => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className='text-sm font-medium text-secondary-700 hover:text-secondary-900 transition-colors duration-200 dark:text-secondary-300 dark:hover:text-white'
             >
-              <div className='p-4'>
-                {products.map(item => (
-                  <div
-                    key={item.name}
-                    className='group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
-                  >
-                    <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
-                      <item.icon
-                        aria-hidden='true'
-                        className='size-6 text-secondary-600 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-white'
-                      />
-                    </div>
-                    <div className='flex-auto'>
-                      <a
-                        href={item.href}
-                        className='block font-semibold text-gray-900 dark:text-white'
-                      >
-                        {item.name}
-                        <span className='absolute inset-0' />
-                      </a>
-                      <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className='grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 dark:divide-white/10 dark:bg-gray-700/50'>
-                {callsToAction.map(item => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
-                  >
-                    <item.icon
-                      aria-hidden='true'
-                      className='size-5 flex-none text-gray-400 dark:text-gray-500'
-                    />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </PopoverPanel>
-          </Popover>
+              {item.label}
+            </Link>
+          ))}
 
-          <a
-            href='#'
-            className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isAtTop
-                ? 'text-gray-900 dark:text-white'
-                : 'text-gray-900 dark:text-white'
-            }`}
-          >
-            Features
-          </a>
-          <a
-            href='#'
-            className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isAtTop
-                ? 'text-gray-900 dark:text-white'
-                : 'text-gray-900 dark:text-white'
-            }`}
-          >
-            Marketplace
-          </a>
-
-          <Popover className='relative'>
-            <PopoverButton
-              className={`flex items-center gap-x-1 text-sm/6 font-semibold transition-colors duration-300 ${
-                isAtTop
-                  ? 'text-gray-900 dark:text-white'
-                  : 'text-gray-900 dark:text-white'
-              }`}
-            >
-              Company
-              <ChevronDown
-                aria-hidden='true'
-                className={`size-5 flex-none transition-colors duration-300 ${
-                  isAtTop
-                    ? 'text-white/70 dark:text-gray-300'
-                    : 'text-gray-400 dark:text-gray-500'
-                }`}
-              />
-            </PopoverButton>
-
-            <PopoverPanel
-              transition
-              className='absolute left-1/2 z-10 mt-3 w-56 -translate-x-1/2 rounded-xl bg-white p-2 shadow-lg outline-1 outline-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10'
-            >
-              {company.map(item => (
-                <a
-                  key={item.name}
+          {/* More dropdown */}
+          <details className='relative group'>
+            <summary className='cursor-pointer list-none text-sm text-secondary-600 hover:text-secondary-800 transition-colors duration-200 dark:text-secondary-400 dark:hover:text-secondary-200'>
+              <span className='flex items-center gap-1'>
+                Más
+                <ChevronDown className='h-4 w-4 transition-transform duration-200 group-open:rotate-180' />
+              </span>
+            </summary>
+            <div className='absolute right-0 mt-2 w-56 rounded-lg border border-secondary/200 bg-white p-2 shadow-lg dark:border-secondary-700 dark:bg-gray-800'>
+              {SECONDARY.map(item => (
+                <Link
+                  key={item.href}
                   href={item.href}
-                  className='block rounded-lg px-3 py-2 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                  className='block rounded px-3 py-2 text-sm text-secondary-700 hover:bg-secondary-50 transition-colors duration-200 dark:text-secondary-300 dark:hover:bg-secondary-800'
                 >
-                  {item.name}
-                </a>
+                  {item.label}
+                </Link>
               ))}
-            </PopoverPanel>
-          </Popover>
-        </PopoverGroup>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-          <a
-            href='#'
-            className={`text-sm/6 font-semibold transition-colors duration-300 ${
-              isAtTop
-                ? 'text-gray-900 dark:text-white'
-                : 'text-gray-900 dark:text-white'
-            }`}
-          >
-            Log in <span aria-hidden='true'>&rarr;</span>
-          </a>
-        </div>
-      </nav>
-      <Dialog
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-        className='lg:hidden'
-      >
-        <div
-          className='fixed inset-0 z-50'
-          onClick={() => setMobileMenuOpen(false)}
-        />
-        <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
-          <div className='flex items-center justify-between'>
-            <AnimatedLogo scrollState={scrollState} asLink />
-            <button
-              type='button'
-              onClick={() => setMobileMenuOpen(false)}
-              className='-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
-            >
-              <span className='sr-only'>Close menu</span>
-              <X aria-hidden='true' className='size-6' />
-            </button>
-          </div>
-          <div className='mt-6 flow-root'>
-            <div className='-my-6 divide-y divide-gray-500/10 dark:divide-white/10'>
-              <div className='space-y-2 py-6'>
-                <Disclosure as='div' className='-mx-3'>
-                  <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
-                    Product
-                    <ChevronDown
-                      aria-hidden='true'
-                      className='size-5 flex-none group-data-open:rotate-180'
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className='mt-2 space-y-2'>
-                    {[...products, ...callsToAction].map(item => (
-                      <DisclosureButton
-                        key={item.name}
-                        as='a'
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-
-                <a
-                  href='#'
-                  onClick={() => setMobileMenuOpen(false)}
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Features
-                </a>
-                <a
-                  href='#'
-                  onClick={() => setMobileMenuOpen(false)}
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Marketplace
-                </a>
-
-                <Disclosure as='div' className='-mx-3'>
-                  <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
-                    Company
-                    <ChevronDown
-                      aria-hidden='true'
-                      className='size-5 flex-none group-data-open:rotate-180'
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className='mt-2 space-y-2'>
-                    {company.map(item => (
-                      <DisclosureButton
-                        key={item.name}
-                        as='a'
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-              </div>
-              <div className='py-6'>
-                <a
-                  href='#'
-                  onClick={() => setMobileMenuOpen(false)}
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Log in
-                </a>
-              </div>
             </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
-    </motion.header>
+          </details>
+
+          <ThemeToggle />
+          <Link
+            href='/signup'
+            className='ml-2 inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            data-analytics='nav_cta_signup'
+          >
+            Comenzar gratis
+          </Link>
+        </nav>
+
+        {/* Mobile hamburger */}
+        <button
+          aria-label='Abrir menú'
+          className='md:hidden p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors duration-200'
+          onClick={() => setOpen(true)}
+        >
+          <Menu className='h-6 w-6 text-secondary-700 dark:text-secondary-300' />
+        </button>
+      </div>
+
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
+    </header>
   );
 }

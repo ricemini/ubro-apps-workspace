@@ -2,119 +2,126 @@
 
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-import AiScanCard from './AiScanCard';
+import { ChevronRight } from 'lucide-react';
 import HeroBackground from './HeroBackground';
+import TrustStrip, { RiskReducers } from './trust/TrustStrip';
+import AggregateRatingJsonLd from './seo/AggregateRatingJsonLd';
+import PriceFlipBadge from './price-flip-badge/PriceFlipBadge';
 
-const DemoModal = dynamic(() => import('./DemoModal'), { ssr: false });
+const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
+  ssr: false,
+});
 
 export default function Hero(): React.JSX.Element {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className='relative isolate overflow-hidden pt-20'>
+    <header className='relative isolate overflow-hidden'>
       <HeroBackground />
 
-      <div className='mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 items-center px-6 py-16'>
-        {/* TEXT column must be above */}
-        <div className='relative z-20 space-y-5'>
-          <h1 className='text-display text-5xl md:text-6xl leading-tight'>
-            <span>Todo tu negocio, </span>
-            <span
-              className='
-                relative inline-block font-display tracking-tight
-                bg-[linear-gradient(90deg,theme(colors.secondary.800),theme(colors.secondary.600),theme(colors.tertiary.700))]
-                bg-[length:300%_300%]
-                bg-clip-text text-transparent
-                drop-shadow-[0_1px_0_rgba(0,0,0,0.22)]
-                motion-safe:animate-[gradient-shift_4s_cubic-bezier(.22,.61,.36,1)_infinite]
-                ml-10
-              '
-            >
-              impulsado por IA
-            </span>
-          </h1>
-
-          <p className='mt-2 font-display text-3xl font-semibold text-primary-600'>
-            Vende más, sin complicarte
-          </p>
-
-          <p className='mt-2 font-body text-secondary/90'>
-            Hecho para MiPyMEs y negocios ambulantes. Funciona sin internet.
-          </p>
-
-          {/* Feature chips */}
-          <ul className='mt-3 flex flex-wrap gap-2'>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
-              Catálogo desde una foto
-            </li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
-              Cobros por CoDi
-            </li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
-              Funciona sin internet
-            </li>
-            <li className='nums-tabular rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary'>
-              Promos con IA
-            </li>
-          </ul>
-
-          {/* CTAs */}
-          <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-2'>
-            <a
-              href='/signup'
-              className='rounded-xl bg-primary-500 text-primary-on px-5 py-3 shadow hover:shadow-md transition'
-              data-analytics='cta_primary_hero'
-            >
-              Crear mi catálogo con IA
-            </a>
-            <button
-              onClick={() => setOpen(true)}
-              className='rounded-xl px-5 py-3 ring-1 ring-secondary/30 hover:ring-secondary/60 bg-white/90 backdrop-blur transition inline-flex items-center gap-2'
-              data-analytics='cta_demo_hero'
-              aria-haspopup='dialog'
-              aria-controls='demo-ia-modal'
-            >
-              <svg
-                className='h-4 w-4'
-                viewBox='0 0 24 24'
-                fill='currentColor'
-                aria-hidden
+      <div className='mx-auto max-w-7xl px-6 pt-12 pb-4'>
+        <div className='grid items-start gap-6 lg:grid-cols-2'>
+          {/* LEFT: copy */}
+          <div className='relative z-20 mt-14'>
+            <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
+              <span>Todo tu negocio, </span>
+              <span
+                className='
+                  bg-gradient-to-r from-secondary-700 via-secondary-600 via-primary-600 to-tertiary-500
+                  bg-clip-text text-transparent
+                '
               >
-                <path d='M8 5v14l11-7z' />
-              </svg>
-              Ver demo de 60 s
-            </button>
+                impulsado por IA
+              </span>
+            </h1>
+
+            <p className='mt-3 font-display text-2xl text-primary-600'>
+              Vende más, sin complicarte.
+            </p>
+
+            <p className='mt-3 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400'>
+              Gestiona tu negocio, crea un catálogo, controla inventario y
+              analiza tus ventas — todo en una sola app con IA.
+            </p>
+
+            {/* Trust Strip - Moved up for better visibility */}
+            <TrustStrip />
+
+            {/* CTAs */}
+            <div className='mt-6 flex flex-wrap items-center gap-5'>
+              <a
+                href='/signup'
+                className='rounded-lg bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition animate-pulse-custom'
+                data-analytics='cta_primary_hero'
+              >
+                Comenzar gratis
+              </a>
+
+              <a
+                href='#caracteristicas'
+                className='group inline-flex items-center gap-x-2 text-sm font-semibold text-secondary-600 hover:text-secondary-700 transition-all duration-300 dark:text-secondary-400 dark:hover:text-secondary-300'
+              >
+                <span className='relative'>
+                  Conoce todas las herramientas
+                  <span className='absolute -bottom-0.5 left-0 h-0.5 w-0 bg-secondary-600 transition-all duration-300 group-hover:w-full dark:bg-secondary-400'></span>
+                </span>
+                <ChevronRight
+                  aria-hidden='true'
+                  className='size-4 transition-transform duration-300 group-hover:translate-x-1'
+                />
+              </a>
+            </div>
+
+            {/* Risk Reducers - Moved below CTAs */}
+            <RiskReducers />
           </div>
 
-          {/* Tertiary links */}
-          <nav className='flex gap-6 text-sm'>
-            <a
-              href='#como-funciona'
-              className='text-black underline decoration-dotted hover:decoration-solid font-medium'
-              data-analytics='hero_scroll_how'
-            >
-              Ver cómo funciona →
-            </a>
-            <a
-              href='/caracteristicas'
-              className='text-black/90 hover:text-black underline font-medium'
-              data-analytics='hero_all_features'
-            >
-              Todas las funciones
-            </a>
-          </nav>
+          {/* RIGHT: offset visual (LCP image) */}
+          <div className='relative z-10'>
+            <div className='relative mx-auto w-full max-w-[560px]'>
+              <div className='absolute -top-6 left-10 z-20'>
+                <PriceFlipBadge />
+              </div>
 
-          {/* Trust micro-strip (only if true; else remove) */}
-          {/* <p className="text-xs text-secondary/70 pt-1">★★★★★ 4.9/5 en reseñas · Más de 1,000 vendedores en MX</p> */}
-        </div>
+              {/* <div className='absolute -top-3 right-3 z-20 rounded-full bg-tertiary-500/90 px-3 py-3 text-xs text-tertiary-on shadow'>
+                Importando menú con IA
+              </div> */}
 
-        {/* VISUAL column can be lower */}
-        <div className='relative z-10'>
-          <AiScanCard />
+              <div className='relative -rotate-3 rounded-2xl border border-secondary/10 bg-white/90 shadow-xl backdrop-blur'>
+                {/* Placeholder for hero image - replace with actual optimized WebP */}
+                <div className='relative h-[500px] w-full rounded-2xl bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center'>
+                  <div className='text-center'>
+                    <div className='mx-auto mb-4 h-16 w-16 rounded-full bg-primary-100 flex items-center justify-center'>
+                      <svg
+                        className='h-8 w-8 text-primary-600'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke='currentColor'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+                        />
+                      </svg>
+                    </div>
+                    <p className='text-sm text-secondary-600'>
+                      Hero Image Placeholder
+                    </p>
+                    <p className='text-xs text-secondary-400 mt-1'>
+                      1120×720 WebP
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {open && <DemoModal onClose={() => setOpen(false)} />}
+      {open && <HowItWorksModal onClose={() => setOpen(false)} />}
+      <AggregateRatingJsonLd />
     </header>
   );
 }

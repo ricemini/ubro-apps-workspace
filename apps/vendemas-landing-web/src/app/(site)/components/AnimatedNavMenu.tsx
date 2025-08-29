@@ -16,28 +16,16 @@ const navMenuVariants = {
     y: 0,
     opacity: 1,
     scale: 1,
-    transition: {
-      duration: 0.4,
-      ease: [0.2, 0.8, 0.2, 1],
-    },
   },
   scrolling: {
     y: -20,
     opacity: 0.9,
     scale: 0.95,
-    transition: {
-      duration: 0.3,
-      ease: [0.2, 0.8, 0.2, 1],
-    },
   },
   fixed: {
     y: -40,
     opacity: 1,
     scale: 1,
-    transition: {
-      duration: 0.4,
-      ease: [0.2, 0.8, 0.2, 1],
-    },
   },
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import './global.css';
 import { inter, jakarta } from './fonts';
 import type { Metadata } from 'next';
+import { ThemeProvider } from './(site)/components/theme/ThemeProvider';
 
 export const metadata: Metadata = {
   title: 'VendeMás - POS Móvil para Vendedores Ambulantes | México y LATAM',
@@ -76,7 +77,9 @@ export default function RootLayout({
         <link rel='canonical' href='https://vendemas.mx' />
         <meta name='theme-color' content='#4CAF50' />
       </head>
-      <body className='font-body antialiased'>{children}</body>
+      <body className='font-body antialiased'>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
