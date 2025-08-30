@@ -244,7 +244,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    '../../libs/vendemas-shared-design/src/**/*.{js,ts,jsx,tsx,mdx}',
+    '../../libs/vendemas-shared-styles/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {

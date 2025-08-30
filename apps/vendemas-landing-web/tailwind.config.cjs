@@ -2,22 +2,40 @@ const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
 const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
-// Direct v3 configuration for Next.js compatibility
 module.exports = {
+  darkMode: ['class'],
   content: [
     join(
       __dirname,
       '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
     ),
     ...createGlobPatternsForDependencies(__dirname),
-    '../../libs/vendemas-shared-design/src/**/*.{html,ts}',
   ],
-  darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1400px',
+    },
     extend: {
       colors: {
-        // Vendemás Design System Colors
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
           50: 'rgb(76 175 80 / 0.05)',
           100: 'rgb(76 175 80 / 0.1)',
           200: 'rgb(76 175 80 / 0.2)',
@@ -28,10 +46,11 @@ module.exports = {
           700: 'rgb(76 175 80 / 0.9)',
           800: 'rgb(76 175 80 / 0.95)',
           900: 'rgb(76 175 80 / 0.98)',
-          DEFAULT: '#4CAF50',
           on: '#000000',
         },
         secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
           50: 'rgb(30 58 95 / 0.05)',
           100: 'rgb(30 58 95 / 0.1)',
           200: 'rgb(30 58 95 / 0.2)',
@@ -42,7 +61,6 @@ module.exports = {
           700: 'rgb(30 58 95 / 0.9)',
           800: 'rgb(30 58 95 / 0.95)',
           900: 'rgb(30 58 95 / 0.98)',
-          DEFAULT: '#1E3A5F',
           on: '#FFFFFF',
         },
         tertiary: {
@@ -59,6 +77,26 @@ module.exports = {
           DEFAULT: '#F4B942',
           on: '#000000',
         },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
         error: {
           50: 'rgb(194 59 75 / 0.05)',
           100: 'rgb(194 59 75 / 0.1)',
@@ -73,11 +111,78 @@ module.exports = {
           DEFAULT: '#C23B4B',
           on: '#FFFFFF',
         },
+        charcoal: {
+          50: 'rgb(34 34 34 / 0.05)',
+          100: 'rgb(34 34 34 / 0.1)',
+          200: 'rgb(34 34 34 / 0.2)',
+          300: 'rgb(34 34 34 / 0.3)',
+          400: 'rgb(34 34 34 / 0.4)',
+          500: '#222222',
+          600: 'rgb(34 34 34 / 0.8)',
+          700: 'rgb(34 34 34 / 0.9)',
+          800: 'rgb(34 34 34 / 0.95)',
+          900: 'rgb(34 34 34 / 0.98)',
+          DEFAULT: '#222222',
+          on: '#FFFFFF',
+        },
+        dark: {
+          50: 'rgb(26 26 26 / 0.05)',
+          100: 'rgb(26 26 26 / 0.1)',
+          200: 'rgb(26 26 26 / 0.2)',
+          300: 'rgb(26 26 26 / 0.3)',
+          400: 'rgb(26 26 26 / 0.4)',
+          500: '#1A1A1A',
+          600: 'rgb(26 26 26 / 0.8)',
+          700: 'rgb(26 26 26 / 0.9)',
+          800: 'rgb(26 26 26 / 0.95)',
+          900: 'rgb(26 26 26 / 0.98)',
+          DEFAULT: '#1A1A1A',
+          on: '#FFFFFF',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'float-slow': 'float-slow 7s ease-in-out infinite',
       },
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        display: [
+          'var(--font-jakarta)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
+        body: [
+          'var(--font-inter)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
+        // keep "sans" for legacy components
+        sans: [
+          'var(--font-inter)',
+          'InterVariable',
+          'Inter',
+          'system-ui',
+          'sans-serif',
+        ],
       },
       fontWeight: {
         normal: '400',
@@ -91,12 +196,6 @@ module.exports = {
         lg: '1.5rem',
         xl: '2rem',
       },
-      borderRadius: {
-        sm: '0.25rem',
-        md: '0.5rem',
-        lg: '1rem',
-        full: '9999px',
-      },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #4CAF50 0%, #1E3A5F 100%)',
         'gradient-secondary':
@@ -105,22 +204,31 @@ module.exports = {
     },
   },
   plugins: [
+    require('tailwindcss-animate'),
     function ({ addUtilities, theme }) {
       const newUtilities = {
         '.app-name': {
           fontFamily: theme('fontFamily.display'),
-          fontWeight: theme('fontWeight.bold'),
-          fontStyle: 'italic',
-          fontSize: '2.5rem',
+          fontWeight: '800',
+          fontStyle: 'normal',
+          fontSize: '2rem',
+          letterSpacing: '-0.02em',
           color: theme('colors.secondary.DEFAULT'),
         },
         '.text-body': {
           fontFamily: theme('fontFamily.body'),
-          fontWeight: theme('fontWeight.normal'),
+          fontWeight: '400',
         },
         '.text-display': {
           fontFamily: theme('fontFamily.display'),
-          fontWeight: theme('fontWeight.bold'),
+          fontWeight: '700',
+          letterSpacing: '-0.01em',
+        },
+        '.font-display': {
+          fontFamily: theme('fontFamily.display'),
+        },
+        '.nums-tabular': {
+          fontVariantNumeric: 'tabular-nums',
         },
       };
       addUtilities(newUtilities);

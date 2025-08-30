@@ -419,3 +419,5 @@ lighthouse-report.json
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+
+project

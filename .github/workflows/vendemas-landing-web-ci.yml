@@ -319,36 +319,36 @@ jobs:
       - name: Prepare for Vercel
         run: |
           echo "🔧 Preparing build artifacts for Vercel deployment..."
-          
+
           # Create Vercel output directory structure
           mkdir -p .vercel/output
-          
+
           # Check what's actually in the build output
           echo "📁 Available files in dist/vendemas-landing-web/:"
           ls -la dist/vendemas-landing-web/
-          
+
           # For standalone output, we need to copy the entire directory structure
           if [ -d "dist/vendemas-landing-web" ]; then
             echo "✅ Found vendemas-landing-web build output"
-            
+
             # Copy the entire build output to .vercel/output
             cp -r dist/vendemas-landing-web/* .vercel/output/
-            
+
             # Ensure we have the necessary files for Vercel
             if [ ! -f ".vercel/output/package.json" ]; then
               echo "⚠️ package.json not found, copying from source"
               cp apps/vendemas-landing-web/package.json .vercel/output/
             fi
-            
+
             if [ ! -d ".vercel/output/public" ]; then
               echo "⚠️ public directory not found, copying from source"
               cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
             fi
-            
+
             # Create Vercel config.json file
             echo "📝 Creating Vercel config.json..."
             echo '{"version":3,"functions":{"app/page.js":{"runtime":"nodejs20.x"},"app/layout.js":{"runtime":"nodejs20.x"}},"routes":[{"src":"/(.*)","dest":"/app/$1"}]}' > .vercel/output/config.json
-            
+
             echo "📁 Vercel output structure created in .vercel/output/"
             ls -la .vercel/output/
             echo "📄 Vercel config.json content:"

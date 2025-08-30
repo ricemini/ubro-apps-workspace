@@ -190,7 +190,7 @@ export default {
   content: [
     join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
     ...createGlobPatternsForDependencies(__dirname),
-    '../../libs/vendemas-shared-design/src/**/*.{html,ts}',
+    '../../libs/vendemas-shared-styles/src/**/*.{html,ts}',
   ],
   // ... rest of configuration
 };
