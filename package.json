@@ -121,7 +121,7 @@
     "@material/theme": "14.0.0",
     "@tailwindcss/postcss": "4.1.12",
     "next": "~15.2.4",
-    "react": "19.0.0",
+    "react": "19.1.1",
     "react-dom": "19.0.0",
     "rxjs": "~7.8.0",
     "sass": "^1.69.0",
