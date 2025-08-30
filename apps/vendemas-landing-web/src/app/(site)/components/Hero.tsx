@@ -8,14 +8,31 @@ import TrustStrip, { RiskReducers } from './trust/TrustStrip';
 import AggregateRatingJsonLd from './seo/AggregateRatingJsonLd';
 import PriceFlipBadge from './price-flip-badge/PriceFlipBadge';
 
+// Dynamically import the modal to avoid SSR issues and improve initial page load
 const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
   ssr: false,
 });
 
+/**
+ * Hero Component - Main landing section with primary CTA and value proposition
+ *
+ * Features:
+ * - Responsive grid layout (1 column on mobile, 2 columns on desktop)
+ * - Accessibility: skip links, ARIA labels, focus management
+ * - Dark mode support with high contrast
+ * - Motion-safe animations respecting user preferences
+ * - SEO: structured data for ratings
+ */
 export default function Hero(): React.JSX.Element {
+  // State for controlling the "How It Works" modal visibility
   const [open, setOpen] = useState(false);
 
-  // Focus management for modal
+  /**
+   * Focus management for modal interactions
+   * - Prevents body scroll when modal is open
+   * - Returns focus to trigger element when modal closes
+   * - Improves accessibility and keyboard navigation
+   */
   const handleModalToggle = (isOpen: boolean) => {
     setOpen(isOpen);
     if (isOpen) {
@@ -32,8 +49,9 @@ export default function Hero(): React.JSX.Element {
   };
 
   return (
+    // Main hero section with proper semantic role and accessibility
     <header className='relative isolate overflow-hidden' role='banner'>
-      {/* Skip link for keyboard navigation */}
+      {/* Skip link for keyboard navigation - appears only on focus */}
       <a
         href='#main-content'
         className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
@@ -41,17 +59,21 @@ export default function Hero(): React.JSX.Element {
         Saltar al contenido principal
       </a>
 
+      {/* Decorative background with aurora effects and scrim for text legibility */}
       <HeroBackground />
 
+      {/* Main content container with responsive padding and semantic structure */}
       <div
         className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12'
         id='main-content'
         tabIndex='-1'
         role='main'
       >
+        {/* Responsive grid: stacked on mobile, side-by-side on desktop */}
         <div className='grid items-start gap-6 lg:grid-cols-2'>
-          {/* LEFT: copy */}
+          {/* LEFT COLUMN: Main copy and CTAs */}
           <div className='relative z-20 mt-14'>
+            {/* Primary headline with gradient text effect */}
             <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
               <span>Todo tu negocio, </span>
               <span
@@ -65,26 +87,29 @@ export default function Hero(): React.JSX.Element {
               </span>
             </h1>
 
+            {/* Subtitle with high contrast support */}
             <p className='mt-3 font-display text-2xl text-primary-600 supports-[color-contrast(high)]:text-primary-800 dark:supports-[color-contrast(high)]:text-primary-200'>
               Vende más, sin complicarte.
             </p>
 
+            {/* Description text with responsive sizing and high contrast support */}
             <p className='mt-3 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400 supports-[color-contrast(high)]:text-gray-700 dark:supports-[color-contrast(high)]:text-gray-200'>
               Gestiona tu negocio, crea un catálogo, controla inventario y
               analiza tus ventas — todo en una sola app con IA.
             </p>
 
-            {/* Trust Strip - Moved up for better visibility */}
+            {/* Trust indicators with motion-safe animations */}
             <div className='motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500'>
               <TrustStrip />
             </div>
 
-            {/* CTAs */}
+            {/* Call-to-action buttons with accessibility features */}
             <div
               className='mt-6 flex flex-wrap items-center gap-5'
               role='group'
               aria-label='Acciones principales'
             >
+              {/* Primary CTA: Sign up button with pulsing animation */}
               <a
                 href='/signup'
                 className='rounded-lg bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 animate-pulse-custom'
@@ -94,10 +119,12 @@ export default function Hero(): React.JSX.Element {
               >
                 Comenzar gratis
               </a>
+              {/* Screen reader description for the primary CTA */}
               <span id='cta-description' className='sr-only'>
                 Botón para comenzar a usar VendeMás de forma gratuita
               </span>
 
+              {/* Secondary CTA: Learn more link with hover effects */}
               <a
                 href='#caracteristicas'
                 className='group inline-flex items-center gap-x-2 text-sm font-semibold text-secondary-600 hover:text-secondary-700 transition-all duration-300 dark:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:rounded-lg dark:focus:ring-white dark:focus:ring-offset-gray-900'
@@ -105,36 +132,37 @@ export default function Hero(): React.JSX.Element {
               >
                 <span className='relative'>
                   Conoce todas las herramientas
+                  {/* Animated underline that hides on focus */}
                   <span className='absolute -bottom-0.5 left-0 h-0.5 w-0 bg-secondary-600 transition-all duration-300 group-hover:w-full dark:bg-white dark:group-hover:bg-white group-focus-within:hidden group-focus:hidden'></span>
                 </span>
+                {/* Chevron icon with hover animation */}
                 <ChevronRight
                   aria-hidden='true'
                   className='size-4 transition-transform duration-300 group-hover:translate-x-1'
                 />
               </a>
+              {/* Screen reader description for the secondary CTA */}
               <span id='features-description' className='sr-only'>
                 Enlace para ver todas las características y herramientas de
                 VendeMás
               </span>
             </div>
 
-            {/* Risk Reducers - Moved below CTAs */}
+            {/* Risk reduction indicators with staggered animations */}
             <div className='motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500 motion-safe:delay-200'>
               <RiskReducers />
             </div>
           </div>
 
-          {/* RIGHT: offset visual (LCP image) */}
+          {/* RIGHT COLUMN: Visual content and mockups */}
           <div className='relative z-10 mt-8 sm:mt-9 md:mt-9'>
             <div className='relative mx-auto w-full max-w-[560px]'>
+              {/* Floating price flip badge positioned absolutely */}
               <div className='absolute -top-6 left-10 z-20'>
                 <PriceFlipBadge />
               </div>
 
-              {/* <div className='absolute -top-3 right-3 z-20 rounded-full bg-tertiary-500/90 px-3 py-3 text-xs text-tertiary-on shadow'>
-                Importando menú con IA
-              </div> */}
-
+              {/* Main hero image container with rotation and backdrop effects */}
               <div className='relative -rotate-3 rounded-2xl border border-secondary/10 bg-white/90 shadow-xl backdrop-blur'>
                 {/* Placeholder for hero image - replace with actual optimized WebP */}
                 <div
@@ -143,6 +171,7 @@ export default function Hero(): React.JSX.Element {
                   aria-label='Placeholder para imagen hero de la aplicación VendeMás - muestra un ícono de galería de imágenes con texto descriptivo'
                   aria-describedby='hero-image-description'
                 >
+                  {/* Placeholder content with icon and text */}
                   <div className='text-center'>
                     <div className='mx-auto mb-4 h-16 w-16 rounded-full bg-primary-100 flex items-center justify-center'>
                       <svg
@@ -168,6 +197,7 @@ export default function Hero(): React.JSX.Element {
                       1120×720 WebP
                     </p>
                   </div>
+                  {/* Screen reader description for the hero image */}
                   <div id='hero-image-description' className='sr-only'>
                     Imagen representativa de la aplicación VendeMás mostrando la
                     interfaz principal con herramientas de gestión empresarial
@@ -179,6 +209,7 @@ export default function Hero(): React.JSX.Element {
         </div>
       </div>
 
+      {/* Modal for "How It Works" with Suspense fallback */}
       {open && (
         <Suspense
           fallback={
@@ -190,6 +221,8 @@ export default function Hero(): React.JSX.Element {
           <HowItWorksModal onClose={() => handleModalToggle(false)} />
         </Suspense>
       )}
+
+      {/* SEO: Structured data for aggregate ratings */}
       <AggregateRatingJsonLd />
 
       {/* ARIA live region for dynamic content updates */}

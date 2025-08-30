@@ -24,7 +24,7 @@ export default function MobileMenu({
   return (
     <div role='dialog' aria-modal='true' className='fixed inset-0 z-50'>
       <div className='absolute inset-0 bg-black/30' onClick={onClose} />
-      <div className='absolute inset-x-0 top-0 rounded-b-2xl bg-white p-6 shadow-xl dark:bg-gray-900'>
+      <div className='absolute inset-x-0 top-0 rounded-b-2xl bg-white p-6 shadow-xl dark:bg-gray-950'>
         {/* Header with close button */}
         <div className='flex items-center justify-between mb-6'>
           <h2 className='text-lg font-semibold text-secondary-900 dark:text-white'>
