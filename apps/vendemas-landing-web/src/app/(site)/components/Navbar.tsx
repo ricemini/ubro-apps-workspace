@@ -29,6 +29,10 @@ import Link from 'next/link';
 import VendeMasLogo from './branding/VendeMasLogo';
 import ThemeToggle from './theme/ThemeToggle';
 
+/**
+ * Product features data for the dropdown mega menu
+ * Each product represents a key feature of the VendeMás platform
+ */
 const products = [
   {
     name: 'Analytics',
@@ -44,40 +48,75 @@ const products = [
   },
   {
     name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
+    description: "Your customers' data will be safe and secure",
     href: '#',
     icon: Shield,
   },
   {
     name: 'Integrations',
-    description: 'Your customers’ data will be safe and secure',
+    description: "Your customers' data will be safe and secure",
     href: '#',
     icon: SquarePlus,
   },
 ];
+
+/**
+ * Call-to-action items displayed in the dropdown footer
+ * Provides quick access to demo, sales contact, and product overview
+ */
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircle },
   { name: 'Contact sales', href: '#', icon: Phone },
   { name: 'View all products', href: '#', icon: Grid3X3 },
 ];
 
+/**
+ * Navbar Component - Main navigation bar with responsive design and dropdown menus
+ *
+ * Features:
+ * - Responsive layout: hamburger menu on mobile, full navigation on md+
+ * - Dropdown mega menu for products and features
+ * - Dark mode support with consistent theming
+ * - Accessibility: proper ARIA labels and keyboard navigation
+ * - Mobile-first design with 60px height optimization
+ * - Logo sizing: small on mobile/medium, medium on large screens
+ *
+ * Responsive Behavior:
+ * - Mobile (< 768px): Hamburger menu with slide-out dialog
+ * - Medium (≥ 768px): Full navigation menus visible
+ * - Large (≥ 1024px): Enhanced horizontal spacing + right-side CTA
+ */
 export default function Example() {
+  // State for controlling mobile menu visibility
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
+    // Main header container with proper semantic role and z-index
     <header className='relative isolate z-10 bg-white dark:bg-gray-950'>
+      {/* Navigation container with responsive padding and max width */}
       <nav
         aria-label='Global'
-        className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'
+        className='mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8'
       >
-        {/* Logo */}
-        <div className='flex lg:flex-1'>
-          <div className='flex lg:flex-1'>
-            <VendeMasLogo size='sm' className='lg:hidden' asLink />
+        {/* Logo section - responsive sizing based on screen size */}
+        {/* Logo flex: none on medium to prevent overflow, flex-none on large for proper spacing */}
+        <div className='flex md:flex-none lg:flex-none'>
+          <div className='flex md:flex-none lg:flex-none'>
+            {/* Small logo for mobile devices */}
+            <VendeMasLogo size='sm' className='md:hidden' asLink />
+            {/* Extra small logo for medium screens (tablets) - 768px to 1023px */}
+            <VendeMasLogo
+              size='xs'
+              className='hidden md:block lg:hidden'
+              asLink
+            />
+            {/* Medium logo for large screens (desktop) - 1024px+ */}
             <VendeMasLogo size='md' className='hidden lg:block' asLink />
           </div>
         </div>
-        <div className='flex lg:hidden'>
+
+        {/* Mobile menu button - hidden on medium screens and up */}
+        <div className='flex md:hidden'>
           <button
             type='button'
             onClick={() => setMobileMenuOpen(true)}
@@ -87,7 +126,11 @@ export default function Example() {
             <Menu aria-hidden='true' className='size-6' />
           </button>
         </div>
-        <PopoverGroup className='hidden lg:flex lg:gap-x-12'>
+
+        {/* Desktop navigation - hidden on mobile, visible on medium+ */}
+        {/* Responsive gaps: smaller on medium screens to prevent overflow */}
+        <PopoverGroup className='hidden md:flex md:gap-x-4 md:flex-1 md:justify-center lg:gap-x-12 lg:flex-1 lg:justify-center'>
+          {/* Products dropdown with mega menu */}
           <Popover>
             <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
               Herramientas
@@ -97,28 +140,36 @@ export default function Example() {
               />
             </PopoverButton>
 
+            {/* Mega menu dropdown panel with smooth transitions */}
             <PopoverPanel
               transition
-              className='absolute inset-x-0 top-16 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+              className='absolute inset-x-0 top-14 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
             >
-              {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
+              {/* Shadow overlay element for visual depth */}
               <div
                 aria-hidden='true'
                 className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
               />
+
+              {/* Main dropdown content container */}
               <div className='relative bg-white dark:bg-gray-950'>
+                {/* Product grid with 4 columns for feature showcase */}
                 <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
+                  {/* Map through products to display feature cards */}
                   {products.map(item => (
                     <div
                       key={item.name}
                       className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
                     >
+                      {/* Icon container with hover effects */}
                       <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                         <item.icon
                           aria-hidden='true'
                           className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
                         />
                       </div>
+
+                      {/* Feature title with full clickable area */}
                       <a
                         href={item.href}
                         className='mt-6 block font-semibold text-gray-900 dark:text-white'
@@ -126,15 +177,21 @@ export default function Example() {
                         {item.name}
                         <span className='absolute inset-0' />
                       </a>
+
+                      {/* Feature description */}
                       <p className='mt-1 text-gray-600 dark:text-gray-400'>
                         {item.description}
                       </p>
                     </div>
                   ))}
                 </div>
+
+                {/* Bottom action section with call-to-action links */}
                 <div className='bg-gray-50 dark:bg-gray-900/50'>
                   <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+                    {/* Grid layout for action items with dividers */}
                     <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
+                      {/* Map through call-to-action items */}
                       {callsToAction.map(item => (
                         <a
                           key={item.name}
@@ -155,11 +212,12 @@ export default function Example() {
             </PopoverPanel>
           </Popover>
 
+          {/* Direct navigation links - visible on medium+ screens */}
           <a
             href='#'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
           >
-            Planes
+            Features
           </a>
           <a
             href='#'
@@ -168,45 +226,72 @@ export default function Example() {
             FAQ
           </a>
         </PopoverGroup>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
+
+        {/* Right-side section: theme toggle and CTA buttons (medium+ screens) */}
+        <div className='hidden md:flex md:items-center md:gap-4 lg:items-center lg:gap-4'>
+          {/* Theme toggle component for light/dark mode switching */}
           <ThemeToggle />
+
+          {/* Primary call-to-action button */}
           <Link
             href='/signup'
-            className='ml-4 inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            className='inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
             data-analytics='nav_cta_signup'
           >
             Comenzar gratis
           </Link>
+
+          {/* Secondary login link */}
           <a
             href='#'
-            className='ml-4 mt-2 text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
           >
             Log in <span aria-hidden='true'>&rarr;</span>
           </a>
         </div>
       </nav>
+
+      {/* Mobile menu dialog - slide-out panel for small screens */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
         className='lg:hidden'
       >
+        {/* Backdrop overlay */}
         <div className='fixed inset-0 z-50' />
-        <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
-          <div className='flex items-center justify-between'>
-            <VendeMasLogo size='xs' className='lg:hidden' asLink />
 
+        {/* Mobile menu panel with slide-in animation */}
+        <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
+          {/* Header with logo and close button */}
+          <div className='flex -mt-2 justify-between'>
+            {/* Small logo for mobile menu */}
+            <VendeMasLogo size='xs' className='lg:hidden -ml-2' asLink />
+
+            {/* Close button for mobile menu */}
             <button
               type='button'
               onClick={() => setMobileMenuOpen(false)}
-              className='-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+              className='-mt-1 -mr-4 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
             >
               <span className='sr-only'>Close menu</span>
               <X aria-hidden='true' className='size-6' />
             </button>
           </div>
+
+          {/* Mobile navigation content */}
           <div className='mt-6 flow-root'>
             <div className='-my-6 divide-y divide-gray-500/10 dark:divide-white/10'>
+              {/* Main navigation section */}
               <div className='space-y-2 py-6'>
+                {/* Primary CTA button with animation */}
+                <Link
+                  href='/signup'
+                  className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
+                  data-analytics='nav_cta_signup'
+                >
+                  Comenzar gratis
+                </Link>
+                {/* Collapsible products section */}
                 <Disclosure as='div' className='-mx-3'>
                   <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
                     Herramientas
@@ -215,6 +300,8 @@ export default function Example() {
                       className='size-5 flex-none group-data-open:rotate-180'
                     />
                   </DisclosureButton>
+
+                  {/* Collapsible content for products and actions */}
                   <DisclosurePanel className='mt-2 space-y-2'>
                     {[...products, ...callsToAction].map(item => (
                       <DisclosureButton
@@ -228,6 +315,8 @@ export default function Example() {
                     ))}
                   </DisclosurePanel>
                 </Disclosure>
+
+                {/* Direct navigation links */}
                 <a
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
@@ -247,14 +336,10 @@ export default function Example() {
                   Company
                 </a>
               </div>
+
+              {/* Bottom CTA section for mobile */}
               <div className='py-6'>
-                <Link
-                  href='/signup'
-                  className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
-                  data-analytics='nav_cta_signup'
-                >
-                  Comenzar gratis
-                </Link>
+                {/* Secondary login link */}
                 <a
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
