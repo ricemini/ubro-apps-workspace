@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -75,60 +75,112 @@ const callsToAction = [
  *
  * Features:
  * - Responsive layout: hamburger menu on mobile, full navigation on md+
- * - Dropdown mega menu for products and features
- * - Dark mode support with consistent theming
- * - Accessibility: proper ARIA labels and keyboard navigation
- * - Mobile-first design with 60px height optimization
- * - Logo sizing: small on mobile/medium, medium on large screens
+ * - Dropdown mega menu for products and features with 4-column grid layout
+ * - Dark mode support with consistent theming across all components
+ * - Accessibility: proper ARIA labels, keyboard navigation, and screen reader support
+ * - Mobile-first design with optimized 60px height for all screen sizes
+ * - Dynamic logo sizing: responsive sizing + scroll-based size changes on large screens
+ * - Sticky positioning: becomes fixed header when scrolling for better UX
  *
  * Responsive Behavior:
- * - Mobile (< 768px): Hamburger menu with slide-out dialog
- * - Medium (≥ 768px): Full navigation menus visible
- * - Large (≥ 1024px): Enhanced horizontal spacing + right-side CTA
+ * - Mobile (< 768px): Hamburger menu with slide-out dialog, small logo
+ * - Medium (768px-1023px): Full navigation menus visible, extra small logo, compact spacing
+ * - Large (≥ 1024px): Enhanced horizontal spacing, medium logo (small when scrolled), right-side CTA
+ *
+ * Scroll Behavior:
+ * - At top: relative positioning, medium logo on large screens
+ * - After 10px scroll: fixed positioning with shadow, small logo on large screens
+ * - Smooth transitions for all state changes
  */
 export default function Example() {
-  // State for controlling mobile menu visibility
+  // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // State for detecting scroll position to adjust logo size and navbar positioning
+  // Triggers after 10px scroll to provide immediate visual feedback
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Effect to detect scroll position and update navbar behavior accordingly
+  // - Logo size changes from medium to small on large screens when scrolled
+  // - Navbar becomes sticky (fixed positioning) when scrolled
+  // - Adds shadow effect for visual separation from content below
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      // Threshold of 10px provides immediate feedback without being too sensitive
+      setIsScrolled(scrollTop > 10);
+    };
+
+    // Add scroll listener for real-time updates
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup: remove listener to prevent memory leaks
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    // Main header container with proper semantic role and z-index
-    <header className='relative isolate z-10 bg-white dark:bg-gray-950'>
-      {/* Navigation container with responsive padding and max width */}
+    // Main header container with dynamic positioning based on scroll state
+    // - At top: relative positioning for normal document flow
+    // - When scrolled: fixed positioning with shadow for sticky navigation
+    // - Smooth transitions for all state changes (position, shadow, logo size)
+    <header
+      className={`${isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg' : 'relative'} isolate z-10 bg-white dark:bg-gray-950 transition-all duration-200`}
+    >
+      {/* Navigation container with responsive padding and max width constraints */}
+      {/* - Horizontal padding: 16px on mobile/medium, 32px on large screens */}
+      {/* - Vertical padding: 8px (4px top/bottom) for consistent 60px height */}
+      {/* - Max width: 7xl (1280px) with auto margins for centering */}
       <nav
         aria-label='Global'
-        className='mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8'
+        className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8 lg:py-2'
       >
-        {/* Logo section - responsive sizing based on screen size */}
-        {/* Logo flex: none on medium to prevent overflow, flex-none on large for proper spacing */}
+        {/* Logo section - responsive sizing with scroll-based dynamic changes */}
+        {/* Flex behavior: none on medium+ to prevent logo from expanding and pushing content */}
         <div className='flex md:flex-none lg:flex-none'>
-          <div className='flex md:flex-none lg:flex-none'>
-            {/* Small logo for mobile devices */}
+          {/* Logo container with smooth transitions for size changes */}
+          <div className='flex md:flex-none lg:flex-none transition-all duration-200'>
+            {/* Mobile logo: small size for compact mobile layout */}
             <VendeMasLogo size='sm' className='md:hidden' asLink />
-            {/* Extra small logo for medium screens (tablets) - 768px to 1023px */}
+
+            {/* Medium screen logo: extra small size (768px-1023px) for tight spacing */}
+            {/* Prevents overflow issues in the 60px navbar height */}
             <VendeMasLogo
               size='xs'
               className='hidden md:block lg:hidden'
               asLink
             />
-            {/* Medium logo for large screens (desktop) - 1024px+ */}
-            <VendeMasLogo size='md' className='hidden lg:block' asLink />
+
+            {/* Large screen logo: dynamic sizing based on scroll position */}
+            {/* - At top: medium size for prominent branding */}
+            {/* - When scrolled: small size for compact sticky navigation */}
+            <VendeMasLogo
+              size={isScrolled ? 'sm' : 'md'}
+              className='hidden lg:block'
+              asLink
+            />
           </div>
         </div>
 
-        {/* Mobile menu button - hidden on medium screens and up */}
+        {/* Mobile menu button - hamburger icon for small screens only */}
+        {/* Hidden on medium+ screens where full navigation is visible */}
         <div className='flex md:hidden'>
           <button
             type='button'
             onClick={() => setMobileMenuOpen(true)}
+            // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
           >
+            {/* Screen reader text for accessibility */}
             <span className='sr-only'>Open main menu</span>
+            {/* Hamburger icon with proper ARIA attributes */}
             <Menu aria-hidden='true' className='size-6' />
           </button>
         </div>
 
-        {/* Desktop navigation - hidden on mobile, visible on medium+ */}
-        {/* Responsive gaps: smaller on medium screens to prevent overflow */}
+        {/* Desktop navigation - full navigation menus for medium+ screens */}
+        {/* Responsive behavior: hidden on mobile, visible on medium+ screens */}
+        {/* Layout strategy: flex-1 + justify-center to distribute navigation items evenly */}
+        {/* Gap spacing: compact on medium (16px), spacious on large (48px) for optimal layout */}
         <PopoverGroup className='hidden md:flex md:gap-x-4 md:flex-1 md:justify-center lg:gap-x-12 lg:flex-1 lg:justify-center'>
           {/* Products dropdown with mega menu */}
           <Popover>
@@ -140,12 +192,17 @@ export default function Example() {
               />
             </PopoverButton>
 
-            {/* Mega menu dropdown panel with smooth transitions */}
+            {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
+            {/* - top-12 (48px): positioned below the 60px navbar */}
+            {/* - inset-x-0: spans full width of viewport for immersive experience */}
+            {/* - Transition classes: smooth enter/exit animations with different durations */}
             <PopoverPanel
               transition
-              className='absolute inset-x-0 top-14 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+              className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
             >
-              {/* Shadow overlay element for visual depth */}
+              {/* Shadow overlay element for visual depth and separation */}
+              {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
+              {/* - Dark mode: no shadow, only ring for subtle separation */}
               <div
                 aria-hidden='true'
                 className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
@@ -227,7 +284,10 @@ export default function Example() {
           </a>
         </PopoverGroup>
 
-        {/* Right-side section: theme toggle and CTA buttons (medium+ screens) */}
+        {/* Right-side section: theme toggle, CTA button, and login link */}
+        {/* Visibility: hidden on mobile, visible on medium+ screens */}
+        {/* Layout: horizontal flex with consistent 16px gaps between elements */}
+        {/* Alignment: vertically centered with the navigation items */}
         <div className='hidden md:flex md:items-center md:gap-4 lg:items-center lg:gap-4'>
           {/* Theme toggle component for light/dark mode switching */}
           <ThemeToggle />
@@ -251,7 +311,9 @@ export default function Example() {
         </div>
       </nav>
 
-      {/* Mobile menu dialog - slide-out panel for small screens */}
+      {/* Mobile menu dialog - slide-out panel for small screens only */}
+      {/* Hidden on large screens where full navigation is always visible */}
+      {/* Provides full-screen mobile experience with proper backdrop and animations */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}

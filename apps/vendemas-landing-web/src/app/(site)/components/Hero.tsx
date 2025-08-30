@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { ChevronRight } from 'lucide-react';
 import HeroBackground from './HeroBackground';
@@ -22,10 +22,34 @@ const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
  * - Dark mode support with high contrast
  * - Motion-safe animations respecting user preferences
  * - SEO: structured data for ratings
+ * - Dynamic PriceFlipBadge positioning synchronized with navbar scroll behavior
+ *
+ * Scroll Behavior:
+ * - At top: PriceFlipBadge positioned at top-left for prominent visibility
+ * - After 10px scroll: PriceFlipBadge moves to bottom-left, synchronized with navbar changes
+ * - Smooth transitions for all positioning changes
  */
 export default function Hero(): React.JSX.Element {
   // State for controlling the "How It Works" modal visibility
   const [open, setOpen] = useState(false);
+  // State for detecting scroll position to adjust PriceFlipBadge positioning
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Effect to detect scroll position and update badge positioning accordingly
+  // Synchronized with navbar behavior: same 10px threshold for consistency
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      // Same threshold as navbar for synchronized behavior
+      setIsScrolled(scrollTop > 10);
+    };
+
+    // Add scroll listener for real-time updates
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup: remove listener to prevent memory leaks
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   /**
    * Focus management for modal interactions
@@ -63,8 +87,9 @@ export default function Hero(): React.JSX.Element {
       <HeroBackground />
 
       {/* Main content container with responsive padding and semantic structure */}
+      {/* Bottom padding accommodates PriceFlipBadge when positioned at bottom on large screens */}
       <div
-        className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12'
+        className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
         id='main-content'
         tabIndex='-1'
         role='main'
@@ -157,8 +182,20 @@ export default function Hero(): React.JSX.Element {
           {/* RIGHT COLUMN: Visual content and mockups */}
           <div className='relative z-10 mt-8 sm:mt-9 md:mt-9'>
             <div className='relative mx-auto w-full max-w-[560px]'>
-              {/* Floating price flip badge positioned absolutely */}
-              <div className='absolute -top-6 left-10 z-20'>
+              {/* Floating price flip badge with responsive positioning behavior */}
+              {/* - Mobile/Medium: Always positioned at top-left for consistent layout */}
+              {/* - Large screens: Dynamic positioning based on scroll state */}
+              {/*   - At top: positioned at top-left for prominent visibility */}
+              {/*   - When scrolled: positioned at bottom-left to complement navbar changes */}
+              <div
+                className={`absolute z-20 transition-all duration-200 ${
+                  // Dynamic positioning only on large screens (lg+)
+                  // On smaller screens, always use top positioning
+                  isScrolled
+                    ? 'lg:bottom-4 lg:-left-5 lg:z-50' // Bottom positioning when scrolled on lg+, top on smaller screens
+                    : '-top-6 left-10' // Top positioning for all screen sizes when at top
+                }`}
+              >
                 <PriceFlipBadge />
               </div>
 
