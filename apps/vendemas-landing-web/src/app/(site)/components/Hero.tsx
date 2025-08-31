@@ -18,36 +18,48 @@ const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
  *
  * Features:
  * - Responsive grid layout (1 column on mobile, 2 columns on desktop)
- * - Accessibility: skip links, ARIA labels, focus management
- * - Dark mode support with high contrast
- * - Motion-safe animations respecting user preferences
- * - SEO: structured data for ratings
+ * - Accessibility: skip links, ARIA labels, focus management, screen reader support
+ * - Dark mode support with high contrast and consistent theming
+ * - Motion-safe animations respecting user preferences and accessibility settings
+ * - SEO: structured data for ratings and search engine optimization
  * - Dynamic PriceFlipBadge positioning synchronized with navbar scroll behavior
+ * - Interactive elements with proper hover states and focus management
  *
  * Scroll Behavior:
  * - At top: PriceFlipBadge positioned at top-left for prominent visibility
  * - After 10px scroll: PriceFlipBadge moves to bottom-left, synchronized with navbar changes
- * - Smooth transitions for all positioning changes
+ * - Smooth transitions for all positioning changes with consistent timing
+ *
+ * Responsive Design:
+ * - Mobile-first approach with progressive enhancement
+ * - Optimized spacing and typography across all breakpoints
+ * - Consistent visual hierarchy maintained across screen sizes
  */
 export default function Hero(): React.JSX.Element {
-  // State for controlling the "How It Works" modal visibility
+  // State for controlling the "How It Works" modal visibility and interactions
   const [open, setOpen] = useState(false);
+
   // State for detecting scroll position to adjust PriceFlipBadge positioning
+  // This enables synchronized behavior with the navbar scroll effects
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Effect to detect scroll position and update badge positioning accordingly
   // Synchronized with navbar behavior: same 10px threshold for consistency
+  // This ensures the badge and navbar respond to scroll events simultaneously
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       // Same threshold as navbar for synchronized behavior
+      // 10px provides immediate feedback without being too sensitive
       setIsScrolled(scrollTop > 10);
     };
 
     // Add scroll listener for real-time updates
+    // Listens to window scroll events for responsive positioning
     window.addEventListener('scroll', handleScroll);
 
     // Cleanup: remove listener to prevent memory leaks
+    // Essential for performance and preventing multiple event listeners
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -74,8 +86,11 @@ export default function Hero(): React.JSX.Element {
 
   return (
     // Main hero section with proper semantic role and accessibility
+    // role="banner" identifies this as the main site header for screen readers
     <header className='relative isolate overflow-hidden' role='banner'>
       {/* Skip link for keyboard navigation - appears only on focus */}
+      {/* Provides quick access to main content for keyboard and screen reader users */}
+      {/* sr-only hides it visually but keeps it accessible to assistive technology */}
       <a
         href='#main-content'
         className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
@@ -88,6 +103,8 @@ export default function Hero(): React.JSX.Element {
 
       {/* Main content container with responsive padding and semantic structure */}
       {/* Bottom padding accommodates PriceFlipBadge when positioned at bottom on large screens */}
+      {/* - Horizontal padding: responsive from 24px on mobile to 48px on large screens */}
+      {/* - Vertical padding: responsive top padding, bottom padding prevents badge overlap */}
       <div
         className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
         id='main-content'
@@ -95,6 +112,8 @@ export default function Hero(): React.JSX.Element {
         role='main'
       >
         {/* Responsive grid: stacked on mobile, side-by-side on desktop */}
+        {/* - Mobile: single column layout for optimal readability */}
+        {/* - Desktop: two-column layout for better content distribution */}
         <div className='grid items-start gap-6 lg:grid-cols-2'>
           {/* LEFT COLUMN: Main copy and CTAs */}
           <div className='relative z-20 mt-14'>
@@ -187,10 +206,11 @@ export default function Hero(): React.JSX.Element {
               {/* - Large screens: Dynamic positioning based on scroll state */}
               {/*   - At top: positioned at top-left for prominent visibility */}
               {/*   - When scrolled: positioned at bottom-left to complement navbar changes */}
+              {/* - Smooth transitions: 200ms duration for polished user experience */}
               <div
                 className={`absolute z-20 transition-all duration-200 ${
                   // Dynamic positioning only on large screens (lg+)
-                  // On smaller screens, always use top positioning
+                  // On smaller screens, always use top positioning for layout stability
                   isScrolled
                     ? 'lg:bottom-4 lg:-left-5 lg:z-50' // Bottom positioning when scrolled on lg+, top on smaller screens
                     : '-top-6 left-10' // Top positioning for all screen sizes when at top
