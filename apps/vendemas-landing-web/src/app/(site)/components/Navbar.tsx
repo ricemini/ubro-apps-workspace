@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -28,6 +28,7 @@ import Link from 'next/link';
 
 import VendeMasLogo from './branding/VendeMasLogo';
 import ThemeToggle from './theme/ThemeToggle';
+import FocusTrap from './accessibility/FocusTrap';
 
 /**
  * Product features data for the dropdown mega menu
@@ -100,6 +101,13 @@ export default function Example() {
   // Triggers after 10px scroll to provide immediate visual feedback
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // State for tracking dropdown menu open state
+  const [isProductsOpen, setIsProductsOpen] = useState(false);
+
+  // Refs for focus management
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
   // Effect to detect scroll position and update navbar behavior accordingly
   // - Logo size changes from medium to small on large screens when scrolled
   // - Navbar becomes sticky (fixed positioning) when scrolled
@@ -118,6 +126,42 @@ export default function Example() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Focus management for mobile menu
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      // Focus the first focusable element in the mobile menu
+      const focusableElements = mobileMenuRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusableElements && focusableElements.length > 0) {
+        (focusableElements[0] as HTMLElement).focus();
+      }
+    }
+  }, [mobileMenuOpen]);
+
+  // Handle mobile menu close with focus return
+  const handleMobileMenuClose = (): void => {
+    setMobileMenuOpen(false);
+    // Return focus to the trigger button
+    if (mobileMenuTriggerRef.current) {
+      mobileMenuTriggerRef.current.focus();
+    }
+  };
+
+  // Handle escape key for mobile menu
+  useEffect(() => {
+    const handleEscape = (e: globalThis.KeyboardEvent): void => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        handleMobileMenuClose();
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [mobileMenuOpen]);
+
   return (
     // Main header container with dynamic positioning based on scroll state
     // - At top: relative positioning for normal document flow
@@ -126,11 +170,20 @@ export default function Example() {
     <header
       className={`${isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg' : 'relative'} isolate z-10 bg-white dark:bg-gray-950 transition-all duration-200`}
     >
+      {/* Skip link for keyboard navigation - appears only on focus */}
+      <a
+        href='#main-content'
+        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
+      >
+        Saltar al contenido principal
+      </a>
+
       {/* Navigation container with responsive padding and max width constraints */}
       {/* - Horizontal padding: 16px on mobile/medium, 32px on large screens */}
       {/* - Vertical padding: 8px (4px top/bottom) for consistent 60px height */}
       {/* - Max width: 7xl (1280px) with auto margins for centering */}
       <nav
+        id="main-navigation"
         aria-label='Global'
         className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8 lg:py-2'
       >
@@ -165,10 +218,14 @@ export default function Example() {
         {/* Hidden on medium+ screens where full navigation is visible */}
         <div className='flex md:hidden'>
           <button
+            ref={mobileMenuTriggerRef}
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
             className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+            aria-expanded={mobileMenuOpen}
+            aria-label='Abrir menú de navegación'
+            aria-controls='mobile-menu'
           >
             {/* Screen reader text for accessibility */}
             <span className='sr-only'>Open main menu</span>
@@ -184,7 +241,12 @@ export default function Example() {
         <PopoverGroup className='hidden md:flex md:gap-x-4 md:flex-1 md:justify-center lg:gap-x-12 lg:flex-1 lg:justify-center'>
           {/* Products dropdown with mega menu */}
           <Popover>
-            <PopoverButton className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'>
+            <PopoverButton
+              className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'
+              aria-label='Herramientas dropdown menu'
+              aria-expanded={isProductsOpen}
+              aria-haspopup='true'
+            >
               Herramientas
               <ChevronDown
                 aria-hidden='true'
@@ -199,6 +261,8 @@ export default function Example() {
             <PopoverPanel
               transition
               className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+              onFocus={() => setIsProductsOpen(true)}
+              onBlur={() => setIsProductsOpen(false)}
             >
               {/* Shadow overlay element for visual depth and separation */}
               {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
@@ -230,13 +294,17 @@ export default function Example() {
                       <a
                         href={item.href}
                         className='mt-6 block font-semibold text-gray-900 dark:text-white'
+                        aria-describedby={`${item.name.toLowerCase()}-description`}
                       >
                         {item.name}
                         <span className='absolute inset-0' />
                       </a>
 
                       {/* Feature description */}
-                      <p className='mt-1 text-gray-600 dark:text-gray-400'>
+                      <p
+                        id={`${item.name.toLowerCase()}-description`}
+                        className='mt-1 text-gray-600 dark:text-gray-400'
+                      >
                         {item.description}
                       </p>
                     </div>
@@ -254,6 +322,7 @@ export default function Example() {
                           key={item.name}
                           href={item.href}
                           className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
+                          aria-label={`${item.name} - ${item.href}`}
                         >
                           <item.icon
                             aria-hidden='true'
@@ -273,12 +342,14 @@ export default function Example() {
           <a
             href='#'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            aria-label='Ver características de la plataforma'
           >
             Features
           </a>
           <a
             href='#'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            aria-label='Preguntas frecuentes'
           >
             FAQ
           </a>
@@ -297,6 +368,7 @@ export default function Example() {
             href='/signup'
             className='inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
             data-analytics='nav_cta_signup'
+            aria-label='Comenzar a usar VendeMás gratis'
           >
             Comenzar gratis
           </Link>
@@ -305,6 +377,7 @@ export default function Example() {
           <a
             href='#'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            aria-label='Iniciar sesión en VendeMás'
           >
             Log in <span aria-hidden='true'>&rarr;</span>
           </a>
@@ -316,102 +389,115 @@ export default function Example() {
       {/* Provides full-screen mobile experience with proper backdrop and animations */}
       <Dialog
         open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
+        onClose={handleMobileMenuClose}
         className='lg:hidden'
       >
         {/* Backdrop overlay */}
         <div className='fixed inset-0 z-50' />
 
         {/* Mobile menu panel with slide-in animation */}
-        <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'>
-          {/* Header with logo and close button */}
-          <div className='flex -mt-2 justify-between'>
-            {/* Small logo for mobile menu */}
-            <VendeMasLogo size='xs' className='lg:hidden -ml-2' asLink />
+        <FocusTrap isActive={mobileMenuOpen} onEscape={handleMobileMenuClose}>
+          <DialogPanel
+            ref={mobileMenuRef}
+            id='mobile-menu'
+            className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'
+          >
+            {/* Header with logo and close button */}
+            <div className='flex -mt-2 justify-between'>
+              {/* Small logo for mobile menu */}
+              <VendeMasLogo size='xs' className='lg:hidden -ml-2' asLink />
 
-            {/* Close button for mobile menu */}
-            <button
-              type='button'
-              onClick={() => setMobileMenuOpen(false)}
-              className='-mt-1 -mr-4 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
-            >
-              <span className='sr-only'>Close menu</span>
-              <X aria-hidden='true' className='size-6' />
-            </button>
-          </div>
+              {/* Close button for mobile menu */}
+              <button
+                type='button'
+                onClick={handleMobileMenuClose}
+                className='-mt-1 -mr-4 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+                aria-label='Cerrar menú de navegación'
+              >
+                <span className='sr-only'>Close menu</span>
+                <X aria-hidden='true' className='size-6' />
+              </button>
+            </div>
 
-          {/* Mobile navigation content */}
-          <div className='mt-6 flow-root'>
-            <div className='-my-6 divide-y divide-gray-500/10 dark:divide-white/10'>
-              {/* Main navigation section */}
-              <div className='space-y-2 py-6'>
-                {/* Primary CTA button with animation */}
-                <Link
-                  href='/signup'
-                  className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
-                  data-analytics='nav_cta_signup'
-                >
-                  Comenzar gratis
-                </Link>
-                {/* Collapsible products section */}
-                <Disclosure as='div' className='-mx-3'>
-                  <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
-                    Herramientas
-                    <ChevronDown
-                      aria-hidden='true'
-                      className='size-5 flex-none group-data-open:rotate-180'
-                    />
-                  </DisclosureButton>
+            {/* Mobile navigation content */}
+            <div className='mt-6 flow-root'>
+              <div className='-my-6 divide-y divide-gray-500/10 dark:divide-white/10'>
+                {/* Main navigation section */}
+                <div className='space-y-2 py-6'>
+                  {/* Primary CTA button with animation */}
+                  <Link
+                    href='/signup'
+                    className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
+                    data-analytics='nav_cta_signup'
+                    aria-label='Comenzar a usar VendeMás gratis'
+                  >
+                    Comenzar gratis
+                  </Link>
+                  {/* Collapsible products section */}
+                  <Disclosure as='div' className='-mx-3'>
+                    <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
+                      Herramientas
+                      <ChevronDown
+                        aria-hidden='true'
+                        className='size-5 flex-none group-data-open:rotate-180'
+                      />
+                    </DisclosureButton>
 
-                  {/* Collapsible content for products and actions */}
-                  <DisclosurePanel className='mt-2 space-y-2'>
-                    {[...products, ...callsToAction].map(item => (
-                      <DisclosureButton
-                        key={item.name}
-                        as='a'
-                        href={item.href}
-                        className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
+                    {/* Collapsible content for products and actions */}
+                    <DisclosurePanel className='mt-2 space-y-2'>
+                      {[...products, ...callsToAction].map(item => (
+                        <DisclosureButton
+                          key={item.name}
+                          as='a'
+                          href={item.href}
+                          className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                          aria-label={`${item.name} - ${item.href}`}
+                        >
+                          {item.name}
+                        </DisclosureButton>
+                      ))}
+                    </DisclosurePanel>
+                  </Disclosure>
 
-                {/* Direct navigation links */}
-                <a
-                  href='#'
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Features
-                </a>
-                <a
-                  href='#'
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Marketplace
-                </a>
-                <a
-                  href='#'
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Company
-                </a>
-              </div>
+                  {/* Direct navigation links */}
+                  <a
+                    href='#'
+                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    aria-label='Ver características de la plataforma'
+                  >
+                    Features
+                  </a>
+                  <a
+                    href='#'
+                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    aria-label='Explorar marketplace'
+                  >
+                    Marketplace
+                  </a>
+                  <a
+                    href='#'
+                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    aria-label='Información de la empresa'
+                  >
+                    Company
+                  </a>
+                </div>
 
-              {/* Bottom CTA section for mobile */}
-              <div className='py-6'>
-                {/* Secondary login link */}
-                <a
-                  href='#'
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                >
-                  Log in
-                </a>
+                {/* Bottom CTA section for mobile */}
+                <div className='py-6'>
+                  {/* Secondary login link */}
+                  <a
+                    href='#'
+                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    aria-label='Iniciar sesión en VendeMás'
+                  >
+                    Log in
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </DialogPanel>
+          </DialogPanel>
+        </FocusTrap>
       </Dialog>
     </header>
   );
