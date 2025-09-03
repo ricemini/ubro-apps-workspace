@@ -4,6 +4,65 @@ import tsparser from '@typescript-eslint/parser';
 import prettier from 'eslint-config-prettier';
 
 export default [
+  {
+    ignores: [
+      // Dependencies
+      '**/node_modules/**',
+      '**/.pnpm-store/**',
+
+      // Build outputs
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/.nuxt/**',
+      '**/coverage/**',
+
+      // Cache directories
+      '**/.angular/**',
+      '**/.nx/**',
+      '**/tmp/**',
+      '**/.cache/**',
+      '**/cache/**',
+
+      // Mobile
+      '**/android/**',
+      '**/ios/**',
+      '**/www/**',
+      '**/.expo/**',
+      '**/web-build/**',
+
+      // Generated files
+      '**/*.min.js',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
+
+      // Apps specific
+      '**/apps/*/dist/**',
+      '**/apps/*/.next/**',
+      '**/apps/*/build/**',
+      '**/libs/*/dist/**',
+      '**/libs/*/build/**',
+      '**/packages/*/node_modules/**',
+      '**/packages/*/dist/**',
+      '**/packages/*/build/**',
+      '**/tools/*/node_modules/**',
+      '**/tools/*/dist/**',
+      '**/tools/*/build/**',
+
+      // Angular specific
+      '**/angular/**',
+      '**/packages/angular/**',
+      '**/node_modules/@angular/**',
+      '**/node_modules/zone.js/**',
+      '**/node_modules/rxjs/**',
+
+      // Test files (optional - uncomment if you want to exclude tests)
+      // '**/*.test.ts',
+      // '**/*.test.tsx',
+      // '**/*.spec.ts',
+      // '**/*.spec.tsx',
+    ],
+  },
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -30,6 +89,52 @@ export default [
         localStorage: 'readonly',
         window: 'readonly',
         HTMLElement: 'readonly',
+        // Add HTML element types to fix the 'not defined' errors
+        HTMLButtonElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
+        HTMLAnchorElement: 'readonly',
+        HTMLSpanElement: 'readonly',
+        HTMLUListElement: 'readonly',
+        HTMLLIElement: 'readonly',
+        HTMLTableElement: 'readonly',
+        HTMLTableSectionElement: 'readonly',
+        HTMLTableRowElement: 'readonly',
+        HTMLTableCellElement: 'readonly',
+        HTMLTableCaptionElement: 'readonly',
+        HTMLParagraphElement: 'readonly',
+        HTMLHeadingElement: 'readonly',
+        HTMLOListElement: 'readonly',
+        KeyboardEvent: 'readonly',
+        React: 'readonly',
+        // Add Angular and other globals
+        Node: 'readonly',
+        ngDevMode: 'readonly',
+        ngJitMode: 'readonly',
+        Zone: 'readonly',
+        PerformanceObserver: 'readonly',
+        performance: 'readonly',
+        NOOP_AFTER_RENDER_REF: 'readonly',
+        // Add test globals
+        describe: 'readonly',
+        beforeEach: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        vi: 'readonly',
+        // Add browser globals
+        self: 'readonly',
+        chunkId: 'readonly',
+        restriction: 'readonly',
+        opts: 'readonly',
+        appRef: 'readonly',
+        injector: 'readonly',
+        value: 'readonly',
+        _M: 'readonly',
+        _: 'readonly',
+        T: 'readonly',
+        actionTypes: 'readonly',
+        navigator: 'readonly',
       },
     },
   },
@@ -80,26 +185,6 @@ export default [
       'no-unused-expressions': 'error',
       'prefer-template': 'error',
     },
-  },
-  {
-    ignores: [
-      'node_modules/',
-      'dist/',
-      'build/',
-      '.next/',
-      '.nuxt/',
-      'coverage/',
-      '*.min.js',
-      '.pnpm-store/',
-      '.nx/',
-      'android/',
-      'ios/',
-      'www/',
-      '.expo/',
-      'web-build/',
-      '**/vite.config.*.timestamp*',
-      '**/vitest.config.*.timestamp*',
-    ],
   },
   prettier,
 ];
