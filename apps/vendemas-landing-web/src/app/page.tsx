@@ -1,6 +1,6 @@
 import React from 'react';
-import Hero from './(site)/components/Hero';
-import Navbar from './(site)/components/Navbar';
+import Hero from './components-site/Hero';
+import Navbar from './components-site/Navbar';
 import ValueProps from './components/ValueProps';
 import HowItWorks from './components/HowItWorks';
 import Features from './components/Features';
@@ -13,7 +13,7 @@ export default function Home(): React.JSX.Element {
   return (
     <>
       <Navbar />
-      <main id="main">
+      <main id='main'>
         <Hero />
         <ValueProps />
         <HowItWorks />

@@ -86,6 +86,11 @@ const nextConfig = {
         source: '/api/v1/:path*',
         destination: '/api/:path*',
       },
+      // Ensure root path serves the home page
+      {
+        source: '/',
+        destination: '/page',
+      },
     ];
   },
 };
