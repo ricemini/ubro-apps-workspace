@@ -9,8 +9,8 @@ const nextConfig = {
   // Nx-specific options
   nx: {},
 
-  // Output configuration for Vercel
-  output: 'standalone',
+  // Remove standalone output - causes issues with Vercel + Nx
+  // output: 'standalone',
 
   // SSR and Performance Configuration
   experimental: {

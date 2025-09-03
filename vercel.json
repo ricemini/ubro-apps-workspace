@@ -1,3 +1,6 @@
 {
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "buildCommand": "nx build vendemas-landing-web",
+  "outputDirectory": "dist/apps/vendemas-landing-web/.next",
+  "installCommand": "pnpm install"
 }
