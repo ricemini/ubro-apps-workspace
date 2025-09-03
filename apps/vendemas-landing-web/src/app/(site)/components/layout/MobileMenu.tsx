@@ -15,8 +15,11 @@ export default function MobileMenu({
   const mobileMenuRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const onKey = (e: globalThis.KeyboardEvent): void =>
-      e.key === 'Escape' && onClose();
+    const onKey = (e: globalThis.KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [onClose]);
@@ -37,14 +40,14 @@ export default function MobileMenu({
   if (!open) return null;
 
   return (
-    <div 
-      role='dialog' 
-      aria-modal='true' 
-      aria-label="Menú de navegación móvil"
+    <div
+      role='dialog'
+      aria-modal='true'
+      aria-label='Menú de navegación móvil'
       className='fixed inset-0 z-50'
     >
       <div className='absolute inset-0 bg-black/30' onClick={onClose} />
-      <div 
+      <div
         ref={mobileMenuRef}
         className='absolute inset-x-0 top-0 rounded-b-2xl bg-white p-6 shadow-xl dark:bg-gray-950'
       >
@@ -63,7 +66,7 @@ export default function MobileMenu({
         </div>
 
         {/* Navigation */}
-        <nav className='space-y-3' aria-label="Navegación principal">
+        <nav className='space-y-3' aria-label='Navegación principal'>
           {/* Primary navigation */}
           {PRIMARY.map(item => (
             <Link
@@ -105,7 +108,7 @@ export default function MobileMenu({
               onClick={onClose}
               className='inline-flex w-full items-center justify-center rounded-lg bg-primary-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
               data-analytics='nav_cta_signup'
-              aria-label="Comenzar a usar VendeMás gratis"
+              aria-label='Comenzar a usar VendeMás gratis'
             >
               Comenzar gratis
             </Link>

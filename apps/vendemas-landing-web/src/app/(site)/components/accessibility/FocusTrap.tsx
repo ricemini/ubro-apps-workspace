@@ -11,14 +11,14 @@ interface FocusTrapProps {
 
 /**
  * FocusTrap Component - Manages focus within a container for accessibility
- * 
+ *
  * Features:
  * - Traps focus within the container when active
  * - Handles Tab and Shift+Tab navigation
  * - Escape key support for closing modals
  * - Automatic focus management
  * - Prevents focus from escaping the container
- * 
+ *
  * @param children - Content to wrap with focus trap
  * @param isActive - Whether the focus trap should be active
  * @param onEscape - Callback for escape key press
@@ -44,8 +44,8 @@ export default function FocusTrap({
         container.querySelectorAll(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'
         )
-      ).filter((el) => {
-        const element = el as HTMLElement;
+      ).filter(el => {
+        const element = el as HTMLElement & { disabled?: boolean };
         return !element.disabled && element.offsetParent !== null;
       }) as HTMLElement[];
     };

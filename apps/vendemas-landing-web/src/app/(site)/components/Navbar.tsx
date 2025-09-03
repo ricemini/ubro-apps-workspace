@@ -160,6 +160,9 @@ export default function Example() {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
+
+    // Return cleanup function even when mobileMenuOpen is false
+    return () => {};
   }, [mobileMenuOpen]);
 
   return (
