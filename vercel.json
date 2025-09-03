@@ -3,20 +3,11 @@
   "buildCommand": "nx build vendemas-landing-web",
   "outputDirectory": "dist/vendemas-landing-web/.next",
   "installCommand": "pnpm install",
+  "devCommand": "nx serve vendemas-landing-web",
+  "regions": ["sfo1"],
   "functions": {
     "app/**/*.tsx": {
       "maxDuration": 30
     }
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Vercel-Cache",
-          "value": "REVALIDATED"
-        }
-      ]
-    }
-  ]
+  }
 }
