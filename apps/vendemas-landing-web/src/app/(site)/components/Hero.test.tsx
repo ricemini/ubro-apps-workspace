@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Hero from './Hero';
 
@@ -221,14 +221,16 @@ describe('Hero Component', () => {
 
     it('applies hover animations to secondary CTA elements', () => {
       render(<Hero />);
-      
-      const secondaryCTALink = screen.getByText('Conoce todas las herramientas').closest('a');
+
+      const secondaryCTALink = screen
+        .getByText('Conoce todas las herramientas')
+        .closest('a');
       expect(secondaryCTALink?.className).toContain('group');
-      
+
       // Check for hover animations on the chevron icon
       const chevron = document.querySelector('svg[aria-hidden="true"]');
       expect(chevron?.className).toContain('group-hover:translate-x-1');
-      
+
       // Check for hover animations on the underline
       const underline = secondaryCTALink?.querySelector('span:last-child');
       expect(underline?.className).toContain('group-hover:w-full');
@@ -259,15 +261,17 @@ describe('Hero Component', () => {
     it('positions PriceFlipBadge at top when not scrolled', () => {
       mockScrollY.mockReturnValue(0);
       render(<Hero />);
-      
-      const badgeContainer = screen.getByTestId('price-flip-badge').closest('div');
+
+      const badgeContainer = screen
+        .getByTestId('price-flip-badge')
+        .closest('div');
       expect(badgeContainer?.className).toContain('-top-6');
       expect(badgeContainer?.className).toContain('left-10');
     });
 
     it('positions PriceFlipBadge at bottom when scrolled past threshold', () => {
       mockScrollY.mockReturnValue(15); // Past 10px threshold
-      
+
       // Mock the scroll event to trigger state change
       const mockHandleScroll = vi.fn();
       mockAddEventListener.mockImplementation((event, handler) => {
@@ -275,22 +279,26 @@ describe('Hero Component', () => {
           mockHandleScroll.mockImplementation(handler);
         }
       });
-      
+
       render(<Hero />);
-      
+
       // Simulate scroll event
       mockHandleScroll();
-      
+
       // The badge should now be positioned at bottom on large screens
-      const badgeContainer = screen.getByTestId('price-flip-badge').closest('div');
+      const badgeContainer = screen
+        .getByTestId('price-flip-badge')
+        .closest('div');
       expect(badgeContainer?.className).toContain('lg:bottom-4');
       expect(badgeContainer?.className).toContain('lg:-left-5');
     });
 
     it('applies smooth transitions to badge positioning changes', () => {
       render(<Hero />);
-      
-      const badgeContainer = screen.getByTestId('price-flip-badge').closest('div');
+
+      const badgeContainer = screen
+        .getByTestId('price-flip-badge')
+        .closest('div');
       expect(badgeContainer?.className).toContain('transition-all');
       expect(badgeContainer?.className).toContain('duration-200');
     });
