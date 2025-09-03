@@ -1,6 +1,22 @@
 {
   "framework": "nextjs",
   "buildCommand": "nx build vendemas-landing-web",
-  "outputDirectory": "dist/apps/vendemas-landing-web/.next",
-  "installCommand": "pnpm install"
+  "outputDirectory": "dist/vendemas-landing-web/.next",
+  "installCommand": "pnpm install",
+  "functions": {
+    "app/**/*.tsx": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Vercel-Cache",
+          "value": "REVALIDATED"
+        }
+      ]
+    }
+  ]
 }

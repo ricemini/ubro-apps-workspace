@@ -12,6 +12,12 @@ const nextConfig = {
   // Remove standalone output - causes issues with Vercel + Nx
   // output: 'standalone',
 
+  // Vercel-specific optimizations for Nx monorepos
+  distDir: '.next',
+  generateBuildId: async () => {
+    return 'vendemas-landing-web';
+  },
+
   // SSR and Performance Configuration
   experimental: {
     // Enable server actions
