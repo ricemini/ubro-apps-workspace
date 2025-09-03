@@ -1,5 +1,4 @@
 // Test setup for vendemas-landing-web
-import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
 // Mock Next.js router

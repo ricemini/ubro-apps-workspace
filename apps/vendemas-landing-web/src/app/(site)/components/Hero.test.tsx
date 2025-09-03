@@ -75,8 +75,9 @@ describe('Hero', () => {
     it('renders the main headline', () => {
       render(<Hero />);
 
-      expect(screen.getByText('Todo tu negocio')).toBeTruthy();
-      expect(screen.getByText('impulsado por IA')).toBeTruthy();
+      // The text is split across multiple spans, so we need to check for partial matches
+      expect(screen.getByText(/Todo tu negocio/)).toBeTruthy();
+      expect(screen.getByText(/impulsado por IA/)).toBeTruthy();
     });
 
     it('renders subtitle and description', () => {
