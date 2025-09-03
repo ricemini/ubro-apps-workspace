@@ -3,15 +3,15 @@
     "version": "21.3.11"
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "nxCloudAccessToken": "process.env.NX_CLOUD_ACCESS_TOKEN",
-  "nxCloudUrl": "https://cloud.nx.app",
+  // "nxCloudAccessToken": "process.env.NX_CLOUD_ACCESS_TOKEN",
+  // "nxCloudUrl": "https://cloud.nx.app",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/vitest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/vitest.config.[jt]s",
@@ -96,12 +96,7 @@
         "targetName": "e2e"
       }
     },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
+
     {
       "plugin": "@nx/vite/plugin",
       "options": {
