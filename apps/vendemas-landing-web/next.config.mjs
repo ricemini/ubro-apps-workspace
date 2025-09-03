@@ -18,6 +18,8 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Next.js 15 optimizations
+    optimizePackageImports: ['@headlessui/react', 'lucide-react'],
   },
 
   // Image optimization
@@ -79,17 +81,12 @@ const nextConfig = {
     ];
   },
 
-  // Rewrites for API routes
+  // Rewrites for API routes only - removed problematic root rewrite
   async rewrites() {
     return [
       {
         source: '/api/v1/:path*',
         destination: '/api/:path*',
-      },
-      // Ensure root path serves the home page
-      {
-        source: '/',
-        destination: '/page',
       },
     ];
   },
