@@ -1,17 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import HeroBackground from './HeroBackground';
 import TrustStrip, { RiskReducers } from './trust/TrustStrip';
 import AggregateRatingJsonLd from './seo/AggregateRatingJsonLd';
 import PriceFlipBadge from './price-flip-badge/PriceFlipBadge';
-
-// Dynamically import the modal to avoid SSR issues and improve initial page load
-const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
-  ssr: false,
-});
 
 /**
  * Hero Component - Main landing section with primary CTA and value proposition
@@ -36,9 +30,6 @@ const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
  * - Consistent visual hierarchy maintained across screen sizes
  */
 export default function Hero(): React.JSX.Element {
-  // State for controlling the "How It Works" modal visibility and interactions
-  const [open, setOpen] = useState(false);
-
   // State for detecting scroll position to adjust PriceFlipBadge positioning
   // This enables synchronized behavior with the navbar scroll effects
   const [isScrolled, setIsScrolled] = useState(false);
@@ -63,27 +54,6 @@ export default function Hero(): React.JSX.Element {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  /**
-   * Focus management for modal interactions
-   * - Prevents body scroll when modal is open
-   * - Returns focus to trigger element when modal closes
-   * - Improves accessibility and keyboard navigation
-   */
-  const handleModalToggle = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (isOpen) {
-      // Focus will be managed by the modal component
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-      // Return focus to the trigger element
-      const trigger = document.querySelector('[data-modal-trigger]');
-      if (trigger instanceof HTMLElement) {
-        trigger.focus();
-      }
-    }
-  };
-
   return (
     // Main hero section with proper semantic role and accessibility
     // role="banner" identifies this as the main site header for screen readers
@@ -106,9 +76,9 @@ export default function Hero(): React.JSX.Element {
       {/* - Horizontal padding: responsive from 24px on mobile to 48px on large screens */}
       {/* - Vertical padding: responsive top padding, bottom padding prevents badge overlap */}
       <div
-        className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
+        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
         id='main-content'
-        tabIndex='-1'
+        tabIndex={-1}
         role='main'
       >
         {/* Responsive grid: stacked on mobile, side-by-side on desktop */}
@@ -116,7 +86,7 @@ export default function Hero(): React.JSX.Element {
         {/* - Desktop: two-column layout for better content distribution */}
         <div className='grid items-start gap-6 lg:grid-cols-2'>
           {/* LEFT COLUMN: Main copy and CTAs */}
-          <div className='relative z-20 mt-14'>
+          <div className='relative z-20 mt-24'>
             {/* Primary headline with gradient text effect */}
             <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
               <span>Todo tu negocio, </span>
@@ -265,19 +235,6 @@ export default function Hero(): React.JSX.Element {
           </div>
         </div>
       </div>
-
-      {/* Modal for "How It Works" with Suspense fallback */}
-      {open && (
-        <Suspense
-          fallback={
-            <div className='sr-only' aria-live='polite'>
-              Cargando modal de instrucciones...
-            </div>
-          }
-        >
-          <HowItWorksModal onClose={() => handleModalToggle(false)} />
-        </Suspense>
-      )}
 
       {/* SEO: Structured data for aggregate ratings */}
       <AggregateRatingJsonLd />

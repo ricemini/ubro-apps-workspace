@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogPanel,
@@ -183,7 +183,7 @@ export default function Example() {
       {/* - Vertical padding: 8px (4px top/bottom) for consistent 60px height */}
       {/* - Max width: 7xl (1280px) with auto margins for centering */}
       <nav
-        id="main-navigation"
+        id='main-navigation'
         aria-label='Global'
         className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8 lg:py-2'
       >
