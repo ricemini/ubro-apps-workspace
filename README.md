@@ -9,11 +9,13 @@ Empower street vendors to sell more with less friction—by giving them a fast, 
 ## 📊 Current Development Status
 
 ### 🚀 Active Development
+
 - **vendemas-landing-web**: ✅ CI/CD pipeline implemented and tested
 - **vendemas-caja-mobile**: 🔄 In development (Ionic/Capacitor mobile app)
 - **vendemas-negocio-web**: 🔄 In development (Angular admin dashboard)
 
 ### 🎯 Next Milestones
+
 - Complete mobile app MVP features
 - Implement authentication system
 - Set up Firebase backend integration
@@ -127,7 +129,7 @@ nx graph
 
 - ESLint, Prettier, Husky, Commitlint
 - Nx plugins (@nx/angular, @nx/react, @nx/next)
-- TypeScript, Jest, Playwright
+- TypeScript, Vitest, Playwright
 - Workspace management tools
 
 ### Project Dependencies (Project-specific)
@@ -163,7 +165,7 @@ pnpm add <package-name> --filter @vendemas/caja-mobile
 
 ### Testing Strategy
 
-- **Unit Tests**: Jest for individual components/functions
+- **Unit Tests**: Vitest for individual components/functions
 - **Integration Tests**: Component interaction testing
 - **E2E Tests**: Playwright for end-to-end workflows
 - **Performance Tests**: Lighthouse CI for performance monitoring
@@ -231,6 +233,7 @@ Setup & Affected Detection → [Lint + Test] (parallel) → Build → Deploy
 ### 📚 Documentation
 
 For detailed CI/CD implementation guide, troubleshooting, and replication instructions, see:
+
 - **[CI/CD Pipeline Reference](docs/ci-cd-pipeline-reference.md)** - Comprehensive guide for implementing similar pipelines
 
 ### Firebase Hosting

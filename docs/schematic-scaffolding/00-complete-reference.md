@@ -1127,7 +1127,7 @@ docs/
 
 ### Phase 6: Testing Framework (Week 6)
 
-- Day 1-2: Unit testing setup (Jest/Vitest)
+- Day 1-2: Unit testing setup (Vitest)
 - Day 3-4: Component testing + Angular testing utilities
 - Day 5: Test coverage + reporting
 

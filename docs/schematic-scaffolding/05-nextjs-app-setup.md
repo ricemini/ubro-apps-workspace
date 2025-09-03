@@ -579,7 +579,7 @@ export default defineConfig({
 #### **test-setup.ts**
 
 ```typescript
-import '@testing-library/jest-dom';
+// Vitest setup - no jest-dom needed
 import { vi } from 'vitest';
 
 // Mock Next.js router

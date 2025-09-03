@@ -178,7 +178,8 @@ describe('Hero', () => {
     it('uses responsive typography', () => {
       render(<Hero />);
 
-      const headline = screen.getByText('Todo tu negocio').closest('h1');
+      // The text is split across multiple spans, so we need to use a more flexible approach
+      const headline = screen.getByRole('heading', { level: 1 });
       expect(headline?.className).toContain('text-5xl');
       expect(headline?.className).toContain('md:text-6xl');
     });
