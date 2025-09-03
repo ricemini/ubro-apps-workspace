@@ -1,57 +1,66 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import HeroBackground from './HeroBackground';
 import TrustStrip, { RiskReducers } from './trust/TrustStrip';
 import AggregateRatingJsonLd from './seo/AggregateRatingJsonLd';
 import PriceFlipBadge from './price-flip-badge/PriceFlipBadge';
 
-// Dynamically import the modal to avoid SSR issues and improve initial page load
-const HowItWorksModal = dynamic(() => import('./HowItWorksModal'), {
-  ssr: false,
-});
-
 /**
  * Hero Component - Main landing section with primary CTA and value proposition
  *
  * Features:
  * - Responsive grid layout (1 column on mobile, 2 columns on desktop)
- * - Accessibility: skip links, ARIA labels, focus management
- * - Dark mode support with high contrast
- * - Motion-safe animations respecting user preferences
- * - SEO: structured data for ratings
+ * - Accessibility: skip links, ARIA labels, focus management, screen reader support
+ * - Dark mode support with high contrast and consistent theming
+ * - Motion-safe animations respecting user preferences and accessibility settings
+ * - SEO: structured data for ratings and search engine optimization
+ * - Dynamic PriceFlipBadge positioning synchronized with navbar scroll behavior
+ * - Interactive elements with proper hover states and focus management
+ *
+ * Scroll Behavior:
+ * - At top: PriceFlipBadge positioned at top-left for prominent visibility
+ * - After 10px scroll: PriceFlipBadge moves to bottom-left, synchronized with navbar changes
+ * - Smooth transitions for all positioning changes with consistent timing
+ *
+ * Responsive Design:
+ * - Mobile-first approach with progressive enhancement
+ * - Optimized spacing and typography across all breakpoints
+ * - Consistent visual hierarchy maintained across screen sizes
  */
 export default function Hero(): React.JSX.Element {
-  // State for controlling the "How It Works" modal visibility
-  const [open, setOpen] = useState(false);
+  // State for detecting scroll position to adjust PriceFlipBadge positioning
+  // This enables synchronized behavior with the navbar scroll effects
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  /**
-   * Focus management for modal interactions
-   * - Prevents body scroll when modal is open
-   * - Returns focus to trigger element when modal closes
-   * - Improves accessibility and keyboard navigation
-   */
-  const handleModalToggle = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (isOpen) {
-      // Focus will be managed by the modal component
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-      // Return focus to the trigger element
-      const trigger = document.querySelector('[data-modal-trigger]');
-      if (trigger instanceof HTMLElement) {
-        trigger.focus();
-      }
-    }
-  };
+  // Effect to detect scroll position and update badge positioning accordingly
+  // Synchronized with navbar behavior: same 10px threshold for consistency
+  // This ensures the badge and navbar respond to scroll events simultaneously
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      // Same threshold as navbar for synchronized behavior
+      // 10px provides immediate feedback without being too sensitive
+      setIsScrolled(scrollTop > 10);
+    };
+
+    // Add scroll listener for real-time updates
+    // Listens to window scroll events for responsive positioning
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup: remove listener to prevent memory leaks
+    // Essential for performance and preventing multiple event listeners
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     // Main hero section with proper semantic role and accessibility
+    // role="banner" identifies this as the main site header for screen readers
     <header className='relative isolate overflow-hidden' role='banner'>
       {/* Skip link for keyboard navigation - appears only on focus */}
+      {/* Provides quick access to main content for keyboard and screen reader users */}
+      {/* sr-only hides it visually but keeps it accessible to assistive technology */}
       <a
         href='#main-content'
         className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
@@ -63,16 +72,21 @@ export default function Hero(): React.JSX.Element {
       <HeroBackground />
 
       {/* Main content container with responsive padding and semantic structure */}
+      {/* Bottom padding accommodates PriceFlipBadge when positioned at bottom on large screens */}
+      {/* - Horizontal padding: responsive from 24px on mobile to 48px on large screens */}
+      {/* - Vertical padding: responsive top padding, bottom padding prevents badge overlap */}
       <div
-        className='mx-auto max-w-7xl px-6 -pt- sm:pt-2 md:pt-4 lg:pt-12'
+        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
         id='main-content'
-        tabIndex='-1'
+        tabIndex={-1}
         role='main'
       >
         {/* Responsive grid: stacked on mobile, side-by-side on desktop */}
+        {/* - Mobile: single column layout for optimal readability */}
+        {/* - Desktop: two-column layout for better content distribution */}
         <div className='grid items-start gap-6 lg:grid-cols-2'>
           {/* LEFT COLUMN: Main copy and CTAs */}
-          <div className='relative z-20 mt-14'>
+          <div className='relative z-20 mt-24'>
             {/* Primary headline with gradient text effect */}
             <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
               <span>Todo tu negocio, </span>
@@ -157,8 +171,21 @@ export default function Hero(): React.JSX.Element {
           {/* RIGHT COLUMN: Visual content and mockups */}
           <div className='relative z-10 mt-8 sm:mt-9 md:mt-9'>
             <div className='relative mx-auto w-full max-w-[560px]'>
-              {/* Floating price flip badge positioned absolutely */}
-              <div className='absolute -top-6 left-10 z-20'>
+              {/* Floating price flip badge with responsive positioning behavior */}
+              {/* - Mobile/Medium: Always positioned at top-left for consistent layout */}
+              {/* - Large screens: Dynamic positioning based on scroll state */}
+              {/*   - At top: positioned at top-left for prominent visibility */}
+              {/*   - When scrolled: positioned at bottom-left to complement navbar changes */}
+              {/* - Smooth transitions: 200ms duration for polished user experience */}
+              <div
+                className={`absolute z-20 transition-all duration-200 ${
+                  // Dynamic positioning only on large screens (lg+)
+                  // On smaller screens, always use top positioning for layout stability
+                  isScrolled
+                    ? 'lg:bottom-4 lg:-left-5 lg:z-50' // Bottom positioning when scrolled on lg+, top on smaller screens
+                    : '-top-6 left-10' // Top positioning for all screen sizes when at top
+                }`}
+              >
                 <PriceFlipBadge />
               </div>
 
@@ -208,19 +235,6 @@ export default function Hero(): React.JSX.Element {
           </div>
         </div>
       </div>
-
-      {/* Modal for "How It Works" with Suspense fallback */}
-      {open && (
-        <Suspense
-          fallback={
-            <div className='sr-only' aria-live='polite'>
-              Cargando modal de instrucciones...
-            </div>
-          }
-        >
-          <HowItWorksModal onClose={() => handleModalToggle(false)} />
-        </Suspense>
-      )}
 
       {/* SEO: Structured data for aggregate ratings */}
       <AggregateRatingJsonLd />

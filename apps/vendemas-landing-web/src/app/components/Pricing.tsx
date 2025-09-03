@@ -38,7 +38,7 @@ export default function Pricing() {
           'Productos ilimitados',
           'Ventas ilimitadas',
           'Todos los métodos de pago',
-          'Pagos CoDi certificados',
+          'CoDi certificado',
           'Hasta 3 usuarios',
           'Reportes avanzados',
           'Inventario inteligente',

@@ -76,7 +76,7 @@ export default function TrustStrip(): React.JSX.Element {
           icon={
             <Shield className='h-3 w-3 text-tertiary-700 dark:text-tertiary-200' />
           }
-          text='Pagos CoDi certificados'
+          text='CoDi certificado'
           srLabel='Integración CoDi certificada y segura'
         />
       </div>
@@ -109,7 +109,7 @@ export default function TrustStrip(): React.JSX.Element {
           icon={
             <Shield className='h-3 w-3 text-tertiary-700 dark:text-tertiary-200' />
           }
-          text='Pagos CoDi certificados'
+          text='CoDi certificado'
           srLabel='Integración CoDi certificada y segura'
         />
       </div>

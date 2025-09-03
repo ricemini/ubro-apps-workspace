@@ -2,7 +2,7 @@ name: VendeMás Landing Web CI/CD
 
 on:
   push:
-    branches: [main, feature/ci-cd]
+    branches: [main]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/**'
@@ -11,7 +11,7 @@ on:
       - 'nx.json'
       - '.github/workflows/vendemas-landing-web-ci.yml'
   pull_request:
-    branches: [main, feature/ci-cd]
+    branches: [main]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/**'
