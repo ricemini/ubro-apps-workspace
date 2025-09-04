@@ -23,11 +23,5 @@ export default function GoogleAnalytics(): React.JSX.Element | null {
     return null;
   }
 
-  return (
-    <NextGoogleAnalytics
-      gaId={analyticsConfig.gaMeasurementId}
-      // Enable enhanced ecommerce for conversion tracking
-      strategy='afterInteractive'
-    />
-  );
+  return <NextGoogleAnalytics gaId={analyticsConfig.gaMeasurementId} />;
 }

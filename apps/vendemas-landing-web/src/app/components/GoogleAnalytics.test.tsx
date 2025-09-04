@@ -1,13 +1,18 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import GoogleAnalytics from './GoogleAnalytics';
 
 // Mock the analytics configuration
+const mockAnalyticsConfig = {
+  isEnabled: true,
+  gaMeasurementId: 'G-TEST123456',
+};
+
 vi.mock('../../lib/analytics', () => ({
-  analyticsConfig: {
-    isEnabled: true,
-    gaMeasurementId: 'G-TEST123456',
+  get analyticsConfig() {
+    return mockAnalyticsConfig;
   },
 }));
 
@@ -23,6 +28,9 @@ vi.mock('@next/third-parties/google', () => ({
 describe('GoogleAnalytics', () => {
   beforeEach((): void => {
     vi.clearAllMocks();
+    // Reset mock state
+    mockAnalyticsConfig.isEnabled = true;
+    mockAnalyticsConfig.gaMeasurementId = 'G-TEST123456';
   });
 
   it('renders Google Analytics when enabled and measurement ID is provided', () => {
@@ -35,12 +43,8 @@ describe('GoogleAnalytics', () => {
 
   it('does not render when disabled', () => {
     // Mock disabled state
-    vi.doMock('../../lib/analytics', () => ({
-      analyticsConfig: {
-        isEnabled: false,
-        gaMeasurementId: 'G-TEST123456',
-      },
-    }));
+    mockAnalyticsConfig.isEnabled = false;
+    mockAnalyticsConfig.gaMeasurementId = 'G-TEST123456';
 
     render(<GoogleAnalytics />);
 
@@ -49,12 +53,8 @@ describe('GoogleAnalytics', () => {
 
   it('does not render when measurement ID is missing', () => {
     // Mock missing measurement ID
-    vi.doMock('../../lib/analytics', () => ({
-      analyticsConfig: {
-        isEnabled: true,
-        gaMeasurementId: null,
-      },
-    }));
+    mockAnalyticsConfig.isEnabled = true;
+    mockAnalyticsConfig.gaMeasurementId = null;
 
     render(<GoogleAnalytics />);
 

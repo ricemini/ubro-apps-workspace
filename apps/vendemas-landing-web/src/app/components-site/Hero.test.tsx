@@ -103,7 +103,7 @@ describe('Hero', () => {
       const secondaryCTA = screen.getByText('Conoce todas las herramientas');
       expect(secondaryCTA).toBeTruthy();
       expect(secondaryCTA.closest('a')?.getAttribute('href')).toBe(
-        '#caracteristicas'
+        '/caracteristicas'
       );
     });
 

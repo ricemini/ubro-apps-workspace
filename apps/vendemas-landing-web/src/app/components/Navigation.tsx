@@ -10,8 +10,8 @@ export default function Navigation(): React.JSX.Element {
 
   const navLinks = [
     { href: '#como-funciona', label: 'Cómo funciona' },
-    { href: '#caracteristicas', label: 'Características' },
-    { href: '#mi-negocio', label: 'Mi Negocio' },
+    { href: '/caracteristicas', label: 'Características' },
+    { href: '/mi-negocio', label: 'Mi Negocio' },
     { href: '#precios', label: 'Precios' },
     { href: '/faq', label: 'FAQ' },
   ];
