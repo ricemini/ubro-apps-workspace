@@ -1,0 +1,80 @@
+# TypeScript & Angular Best Practices
+
+## 🔧 TypeScript Best Practices
+
+### Type Safety
+
+- Use strict type checking (`strict: true` in tsconfig)
+- Prefer type inference when the type is obvious
+- Avoid `any` type; use `unknown` when type is uncertain
+- Use branded types for domain-specific values
+- Leverage utility types for complex type transformations
+
+### Code Organization
+
+- Use barrel exports for clean import paths
+- Group related types in dedicated type files
+- Use interfaces for object shapes, classes for behavior
+- Implement proper error handling with typed errors
+
+## ⚡ Angular Best Practices
+
+### Modern Angular Patterns
+
+- Always use standalone components over NgModules
+- Must NOT set `standalone: true` inside Angular decorators (it's the default)
+- Use signals for state management and reactivity
+- Implement lazy loading for feature routes
+- Do NOT use `@HostBinding` and `@HostListener` decorators; use the `host` object instead
+- Use `NgOptimizedImage` for all static images (doesn't work for base64 images)
+
+### Component Architecture
+
+- Keep components small and focused on single responsibility
+- Use `input()` and `output()` functions instead of decorators
+- Use `computed()` for derived state
+- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Prefer inline templates for small components
+- Prefer Reactive forms over Template-driven forms
+- Do NOT use `ngClass`, use `class` bindings instead
+- Do NOT use `ngStyle`, use `style` bindings instead
+
+### State Management
+
+- Use signals for local component state
+- Use `computed()` for derived state
+- Keep state transformations pure and predictable
+- Do NOT use `mutate` on signals, use `update` or `set` instead
+- Consider NgRx for complex global state when signals aren't sufficient
+
+### Templates
+
+- Keep templates simple and avoid complex logic
+- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
+- Use the async pipe to handle observables
+- Implement proper accessibility attributes
+- Use trackBy functions for performance in loops
+
+### Services
+
+- Design services around single responsibility
+- Use `providedIn: 'root'` for singleton services
+- Use the `inject()` function instead of constructor injection
+- Implement proper error handling and retry logic
+- Use interceptors for cross-cutting concerns
+
+## 🐛 Common Pitfalls & Solutions
+
+### Angular-Specific Issues
+
+- **Control Flow**: You cannot use `as` expressions in `@else if (...)`. Invalid: `@else if (bla(); as x)`
+- **Signal Mutations**: Avoid `mutate()` on signals, use `update()` or `set()` instead
+- **Change Detection**: Use OnPush strategy and signals for better performance
+- **Memory Leaks**: Properly unsubscribe from observables and clean up resources
+
+### General Issues
+
+- **Over-Engineering**: Start simple and add complexity only when needed
+- **Premature Optimization**: Profile first, optimize based on data
+- **Technical Debt**: Address technical debt regularly, don't let it accumulate
+- **Documentation**: Keep documentation up-to-date with code changes
