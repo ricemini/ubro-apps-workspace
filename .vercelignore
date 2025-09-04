@@ -1,0 +1,22 @@
+# Exclude build artifacts from other projects
+dist/apps/vendemas-caja-mobile/
+dist/apps/vendemas-negocio-web/
+dist/apps/vendemas-admin-web/
+
+# Exclude node_modules (should be handled by Vercel)
+node_modules/
+
+# Exclude test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Exclude development files
+.env.local
+.env.development
+.env.test
+
+# Exclude Nx cache
+.nx/
+tmp/

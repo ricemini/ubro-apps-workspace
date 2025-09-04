@@ -3,6 +3,8 @@ import './global.css';
 import { inter, jakarta } from './fonts';
 import type { Metadata } from 'next';
 import { ThemeProvider } from './components-site/theme/ThemeProvider';
+import GoogleAnalytics from './components/GoogleAnalytics';
+import FirebaseAnalytics from './components/FirebaseAnalytics';
 
 export const metadata: Metadata = {
   title: 'VendeMás - POS Móvil para Vendedores Ambulantes | México y LATAM',
@@ -79,6 +81,9 @@ export default function RootLayout({
       </head>
       <body className='font-body antialiased'>
         <ThemeProvider>{children}</ThemeProvider>
+        {/* Analytics Components */}
+        <GoogleAnalytics />
+        <FirebaseAnalytics />
       </body>
     </html>
   );

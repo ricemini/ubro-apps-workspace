@@ -154,6 +154,11 @@ html {
     animation: none !important;
     filter: none !important;
   }
+  .animate-slide-in-fade {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Motion keyframes (non-gradient helpers kept) */
@@ -209,6 +214,27 @@ html {
     50% {
       --vm-glow: 0.06;
     } /* keep subtle */
+  }
+
+  /* Subtle slide-in fade animation for value proposition cards */
+  @keyframes slide-in-fade {
+    0% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-slide-in-fade {
+    animation: slide-in-fade 600ms ease-out forwards;
+  }
+
+  /* Initial hidden state for cards before animation */
+  .opacity-0.translate-y-3 {
+    opacity: 0 !important;
+    transform: translateY(12px) !important;
   }
 }
 
