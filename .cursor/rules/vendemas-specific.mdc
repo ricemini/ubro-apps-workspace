@@ -125,7 +125,8 @@ libs/
 ├── vendemas-shared-utils/ # Utility functions
 ├── vendemas-shared-api/ # API client utilities
 └── vendemas-shared-constants/ # Shared constants
-```
+
+````
 
 **Import Paths:**
 
@@ -140,4 +141,77 @@ import { CajaService } from '@vendemas/caja-mobile';
 import { NegocioService } from '@vendemas/negocio-web';
 import { AdminService } from '@vendemas/admin-web';
 import { WebsiteService } from '@vendemas/website';
+````
+
+## 🚀 Vercel Deployment Configuration for vendemas-landing-web
+
+**CRITICAL: Vercel Configuration Requirements for Nx Monorepo**
+
+The `vendemas-landing-web` project requires specific Vercel configuration due to the Nx monorepo structure. **Always verify these settings when working on CI/CD or deployment issues:**
+
+### Required Vercel Configuration (`apps/vendemas-landing-web/vercel.json`):
+
+```json
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npx nx run vendemas-landing-web:build:production",
+  "devCommand": "npx nx run vendemas-landing-web:serve",
+  "installCommand": "pnpm install",
+  "outputDirectory": "dist/vendemas-landing-web/.next",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "distDir": "dist/vendemas-landing-web/.next"
+      }
+    }
+  ]
+}
 ```
+
+### Required Package.json Scripts (`apps/vendemas-landing-web/package.json`):
+
+```json
+{
+  "scripts": {
+    "build": "npx nx run vendemas-landing-web:build:production",
+    "dev": "npx nx run vendemas-landing-web:serve",
+    "start": "npx nx run vendemas-landing-web:serve:production",
+    "lint": "npx nx run vendemas-landing-web:lint",
+    "test": "npx nx run vendemas-landing-web:test"
+  }
+}
+```
+
+### Common Vercel Deployment Issues & Solutions:
+
+1. **404 NOT_FOUND Error**: Usually caused by Vercel using cached configuration
+   - **Solution**: Force redeployment with empty commit: `git commit --allow-empty -m "ci: force vercel redeployment"`
+   - **Root Cause**: Vercel caches build settings and doesn't pick up `vercel.json` changes
+
+2. **Build Command Not Found**: Vercel tries to run `pnpm build` instead of Nx commands
+   - **Solution**: Ensure `buildCommand` is set to `npx nx run vendemas-landing-web:build:production`
+   - **Root Cause**: Generic Next.js build commands don't work in Nx monorepos
+
+3. **Output Directory Not Found**: Vercel can't find the built files
+   - **Solution**: Set `outputDirectory` to `dist/vendemas-landing-web/.next`
+   - **Root Cause**: Nx outputs to a different directory than standard Next.js
+
+### Deployment Checklist:
+
+- [ ] Verify `vercel.json` has correct Nx build commands
+- [ ] Confirm `outputDirectory` points to `dist/vendemas-landing-web/.next`
+- [ ] Check `package.json` has proper scripts for Vercel
+- [ ] Test build locally: `npx nx run vendemas-landing-web:build`
+- [ ] If 404 error persists, force redeployment with empty commit
+
+### Force Redeployment Command:
+
+```bash
+git commit --allow-empty -m "ci: force vercel redeployment with updated config"
+git push
+```
+
+**Remember**: Vercel caches configuration aggressively. When changing `vercel.json` or build settings, always force a redeployment to ensure changes are picked up.
