@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ChevronRight } from 'lucide-react';
 import HeroBackground from './HeroBackground';
 import TrustStrip, { RiskReducers } from './trust/TrustStrip';
 import AggregateRatingJsonLd from './seo/AggregateRatingJsonLd';
 import PriceFlipBadge from './price-flip-badge/PriceFlipBadge';
+import SecondaryCTA from '../components/SecondaryCTA';
 
 /**
  * Hero Component - Main landing section with primary CTA and value proposition
@@ -38,7 +38,7 @@ export default function Hero(): React.JSX.Element {
   // Synchronized with navbar behavior: same 10px threshold for consistency
   // This ensures the badge and navbar respond to scroll events simultaneously
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollTop = window.scrollY;
       // Same threshold as navbar for synchronized behavior
       // 10px provides immediate feedback without being too sensitive
@@ -51,7 +51,7 @@ export default function Hero(): React.JSX.Element {
 
     // Cleanup: remove listener to prevent memory leaks
     // Essential for performance and preventing multiple event listeners
-    return () => window.removeEventListener('scroll', handleScroll);
+    return (): void => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -139,27 +139,11 @@ export default function Hero(): React.JSX.Element {
               </span>
 
               {/* Secondary CTA: Learn more link with hover effects */}
-              <a
-                href='/caracteristicas'
-                className='group inline-flex items-center gap-x-2 text-sm font-semibold text-secondary-600 hover:text-secondary-700 transition-all duration-300 dark:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:rounded-lg dark:focus:ring-white dark:focus:ring-offset-gray-900'
-                aria-describedby='features-description'
-              >
-                <span className='relative'>
-                  Conoce todas las herramientas
-                  {/* Animated underline that hides on focus */}
-                  <span className='absolute -bottom-0.5 left-0 h-0.5 w-0 bg-secondary-600 transition-all duration-300 group-hover:w-full dark:bg-white dark:group-hover:bg-white group-focus-within:hidden group-focus:hidden'></span>
-                </span>
-                {/* Chevron icon with hover animation */}
-                <ChevronRight
-                  aria-hidden='true'
-                  className='size-4 transition-transform duration-300 group-hover:translate-x-1'
-                />
-              </a>
-              {/* Screen reader description for the secondary CTA */}
-              <span id='features-description' className='sr-only'>
-                Enlace para ver todas las características y herramientas de
-                VendeMás
-              </span>
+              <SecondaryCTA
+                text='Conoce todas las herramientas'
+                url='/caracteristicas'
+                description='Enlace para ver todas las características y herramientas de VendeMás'
+              />
             </div>
 
             {/* Risk reduction indicators with staggered animations */}

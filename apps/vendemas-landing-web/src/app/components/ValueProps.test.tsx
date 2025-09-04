@@ -1,8 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-// import userEvent from '@testing-library/user-event';
 import ValueProps from './ValueProps';
 
 // Mock IntersectionObserver
@@ -43,8 +41,8 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const heading = screen.getByRole('heading', { level: 2 });
-      expect(heading).toBeInTheDocument();
-      expect(heading).toHaveTextContent('¿Por qué elegir VendeMás?');
+      expect(heading).toBeTruthy();
+      expect(heading.textContent).toContain('¿Por qué elegir VendeMás?');
     });
 
     it('renders the subtitle with correct content', () => {
@@ -53,8 +51,8 @@ describe('ValueProps Component', () => {
       const subtitle = screen.getByText(
         /Diseñado para las necesidades de las PyMES/
       );
-      expect(subtitle).toBeInTheDocument();
-      expect(subtitle).toHaveTextContent('de México y Latinoamérica');
+      expect(subtitle).toBeTruthy();
+      expect(subtitle.textContent).toContain('de México y Latinoamérica');
     });
 
     it('renders all four value proposition cards', () => {
@@ -72,10 +70,10 @@ describe('ValueProps Component', () => {
       const shieldIcon = screen.getByTestId('shield-check-icon');
       const smartphoneIcon = screen.getByTestId('smartphone-icon');
 
-      expect(trendingIcon).toBeInTheDocument();
-      expect(brainIcon).toBeInTheDocument();
-      expect(shieldIcon).toBeInTheDocument();
-      expect(smartphoneIcon).toBeInTheDocument();
+      expect(trendingIcon).toBeTruthy();
+      expect(brainIcon).toBeTruthy();
+      expect(shieldIcon).toBeTruthy();
+      expect(smartphoneIcon).toBeTruthy();
     });
   });
 
@@ -83,16 +81,12 @@ describe('ValueProps Component', () => {
     it('displays correct titles for all cards', () => {
       renderComponent();
 
-      expect(screen.getByText('Aumenta tus ventas')).toBeInTheDocument();
-      expect(
-        screen.getByText('Inteligencia para Vender Más')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('Pagos seguros y sin límites')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Aumenta tus ventas')).toBeTruthy();
+      expect(screen.getByText('Inteligencia para Vender Más')).toBeTruthy();
+      expect(screen.getByText('Pagos seguros y sin límites')).toBeTruthy();
       expect(
         screen.getByText('Fácil de usar, siempre disponible')
-      ).toBeInTheDocument();
+      ).toBeTruthy();
     });
 
     it('displays correct descriptions for all cards', () => {
@@ -100,38 +94,38 @@ describe('ValueProps Component', () => {
 
       expect(
         screen.getByText(/Acepta más formas de pago y nunca pierdas una venta/)
-      ).toBeInTheDocument();
+      ).toBeTruthy();
       expect(
         screen.getByText(/Entiende a tus clientes y optimiza tu catálogo/)
-      ).toBeInTheDocument();
+      ).toBeTruthy();
       expect(
         screen.getByText(/Transacciones rápidas y protegidas/)
-      ).toBeInTheDocument();
+      ).toBeTruthy();
       expect(
         screen.getByText(
           /Una interfaz intuitiva que funciona en cualquier dispositivo/
         )
-      ).toBeInTheDocument();
+      ).toBeTruthy();
     });
 
     it('displays correct statistics for all cards', () => {
       renderComponent();
 
-      expect(screen.getByText('+40%')).toBeInTheDocument();
-      expect(screen.getByText('Asistente IA')).toBeInTheDocument();
-      expect(screen.getByText('100%')).toBeInTheDocument();
-      expect(screen.getByText('< 5 minutos')).toBeInTheDocument();
+      expect(screen.getByText('+40%')).toBeTruthy();
+      expect(screen.getByText('Asistente IA')).toBeTruthy();
+      expect(screen.getByText('100%')).toBeTruthy();
+      expect(screen.getByText('< 5 minutos')).toBeTruthy();
     });
 
     it('displays correct stat labels for all cards', () => {
       renderComponent();
 
-      expect(screen.getByText('de aumento en ventas')).toBeInTheDocument();
+      expect(screen.getByText('de aumento en ventas')).toBeTruthy();
       expect(
         screen.getByText('Análisis y Decisiones Inteligente')
-      ).toBeInTheDocument();
-      expect(screen.getByText('de transacciones seguras')).toBeInTheDocument();
-      expect(screen.getByText('Tiempo de aprendizaje')).toBeInTheDocument();
+      ).toBeTruthy();
+      expect(screen.getByText('de transacciones seguras')).toBeTruthy();
+      expect(screen.getByText('Tiempo de aprendizaje')).toBeTruthy();
     });
   });
 
@@ -140,9 +134,8 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const region = screen.getByRole('region');
-      expect(region).toBeInTheDocument();
-      expect(region).toHaveAttribute(
-        'aria-label',
+      expect(region).toBeTruthy();
+      expect(region.getAttribute('aria-label')).toBe(
         'Características principales de VendeMás'
       );
     });
@@ -152,9 +145,8 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach((card, index) => {
-        expect(card).toHaveAttribute('aria-labelledby', `title-${index}`);
-        expect(card).toHaveAttribute(
-          'aria-describedby',
+        expect(card.getAttribute('aria-labelledby')).toBe(`title-${index}`);
+        expect(card.getAttribute('aria-describedby')).toBe(
           `desc-${index} stats-${index}`
         );
       });
@@ -172,7 +164,7 @@ describe('ValueProps Component', () => {
 
       titles.forEach((title, index) => {
         const titleElement = screen.getByText(title);
-        expect(titleElement).toHaveAttribute('id', `title-${index}`);
+        expect(titleElement.getAttribute('id')).toBe(`title-${index}`);
       });
     });
 
@@ -182,7 +174,7 @@ describe('ValueProps Component', () => {
       const h2 = screen.getByRole('heading', { level: 2 });
       const h3s = screen.getAllByRole('heading', { level: 3 });
 
-      expect(h2).toBeInTheDocument();
+      expect(h2).toBeTruthy();
       expect(h3s).toHaveLength(4);
     });
 
@@ -197,12 +189,10 @@ describe('ValueProps Component', () => {
         button.textContent?.includes('Únete gratis a 10,000+ vendedores')
       );
 
-      expect(mobileButton).toHaveAttribute(
-        'aria-label',
+      expect(mobileButton?.getAttribute('aria-label')).toBe(
         'Comenzar a usar VendeMás de forma gratuita'
       );
-      expect(secondaryButton).toHaveAttribute(
-        'aria-label',
+      expect(secondaryButton?.getAttribute('aria-label')).toBe(
         'Comenzar a usar VendeMás de forma gratuita en minutos'
       );
     });
@@ -214,7 +204,7 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveAttribute('tabIndex', '0');
+        expect(card.getAttribute('tabIndex')).toBe('0');
       });
     });
 
@@ -223,8 +213,8 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('focus-within:ring-2');
-        expect(card).toHaveClass('focus-within:ring-primary-500');
+        expect(card.className).toContain('focus-within:ring-2');
+        expect(card.className).toContain('focus-within:ring-primary-500');
       });
     });
 
@@ -233,8 +223,8 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('hover:shadow-xl');
-        expect(card).toHaveClass('hover:border-primary-200');
+        expect(card.className).toContain('hover:shadow-xl');
+        expect(card.className).toContain('hover:border-primary-200');
       });
     });
   });
@@ -244,20 +234,20 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const grid = screen.getByRole('region');
-      expect(grid).toHaveClass('grid');
-      expect(grid).toHaveClass('md:grid-cols-2');
-      expect(grid).toHaveClass('lg:grid-cols-4');
+      expect(grid.className).toContain('grid');
+      expect(grid.className).toContain('md:grid-cols-2');
+      expect(grid.className).toContain('lg:grid-cols-4');
     });
 
     it('has proper spacing and padding', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section).toHaveClass('py-20');
+      expect(section?.className).toContain('py-20');
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('p-8');
+        expect(card.className).toContain('p-8');
       });
     });
 
@@ -265,12 +255,12 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section).toHaveClass('dark:bg-gray-900');
+      expect(section?.className).toContain('dark:bg-gray-900');
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('dark:bg-gray-800');
-        expect(card).toHaveClass('dark:border-gray-700');
+        expect(card.className).toContain('dark:bg-gray-800');
+        expect(card.className).toContain('dark:border-gray-700');
       });
     });
   });
@@ -283,8 +273,8 @@ describe('ValueProps Component', () => {
       const mobileButton = buttons.find(button =>
         button.textContent?.includes('Comenzar gratis')
       );
-      expect(mobileButton).toBeInTheDocument();
-      expect(mobileButton).toHaveTextContent('Comenzar gratis');
+      expect(mobileButton).toBeTruthy();
+      expect(mobileButton?.textContent).toContain('Comenzar gratis');
     });
 
     it('has proper mobile-specific styling', () => {
@@ -294,10 +284,10 @@ describe('ValueProps Component', () => {
       const mobileButton = buttons.find(button =>
         button.textContent?.includes('Comenzar gratis')
       );
-      expect(mobileButton).toHaveClass('w-full');
-      expect(mobileButton).toHaveClass('bg-gradient-primary');
-      expect(mobileButton).toHaveClass('rounded-xl');
-      expect(mobileButton).toHaveClass('shadow-lg');
+      expect(mobileButton?.className).toContain('w-full');
+      expect(mobileButton?.className).toContain('bg-gradient-primary');
+      expect(mobileButton?.className).toContain('rounded-xl');
+      expect(mobileButton?.className).toContain('shadow-lg');
     });
 
     it('has proper accessibility attributes for mobile button', () => {
@@ -307,8 +297,7 @@ describe('ValueProps Component', () => {
       const mobileButton = buttons.find(button =>
         button.textContent?.includes('Comenzar gratis')
       );
-      expect(mobileButton).toHaveAttribute(
-        'aria-label',
+      expect(mobileButton?.getAttribute('aria-label')).toBe(
         'Comenzar a usar VendeMás de forma gratuita'
       );
     });
@@ -321,11 +310,11 @@ describe('ValueProps Component', () => {
         button.textContent?.includes('Comenzar gratis')
       );
       const mobileContainer = mobileButton?.closest('div');
-      expect(mobileContainer).toHaveClass('block');
-      expect(mobileContainer).toHaveClass('sm:hidden');
-      expect(mobileContainer).toHaveClass('fixed');
-      expect(mobileContainer).toHaveClass('bottom-4');
-      expect(mobileContainer).toHaveClass('z-50');
+      expect(mobileContainer?.className).toContain('block');
+      expect(mobileContainer?.className).toContain('sm:hidden');
+      expect(mobileContainer?.className).toContain('fixed');
+      expect(mobileContainer?.className).toContain('bottom-4');
+      expect(mobileContainer?.className).toContain('z-50');
     });
   });
 
@@ -337,8 +326,8 @@ describe('ValueProps Component', () => {
       const secondaryButton = buttons.find(button =>
         button.textContent?.includes('Únete gratis a 10,000+ vendedores')
       );
-      expect(secondaryButton).toBeInTheDocument();
-      expect(secondaryButton).toHaveTextContent(
+      expect(secondaryButton).toBeTruthy();
+      expect(secondaryButton?.textContent).toContain(
         'Únete gratis a 10,000+ vendedores'
       );
     });
@@ -357,8 +346,7 @@ describe('ValueProps Component', () => {
       const secondaryButton = buttons.find(button =>
         button.textContent?.includes('Únete gratis a 10,000+ vendedores')
       );
-      expect(secondaryButton).toHaveAttribute(
-        'aria-label',
+      expect(secondaryButton?.getAttribute('aria-label')).toBe(
         'Comenzar a usar VendeMás de forma gratuita en minutos'
       );
     });
@@ -370,11 +358,11 @@ describe('ValueProps Component', () => {
       const secondaryButton = buttons.find(button =>
         button.textContent?.includes('Únete gratis a 10,000+ vendedores')
       );
-      expect(secondaryButton).toHaveClass('group');
-      expect(secondaryButton).toHaveClass('bg-gradient-to-r');
-      expect(secondaryButton).toHaveClass('from-secondary-500');
-      expect(secondaryButton).toHaveClass('to-secondary-600');
-      expect(secondaryButton).toHaveClass('dark:bg-gradient-primary');
+      expect(secondaryButton?.className).toContain('group');
+      expect(secondaryButton?.className).toContain('bg-gradient-to-r');
+      expect(secondaryButton?.className).toContain('from-secondary-500');
+      expect(secondaryButton?.className).toContain('to-secondary-600');
+      expect(secondaryButton?.className).toContain('dark:bg-gradient-primary');
     });
 
     it('has animated arrow with proper classes', () => {
@@ -385,12 +373,12 @@ describe('ValueProps Component', () => {
 
       // Check the secondary CTA arrow (second one)
       const secondaryArrow = arrowIcons[1];
-      expect(secondaryArrow).toHaveClass('h-5');
-      expect(secondaryArrow).toHaveClass('w-5');
-      expect(secondaryArrow).toHaveClass('transition-all');
-      expect(secondaryArrow).toHaveClass('duration-200');
-      expect(secondaryArrow).toHaveClass('group-hover:scale-110');
-      expect(secondaryArrow).toHaveClass('group-hover:translate-x-0.5');
+      expect(secondaryArrow.className).toContain('h-5');
+      expect(secondaryArrow.className).toContain('w-5');
+      expect(secondaryArrow.className).toContain('transition-all');
+      expect(secondaryArrow.className).toContain('duration-200');
+      expect(secondaryArrow.className).toContain('group-hover:scale-110');
+      expect(secondaryArrow.className).toContain('group-hover:translate-x-0.5');
     });
   });
 
@@ -400,8 +388,8 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('opacity-0');
-        expect(card).toHaveClass('translate-y-3');
+        expect(card.className).toContain('opacity-0');
+        expect(card.className).toContain('translate-y-3');
       });
     });
 
@@ -410,8 +398,8 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveStyle('animation-duration: 600ms');
-        expect(card).toHaveStyle('animation-fill-mode: both');
+        expect(card.style.animationDuration).toBe('600ms');
+        expect(card.style.animationFillMode).toBe('both');
       });
     });
 
@@ -420,7 +408,7 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveStyle('animation-delay: 0ms');
+        expect(card.style.animationDelay).toBe('0ms');
       });
     });
 
@@ -428,14 +416,14 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section).toHaveAttribute('id', 'por-que-vendemas');
+      expect(section?.getAttribute('id')).toBe('por-que-vendemas');
     });
 
     it('has intersection observer ref attached to section', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section).toBeInTheDocument();
+      expect(section).toBeTruthy();
       // The ref is attached but not directly testable in this context
       // This test ensures the section exists for the observer to attach to
     });
@@ -446,7 +434,7 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section).toBeInTheDocument();
+      expect(section).toBeTruthy();
 
       // Component should render all cards in initial hidden state
       const cards = screen.getAllByRole('article');
@@ -460,10 +448,10 @@ describe('ValueProps Component', () => {
 
       expect(
         screen.getByText(/Únete gratis a 10,000\+ vendedores/)
-      ).toBeInTheDocument();
+      ).toBeTruthy();
       expect(
         screen.getByText(/Sin costos ocultos, sin permanencia/)
-      ).toBeInTheDocument();
+      ).toBeTruthy();
     });
   });
 
@@ -487,12 +475,10 @@ describe('ValueProps Component', () => {
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
         // Each card should have an icon, title, description, and stats
-        expect(
-          card.querySelector('[data-testid*="-icon"]')
-        ).toBeInTheDocument();
-        expect(card.querySelector('h3')).toBeInTheDocument();
-        expect(card.querySelector('p')).toBeInTheDocument();
-        expect(card.querySelector('.border-t')).toBeInTheDocument(); // Stats separator
+        expect(card.querySelector('[data-testid*="-icon"]')).toBeTruthy();
+        expect(card.querySelector('h3')).toBeTruthy();
+        expect(card.querySelector('p')).toBeTruthy();
+        expect(card.querySelector('.border-t')).toBeTruthy(); // Stats separator
       });
     });
   });
@@ -504,7 +490,7 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       // Component should render without errors
-      expect(screen.getByRole('region')).toBeInTheDocument();
+      expect(screen.getByRole('region')).toBeTruthy();
     });
 
     it('maintains accessibility with different content lengths', () => {
@@ -513,9 +499,9 @@ describe('ValueProps Component', () => {
       // All cards should have the same height due to flex-1 class
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card).toHaveClass('flex');
-        expect(card).toHaveClass('flex-col');
-        expect(card).toHaveClass('h-full');
+        expect(card.className).toContain('flex');
+        expect(card.className).toContain('flex-col');
+        expect(card.className).toContain('h-full');
       });
     });
   });

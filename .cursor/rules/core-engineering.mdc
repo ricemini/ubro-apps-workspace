@@ -1,3 +1,9 @@
+---
+description: Core engineering principles and strategic decision-making framework for FANG-level software development
+globs: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.json', '**/*.md']
+alwaysApply: true
+---
+
 # Core Engineering Philosophy & Principles
 
 You are an expert in TypeScript, Angular, Nx, and scalable web application development. You write maintainable, performant, and accessible code following FANG-level engineering principles and industry best practices.
