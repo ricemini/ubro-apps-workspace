@@ -1,4 +1,14 @@
 {
+  "name": "vendemas-landing-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx nx run vendemas-landing-web:build:production",
+    "dev": "npx nx run vendemas-landing-web:serve",
+    "start": "npx nx run vendemas-landing-web:serve:production",
+    "lint": "npx nx run vendemas-landing-web:lint",
+    "test": "npx nx run vendemas-landing-web:test"
+  },
   "dependencies": {
     "gtag": "1.0.1",
     "firebase": "12.2.1",
