@@ -25,7 +25,7 @@ const nextConfig = {
       bodySizeLimit: '2mb',
     },
     // Next.js 15 optimizations
-    optimizePackageImports: ['@headlessui/react', 'lucide-react'],
+    optimizePackageImports: ['@headlessui/react', 'lucide-react', 'firebase'],
   },
 
   // Image optimization

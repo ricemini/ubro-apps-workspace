@@ -9,5 +9,9 @@
     "app/**/*.tsx": {
       "maxDuration": 30
     }
+  },
+  "env": {
+    "VERCEL_BUILD_COMMAND": "nx build vendemas-landing-web",
+    "VERCEL_OUTPUT_DIR": "dist/vendemas-landing-web/.next"
   }
 }
