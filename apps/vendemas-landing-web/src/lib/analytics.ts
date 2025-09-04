@@ -8,7 +8,7 @@
 
 import { getAnalytics, logEvent, Analytics } from 'firebase/analytics';
 import { initializeApp, FirebaseApp } from 'firebase/app';
-import { getPerformance, Performance } from 'firebase/performance';
+import { getPerformance } from 'firebase/performance';
 
 // Environment variables with fallbacks for development
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -25,7 +25,7 @@ const FIREBASE_CONFIG = {
 // Firebase app instance
 let firebaseApp: FirebaseApp | null = null;
 let analytics: Analytics | null = null;
-let performance: Performance | null = null;
+let performance: ReturnType<typeof getPerformance> | null = null;
 
 /**
  * Initialize Firebase Analytics
@@ -69,7 +69,9 @@ export const getFirebaseAnalytics = (): Analytics | null => {
 /**
  * Get Firebase Performance instance
  */
-export const getFirebasePerformance = (): Performance | null => {
+export const getFirebasePerformance = (): ReturnType<
+  typeof getPerformance
+> | null => {
   return performance;
 };
 

@@ -46,7 +46,7 @@ export default function ValueProps(): React.JSX.Element {
   const { trackValuePropositionView, trackCTAClick } = useAnalytics();
 
   // Intersection Observer to trigger scroll-based entrance animations
-  useEffect((): void => {
+  useEffect(() => {
     const observer = new window.IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -72,7 +72,7 @@ export default function ValueProps(): React.JSX.Element {
     }
 
     return () => observer.disconnect();
-  }, [trackValuePropositionView]);
+  }, []); // trackValuePropositionView is stable (useCallback with empty deps)
 
   // Core value propositions data - optimized for conversion and readability
   // Each object contains: icon, title, description, stat, and statLabel
