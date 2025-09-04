@@ -333,9 +333,10 @@ describe('ValueProps Component', () => {
     it('renders secondary CTA button with correct text', () => {
       renderComponent();
 
-      const secondaryButton = screen.getByRole('button', {
-        name: /Comenzar a usar VendeMás de forma gratuita en minutos/i,
-      });
+      const buttons = screen.getAllByRole('button');
+      const secondaryButton = buttons.find(button =>
+        button.textContent?.includes('Únete gratis a 10,000+ vendedores')
+      );
       expect(secondaryButton).toBeInTheDocument();
       expect(secondaryButton).toHaveTextContent(
         'Únete gratis a 10,000+ vendedores'
@@ -352,9 +353,10 @@ describe('ValueProps Component', () => {
     it('has proper accessibility attributes for secondary button', () => {
       renderComponent();
 
-      const secondaryButton = screen.getByRole('button', {
-        name: /Comenzar a usar VendeMás de forma gratuita en minutos/i,
-      });
+      const buttons = screen.getAllByRole('button');
+      const secondaryButton = buttons.find(button =>
+        button.textContent?.includes('Únete gratis a 10,000+ vendedores')
+      );
       expect(secondaryButton).toHaveAttribute(
         'aria-label',
         'Comenzar a usar VendeMás de forma gratuita en minutos'
@@ -364,9 +366,10 @@ describe('ValueProps Component', () => {
     it('has proper styling and hover effects for secondary button', () => {
       renderComponent();
 
-      const secondaryButton = screen.getByRole('button', {
-        name: /Comenzar a usar VendeMás de forma gratuita en minutos/i,
-      });
+      const buttons = screen.getAllByRole('button');
+      const secondaryButton = buttons.find(button =>
+        button.textContent?.includes('Únete gratis a 10,000+ vendedores')
+      );
       expect(secondaryButton).toHaveClass('group');
       expect(secondaryButton).toHaveClass('bg-gradient-to-r');
       expect(secondaryButton).toHaveClass('from-secondary-500');
@@ -378,7 +381,7 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const arrowIcons = screen.getAllByTestId('arrow-right-icon');
-      expect(arrowIcons).toHaveLength(2);
+      expect(arrowIcons).toHaveLength(2); // Mobile sticky CTA and secondary CTA
 
       // Check the secondary CTA arrow (second one)
       const secondaryArrow = arrowIcons[1];
