@@ -1,0 +1,61 @@
+# Monorepo Rating System
+
+## 📊 Monorepo Rating System
+
+When asked to "Rate the monorepo", conduct a comprehensive FANG-grade analysis using the following criteria:
+
+### Rating Criteria (1-10 Scale)
+
+**Architecture & Design (25%)**
+
+- Project organization and domain boundaries
+- Dependency management and circular dependency prevention
+- Library structure and shared code organization
+- Scalability and growth potential
+
+**Code Quality & Standards (20%)**
+
+- TypeScript configuration and type safety
+- Code consistency and formatting
+- Documentation quality and completeness
+- Testing strategy and coverage
+
+**Performance & Build System (20%)**
+
+- Nx caching and incremental builds
+- Build performance and parallelization
+- Bundle optimization and tree-shaking
+- Development workflow efficiency
+
+**Security & Best Practices (15%)**
+
+- Authentication and authorization implementation
+- Input validation and sanitization
+- Environment configuration and secret management
+- Security headers and policies
+
+**Maintainability & Developer Experience (20%)**
+
+- Code readability and self-documentation
+- Error handling and logging
+- Development tooling and automation
+- Technical debt management
+
+### Rating Scale
+
+- **9-10**: FANG-level excellence, industry-leading practices
+- **7-8**: Strong engineering practices, minor improvements needed
+- **5-6**: Good foundation, significant improvements required
+- **3-4**: Basic structure, major architectural changes needed
+- **1-2**: Fundamental issues, requires complete restructuring
+
+### Analysis Process
+
+1. **Deep Code Review**: Examine project structure, dependencies, and code quality
+2. **Performance Assessment**: Evaluate build times, caching, and optimization
+3. **Security Audit**: Review authentication, validation, and security practices
+4. **Scalability Analysis**: Assess growth potential and architectural decisions
+5. **Developer Experience**: Evaluate tooling, documentation, and workflow
+6. **Industry Comparison**: Benchmark against FANG-level standards
+
+Provide specific recommendations for improvement in each category with actionable next steps.

@@ -1,13 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  TrendingUp,
-  Brain,
-  ShieldCheck,
-  Smartphone,
-  ArrowRight,
-} from 'lucide-react';
+import { TrendingUp, Brain, ShieldCheck, Smartphone } from 'lucide-react';
+import CTASection from './CTASection';
 import { useAnalytics } from '../../hooks/useAnalytics';
 
 /**
@@ -71,7 +66,7 @@ export default function ValueProps(): React.JSX.Element {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return (): void => observer.disconnect();
   }, []); // trackValuePropositionView is stable (useCallback with empty deps)
 
   // Core value propositions data - optimized for conversion and readability
@@ -210,41 +205,8 @@ export default function ValueProps(): React.JSX.Element {
           ))}
         </div>
 
-        {/* Mobile Sticky CTA - Ensures conversion opportunity on small screens */}
-        <div className='block sm:hidden fixed bottom-4 left-4 right-4 z-50'>
-          <button
-            type='button'
-            className='w-full bg-gradient-primary text-white font-semibold px-6 py-4 rounded-xl shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
-            aria-label='Comenzar a usar VendeMás de forma gratuita'
-            onClick={() => trackCTAClick('primary', 'value_props_mobile_cta')}
-          >
-            Comenzar gratis
-            <ArrowRight className='h-5 w-5' />
-          </button>
-        </div>
-
-        {/* Secondary CTA Button - Quick start action with animated arrow */}
-        <div className='mt-12 text-center'>
-          {/* Quick start button with hover animations and accessibility */}
-          <button
-            type='button'
-            className='group rounded-full bg-gradient-to-r from-secondary-500 to-secondary-600 dark:bg-gradient-primary px-8 py-4 text-base font-semibold text-white shadow-xs inset-ring inset-ring-secondary-300 dark:inset-ring-primary-300 hover:opacity-90 flex items-center gap-3 mx-auto transition-all duration-200 animate-pulse-custom'
-            aria-label='Comenzar a usar VendeMás de forma gratuita en minutos'
-            onClick={() =>
-              trackCTAClick('secondary', 'value_props_quick_start')
-            }
-          >
-            {/* Button text - Clear call to action */}
-            Únete gratis a 10,000+ vendedores
-            {/* Animated arrow icon - Grows and moves on hover for visual feedback */}
-            <ArrowRight className='h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:translate-x-0.5' />
-          </button>
-
-          {/* Trust and urgency messaging - Addresses common concerns */}
-          <p className='mt-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto'>
-            Sin costos ocultos, sin permanencia. Comienza a usar VendeMás hoy
-            mismo.
-          </p>
+        <div className='mt-12'>
+          <CTASection trackCTAClick={trackCTAClick} />
         </div>
       </div>
     </section>
