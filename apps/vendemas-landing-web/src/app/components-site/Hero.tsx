@@ -140,7 +140,7 @@ export default function Hero(): React.JSX.Element {
 
               {/* Secondary CTA: Learn more link with hover effects */}
               <a
-                href='#caracteristicas'
+                href='/caracteristicas'
                 className='group inline-flex items-center gap-x-2 text-sm font-semibold text-secondary-600 hover:text-secondary-700 transition-all duration-300 dark:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:rounded-lg dark:focus:ring-white dark:focus:ring-offset-gray-900'
                 aria-describedby='features-description'
               >

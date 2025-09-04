@@ -13,7 +13,7 @@ export const PRIMARY = [
   {
     name: 'Características',
     label: 'Características',
-    href: '#caracteristicas',
+    href: '/caracteristicas',
     description: 'Funcionalidades que impulsan tu negocio',
   },
   {

@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useRef, useState } from 'react';
 import {
   TrendingUp,
   Brain,
@@ -7,7 +8,6 @@ import {
   Smartphone,
   ArrowRight,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import { useAnalytics } from '../../hooks/useAnalytics';
 
 /**
@@ -23,11 +23,17 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Respects user's motion preferences (prefers-reduced-motion)
  * - One-time animation trigger to prevent re-animations
  *
+ * Mobile Optimization:
+ * - Sticky CTA button for mobile screens to ensure conversion opportunity
+ * - Responsive design with mobile-first approach
+ * - Touch-friendly button sizing and spacing
+ *
  * Accessibility Features:
  * - Semantic HTML with proper ARIA labels and descriptions
  * - Keyboard navigation support for all interactive elements
  * - Screen reader friendly content relationships
  * - Focus management with visible indicators
+ * - Mobile accessibility with proper touch targets
  * - Dark mode support for all visual elements
  * - Animation respects accessibility preferences
  */
@@ -40,7 +46,7 @@ export default function ValueProps(): React.JSX.Element {
   const { trackValuePropositionView, trackCTAClick } = useAnalytics();
 
   // Intersection Observer to trigger scroll-based entrance animations
-  useEffect(() => {
+  useEffect((): void => {
     const observer = new window.IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -204,54 +210,41 @@ export default function ValueProps(): React.JSX.Element {
           ))}
         </div>
 
+        {/* Mobile Sticky CTA - Ensures conversion opportunity on small screens */}
+        <div className='block sm:hidden fixed bottom-4 left-4 right-4 z-50'>
+          <button
+            type='button'
+            className='w-full bg-gradient-primary text-white font-semibold px-6 py-4 rounded-xl shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
+            aria-label='Comenzar a usar VendeMás de forma gratuita'
+            onClick={() => trackCTAClick('primary', 'value_props_mobile_cta')}
+          >
+            Comenzar gratis
+            <ArrowRight className='h-5 w-5' />
+          </button>
+        </div>
+
         {/* Secondary CTA Button - Quick start action with animated arrow */}
         <div className='mt-12 text-center'>
           {/* Quick start button with hover animations and accessibility */}
           <button
             type='button'
-            className='group rounded-full bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-200 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20 flex items-center gap-2 mx-auto transition-all duration-200'
+            className='group rounded-full bg-gradient-to-r from-secondary-500 to-secondary-600 dark:bg-gradient-primary px-8 py-4 text-base font-semibold text-white shadow-xs inset-ring inset-ring-secondary-300 dark:inset-ring-primary-300 hover:opacity-90 flex items-center gap-3 mx-auto transition-all duration-200 animate-pulse-custom'
             aria-label='Comenzar a usar VendeMás de forma gratuita en minutos'
             onClick={() =>
               trackCTAClick('secondary', 'value_props_quick_start')
             }
           >
             {/* Button text - Clear call to action */}
-            Empieza gratis en minutos
+            Únete gratis a 10,000+ vendedores
             {/* Animated arrow icon - Grows and moves on hover for visual feedback */}
             <ArrowRight className='h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:translate-x-0.5' />
           </button>
-        </div>
 
-        {/* Call-to-Action Section - Conversion-focused with compelling messaging */}
-        <div className='mt-16 text-center bg-gradient-primary rounded-2xl p-12 text-white'>
-          {/* CTA headline - Clear value proposition for conversion */}
-          <h3 className='text-display text-2xl sm:text-3xl font-bold mb-4'>
-            Únete a miles de vendedores que ya aumentaron sus ingresos
-          </h3>
-          {/* CTA description - Addresses common concerns and creates urgency */}
-          <p className='text-body text-lg opacity-90 mb-8 max-w-2xl mx-auto'>
+          {/* Trust and urgency messaging - Addresses common concerns */}
+          <p className='mt-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto'>
             Sin costos ocultos, sin permanencia. Comienza a usar VendeMás hoy
             mismo.
           </p>
-          {/* Action Buttons - Primary and secondary CTAs with accessibility */}
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            {/* Primary CTA - Free trial button with enhanced focus states */}
-            <button
-              className='bg-white text-primary-500 hover:bg-gray-100 font-semibold px-8 py-4 rounded-xl transition-all duration-200 btn-focus focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500'
-              aria-label='Comenzar a usar VendeMás de forma gratuita'
-              onClick={() => trackCTAClick('trial', 'value_props_main_cta')}
-            >
-              Comenzar gratis
-            </button>
-            {/* Secondary CTA - Sales contact button with hover effects */}
-            <button
-              className='border-2 border-white text-white hover:bg-white hover:text-primary-500 font-semibold px-8 py-4 rounded-xl transition-all duration-200 btn-focus focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500'
-              aria-label='Contactar con el equipo de ventas de VendeMás'
-              onClick={() => trackCTAClick('contact', 'value_props_sales_cta')}
-            >
-              Hablar con ventas
-            </button>
-          </div>
         </div>
       </div>
     </section>

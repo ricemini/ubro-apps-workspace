@@ -1,16 +1,34 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 // import userEvent from '@testing-library/user-event';
 import ValueProps from './ValueProps';
 
+// Mock IntersectionObserver
+const mockIntersectionObserver = vi.fn();
+mockIntersectionObserver.mockReturnValue({
+  observe: (): void => null,
+  unobserve: (): void => null,
+  disconnect: (): void => null,
+});
+window.IntersectionObserver = mockIntersectionObserver;
+
 // Mock Lucide React icons
 vi.mock('lucide-react', () => ({
-  TrendingUp: () => <div data-testid='trending-up-icon'>📈</div>,
-  Brain: () => <div data-testid='brain-icon'>🧠</div>,
-  ShieldCheck: () => <div data-testid='shield-check-icon'>🛡️</div>,
-  Smartphone: () => <div data-testid='smartphone-icon'>📱</div>,
-  ArrowRight: () => <div data-testid='arrow-right-icon'>→</div>,
+  TrendingUp: (): React.JSX.Element => (
+    <div data-testid='trending-up-icon'>📈</div>
+  ),
+  Brain: (): React.JSX.Element => <div data-testid='brain-icon'>🧠</div>,
+  ShieldCheck: (): React.JSX.Element => (
+    <div data-testid='shield-check-icon'>🛡️</div>
+  ),
+  Smartphone: (): React.JSX.Element => (
+    <div data-testid='smartphone-icon'>📱</div>
+  ),
+  ArrowRight: (): React.JSX.Element => (
+    <div data-testid='arrow-right-icon'>→</div>
+  ),
 }));
 
 describe('ValueProps Component', () => {
@@ -166,20 +184,20 @@ describe('ValueProps Component', () => {
     it('has proper button accessibility', () => {
       renderComponent();
 
-      const primaryButton = screen.getByRole('button', {
+      const mobileButton = screen.getByRole('button', {
         name: /Comenzar gratis/i,
       });
       const secondaryButton = screen.getByRole('button', {
-        name: /Hablar con ventas/i,
+        name: /Únete gratis a 10,000\+ vendedores/i,
       });
 
-      expect(primaryButton).toHaveAttribute(
+      expect(mobileButton).toHaveAttribute(
         'aria-label',
         'Comenzar a usar VendeMás de forma gratuita'
       );
       expect(secondaryButton).toHaveAttribute(
         'aria-label',
-        'Contactar con el equipo de ventas de VendeMás'
+        'Comenzar a usar VendeMás de forma gratuita en minutos'
       );
     });
   });
@@ -251,29 +269,82 @@ describe('ValueProps Component', () => {
     });
   });
 
+  describe('Mobile Sticky CTA', () => {
+    it('renders mobile sticky CTA button with correct text', () => {
+      renderComponent();
+
+      const mobileButton = screen.getByRole('button', {
+        name: /Comenzar gratis/i,
+      });
+      expect(mobileButton).toBeInTheDocument();
+      expect(mobileButton).toHaveTextContent('Comenzar gratis');
+    });
+
+    it('has proper mobile-specific styling', () => {
+      renderComponent();
+
+      const mobileButton = screen.getByRole('button', {
+        name: /Comenzar gratis/i,
+      });
+      expect(mobileButton).toHaveClass('w-full');
+      expect(mobileButton).toHaveClass('bg-gradient-primary');
+      expect(mobileButton).toHaveClass('rounded-xl');
+      expect(mobileButton).toHaveClass('shadow-lg');
+    });
+
+    it('has proper accessibility attributes for mobile button', () => {
+      renderComponent();
+
+      const mobileButton = screen.getByRole('button', {
+        name: /Comenzar gratis/i,
+      });
+      expect(mobileButton).toHaveAttribute(
+        'aria-label',
+        'Comenzar a usar VendeMás de forma gratuita'
+      );
+    });
+
+    it('has mobile container with proper responsive classes', () => {
+      renderComponent();
+
+      const mobileContainer = screen
+        .getByRole('button', {
+          name: /Comenzar gratis/i,
+        })
+        .closest('div');
+      expect(mobileContainer).toHaveClass('block');
+      expect(mobileContainer).toHaveClass('sm:hidden');
+      expect(mobileContainer).toHaveClass('fixed');
+      expect(mobileContainer).toHaveClass('bottom-4');
+      expect(mobileContainer).toHaveClass('z-50');
+    });
+  });
+
   describe('Secondary CTA Button', () => {
     it('renders secondary CTA button with correct text', () => {
       renderComponent();
 
       const secondaryButton = screen.getByRole('button', {
-        name: /Empieza gratis en minutos/i,
+        name: /Únete gratis a 10,000\+ vendedores/i,
       });
       expect(secondaryButton).toBeInTheDocument();
-      expect(secondaryButton).toHaveTextContent('Empieza gratis en minutos');
+      expect(secondaryButton).toHaveTextContent(
+        'Únete gratis a 10,000+ vendedores'
+      );
     });
 
     it('renders arrow icon in secondary CTA button', () => {
       renderComponent();
 
-      const arrowIcon = screen.getByTestId('arrow-right-icon');
-      expect(arrowIcon).toBeInTheDocument();
+      const arrowIcons = screen.getAllByTestId('arrow-right-icon');
+      expect(arrowIcons).toHaveLength(2); // Mobile sticky CTA and secondary CTA
     });
 
     it('has proper accessibility attributes for secondary button', () => {
       renderComponent();
 
       const secondaryButton = screen.getByRole('button', {
-        name: /Empieza gratis en minutos/i,
+        name: /Únete gratis a 10,000\+ vendedores/i,
       });
       expect(secondaryButton).toHaveAttribute(
         'aria-label',
@@ -285,13 +356,13 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const secondaryButton = screen.getByRole('button', {
-        name: /Empieza gratis en minutos/i,
+        name: /Únete gratis a 10,000\+ vendedores/i,
       });
       expect(secondaryButton).toHaveClass('group');
-      expect(secondaryButton).toHaveClass('bg-gray-100');
-      expect(secondaryButton).toHaveClass('hover:bg-gray-200');
-      expect(secondaryButton).toHaveClass('dark:bg-white/10');
-      expect(secondaryButton).toHaveClass('dark:hover:bg-white/20');
+      expect(secondaryButton).toHaveClass('bg-gradient-to-r');
+      expect(secondaryButton).toHaveClass('from-secondary-500');
+      expect(secondaryButton).toHaveClass('to-secondary-600');
+      expect(secondaryButton).toHaveClass('dark:bg-gradient-primary');
     });
 
     it('has animated arrow with proper classes', () => {
@@ -372,25 +443,11 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       expect(
-        screen.getByText(/Únete a miles de vendedores/)
+        screen.getByText(/Únete gratis a 10,000\+ vendedores/)
       ).toBeInTheDocument();
       expect(
         screen.getByText(/Sin costos ocultos, sin permanencia/)
       ).toBeInTheDocument();
-    });
-
-    it('has proper button styling and focus states', () => {
-      renderComponent();
-
-      const primaryButton = screen.getByRole('button', {
-        name: /Comenzar gratis/i,
-      });
-      const secondaryButton = screen.getByRole('button', {
-        name: /Hablar con ventas/i,
-      });
-
-      expect(primaryButton).toHaveClass('focus:ring-2');
-      expect(secondaryButton).toHaveClass('focus:ring-2');
     });
   });
 

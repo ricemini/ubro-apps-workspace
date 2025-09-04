@@ -343,14 +343,14 @@ export default function Example() {
 
           {/* Direct navigation links - visible on medium+ screens */}
           <a
-            href='#'
+            href='/caracteristicas'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
             aria-label='Ver características de la plataforma'
           >
             Features
           </a>
           <a
-            href='#'
+            href='/faq'
             className='text-sm/6 font-semibold text-gray-900 dark:text-white'
             aria-label='Preguntas frecuentes'
           >
@@ -464,7 +464,7 @@ export default function Example() {
 
                   {/* Direct navigation links */}
                   <a
-                    href='#'
+                    href='/caracteristicas'
                     className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                     aria-label='Ver características de la plataforma'
                   >
