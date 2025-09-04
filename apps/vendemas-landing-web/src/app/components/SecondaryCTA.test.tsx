@@ -5,7 +5,7 @@ import SecondaryCTA from './SecondaryCTA';
 
 // Mock the ChevronRight icon from lucide-react
 vi.mock('lucide-react', () => ({
-  ChevronRight: ({ className, ...props }: any): JSX.Element => (
+  ChevronRight: ({ className, ...props }: any): React.JSX.Element => (
     <svg
       data-testid='chevron-right-icon'
       className={className}

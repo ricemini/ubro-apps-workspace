@@ -51,7 +51,7 @@ export default function SecondaryCTA({
   text,
   url,
   description = 'Enlace para ver más información',
-}: SecondaryCTAProps): JSX.Element {
+}: SecondaryCTAProps): React.JSX.Element {
   return (
     <>
       {/* Secondary CTA: Learn more link with hover effects */}

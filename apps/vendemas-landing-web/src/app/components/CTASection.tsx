@@ -51,7 +51,7 @@ export default function CTASection({
   trackCTAClick,
   buttonText = 'Únete gratis a 10,000+ vendedores',
   showTrustMessage = true,
-}: CTASectionProps): JSX.Element {
+}: CTASectionProps): React.JSX.Element {
   return (
     <>
       {/* Mobile Sticky CTA - Ensures conversion opportunity on small screens */}

@@ -5,7 +5,7 @@ import CTASection from './CTASection';
 
 // Mock the ArrowRight icon from lucide-react
 vi.mock('lucide-react', () => ({
-  ArrowRight: ({ className, ...props }: any): JSX.Element => (
+  ArrowRight: ({ className, ...props }: any): React.JSX.Element => (
     <svg
       data-testid='arrow-right-icon'
       className={className}

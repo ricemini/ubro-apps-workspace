@@ -5,7 +5,7 @@ import HowItWorks from './HowItWorks';
 
 // Mock the icons from lucide-react
 vi.mock('lucide-react', () => ({
-  Smartphone: ({ className, ...props }: any): JSX.Element => (
+  Smartphone: ({ className, ...props }: any): React.JSX.Element => (
     <svg
       data-testid='smartphone-icon'
       className={className}
@@ -16,7 +16,7 @@ vi.mock('lucide-react', () => ({
       <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' />
     </svg>
   ),
-  QrCode: ({ className, ...props }: any): JSX.Element => (
+  QrCode: ({ className, ...props }: any): React.JSX.Element => (
     <svg
       data-testid='qrcode-icon'
       className={className}
@@ -27,7 +27,7 @@ vi.mock('lucide-react', () => ({
       <path d='M3 3h7v7H3V3zm0 11h7v7H3v-7zm11 0h7v7h-7v-7z' />
     </svg>
   ),
-  TrendingUp: ({ className, ...props }: any): JSX.Element => (
+  TrendingUp: ({ className, ...props }: any): React.JSX.Element => (
     <svg
       data-testid='trending-up-icon'
       className={className}
@@ -46,7 +46,7 @@ vi.mock('./CTASection', () => ({
     trackCTAClick,
     buttonText,
     showTrustMessage,
-  }: any): JSX.Element => (
+  }: any): React.JSX.Element => (
     <div data-testid='cta-section'>
       <button onClick={trackCTAClick} data-testid='cta-button'>
         {buttonText}
@@ -60,7 +60,7 @@ vi.mock('./CTASection', () => ({
 
 // Mock the SecondaryCTA component
 vi.mock('./SecondaryCTA', () => ({
-  default: ({ text, url }: any): JSX.Element => (
+  default: ({ text, url }: any): React.JSX.Element => (
     <a
       href={url}
       data-testid='secondary-cta'

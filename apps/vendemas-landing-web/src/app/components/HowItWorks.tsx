@@ -35,7 +35,7 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Keyboard navigation support
  * - Respects user motion preferences
  */
-export default function HowItWorks(): JSX.Element {
+export default function HowItWorks(): React.JSX.Element {
   const [activeStep, setActiveStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const { trackCTAClick } = useAnalytics();

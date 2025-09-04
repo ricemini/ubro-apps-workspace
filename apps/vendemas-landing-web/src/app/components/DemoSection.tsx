@@ -38,7 +38,7 @@
  * - Provides social proof through statistics
  * - Encourages deeper engagement with the product
  */
-export default function DemoSection(): JSX.Element {
+export default function DemoSection(): React.JSX.Element {
   return (
     <div className='bg-secondary-500 rounded-2xl overflow-hidden'>
       <div className='grid lg:grid-cols-2 gap-0'>
