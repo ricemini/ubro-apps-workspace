@@ -93,7 +93,7 @@ const callsToAction = [
  * - After 10px scroll: fixed positioning with shadow, small logo on large screens
  * - Smooth transitions for all state changes
  */
-export default function Example() {
+export default function Example(): React.JSX.Element {
   // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -113,7 +113,7 @@ export default function Example() {
   // - Navbar becomes sticky (fixed positioning) when scrolled
   // - Adds shadow effect for visual separation from content below
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollTop = window.scrollY;
       // Threshold of 10px provides immediate feedback without being too sensitive
       setIsScrolled(scrollTop > 10);
@@ -123,7 +123,7 @@ export default function Example() {
     window.addEventListener('scroll', handleScroll);
 
     // Cleanup: remove listener to prevent memory leaks
-    return () => window.removeEventListener('scroll', handleScroll);
+    return (): void => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Focus management for mobile menu
@@ -162,7 +162,9 @@ export default function Example() {
     }
 
     // Return cleanup function even when mobileMenuOpen is false
-    return () => {};
+    return (): void => {
+      // No cleanup needed when mobileMenuOpen is false
+    };
   }, [mobileMenuOpen]);
 
   return (
@@ -364,7 +366,13 @@ export default function Example() {
         {/* Alignment: vertically centered with the navigation items */}
         <div className='hidden md:flex md:items-center md:gap-4 lg:items-center lg:gap-4'>
           {/* Theme toggle component for light/dark mode switching */}
-          <ThemeToggle />
+          {/* Compact mode on medium screens (md), normal mode on large screens (lg+) */}
+          <div className='md:block lg:hidden'>
+            <ThemeToggle isCompact={true} />
+          </div>
+          <div className='hidden lg:block'>
+            <ThemeToggle isCompact={false} />
+          </div>
 
           {/* Primary call-to-action button */}
           <Link

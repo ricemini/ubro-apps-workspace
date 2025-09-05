@@ -142,20 +142,19 @@ export default function ValueProps(): React.JSX.Element {
             <article
               key={index}
               // Comprehensive styling with hover effects, focus states, dark mode, and conditional scroll animations
-              className={`group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-primary-200 hover:bg-gradient-to-br hover:from-white hover:to-primary-50 dark:hover:from-gray-800 dark:hover:to-gray-700 flex flex-col h-full focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-900 ${
+              className={`group bg-white dark:bg-gray-800 p-8 card-border transition-all duration-300 hover:border-primary-200 hover:bg-gradient-to-br hover:from-white hover:to-primary-50 dark:hover:from-gray-800 dark:hover:to-gray-700 flex flex-col h-full focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-900 ${
                 isInView ? 'animate-slide-in-fade' : 'opacity-0 translate-y-3'
               }`}
-              tabIndex={0}
-              role='article'
-              // ARIA attributes for screen reader accessibility
-              aria-labelledby={`title-${index}`}
-              aria-describedby={`desc-${index} stats-${index}`}
-              // Staggered animation timing - only applies when section is in view
               style={{
                 animationDelay: isInView ? `${index * 80}ms` : '0ms',
                 animationDuration: '600ms',
                 animationFillMode: 'both',
               }}
+              tabIndex={0}
+              role='article'
+              // ARIA attributes for screen reader accessibility
+              aria-labelledby={`title-${index}`}
+              aria-describedby={`desc-${index} stats-${index}`}
             >
               {/* Icon Container - Centered with hover effects and accessibility */}
               <div

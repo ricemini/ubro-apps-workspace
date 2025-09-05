@@ -80,6 +80,16 @@
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200;
   }
 
+  /* Reusable card border styling */
+  .card-border {
+    border: 1px solid rgba(30, 58, 95, 0.3);
+    border-radius: 18px;
+    box-shadow:
+      0 1px 1px -0.5px rgba(18, 43, 165, 0.04),
+      0 3px 3px -1.5px rgba(18, 43, 165, 0.04),
+      0 6px 6px -3px rgba(18, 43, 165, 0.04);
+  }
+
   /* === Single source of truth for gradient motion === */
   .animate-vm-gradient {
     --vm-glow: 0;

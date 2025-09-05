@@ -114,7 +114,7 @@ export default function HowItWorks(): React.JSX.Element {
         </div>
 
         {/* Steps - Single Full Width Card */}
-        <div className='bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden mb-16 relative'>
+        <div className='bg-white dark:bg-gray-800 card-border overflow-hidden mb-16 relative'>
           {/* ARIA live region for screen reader announcements */}
           <div
             aria-live='polite'
