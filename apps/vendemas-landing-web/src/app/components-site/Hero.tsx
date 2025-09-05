@@ -88,16 +88,17 @@ export default function Hero(): React.JSX.Element {
           {/* LEFT COLUMN: Main copy and CTAs */}
           <div className='relative z-20 mt-24'>
             {/* Primary headline with gradient text effect */}
-            <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
-              <span>Todo tu negocio, </span>
+            <h1 className='font-display text-display text-5xl md:text-6xl leading-tight'>
+              <span className='text-secondary-500'>Todo tu negocio, </span>
+              <span className='text-secondary-500'>impulsado </span>
               <span
                 className='
-                  bg-gradient-to-r from-secondary-700 via-secondary-600 via-primary-600 to-tertiary-500
+                  bg-gradient-to-r from-secondary-500 via-secondary-600 via-primary-600 to-tertiary-500
                   bg-clip-text text-transparent
                   supports-[color-contrast(high)]:bg-secondary-700 supports-[color-contrast(high)]:bg-clip-text supports-[color-contrast(high)]:text-transparent
                 '
               >
-                impulsado por IA
+                por IA
               </span>
             </h1>
 

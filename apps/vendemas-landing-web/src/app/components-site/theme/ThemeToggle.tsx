@@ -61,7 +61,7 @@ export default function ThemeToggle({
         {/* Compact mode - single button */}
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className='flex h-8 w-8 items-center justify-center rounded-lg border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 hover:bg-secondary-100 dark:hover:bg-white dark:hover:text-secondary-500'
+          className='flex h-8 w-8 items-center justify-center card-border !rounded-[14px] border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 hover:bg-secondary-100 dark:hover:bg-white dark:hover:text-secondary-500'
           aria-label={`Cambiar tema (actual: ${currentTheme?.label})`}
           aria-expanded={isDropdownOpen}
           aria-haspopup='true'
@@ -79,7 +79,7 @@ export default function ThemeToggle({
                   setTheme(value);
                   setIsDropdownOpen(false);
                 }}
-                className={`flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200 ${
+                className={`flex h-8 w-8 items-center justify-center rounded-[14px] transition-all duration-200 ${
                   theme === value
                     ? 'bg-secondary-500 text-white dark:bg-white dark:text-secondary-500 shadow-sm'
                     : 'text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 dark:text-white dark:hover:bg-white dark:hover:text-secondary-500'
@@ -98,12 +98,12 @@ export default function ThemeToggle({
 
   // Normal mode - all three buttons visible
   return (
-    <div className='flex items-center gap-1 rounded-lg border border-secondary-200 bg-white p-1 dark:border-secondary-700 dark:bg-secondary-800'>
+    <div className='flex items-center gap-1 card-border !rounded-[14px] border border-secondary-200 bg-white p-1 dark:border-secondary-700 dark:bg-secondary-800'>
       {themes.map(({ value, icon: Icon, label }) => (
         <button
           key={value}
           onClick={() => setTheme(value)}
-          className={`flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200 ${
+          className={`flex h-8 w-8 items-center justify-center rounded-[14px] transition-all duration-200 ${
             theme === value
               ? 'bg-secondary-500 text-white dark:bg-white dark:text-secondary-500 shadow-sm'
               : 'text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 dark:text-white dark:hover:bg-white dark:hover:text-secondary-500'

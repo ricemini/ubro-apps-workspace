@@ -169,12 +169,24 @@ export default function Example(): React.JSX.Element {
 
   return (
     // Main header container with dynamic positioning based on scroll state
-    // - At top: relative positioning for normal document flow
+    // - At top: relative positioning for normal document flow with gradient background
     // - When scrolled: fixed positioning with shadow for sticky navigation
     // - Smooth transitions for all state changes (position, shadow, logo size)
     <header
-      className={`${isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg' : 'relative'} isolate z-10 bg-white dark:bg-gray-950 transition-all duration-200`}
+      className={`${isScrolled ? 'fixed top-0 left-0 right-0 bg-transparent' : 'relative'} isolate z-10 transition-all duration-200`}
     >
+      {/* Gradient background overlay - only visible when at top */}
+      {!isScrolled && (
+        <div
+          className='absolute inset-0 -z-10'
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(30, 58, 95, 0.2) 50%, rgba(95, 37, 159, 0.3) 100%)',
+            filter: 'blur(40px)',
+          }}
+          aria-hidden='true'
+        />
+      )}
       {/* Skip link for keyboard navigation - appears only on focus */}
       <a
         href='#main-content'
@@ -198,13 +210,17 @@ export default function Example(): React.JSX.Element {
           {/* Logo container with smooth transitions for size changes */}
           <div className='flex md:flex-none lg:flex-none transition-all duration-200'>
             {/* Mobile logo: small size for compact mobile layout */}
-            <VendeMasLogo size='sm' className='md:hidden' asLink />
+            <VendeMasLogo
+              size='sm'
+              className={`md:hidden ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
+              asLink
+            />
 
             {/* Medium screen logo: extra small size (768px-1023px) for tight spacing */}
             {/* Prevents overflow issues in the 60px navbar height */}
             <VendeMasLogo
-              size='xs'
-              className='hidden md:block lg:hidden'
+              size='sm'
+              className={`hidden md:block lg:hidden ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
               asLink
             />
 
@@ -213,7 +229,7 @@ export default function Example(): React.JSX.Element {
             {/* - When scrolled: small size for compact sticky navigation */}
             <VendeMasLogo
               size={isScrolled ? 'sm' : 'md'}
-              className='hidden lg:block'
+              className={`hidden lg:block ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
               asLink
             />
           </div>
@@ -377,7 +393,7 @@ export default function Example(): React.JSX.Element {
           {/* Primary call-to-action button */}
           <Link
             href='/signup'
-            className='inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
             data-analytics='nav_cta_signup'
             aria-label='Comenzar a usar VendeMás gratis'
           >
@@ -387,7 +403,7 @@ export default function Example(): React.JSX.Element {
           {/* Secondary login link */}
           <a
             href='#'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className='inline-flex items-center card-border !rounded-[14px] bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-secondary-800 dark:text-white dark:hover:bg-secondary-700'
             aria-label='Iniciar sesión en VendeMás'
           >
             Log in <span aria-hidden='true'>&rarr;</span>
@@ -438,7 +454,7 @@ export default function Example(): React.JSX.Element {
                   {/* Primary CTA button with animation */}
                   <Link
                     href='/signup'
-                    className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
+                    className='-mx-3 mb-4 block card-border bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom rounded-[14px]'
                     data-analytics='nav_cta_signup'
                     aria-label='Comenzar a usar VendeMás gratis'
                   >
@@ -499,7 +515,7 @@ export default function Example(): React.JSX.Element {
                   {/* Secondary login link */}
                   <a
                     href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 rounded-[14px]'
                     aria-label='Iniciar sesión en VendeMás'
                   >
                     Log in

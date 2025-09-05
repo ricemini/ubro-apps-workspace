@@ -19,7 +19,7 @@ export default function Home(): React.JSX.Element {
             className='absolute top-0 right-0 w-[1200px] h-[1200px] -z-5'
             style={{
               background:
-                'linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(236, 72, 153, 0.3) 100%)',
+                'linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(30, 58, 95, 0.2) 50%, rgba(95, 37, 159, 0.3) 100%)',
               borderRadius: '50%',
               filter: 'blur(60px)',
               transform: 'translateX(30%)',
@@ -32,7 +32,7 @@ export default function Home(): React.JSX.Element {
             className='absolute top-0 right-0 w-[600px] h-[1200px] -z-20 dark:block hidden'
             style={{
               background:
-                'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(236, 72, 153, 0.2) 100%)',
+                'linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(30, 58, 95, 0.15) 50%, rgba(95, 37, 159, 0.2) 100%)',
               borderRadius: '50%',
               filter: 'blur(60px)',
               transform: 'translateX(30%)',

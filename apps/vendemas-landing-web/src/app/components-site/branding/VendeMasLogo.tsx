@@ -76,7 +76,7 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${SIZE_MAP.sm.vende * 1.4}px`,
+            fontSize: `${SIZE_MAP.sm.vende}px`,
             lineHeight: 0.9,
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
           }}
@@ -131,7 +131,7 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${s.vende * 1.4}px`,
+            fontSize: `${s.vende}px`,
             lineHeight: 0.9,
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
           }}
@@ -208,7 +208,7 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${s.vende * 1.4}px`,
+            fontSize: `${s.vende}px`,
             lineHeight: 0.9,
             // tiny shadow for edge crispness on light BGs
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
