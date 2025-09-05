@@ -212,24 +212,27 @@ export default function Example(): React.JSX.Element {
             {/* Mobile logo: small size for compact mobile layout */}
             <VendeMasLogo
               size='sm'
-              className={`md:hidden ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
+              className={`md:hidden ${mobileMenuOpen ? 'hidden' : ''}`}
+              isSmall={false}
               asLink
             />
 
             {/* Medium screen logo: extra small size (768px-1023px) for tight spacing */}
             {/* Prevents overflow issues in the 60px navbar height */}
             <VendeMasLogo
-              size='sm'
-              className={`hidden md:block lg:hidden ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
+              size='xs'
+              className='hidden md:block lg:hidden'
+              isSmall={false}
               asLink
             />
 
-            {/* Large screen logo: dynamic sizing based on scroll position */}
+            {/* Large screen logo: always with background styling */}
             {/* - At top: medium size for prominent branding */}
             {/* - When scrolled: small size for compact sticky navigation */}
             <VendeMasLogo
-              size={isScrolled ? 'sm' : 'md'}
-              className={`hidden lg:block ${isScrolled ? 'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50' : ''}`}
+              size={isScrolled ? 'sm' : 'sm'}
+              className='hidden lg:block'
+              isSmall={false}
               asLink
             />
           </div>
@@ -243,7 +246,7 @@ export default function Example(): React.JSX.Element {
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] p-2.5 text-gray-700 dark:text-gray-400'
             aria-expanded={mobileMenuOpen}
             aria-label='Abrir menú de navegación'
             aria-controls='mobile-menu'
@@ -438,7 +441,7 @@ export default function Example(): React.JSX.Element {
               <button
                 type='button'
                 onClick={handleMobileMenuClose}
-                className='-mt-1 -mr-4 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+                className='-mt-1 -mr-4 card-border !rounded-[14px] p-2.5 text-gray-700 dark:text-gray-400'
                 aria-label='Cerrar menú de navegación'
               >
                 <span className='sr-only'>Close menu</span>
