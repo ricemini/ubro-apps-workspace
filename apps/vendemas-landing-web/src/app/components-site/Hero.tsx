@@ -76,7 +76,7 @@ export default function Hero(): React.JSX.Element {
       {/* - Horizontal padding: responsive from 24px on mobile to 48px on large screens */}
       {/* - Vertical padding: responsive top padding, bottom padding prevents badge overlap */}
       <div
-        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
+        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-24 pb-8 lg:pb-16'
         id='main-content'
         tabIndex={-1}
         role='main'
@@ -127,7 +127,7 @@ export default function Hero(): React.JSX.Element {
               {/* Primary CTA: Sign up button with pulsing animation */}
               <a
                 href='/signup'
-                className='rounded-lg bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 animate-pulse-custom'
+                className='rounded-[14px] bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom'
                 data-analytics='cta_primary_hero'
                 role='button'
                 aria-describedby='cta-description'

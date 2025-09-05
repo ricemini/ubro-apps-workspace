@@ -97,34 +97,12 @@ export default function Example(): React.JSX.Element {
   // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // State for detecting scroll position to adjust logo size and navbar positioning
-  // Triggers after 10px scroll to provide immediate visual feedback
-  const [isScrolled, setIsScrolled] = useState(false);
-
   // State for tracking dropdown menu open state
   const [isProductsOpen, setIsProductsOpen] = useState(false);
 
   // Refs for focus management
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-
-  // Effect to detect scroll position and update navbar behavior accordingly
-  // - Logo size changes from medium to small on large screens when scrolled
-  // - Navbar becomes sticky (fixed positioning) when scrolled
-  // - Adds shadow effect for visual separation from content below
-  useEffect(() => {
-    const handleScroll = (): void => {
-      const scrollTop = window.scrollY;
-      // Threshold of 10px provides immediate feedback without being too sensitive
-      setIsScrolled(scrollTop > 10);
-    };
-
-    // Add scroll listener for real-time updates
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup: remove listener to prevent memory leaks
-    return (): void => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Focus management for mobile menu
   useEffect(() => {
@@ -168,25 +146,10 @@ export default function Example(): React.JSX.Element {
   }, [mobileMenuOpen]);
 
   return (
-    // Main header container with dynamic positioning based on scroll state
-    // - At top: relative positioning for normal document flow with gradient background
-    // - When scrolled: fixed positioning with shadow for sticky navigation
-    // - Smooth transitions for all state changes (position, shadow, logo size)
-    <header
-      className={`${isScrolled ? 'fixed top-0 left-0 right-0 bg-transparent' : 'relative'} isolate z-10 transition-all duration-200`}
-    >
-      {/* Gradient background overlay - only visible when at top */}
-      {!isScrolled && (
-        <div
-          className='absolute inset-0 -z-10'
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(30, 58, 95, 0.2) 50%, rgba(95, 37, 159, 0.3) 100%)',
-            filter: 'blur(40px)',
-          }}
-          aria-hidden='true'
-        />
-      )}
+    // Main header container with fixed positioning
+    // - Always fixed positioning for consistent sticky navigation
+    // - Transparent background for clean overlay effect
+    <header className='fixed top-0 left-0 right-0 bg-transparent isolate z-10 b-4'>
       {/* Skip link for keyboard navigation - appears only on focus */}
       <a
         href='#main-content'
@@ -204,11 +167,11 @@ export default function Example(): React.JSX.Element {
         aria-label='Global'
         className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8 lg:py-2'
       >
-        {/* Logo section - responsive sizing with scroll-based dynamic changes */}
+        {/* Logo section - responsive sizing */}
         {/* Flex behavior: none on medium+ to prevent logo from expanding and pushing content */}
         <div className='flex md:flex-none lg:flex-none'>
-          {/* Logo container with smooth transitions for size changes */}
-          <div className='flex md:flex-none lg:flex-none transition-all duration-200'>
+          {/* Logo container */}
+          <div className='flex md:flex-none lg:flex-none'>
             {/* Mobile logo: small size for compact mobile layout */}
             <VendeMasLogo
               size='sm'
@@ -227,10 +190,9 @@ export default function Example(): React.JSX.Element {
             />
 
             {/* Large screen logo: always with background styling */}
-            {/* - At top: medium size for prominent branding */}
-            {/* - When scrolled: small size for compact sticky navigation */}
+            {/* - Fixed size for consistent branding */}
             <VendeMasLogo
-              size={isScrolled ? 'sm' : 'sm'}
+              size='sm'
               className='hidden lg:block'
               isSmall={false}
               asLink
