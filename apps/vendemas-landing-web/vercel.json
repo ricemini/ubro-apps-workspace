@@ -2,7 +2,7 @@
   "version": 2,
   "framework": "nextjs",
   "buildCommand": "npx nx run vendemas-landing-web:build:production",
-  "devCommand": "npx nx run vendemas-landing-web:serve",
+  "devCommand": "npx nx run vendemas-landing-web:serve --port=3000",
   "installCommand": "pnpm install",
   "outputDirectory": "dist/vendemas-landing-web/.next",
   "functions": {

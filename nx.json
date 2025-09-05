@@ -43,6 +43,12 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@nx/next:server": {
+      "cache": false,
+      "options": {
+        "port": 3000
+      }
     }
   },
   "generators": {
@@ -58,7 +64,8 @@
       "linter": "eslint",
       "unitTestRunner": "vitest",
       "e2eTestRunner": "playwright",
-      "strict": true
+      "strict": true,
+      "port": 3000
     },
     "@nx/js:library": {
       "linter": "eslint",

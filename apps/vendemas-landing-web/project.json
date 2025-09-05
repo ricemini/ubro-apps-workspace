@@ -33,16 +33,19 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "vendemas-landing-web:build",
-        "dev": true
+        "dev": true,
+        "port": 3000
       },
       "configurations": {
         "development": {
           "buildTarget": "vendemas-landing-web:build:development",
-          "dev": true
+          "dev": true,
+          "port": 3000
         },
         "production": {
           "buildTarget": "vendemas-landing-web:build:production",
-          "dev": false
+          "dev": false,
+          "port": 3000
         }
       }
     },

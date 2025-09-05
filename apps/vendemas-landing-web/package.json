@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "npx nx run vendemas-landing-web:build:production",
-    "dev": "npx nx run vendemas-landing-web:serve",
-    "start": "npx nx run vendemas-landing-web:serve:production",
+    "dev": "npx nx run vendemas-landing-web:serve --port=3000",
+    "start": "npx nx run vendemas-landing-web:serve:production --port=3000",
     "lint": "npx nx run vendemas-landing-web:lint",
     "test": "npx nx run vendemas-landing-web:test"
   },
