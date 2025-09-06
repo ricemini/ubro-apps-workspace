@@ -310,7 +310,8 @@ jobs:
           cd apps/vendemas-landing-web
           
           # Create a comprehensive package.json with all dependencies
-          echo '{
+          cat > package.json << 'EOF'
+{
   "name": "vendemas-landing-web",
   "version": "0.0.0",
   "private": true,
@@ -342,7 +343,8 @@ jobs:
     "eslint": "^8.0.0",
     "eslint-config-next": "^15.0.0"
   }
-}' > package.json
+}
+EOF
           
           # Remove pnpm-lock.yaml to force npm usage
           rm -f pnpm-lock.yaml
