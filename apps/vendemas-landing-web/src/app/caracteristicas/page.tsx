@@ -1,8 +1,4 @@
 import { Metadata } from 'next';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import GoogleAnalytics from '../components/GoogleAnalytics';
-import FirebaseAnalytics from '../components/FirebaseAnalytics';
 
 export const metadata: Metadata = {
   title: 'Todas las funciones — VendeMás',
@@ -169,142 +165,131 @@ const faqs = [
 
 export default function FeaturesPage() {
   return (
-    <>
-      <Navigation />
-      <main className='mx-auto max-w-7xl px-6 py-12 space-y-12'>
-        <header className='space-y-4 text-center'>
-          <h1 className='text-display text-4xl sm:text-5xl text-secondary-500'>
-            Todas las funciones
-          </h1>
-          <p className='text-body text-xl text-secondary-500/80 max-w-3xl mx-auto'>
-            Todo lo que necesitas para tu MiPyME, en una sola plataforma.
-          </p>
-        </header>
+    <main className='mx-auto max-w-7xl px-6 py-12 space-y-12'>
+      <header className='space-y-4 text-center'>
+        <h1 className='text-display text-4xl sm:text-5xl text-secondary-500'>
+          Todas las funciones
+        </h1>
+        <p className='text-body text-xl text-secondary-500/80 max-w-3xl mx-auto'>
+          Todo lo que necesitas para tu MiPyME, en una sola plataforma.
+        </p>
+      </header>
 
-        <section className='flex flex-wrap justify-center gap-3'>
-          {filterChips.map(chip => (
-            <a
-              key={chip}
-              href={`#${chip.toLowerCase().replace(/\s+/g, '-')}`}
-              className='rounded-full bg-secondary-500/10 hover:bg-secondary-500/20 text-secondary-500 px-4 py-2 text-sm font-medium transition-colors duration-200 btn-focus'
+      <section className='flex flex-wrap justify-center gap-3'>
+        {filterChips.map(chip => (
+          <a
+            key={chip}
+            href={`#${chip.toLowerCase().replace(/\s+/g, '-')}`}
+            className='rounded-full bg-secondary-500/10 hover:bg-secondary-500/20 text-secondary-500 px-4 py-2 text-sm font-medium transition-colors duration-200 btn-focus'
+          >
+            {chip}
+          </a>
+        ))}
+      </section>
+
+      {/* Feature sections */}
+      <div className='space-y-16'>
+        {features.map((feature, index) => (
+          <section
+            key={feature.id}
+            id={feature.id}
+            className={`grid lg:grid-cols-2 gap-12 items-center ${
+              index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+            }`}
+          >
+            <div
+              className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}
             >
-              {chip}
-            </a>
-          ))}
-        </section>
-
-        {/* Feature sections */}
-        <div className='space-y-16'>
-          {features.map((feature, index) => (
-            <section
-              key={feature.id}
-              id={feature.id}
-              className={`grid lg:grid-cols-2 gap-12 items-center ${
-                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-              }`}
-            >
-              <div
-                className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}
-              >
-                <div>
-                  <h2 className='text-display text-3xl text-secondary-500 mb-3'>
-                    {feature.title}
-                  </h2>
-                  <p className='text-body text-lg text-secondary-500/80 mb-6'>
-                    {feature.description}
-                  </p>
-                </div>
-
-                <ul className='space-y-3'>
-                  {feature.bullets.map((bullet, bulletIndex) => (
-                    <li
-                      key={bulletIndex}
-                      className='flex items-start space-x-3'
-                    >
-                      <div className='w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0'></div>
-                      <span className='text-body text-secondary-500/90'>
-                        {bullet}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href='/signup'
-                  className='inline-block rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 py-3 transition-colors duration-200 btn-focus'
-                >
-                  Comenzar gratis
-                </a>
+              <div>
+                <h2 className='text-display text-3xl text-secondary-500 mb-3'>
+                  {feature.title}
+                </h2>
+                <p className='text-body text-lg text-secondary-500/80 mb-6'>
+                  {feature.description}
+                </p>
               </div>
 
-              <div
-                className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+              <ul className='space-y-3'>
+                {feature.bullets.map((bullet, bulletIndex) => (
+                  <li key={bulletIndex} className='flex items-start space-x-3'>
+                    <div className='w-2 h-2 bg-primary-500 rounded-full mt-2 flex-shrink-0'></div>
+                    <span className='text-body text-secondary-500/90'>
+                      {bullet}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href='/signup'
+                className='inline-block rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 py-3 transition-colors duration-200 btn-focus'
               >
-                <div className='relative'>
-                  <div className='aspect-video bg-gradient-to-br from-primary-100 to-tertiary-100 rounded-2xl shadow-xl flex items-center justify-center'>
-                    <div className='text-center space-y-3'>
-                      <div className='w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto'>
-                        <div className='w-8 h-8 bg-primary-500 rounded-lg'></div>
-                      </div>
-                      <p className='text-secondary-500 font-medium'>
-                        {feature.title}
-                      </p>
+                Comenzar gratis
+              </a>
+            </div>
+
+            <div
+              className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+            >
+              <div className='relative'>
+                <div className='aspect-video bg-gradient-to-br from-primary-100 to-tertiary-100 rounded-2xl shadow-xl flex items-center justify-center'>
+                  <div className='text-center space-y-3'>
+                    <div className='w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto'>
+                      <div className='w-8 h-8 bg-primary-500 rounded-lg'></div>
                     </div>
+                    <p className='text-secondary-500 font-medium'>
+                      {feature.title}
+                    </p>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {/* FAQ Section */}
+      <section className='bg-gray-50 rounded-2xl p-12'>
+        <h2 className='text-display text-3xl text-secondary-500 text-center mb-12'>
+          Preguntas frecuentes sobre funciones
+        </h2>
+
+        <div className='grid md:grid-cols-2 gap-8 max-w-4xl mx-auto'>
+          {faqs.map((faq, index) => (
+            <div key={index} className='space-y-3'>
+              <h3 className='text-display text-lg font-semibold text-secondary-500'>
+                {faq.question}
+              </h3>
+              <p className='text-body text-secondary-500/80'>{faq.answer}</p>
+            </div>
           ))}
         </div>
 
-        {/* FAQ Section */}
-        <section className='bg-gray-50 rounded-2xl p-12'>
-          <h2 className='text-display text-3xl text-secondary-500 text-center mb-12'>
-            Preguntas frecuentes sobre funciones
-          </h2>
-
-          <div className='grid md:grid-cols-2 gap-8 max-w-4xl mx-auto'>
-            {faqs.map((faq, index) => (
-              <div key={index} className='space-y-3'>
-                <h3 className='text-display text-lg font-semibold text-secondary-500'>
-                  {faq.question}
-                </h3>
-                <p className='text-body text-secondary-500/80'>{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className='text-center mt-12'>
-            <a
-              href='/faq'
-              className='inline-block border-2 border-primary-500 text-primary-500 hover:bg-primary-50 font-semibold px-8 py-3 rounded-lg transition-all duration-200 btn-focus'
-            >
-              Ver todas las preguntas frecuentes
-            </a>
-          </div>
-        </section>
-
-        {/* Bottom CTA */}
-        <section className='bg-gradient-primary rounded-2xl p-12 text-center text-white'>
-          <h2 className='text-display text-3xl font-bold mb-4'>
-            ¿Listo para modernizar tu negocio?
-          </h2>
-          <p className='text-lg opacity-90 mb-8 max-w-2xl mx-auto'>
-            Comienza gratis y descubre cómo VendeMás puede transformar tu
-            MiPyME.
-          </p>
+        <div className='text-center mt-12'>
           <a
-            href='/signup'
-            className='inline-block bg-white text-primary-500 hover:bg-gray-100 font-semibold px-8 py-4 rounded-lg transition-colors duration-200 btn-focus text-lg'
+            href='/faq'
+            className='inline-block border-2 border-primary-500 text-primary-500 hover:bg-primary-50 font-semibold px-8 py-3 rounded-lg transition-all duration-200 btn-focus'
           >
-            Comenzar gratis ahora
+            Ver todas las preguntas frecuentes
           </a>
-        </section>
-      </main>
-      <Footer />
-      {/* Analytics Components */}
-      <GoogleAnalytics />
-      <FirebaseAnalytics />
-    </>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className='bg-gradient-primary rounded-2xl p-12 text-center text-white'>
+        <h2 className='text-display text-3xl font-bold mb-4'>
+          ¿Listo para modernizar tu negocio?
+        </h2>
+        <p className='text-lg opacity-90 mb-8 max-w-2xl mx-auto'>
+          Comienza gratis y descubre cómo VendeMás puede transformar tu MiPyME.
+        </p>
+        <a
+          href='/signup'
+          className='inline-block bg-white text-primary-500 hover:bg-gray-100 font-semibold px-8 py-4 rounded-lg transition-colors duration-200 btn-focus text-lg'
+        >
+          Comenzar gratis ahora
+        </a>
+      </section>
+    </main>
   );
 }
