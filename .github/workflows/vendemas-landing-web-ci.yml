@@ -1,4 +1,4 @@
-name: VendeMás Landing Web - CI/CD Pipeline (Updated)
+name: VendeMás Landing Web - CI/CD Pipeline (Fixed Deployment)
 
 on:
   push:
