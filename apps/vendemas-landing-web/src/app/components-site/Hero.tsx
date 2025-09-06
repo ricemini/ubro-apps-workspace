@@ -151,7 +151,7 @@ export default function Hero(): React.JSX.Element {
               {/* Secondary CTA: Learn more link with hover effects */}
               <SecondaryCTA
                 text='Conoce todas las herramientas'
-                url='/caracteristicas'
+                url='/funcionalidades'
                 description='Enlace para ver todas las características y herramientas de VendeMás'
               />
             </div>
