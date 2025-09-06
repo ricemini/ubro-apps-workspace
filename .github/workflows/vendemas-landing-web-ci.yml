@@ -360,14 +360,39 @@ jobs:
             exit 1
           fi
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
+      - name: Install Vercel CLI and jq
+        run: |
+          npm install -g vercel@latest
+          sudo apt-get update && sudo apt-get install -y jq
 
       - name: Deploy to Vercel
         id: deploy
         run: |
           # Deploy using the prepared structure with --prebuilt flag
-          vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt
+          echo "🚀 Starting Vercel deployment..."
+          DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt --json)
+          echo "📄 Vercel deployment output:"
+          echo "$DEPLOYMENT_OUTPUT"
+
+          # Extract URL from JSON output
+          DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | jq -r '.url // empty')
+
+          # Fallback: try to extract URL from non-JSON output if JSON parsing failed
+          if [ -z "$DEPLOYMENT_URL" ] || [ "$DEPLOYMENT_URL" = "null" ]; then
+            echo "⚠️ JSON parsing failed, trying fallback method..."
+            DEPLOYMENT_URL=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt | grep -o 'https://[^[:space:]]*' | head -1)
+          fi
+
+          if [ -n "$DEPLOYMENT_URL" ] && [ "$DEPLOYMENT_URL" != "null" ]; then
+            echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+            echo "preview-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+            echo "✅ Deployment URL: $DEPLOYMENT_URL"
+          else
+            echo "❌ Failed to extract deployment URL"
+            echo "url=" >> $GITHUB_OUTPUT
+            echo "preview-url=" >> $GITHUB_OUTPUT
+            exit 1
+          fi
         env:
           VERCEL_TOKEN: ${{ env.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
@@ -376,9 +401,18 @@ jobs:
       - name: Test Deployment with Bypass Token
         run: |
           echo "🧪 Testing deployment accessibility with bypass token..."
+          DEPLOYMENT_URL="${{ steps.deploy.outputs.url }}"
+
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "❌ Deployment URL is empty, cannot test deployment"
+            exit 1
+          fi
+
+          echo "🔗 Testing URL: $DEPLOYMENT_URL"
+
           if [ -n "${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" ]; then
             # Test with bypass token
-            curl -f -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" "${{ steps.deploy.outputs.url }}" || {
+            curl -f -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" "$DEPLOYMENT_URL" || {
               echo "❌ Deployment test failed with bypass token"
               exit 1
             }
@@ -386,7 +420,7 @@ jobs:
           else
             echo "⚠️ VERCEL_AUTOMATION_BYPASS_SECRET not configured, skipping bypass test"
             # Test without bypass token (should return 401 if protection is enabled)
-            curl -f "${{ steps.deploy.outputs.url }}" || {
+            curl -f "$DEPLOYMENT_URL" || {
               echo "ℹ️ Deployment requires authentication (expected if protection is enabled)"
             }
           fi
