@@ -318,47 +318,27 @@ jobs:
 
       - name: Prepare for Vercel
         run: |
-          echo "🔧 Preparing build artifacts for Vercel deployment..."
+          echo "🔧 Preparing for Vercel deployment..."
 
-          # Create Vercel output directory structure
-          mkdir -p .vercel/output
+          # Change to the app directory for Vercel deployment
+          cd apps/vendemas-landing-web
 
-          # Check what's actually in the build output
-          echo "📁 Available files in dist/vendemas-landing-web/:"
-          ls -la dist/vendemas-landing-web/
+          # Check what's in the app directory
+          echo "📁 Available files in apps/vendemas-landing-web/:"
+          ls -la
 
-          # For standalone output, we need to copy the entire directory structure
-          if [ -d "dist/vendemas-landing-web" ]; then
-            echo "✅ Found vendemas-landing-web build output"
-
-            # Copy the entire build output to .vercel/output
-            cp -r dist/vendemas-landing-web/* .vercel/output/
-
-            # Ensure we have the necessary files for Vercel
-            if [ ! -f ".vercel/output/package.json" ]; then
-              echo "⚠️ package.json not found, copying from source"
-              cp apps/vendemas-landing-web/package.json .vercel/output/
-            fi
-
-            if [ ! -d ".vercel/output/public" ]; then
-              echo "⚠️ public directory not found, copying from source"
-              cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
-            fi
-
-            # Create Vercel config.json file
-            echo "📝 Creating Vercel config.json..."
-            echo '{"version":3,"functions":{"app/page.js":{"runtime":"nodejs20.x"},"app/layout.js":{"runtime":"nodejs20.x"}},"routes":[{"src":"/(.*)","dest":"/app/$1"}]}' > .vercel/output/config.json
-
-            echo "📁 Vercel output structure created in .vercel/output/"
-            ls -la .vercel/output/
-            echo "📄 Vercel config.json content:"
-            cat .vercel/output/config.json
-          else
-            echo "❌ vendemas-landing-web build output not found"
-            echo "📁 Available files in dist/:"
-            ls -la dist/
+          # Ensure we have the necessary files
+          if [ ! -f "package.json" ]; then
+            echo "❌ package.json not found in app directory"
             exit 1
           fi
+
+          if [ ! -d "src" ]; then
+            echo "❌ src directory not found in app directory"
+            exit 1
+          fi
+
+          echo "✅ App directory structure looks good"
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
@@ -366,16 +346,19 @@ jobs:
       - name: Deploy to Vercel
         id: deploy
         run: |
-          # Deploy using the prepared structure with --prebuilt flag
+          # Deploy using Vercel's build process
           echo "🚀 Starting Vercel deployment..."
+
+          # Change to the app directory
+          cd apps/vendemas-landing-web
 
           # Use production deployment for main branch, preview for feature branches
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "📦 Deploying to production..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt 2>&1)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes 2>&1)
           else
             echo "🔍 Deploying preview for feature branch..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes --prebuilt 2>&1)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes 2>&1)
           fi
 
           echo "📄 Vercel deployment output:"
