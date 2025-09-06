@@ -11,10 +11,10 @@ export const PRIMARY = [
     description: 'Descubre nuestras soluciones para vendedores ambulantes',
   },
   {
-    name: 'Características',
-    label: 'Características',
-    href: '/funcionalidades',
-    description: 'Funcionalidades que impulsan tu negocio',
+    name: 'Funciones',
+    label: 'Funciones',
+    href: '/funciones',
+    description: 'Funciones que impulsan tu negocio',
   },
   {
     name: 'Precios',

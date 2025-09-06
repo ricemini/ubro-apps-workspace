@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       'Cobros CoDi, catálogo desde una foto, inventario, promociones y estadísticas con IA, facturación y más.',
   },
   alternates: {
-    canonical: '/funcionalidades',
+    canonical: '/funciones',
   },
 };
 

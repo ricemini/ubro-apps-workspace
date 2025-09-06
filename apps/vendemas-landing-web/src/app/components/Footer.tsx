@@ -12,7 +12,7 @@ import {
 export default function Footer() {
   const footerLinks = {
     producto: [
-      { name: 'Funcionalidades', href: '/funcionalidades' },
+      { name: 'Funciones', href: '/funciones' },
       { name: 'Cómo funciona', href: '/#como-funciona' },
       { name: 'Precios', href: '/#precios' },
       { name: 'Casos de éxito', href: '/casos-exito' },

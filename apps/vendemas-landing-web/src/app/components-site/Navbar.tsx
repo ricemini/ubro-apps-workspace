@@ -343,11 +343,11 @@ export default function Example(): React.JSX.Element {
 
             {/* Direct navigation links - visible on medium+ screens */}
             <a
-              href='/funcionalidades'
+              href='/funciones'
               className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-              aria-label='Ver funcionalidades de la plataforma'
+              aria-label='Ver funciones de la plataforma'
             >
-              Funcionalidades
+              Funciones
             </a>
             <a
               href='/faq'
@@ -478,11 +478,11 @@ export default function Example(): React.JSX.Element {
 
                   {/* Direct navigation links */}
                   <a
-                    href='/funcionalidades'
+                    href='/funciones'
                     className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Ver funcionalidades de la plataforma'
+                    aria-label='Ver funciones de la plataforma'
                   >
-                    Funcionalidades
+                    Funciones
                   </a>
                   <a
                     href='#'
