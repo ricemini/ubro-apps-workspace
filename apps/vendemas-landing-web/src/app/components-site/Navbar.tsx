@@ -136,7 +136,7 @@ export default function Example(): React.JSX.Element {
 
     if (mobileMenuOpen) {
       document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      return (): void => document.removeEventListener('keydown', handleEscape);
     }
 
     // Return cleanup function even when mobileMenuOpen is false
@@ -172,30 +172,12 @@ export default function Example(): React.JSX.Element {
         <div className='flex md:flex-none lg:flex-none'>
           {/* Logo container */}
           <div className='flex md:flex-none lg:flex-none'>
-            {/* Mobile logo: small size for compact mobile layout */}
+            {/* Responsive logo: VendeMá$ on mobile/medium when hamburger visible, V$ on large screens */}
             <VendeMasLogo
-              size='sm'
-              className={`md:hidden ${mobileMenuOpen ? 'hidden' : ''}`}
               isSmall={false}
+              navbar
               asLink
-            />
-
-            {/* Medium screen logo: extra small size (768px-1023px) for tight spacing */}
-            {/* Prevents overflow issues in the 60px navbar height */}
-            <VendeMasLogo
-              size='xs'
-              className='hidden md:block lg:hidden'
-              isSmall={true}
-              asLink
-            />
-
-            {/* Large screen logo: always with background styling */}
-            {/* - Fixed size for consistent branding */}
-            <VendeMasLogo
-              size='sm'
-              className='hidden lg:block'
-              isSmall={false}
-              asLink
+              className={mobileMenuOpen ? 'hidden' : ''}
             />
           </div>
         </div>
@@ -208,7 +190,14 @@ export default function Example(): React.JSX.Element {
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
-            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] p-2.5 text-gray-700 dark:text-gray-400'
+            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] text-gray-700 dark:text-gray-400'
+            style={{
+              height: '42px',
+              width: '42px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             aria-expanded={mobileMenuOpen}
             aria-label='Abrir menú de navegación'
             aria-controls='mobile-menu'
@@ -398,15 +387,22 @@ export default function Example(): React.JSX.Element {
             className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'
           >
             {/* Header with logo and close button */}
-            <div className='flex -mt-2 justify-between'>
-              {/* Small logo for mobile menu */}
-              <VendeMasLogo size='xs' className='lg:hidden -ml-2' asLink />
+            <div className='flex -mt-3 -mr-0.5 justify-between'>
+              {/* Logo for mobile menu - same size as navbar */}
+              <VendeMasLogo navbar className='lg:hidden -ml-2 -mt-1' asLink />
 
               {/* Close button for mobile menu */}
               <button
                 type='button'
                 onClick={handleMobileMenuClose}
-                className='-mt-1 -mr-4 card-border !rounded-[14px] p-2.5 text-gray-700 dark:text-gray-400'
+                className='-mt-1 -mr-4 card-border !rounded-[14px] text-gray-700 dark:text-gray-400'
+                style={{
+                  height: '42px',
+                  width: '42px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 aria-label='Cerrar menú de navegación'
               >
                 <span className='sr-only'>Close menu</span>
