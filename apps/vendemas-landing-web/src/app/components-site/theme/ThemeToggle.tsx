@@ -4,6 +4,29 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
+/**
+ * ThemeToggle Component - Light/Dark mode switcher with responsive design
+ *
+ * Features:
+ * - Two modes: compact (single button) and full (dropdown with options)
+ * - Consistent 42px height in compact mode to match navbar elements
+ * - Three theme options: light, dark, and system (auto)
+ * - Click-outside-to-close functionality for dropdown
+ * - Smooth transitions and hover states
+ * - Accessibility: ARIA labels, keyboard navigation support
+ * - SSR-safe with mounted state handling
+ *
+ * Responsive Behavior:
+ * - Medium screens (md): Uses compact mode (single button)
+ * - Large screens (lg+): Uses full mode (dropdown with all options)
+ * - Automatically switches based on screen size
+ *
+ * Styling:
+ * - Compact: 42px height with card-border and 14px border radius
+ * - Full: Dropdown with proper spacing and hover effects
+ * - Dark mode: Full support with proper contrast
+ */
+
 interface ThemeToggleProps {
   isCompact?: boolean;
 }

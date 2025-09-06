@@ -1,5 +1,30 @@
 'use client';
 
+/**
+ * Navbar Component - Main navigation header with responsive design
+ *
+ * Features:
+ * - Responsive layout: hamburger menu on mobile, full navigation on desktop
+ * - Logo with responsive variants: V$ on mobile/medium, VendeMá$ on large screens
+ * - Theme toggle with compact and full modes based on screen size
+ * - Desktop navigation with mega menu dropdown for "Herramientas"
+ * - Mobile menu with slide-in panel and focus trap
+ * - Consistent 42px height for all interactive elements
+ * - Card-based styling with 14px border radius throughout
+ * - Accessibility: ARIA labels, keyboard navigation, screen reader support
+ *
+ * Responsive Behavior:
+ * - Mobile (< md): Hamburger menu, compact logo, hidden when menu open
+ * - Medium (md-lg): Compact theme toggle, V$ logo, full navigation
+ * - Large (lg+): Full theme toggle, VendeMá$ logo, full navigation
+ *
+ * Styling:
+ * - All buttons: 42px height with card-border and 14px border radius
+ * - Logo: navbar-optimized sizing with consistent 42px container height
+ * - Gaps: 8px between theme toggle and buttons, 16px between nav items
+ * - Dark mode: Full support with proper contrast and theming
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
@@ -33,6 +58,7 @@ import FocusTrap from './accessibility/FocusTrap';
 /**
  * Product features data for the dropdown mega menu
  * Each product represents a key feature of the VendeMás platform
+ * Used in the "Herramientas" dropdown navigation
  */
 const products = [
   {

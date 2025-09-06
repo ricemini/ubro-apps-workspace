@@ -42,8 +42,30 @@ const SIZE_MAP: Record<
 };
 
 /**
- * VendeMás brand logo – text + optional shop icon.
- * Colors pulled from Tailwind tokens: secondary (text), primary ($), tertiary (icon).
+ * VendeMás brand logo – text + optional shop icon
+ *
+ * Features:
+ * - Responsive variants: V$ (compact) and VendeMá$ (full branding)
+ * - Navbar-optimized sizing with consistent 42px container height
+ * - Card styling with 14px border radius and proper padding
+ * - Dark mode support with secondary background and proper text colors
+ * - CSS-based responsive behavior for screen size adaptation
+ * - Link wrapper option for navigation usage
+ *
+ * Sizing:
+ * - navbar-sm: 24px font size for mobile/medium screens
+ * - navbar-md: 26px font size for large screens
+ * - Container: Always 42px height with flex centering
+ *
+ * Responsive Behavior:
+ * - Mobile/Medium: Shows V$ when isSmall=true, VendeMá$ when isSmall=false
+ * - Large screens: Always shows VendeMá$ regardless of isSmall prop
+ * - Uses CSS classes for responsive visibility control
+ *
+ * Colors (from Tailwind tokens):
+ * - V: tertiary-500 (orange)
+ * - endeMá: secondary-500 (navy), white in dark mode
+ * - $: primary-500 (green)
  */
 export function VendeMasLogo({
   size = 'md',

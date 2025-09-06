@@ -6,7 +6,7 @@ import CTASection from './CTASection';
 import { useAnalytics } from '../../hooks/useAnalytics';
 
 /**
- * ValueProps Component
+ * ValueProps Component - Core value propositions with scroll-triggered animations
  *
  * Displays the core value propositions of VendeMás in an accessible,
  * conversion-optimized grid layout with scroll-triggered animations. Each card highlights a key benefit
@@ -17,11 +17,13 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Staggered card entrance with subtle slide-in and fade effects
  * - Respects user's motion preferences (prefers-reduced-motion)
  * - One-time animation trigger to prevent re-animations
+ * - Smooth transitions with proper timing and easing
  *
  * Mobile Optimization:
  * - Sticky CTA button for mobile screens to ensure conversion opportunity
  * - Responsive design with mobile-first approach
  * - Touch-friendly button sizing and spacing
+ * - Optimized card layout for different screen sizes
  *
  * Accessibility Features:
  * - Semantic HTML with proper ARIA labels and descriptions
@@ -30,6 +32,16 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Focus management with visible indicators
  * - Mobile accessibility with proper touch targets
  * - Dark mode support for all visual elements
+ *
+ * Value Propositions:
+ * - TrendingUp: Sales growth and performance metrics
+ * - Brain: AI-powered features and automation
+ * - ShieldCheck: Security and reliability guarantees
+ * - Smartphone: Mobile-first design and accessibility
+ *
+ * Components Used:
+ * - CTASection: Call-to-action section with primary buttons
+ * - useAnalytics: Analytics tracking for user interactions
  * - Animation respects accessibility preferences
  */
 export default function ValueProps(): React.JSX.Element {

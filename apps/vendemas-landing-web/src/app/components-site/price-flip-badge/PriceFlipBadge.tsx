@@ -122,8 +122,8 @@ export default function PriceFlipBadge({
           transition-all duration-300
           ${
             variant === 'pro'
-              ? 'bg-secondary-500 text-white shadow' // Pro plan: secondary color
-              : 'bg-tertiary-500 text-white shadow' // Free plan: tertiary color
+              ? 'bg-tertiary-500 text-secondary-700 shadow !font-bold' // Pro plan: secondary color
+              : 'bg-secondary-500 text-white shadow' // Free plan: tertiary color
           }
         `}
       >

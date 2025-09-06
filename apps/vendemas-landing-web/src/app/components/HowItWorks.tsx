@@ -7,7 +7,7 @@ import SecondaryCTA from './SecondaryCTA';
 import { useAnalytics } from '../../hooks/useAnalytics';
 
 /**
- * HowItWorks Component
+ * HowItWorks Component - Step-by-step guide with cyclic animation
  *
  * Displays a step-by-step guide showing how VendeMás works with an engaging
  * cyclic animation that highlights each step in sequence. Features a modern
@@ -28,6 +28,17 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - 2-second intervals between step changes
  * - Smooth 500ms transitions for all animated elements
  * - Active step gets secondary color treatment and enhanced styling
+ * - Respects user's motion preferences for accessibility
+ *
+ * Steps:
+ * - Step 1: Download app (Smartphone icon)
+ * - Step 2: Generate QR code (QrCode icon)
+ * - Step 3: Track sales (TrendingUp icon)
+ *
+ * Components Used:
+ * - CTASection: Call-to-action section with primary buttons
+ * - SecondaryCTA: Additional call-to-action elements
+ * - useAnalytics: Analytics tracking for user interactions
  *
  * Accessibility:
  * - Semantic HTML structure with proper ARIA labels

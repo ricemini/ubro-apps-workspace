@@ -18,6 +18,7 @@ import SecondaryCTA from '../components/SecondaryCTA';
  * - SEO: structured data for ratings and search engine optimization
  * - Dynamic PriceFlipBadge positioning synchronized with navbar scroll behavior
  * - Interactive elements with proper hover states and focus management
+ * - Trust indicators: rating display, active businesses count, CoDi certification
  *
  * Scroll Behavior:
  * - At top: PriceFlipBadge positioned at top-left for prominent visibility
@@ -28,6 +29,14 @@ import SecondaryCTA from '../components/SecondaryCTA';
  * - Mobile-first approach with progressive enhancement
  * - Optimized spacing and typography across all breakpoints
  * - Consistent visual hierarchy maintained across screen sizes
+ * - Trust strip with risk reducers for conversion optimization
+ *
+ * Components Used:
+ * - HeroBackground: Animated background with gradient effects
+ * - TrustStrip: Social proof and trust indicators
+ * - PriceFlipBadge: Dynamic pricing display with scroll behavior
+ * - SecondaryCTA: Additional call-to-action elements
+ * - AggregateRatingJsonLd: SEO structured data for ratings
  */
 export default function Hero(): React.JSX.Element {
   // State for detecting scroll position to adjust PriceFlipBadge positioning
