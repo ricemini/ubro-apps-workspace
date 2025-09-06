@@ -212,10 +212,10 @@ export default function Example(): React.JSX.Element {
         {/* Desktop navigation - full navigation menus for medium+ screens */}
         {/* Responsive behavior: hidden on mobile, visible on medium+ screens */}
         {/* Layout strategy: flex-1 + justify-center to distribute navigation items evenly */}
-        {/* Gap spacing: compact on medium (16px), spacious on large (48px) for optimal layout */}
+        {/* Gap spacing: compact on medium (16px), spacious on large (16px) for optimal layout */}
         <PopoverGroup className='hidden md:flex md:flex-1 md:justify-center lg:flex-1 lg:justify-center'>
           {/* Navigation container with single card styling */}
-          <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-6'>
+          <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-4'>
             {/* Products dropdown with mega menu */}
             <Popover>
               <PopoverButton
@@ -335,9 +335,9 @@ export default function Example(): React.JSX.Element {
 
         {/* Right-side section: theme toggle, CTA button, and login link */}
         {/* Visibility: hidden on mobile, visible on medium+ screens */}
-        {/* Layout: horizontal flex with consistent 16px gaps between elements */}
+        {/* Layout: horizontal flex with consistent 8px gaps between elements */}
         {/* Alignment: vertically centered with the navigation items */}
-        <div className='hidden md:flex md:items-center md:gap-4 lg:items-center lg:gap-4'>
+        <div className='hidden md:flex md:items-center md:gap-2 lg:items-center lg:gap-2'>
           {/* Theme toggle component for light/dark mode switching */}
           {/* Compact mode on medium screens (md), normal mode on large screens (lg+) */}
           <div className='md:block lg:hidden'>

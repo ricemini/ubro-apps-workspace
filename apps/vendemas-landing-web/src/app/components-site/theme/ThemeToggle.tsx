@@ -61,7 +61,14 @@ export default function ThemeToggle({
         {/* Compact mode - single button */}
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className='flex h-8 w-8 items-center justify-center card-border !rounded-[14px] border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 hover:bg-secondary-100 dark:hover:bg-white dark:hover:text-secondary-500'
+          className='flex items-center justify-center card-border !rounded-[14px] border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 hover:bg-secondary-100 dark:hover:bg-white dark:hover:text-secondary-500'
+          style={{
+            height: '42px',
+            width: '42px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
           aria-label={`Cambiar tema (actual: ${currentTheme?.label})`}
           aria-expanded={isDropdownOpen}
           aria-haspopup='true'
