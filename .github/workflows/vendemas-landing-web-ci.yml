@@ -360,10 +360,8 @@ jobs:
             exit 1
           fi
 
-      - name: Install Vercel CLI and jq
-        run: |
-          npm install -g vercel@latest
-          sudo apt-get update && sudo apt-get install -y jq
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
 
       - name: Deploy to Vercel
         id: deploy
@@ -374,22 +372,28 @@ jobs:
           # Use production deployment for main branch, preview for feature branches
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "📦 Deploying to production..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt --json)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt 2>&1)
           else
             echo "🔍 Deploying preview for feature branch..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes --prebuilt --json)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes --prebuilt 2>&1)
           fi
 
           echo "📄 Vercel deployment output:"
           echo "$DEPLOYMENT_OUTPUT"
 
-          # Extract URL from JSON output
-          DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | jq -r '.url // empty')
+          # Extract URL from the output using regex (since --json is not supported)
+          DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*\.vercel\.app' | head -1)
 
-          # Fallback: try to extract URL from non-JSON output if JSON parsing failed
-          if [ -z "$DEPLOYMENT_URL" ] || [ "$DEPLOYMENT_URL" = "null" ]; then
-            echo "⚠️ JSON parsing failed, trying fallback method..."
-            DEPLOYMENT_URL=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt | grep -o 'https://[^[:space:]]*' | head -1)
+          # Alternative extraction methods if the first one fails
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "⚠️ First extraction method failed, trying alternative..."
+            DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*' | grep -v 'vercel.com' | head -1)
+          fi
+
+          # Try to extract from any URL pattern
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "⚠️ Alternative extraction failed, trying broader pattern..."
+            DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -oE 'https?://[^[:space:]]+' | head -1)
           fi
 
           if [ -n "$DEPLOYMENT_URL" ] && [ "$DEPLOYMENT_URL" != "null" ]; then
@@ -398,6 +402,8 @@ jobs:
             echo "✅ Deployment URL: $DEPLOYMENT_URL"
           else
             echo "❌ Failed to extract deployment URL"
+            echo "📄 Full output for debugging:"
+            echo "$DEPLOYMENT_OUTPUT"
             echo "url=" >> $GITHUB_OUTPUT
             echo "preview-url=" >> $GITHUB_OUTPUT
             exit 1
