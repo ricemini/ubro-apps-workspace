@@ -5,10 +5,10 @@ import CTASection from './CTASection';
 
 // Mock the ArrowRight icon from lucide-react
 vi.mock('lucide-react', () => ({
-  ArrowRight: ({ className, ...props }: any): React.JSX.Element => (
+  ArrowRight: (props: any): React.JSX.Element => (
     <svg
       data-testid='arrow-right-icon'
-      className={className}
+      className={props.className}
       aria-hidden='true'
       {...props}
       viewBox='0 0 24 24'
@@ -21,7 +21,7 @@ vi.mock('lucide-react', () => ({
 describe('CTASection', () => {
   const mockTrackCTAClick = vi.fn() as any;
 
-  beforeEach((): void => {
+  beforeEach(() => {
     vi.clearAllMocks();
   });
 
@@ -219,7 +219,7 @@ describe('CTASection', () => {
       });
 
       expect(desktopCTA.className).toContain('group');
-      expect(desktopCTA.className).toContain('rounded-full');
+      expect(desktopCTA.className).toContain('rounded-[14px]');
       expect(desktopCTA.className).toContain('bg-gradient-to-r');
       expect(desktopCTA.className).toContain('from-secondary-500');
       expect(desktopCTA.className).toContain('to-secondary-600');

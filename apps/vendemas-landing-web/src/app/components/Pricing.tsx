@@ -161,7 +161,7 @@ export default function Pricing() {
 
                 {/* CTA Button */}
                 <button
-                  className={`w-full font-semibold px-6 py-4 rounded-xl transition-all duration-200 btn-focus ${
+                  className={`w-full card-border !rounded-[14px] font-semibold px-6 py-4 transition-all duration-200 btn-focus ${
                     plan.ctaStyle === 'primary'
                       ? 'bg-primary-500 hover:bg-primary-600 text-white'
                       : 'border-2 border-primary-500 text-primary-500 hover:bg-primary-50'

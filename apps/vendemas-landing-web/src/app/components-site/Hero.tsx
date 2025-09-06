@@ -18,6 +18,7 @@ import SecondaryCTA from '../components/SecondaryCTA';
  * - SEO: structured data for ratings and search engine optimization
  * - Dynamic PriceFlipBadge positioning synchronized with navbar scroll behavior
  * - Interactive elements with proper hover states and focus management
+ * - Trust indicators: rating display, active businesses count, CoDi certification
  *
  * Scroll Behavior:
  * - At top: PriceFlipBadge positioned at top-left for prominent visibility
@@ -28,6 +29,14 @@ import SecondaryCTA from '../components/SecondaryCTA';
  * - Mobile-first approach with progressive enhancement
  * - Optimized spacing and typography across all breakpoints
  * - Consistent visual hierarchy maintained across screen sizes
+ * - Trust strip with risk reducers for conversion optimization
+ *
+ * Components Used:
+ * - HeroBackground: Animated background with gradient effects
+ * - TrustStrip: Social proof and trust indicators
+ * - PriceFlipBadge: Dynamic pricing display with scroll behavior
+ * - SecondaryCTA: Additional call-to-action elements
+ * - AggregateRatingJsonLd: SEO structured data for ratings
  */
 export default function Hero(): React.JSX.Element {
   // State for detecting scroll position to adjust PriceFlipBadge positioning
@@ -76,7 +85,7 @@ export default function Hero(): React.JSX.Element {
       {/* - Horizontal padding: responsive from 24px on mobile to 48px on large screens */}
       {/* - Vertical padding: responsive top padding, bottom padding prevents badge overlap */}
       <div
-        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-12 pb-8 lg:pb-16'
+        className='mx-auto max-w-7xl px-6 sm:pt-2 md:pt-4 lg:pt-24 pb-8 lg:pb-16'
         id='main-content'
         tabIndex={-1}
         role='main'
@@ -88,16 +97,17 @@ export default function Hero(): React.JSX.Element {
           {/* LEFT COLUMN: Main copy and CTAs */}
           <div className='relative z-20 mt-24'>
             {/* Primary headline with gradient text effect */}
-            <h1 className='font-display text-display text-5xl md:text-6xl leading-tight text-secondary-500'>
-              <span>Todo tu negocio, </span>
+            <h1 className='font-display text-display text-5xl md:text-6xl leading-tight'>
+              <span className='text-secondary-500'>Todo tu negocio, </span>
+              <span className='text-secondary-500'>impulsado </span>
               <span
                 className='
-                  bg-gradient-to-r from-secondary-700 via-secondary-600 via-primary-600 to-tertiary-500
+                  bg-gradient-to-r from-secondary-500 via-secondary-600 via-primary-600 to-tertiary-500
                   bg-clip-text text-transparent
                   supports-[color-contrast(high)]:bg-secondary-700 supports-[color-contrast(high)]:bg-clip-text supports-[color-contrast(high)]:text-transparent
                 '
               >
-                impulsado por IA
+                por IA
               </span>
             </h1>
 
@@ -126,7 +136,7 @@ export default function Hero(): React.JSX.Element {
               {/* Primary CTA: Sign up button with pulsing animation */}
               <a
                 href='/signup'
-                className='rounded-lg bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 animate-pulse-custom'
+                className='card-border !rounded-[14px] bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom'
                 data-analytics='cta_primary_hero'
                 role='button'
                 aria-describedby='cta-description'
@@ -141,7 +151,7 @@ export default function Hero(): React.JSX.Element {
               {/* Secondary CTA: Learn more link with hover effects */}
               <SecondaryCTA
                 text='Conoce todas las herramientas'
-                url='/caracteristicas'
+                url='/funciones'
                 description='Enlace para ver todas las características y herramientas de VendeMás'
               />
             </div>

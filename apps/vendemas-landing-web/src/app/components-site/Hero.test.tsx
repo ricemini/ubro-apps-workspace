@@ -5,22 +5,30 @@ import Hero from './Hero';
 
 // Mock child components to isolate Hero component testing
 vi.mock('./HeroBackground', () => ({
-  default: () => <div data-testid='hero-background'>Hero Background</div>,
+  default: (): React.JSX.Element => (
+    <div data-testid='hero-background'>Hero Background</div>
+  ),
 }));
 
 vi.mock('./trust/TrustStrip', () => ({
-  default: () => <div data-testid='trust-strip'>Trust Strip</div>,
-  RiskReducers: () => <div data-testid='risk-reducers'>Risk Reducers</div>,
+  default: (): React.JSX.Element => (
+    <div data-testid='trust-strip'>Trust Strip</div>
+  ),
+  RiskReducers: (): React.JSX.Element => (
+    <div data-testid='risk-reducers'>Risk Reducers</div>
+  ),
 }));
 
 vi.mock('./seo/AggregateRatingJsonLd', () => ({
-  default: () => (
+  default: (): React.JSX.Element => (
     <div data-testid='aggregate-rating-json-ld'>Aggregate Rating JSON-LD</div>
   ),
 }));
 
 vi.mock('./price-flip-badge/PriceFlipBadge', () => ({
-  default: () => <div data-testid='price-flip-badge'>Price Flip Badge</div>,
+  default: (): React.JSX.Element => (
+    <div data-testid='price-flip-badge'>Price Flip Badge</div>
+  ),
 }));
 
 // Mock scroll event listeners
@@ -45,24 +53,24 @@ Object.defineProperty(window, 'scrollY', {
 });
 
 describe('Hero', () => {
-  beforeEach(() => {
+  beforeEach((): void => {
     vi.clearAllMocks();
     mockScrollY.mockReturnValue(0);
   });
 
-  afterEach(() => {
+  afterEach((): void => {
     vi.clearAllMocks();
   });
 
   describe('Core Rendering', () => {
-    it('renders the main hero section', () => {
+    it('renders the main hero section', (): void => {
       render(<Hero />);
 
       expect(screen.getByRole('banner')).toBeTruthy();
       expect(screen.getByRole('main')).toBeTruthy();
     });
 
-    it('renders all child components', () => {
+    it('renders all child components', (): void => {
       render(<Hero />);
 
       expect(screen.getByTestId('hero-background')).toBeTruthy();
@@ -72,15 +80,18 @@ describe('Hero', () => {
       expect(screen.getByTestId('aggregate-rating-json-ld')).toBeTruthy();
     });
 
-    it('renders the main headline', () => {
+    it('renders the main headline', (): void => {
       render(<Hero />);
 
       // The text is split across multiple spans, so we need to check for partial matches
       expect(screen.getByText(/Todo tu negocio/)).toBeTruthy();
-      expect(screen.getByText(/impulsado por IA/)).toBeTruthy();
+      // Check that the headline contains both parts of the text
+      const headline = screen.getByRole('heading', { level: 1 });
+      expect(headline.textContent).toContain('impulsado');
+      expect(headline.textContent).toContain('por IA');
     });
 
-    it('renders subtitle and description', () => {
+    it('renders subtitle and description', (): void => {
       render(<Hero />);
 
       expect(screen.getByText('Vende más, sin complicarte.')).toBeTruthy();
@@ -89,7 +100,7 @@ describe('Hero', () => {
   });
 
   describe('Call-to-Action Buttons', () => {
-    it('renders primary CTA button', () => {
+    it('renders primary CTA button', (): void => {
       render(<Hero />);
 
       const primaryCTA = screen.getByText('Comenzar gratis');
@@ -97,17 +108,17 @@ describe('Hero', () => {
       expect(primaryCTA.closest('a')?.getAttribute('href')).toBe('/signup');
     });
 
-    it('renders secondary CTA link', () => {
+    it('renders secondary CTA link', (): void => {
       render(<Hero />);
 
       const secondaryCTA = screen.getByText('Conoce todas las herramientas');
       expect(secondaryCTA).toBeTruthy();
       expect(secondaryCTA.closest('a')?.getAttribute('href')).toBe(
-        '/caracteristicas'
+        '/funciones'
       );
     });
 
-    it('renders chevron icon', () => {
+    it('renders chevron icon', (): void => {
       render(<Hero />);
 
       const chevron = document.querySelector('svg[aria-hidden="true"]');
@@ -116,7 +127,7 @@ describe('Hero', () => {
   });
 
   describe('Accessibility', () => {
-    it('provides skip link for keyboard navigation', () => {
+    it('provides skip link for keyboard navigation', (): void => {
       render(<Hero />);
 
       const skipLink = screen.getByText('Saltar al contenido principal');
@@ -124,7 +135,7 @@ describe('Hero', () => {
       expect(skipLink.closest('a')?.getAttribute('href')).toBe('#main-content');
     });
 
-    it('has proper ARIA labels', () => {
+    it('has proper ARIA labels', (): void => {
       render(<Hero />);
 
       expect(screen.getByLabelText('Acciones principales')).toBeTruthy();
@@ -133,7 +144,7 @@ describe('Hero', () => {
       ).toBeTruthy();
     });
 
-    it('has proper screen reader descriptions', () => {
+    it('has proper screen reader descriptions', (): void => {
       render(<Hero />);
 
       expect(
@@ -146,7 +157,7 @@ describe('Hero', () => {
   });
 
   describe('Scroll Behavior', () => {
-    it('sets up scroll event listener on mount', () => {
+    it('sets up scroll event listener on mount', (): void => {
       render(<Hero />);
 
       expect(mockAddEventListener).toHaveBeenCalledWith(
@@ -155,7 +166,7 @@ describe('Hero', () => {
       );
     });
 
-    it('removes scroll event listener on unmount', () => {
+    it('removes scroll event listener on unmount', (): void => {
       const { unmount } = render(<Hero />);
 
       unmount();
@@ -168,14 +179,14 @@ describe('Hero', () => {
   });
 
   describe('Responsive Design', () => {
-    it('applies responsive grid layout', () => {
+    it('applies responsive grid layout', (): void => {
       render(<Hero />);
 
       const gridContainer = screen.getByRole('main').querySelector('.grid');
       expect(gridContainer).toBeTruthy();
     });
 
-    it('uses responsive typography', () => {
+    it('uses responsive typography', (): void => {
       render(<Hero />);
 
       // The text is split across multiple spans, so we need to use a more flexible approach
@@ -186,14 +197,14 @@ describe('Hero', () => {
   });
 
   describe('Hero Image', () => {
-    it('renders hero image placeholder', () => {
+    it('renders hero image placeholder', (): void => {
       render(<Hero />);
 
       expect(screen.getByRole('img')).toBeTruthy();
       expect(screen.getByText('Hero Image Placeholder')).toBeTruthy();
     });
 
-    it('has proper image description', () => {
+    it('has proper image description', (): void => {
       render(<Hero />);
 
       expect(
@@ -203,13 +214,13 @@ describe('Hero', () => {
   });
 
   describe('SEO and Structured Data', () => {
-    it('renders aggregate rating JSON-LD', () => {
+    it('renders aggregate rating JSON-LD', (): void => {
       render(<Hero />);
 
       expect(screen.getByTestId('aggregate-rating-json-ld')).toBeTruthy();
     });
 
-    it('has proper main content ID', () => {
+    it('has proper main content ID', (): void => {
       render(<Hero />);
 
       const mainContent = screen.getByRole('main');
@@ -218,7 +229,7 @@ describe('Hero', () => {
   });
 
   describe('Component Integration', () => {
-    it('integrates all child components without conflicts', () => {
+    it('integrates all child components without conflicts', (): void => {
       render(<Hero />);
 
       // All child components should render without errors
@@ -231,7 +242,7 @@ describe('Hero', () => {
   });
 
   describe('Edge Cases', () => {
-    it('handles scroll events safely', () => {
+    it('handles scroll events safely', (): void => {
       render(<Hero />);
 
       // Component should render without throwing errors

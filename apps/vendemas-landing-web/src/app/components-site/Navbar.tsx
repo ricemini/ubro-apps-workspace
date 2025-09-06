@@ -1,5 +1,30 @@
 'use client';
 
+/**
+ * Navbar Component - Main navigation header with responsive design
+ *
+ * Features:
+ * - Responsive layout: hamburger menu on mobile, full navigation on desktop
+ * - Logo with responsive variants: V$ on mobile/medium, VendeMá$ on large screens
+ * - Theme toggle with compact and full modes based on screen size
+ * - Desktop navigation with mega menu dropdown for "Herramientas"
+ * - Mobile menu with slide-in panel and focus trap
+ * - Consistent 42px height for all interactive elements
+ * - Card-based styling with 14px border radius throughout
+ * - Accessibility: ARIA labels, keyboard navigation, screen reader support
+ *
+ * Responsive Behavior:
+ * - Mobile (< md): Hamburger menu, compact logo, hidden when menu open
+ * - Medium (md-lg): Compact theme toggle, V$ logo, full navigation
+ * - Large (lg+): Full theme toggle, VendeMá$ logo, full navigation
+ *
+ * Styling:
+ * - All buttons: 42px height with card-border and 14px border radius
+ * - Logo: navbar-optimized sizing with consistent 42px container height
+ * - Gaps: 8px between theme toggle and buttons, 16px between nav items
+ * - Dark mode: Full support with proper contrast and theming
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
@@ -33,6 +58,7 @@ import FocusTrap from './accessibility/FocusTrap';
 /**
  * Product features data for the dropdown mega menu
  * Each product represents a key feature of the VendeMás platform
+ * Used in the "Herramientas" dropdown navigation
  */
 const products = [
   {
@@ -93,13 +119,9 @@ const callsToAction = [
  * - After 10px scroll: fixed positioning with shadow, small logo on large screens
  * - Smooth transitions for all state changes
  */
-export default function Example() {
+export default function Example(): React.JSX.Element {
   // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // State for detecting scroll position to adjust logo size and navbar positioning
-  // Triggers after 10px scroll to provide immediate visual feedback
-  const [isScrolled, setIsScrolled] = useState(false);
 
   // State for tracking dropdown menu open state
   const [isProductsOpen, setIsProductsOpen] = useState(false);
@@ -107,24 +129,6 @@ export default function Example() {
   // Refs for focus management
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-
-  // Effect to detect scroll position and update navbar behavior accordingly
-  // - Logo size changes from medium to small on large screens when scrolled
-  // - Navbar becomes sticky (fixed positioning) when scrolled
-  // - Adds shadow effect for visual separation from content below
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      // Threshold of 10px provides immediate feedback without being too sensitive
-      setIsScrolled(scrollTop > 10);
-    };
-
-    // Add scroll listener for real-time updates
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup: remove listener to prevent memory leaks
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Focus management for mobile menu
   useEffect(() => {
@@ -158,21 +162,20 @@ export default function Example() {
 
     if (mobileMenuOpen) {
       document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      return (): void => document.removeEventListener('keydown', handleEscape);
     }
 
     // Return cleanup function even when mobileMenuOpen is false
-    return () => {};
+    return (): void => {
+      // No cleanup needed when mobileMenuOpen is false
+    };
   }, [mobileMenuOpen]);
 
   return (
-    // Main header container with dynamic positioning based on scroll state
-    // - At top: relative positioning for normal document flow
-    // - When scrolled: fixed positioning with shadow for sticky navigation
-    // - Smooth transitions for all state changes (position, shadow, logo size)
-    <header
-      className={`${isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg' : 'relative'} isolate z-10 bg-white dark:bg-gray-950 transition-all duration-200`}
-    >
+    // Main header container with fixed positioning
+    // - Always fixed positioning for consistent sticky navigation
+    // - Transparent background for clean overlay effect
+    <header className='fixed top-0 left-0 right-0 bg-transparent isolate z-10 b-4'>
       {/* Skip link for keyboard navigation - appears only on focus */}
       <a
         href='#main-content'
@@ -190,29 +193,17 @@ export default function Example() {
         aria-label='Global'
         className='mx-auto flex max-w-7xl items-center justify-between px-4 py-2 lg:px-8 lg:py-2'
       >
-        {/* Logo section - responsive sizing with scroll-based dynamic changes */}
+        {/* Logo section - responsive sizing */}
         {/* Flex behavior: none on medium+ to prevent logo from expanding and pushing content */}
         <div className='flex md:flex-none lg:flex-none'>
-          {/* Logo container with smooth transitions for size changes */}
-          <div className='flex md:flex-none lg:flex-none transition-all duration-200'>
-            {/* Mobile logo: small size for compact mobile layout */}
-            <VendeMasLogo size='sm' className='md:hidden' asLink />
-
-            {/* Medium screen logo: extra small size (768px-1023px) for tight spacing */}
-            {/* Prevents overflow issues in the 60px navbar height */}
+          {/* Logo container */}
+          <div className='flex md:flex-none lg:flex-none'>
+            {/* Responsive logo: VendeMá$ on mobile/medium when hamburger visible, V$ on large screens */}
             <VendeMasLogo
-              size='xs'
-              className='hidden md:block lg:hidden'
+              isSmall={false}
+              navbar
               asLink
-            />
-
-            {/* Large screen logo: dynamic sizing based on scroll position */}
-            {/* - At top: medium size for prominent branding */}
-            {/* - When scrolled: small size for compact sticky navigation */}
-            <VendeMasLogo
-              size={isScrolled ? 'sm' : 'md'}
-              className='hidden lg:block'
-              asLink
+              className={mobileMenuOpen ? 'hidden' : ''}
             />
           </div>
         </div>
@@ -225,7 +216,14 @@ export default function Example() {
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
-            className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] text-gray-700 dark:text-gray-400'
+            style={{
+              height: '42px',
+              width: '42px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             aria-expanded={mobileMenuOpen}
             aria-label='Abrir menú de navegación'
             aria-controls='mobile-menu'
@@ -240,136 +238,145 @@ export default function Example() {
         {/* Desktop navigation - full navigation menus for medium+ screens */}
         {/* Responsive behavior: hidden on mobile, visible on medium+ screens */}
         {/* Layout strategy: flex-1 + justify-center to distribute navigation items evenly */}
-        {/* Gap spacing: compact on medium (16px), spacious on large (48px) for optimal layout */}
-        <PopoverGroup className='hidden md:flex md:gap-x-4 md:flex-1 md:justify-center lg:gap-x-12 lg:flex-1 lg:justify-center'>
-          {/* Products dropdown with mega menu */}
-          <Popover>
-            <PopoverButton
-              className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'
-              aria-label='Herramientas dropdown menu'
-              aria-expanded={isProductsOpen}
-              aria-haspopup='true'
-            >
-              Herramientas
-              <ChevronDown
-                aria-hidden='true'
-                className='size-5 flex-none text-gray-400 dark:text-gray-500'
-              />
-            </PopoverButton>
+        {/* Gap spacing: compact on medium (16px), spacious on large (16px) for optimal layout */}
+        <PopoverGroup className='hidden md:flex md:flex-1 md:justify-center lg:flex-1 lg:justify-center'>
+          {/* Navigation container with single card styling */}
+          <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-4'>
+            {/* Products dropdown with mega menu */}
+            <Popover>
+              <PopoverButton
+                className='flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+                aria-label='Herramientas dropdown menu'
+                aria-expanded={isProductsOpen}
+                aria-haspopup='true'
+              >
+                Herramientas
+                <ChevronDown
+                  aria-hidden='true'
+                  className='size-4 flex-none text-gray-400 dark:text-gray-500'
+                />
+              </PopoverButton>
 
-            {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
-            {/* - top-12 (48px): positioned below the 60px navbar */}
-            {/* - inset-x-0: spans full width of viewport for immersive experience */}
-            {/* - Transition classes: smooth enter/exit animations with different durations */}
-            <PopoverPanel
-              transition
-              className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
-              onFocus={() => setIsProductsOpen(true)}
-              onBlur={() => setIsProductsOpen(false)}
-            >
-              {/* Shadow overlay element for visual depth and separation */}
-              {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
-              {/* - Dark mode: no shadow, only ring for subtle separation */}
-              <div
-                aria-hidden='true'
-                className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
-              />
+              {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
+              {/* - top-12 (48px): positioned below the 60px navbar */}
+              {/* - inset-x-0: spans full width of viewport for immersive experience */}
+              {/* - Transition classes: smooth enter/exit animations with different durations */}
+              <PopoverPanel
+                transition
+                className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+                onFocus={() => setIsProductsOpen(true)}
+                onBlur={() => setIsProductsOpen(false)}
+              >
+                {/* Shadow overlay element for visual depth and separation */}
+                {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
+                {/* - Dark mode: no shadow, only ring for subtle separation */}
+                <div
+                  aria-hidden='true'
+                  className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
+                />
 
-              {/* Main dropdown content container */}
-              <div className='relative bg-white dark:bg-gray-950'>
-                {/* Product grid with 4 columns for feature showcase */}
-                <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
-                  {/* Map through products to display feature cards */}
-                  {products.map(item => (
-                    <div
-                      key={item.name}
-                      className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
-                    >
-                      {/* Icon container with hover effects */}
-                      <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
-                        <item.icon
-                          aria-hidden='true'
-                          className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
-                        />
-                      </div>
-
-                      {/* Feature title with full clickable area */}
-                      <a
-                        href={item.href}
-                        className='mt-6 block font-semibold text-gray-900 dark:text-white'
-                        aria-describedby={`${item.name.toLowerCase()}-description`}
+                {/* Main dropdown content container */}
+                <div className='relative bg-white dark:bg-gray-950'>
+                  {/* Product grid with 4 columns for feature showcase */}
+                  <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
+                    {/* Map through products to display feature cards */}
+                    {products.map(item => (
+                      <div
+                        key={item.name}
+                        className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
                       >
-                        {item.name}
-                        <span className='absolute inset-0' />
-                      </a>
-
-                      {/* Feature description */}
-                      <p
-                        id={`${item.name.toLowerCase()}-description`}
-                        className='mt-1 text-gray-600 dark:text-gray-400'
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bottom action section with call-to-action links */}
-                <div className='bg-gray-50 dark:bg-gray-900/50'>
-                  <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-                    {/* Grid layout for action items with dividers */}
-                    <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
-                      {/* Map through call-to-action items */}
-                      {callsToAction.map(item => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                          aria-label={`${item.name} - ${item.href}`}
-                        >
+                        {/* Icon container with hover effects */}
+                        <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                           <item.icon
                             aria-hidden='true'
-                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                            className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
                           />
+                        </div>
+
+                        {/* Feature title with full clickable area */}
+                        <a
+                          href={item.href}
+                          className='mt-6 block font-semibold text-gray-900 dark:text-white'
+                          aria-describedby={`${item.name.toLowerCase()}-description`}
+                        >
                           {item.name}
+                          <span className='absolute inset-0' />
                         </a>
-                      ))}
+
+                        {/* Feature description */}
+                        <p
+                          id={`${item.name.toLowerCase()}-description`}
+                          className='mt-1 text-gray-600 dark:text-gray-400'
+                        >
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom action section with call-to-action links */}
+                  <div className='bg-gray-50 dark:bg-gray-900/50'>
+                    <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+                      {/* Grid layout for action items with dividers */}
+                      <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
+                        {/* Map through call-to-action items */}
+                        {callsToAction.map(item => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
+                            aria-label={`${item.name} - ${item.href}`}
+                          >
+                            <item.icon
+                              aria-hidden='true'
+                              className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                            />
+                            {item.name}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </PopoverPanel>
-          </Popover>
+              </PopoverPanel>
+            </Popover>
 
-          {/* Direct navigation links - visible on medium+ screens */}
-          <a
-            href='/caracteristicas'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            aria-label='Ver características de la plataforma'
-          >
-            Features
-          </a>
-          <a
-            href='/faq'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            aria-label='Preguntas frecuentes'
-          >
-            FAQ
-          </a>
+            {/* Direct navigation links - visible on medium+ screens */}
+            <a
+              href='/funciones'
+              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Ver funciones de la plataforma'
+            >
+              Funciones
+            </a>
+            <a
+              href='/faq'
+              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Preguntas frecuentes'
+            >
+              FAQ
+            </a>
+          </div>
         </PopoverGroup>
 
         {/* Right-side section: theme toggle, CTA button, and login link */}
         {/* Visibility: hidden on mobile, visible on medium+ screens */}
-        {/* Layout: horizontal flex with consistent 16px gaps between elements */}
+        {/* Layout: horizontal flex with consistent 8px gaps between elements */}
         {/* Alignment: vertically centered with the navigation items */}
-        <div className='hidden md:flex md:items-center md:gap-4 lg:items-center lg:gap-4'>
+        <div className='hidden md:flex md:items-center md:gap-2 lg:items-center lg:gap-2'>
           {/* Theme toggle component for light/dark mode switching */}
-          <ThemeToggle />
+          {/* Compact mode on medium screens (md), normal mode on large screens (lg+) */}
+          <div className='md:block lg:hidden'>
+            <ThemeToggle isCompact={true} />
+          </div>
+          <div className='hidden lg:block'>
+            <ThemeToggle isCompact={false} />
+          </div>
 
           {/* Primary call-to-action button */}
           <Link
             href='/signup'
-            className='inline-flex items-center rounded-lg bg-primary-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
             data-analytics='nav_cta_signup'
             aria-label='Comenzar a usar VendeMás gratis'
           >
@@ -379,7 +386,7 @@ export default function Example() {
           {/* Secondary login link */}
           <a
             href='#'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
+            className='inline-flex items-center card-border !rounded-[14px] bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-secondary-800 dark:text-white dark:hover:bg-secondary-700'
             aria-label='Iniciar sesión en VendeMás'
           >
             Log in <span aria-hidden='true'>&rarr;</span>
@@ -406,15 +413,22 @@ export default function Example() {
             className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'
           >
             {/* Header with logo and close button */}
-            <div className='flex -mt-2 justify-between'>
-              {/* Small logo for mobile menu */}
-              <VendeMasLogo size='xs' className='lg:hidden -ml-2' asLink />
+            <div className='flex -mt-3 -mr-0.5 justify-between'>
+              {/* Logo for mobile menu - same size as navbar */}
+              <VendeMasLogo navbar className='lg:hidden -ml-2 -mt-1' asLink />
 
               {/* Close button for mobile menu */}
               <button
                 type='button'
                 onClick={handleMobileMenuClose}
-                className='-mt-1 -mr-4 rounded-md p-2.5 text-gray-700 dark:text-gray-400'
+                className='-mt-1 -mr-4 card-border !rounded-[14px] text-gray-700 dark:text-gray-400'
+                style={{
+                  height: '42px',
+                  width: '42px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 aria-label='Cerrar menú de navegación'
               >
                 <span className='sr-only'>Close menu</span>
@@ -430,7 +444,7 @@ export default function Example() {
                   {/* Primary CTA button with animation */}
                   <Link
                     href='/signup'
-                    className='-mx-3 mb-4 block rounded-lg bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
+                    className='-mx-3 mb-4 block card-border !rounded-[14px] bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
                     data-analytics='nav_cta_signup'
                     aria-label='Comenzar a usar VendeMás gratis'
                   >
@@ -464,11 +478,11 @@ export default function Example() {
 
                   {/* Direct navigation links */}
                   <a
-                    href='/caracteristicas'
+                    href='/funciones'
                     className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Ver características de la plataforma'
+                    aria-label='Ver funciones de la plataforma'
                   >
-                    Features
+                    Funciones
                   </a>
                   <a
                     href='#'
@@ -491,7 +505,7 @@ export default function Example() {
                   {/* Secondary login link */}
                   <a
                     href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 rounded-[14px]'
                     aria-label='Iniciar sesión en VendeMás'
                   >
                     Log in

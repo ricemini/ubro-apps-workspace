@@ -6,7 +6,7 @@ import CTASection from './CTASection';
 import { useAnalytics } from '../../hooks/useAnalytics';
 
 /**
- * ValueProps Component
+ * ValueProps Component - Core value propositions with scroll-triggered animations
  *
  * Displays the core value propositions of VendeMás in an accessible,
  * conversion-optimized grid layout with scroll-triggered animations. Each card highlights a key benefit
@@ -17,11 +17,13 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Staggered card entrance with subtle slide-in and fade effects
  * - Respects user's motion preferences (prefers-reduced-motion)
  * - One-time animation trigger to prevent re-animations
+ * - Smooth transitions with proper timing and easing
  *
  * Mobile Optimization:
  * - Sticky CTA button for mobile screens to ensure conversion opportunity
  * - Responsive design with mobile-first approach
  * - Touch-friendly button sizing and spacing
+ * - Optimized card layout for different screen sizes
  *
  * Accessibility Features:
  * - Semantic HTML with proper ARIA labels and descriptions
@@ -30,6 +32,16 @@ import { useAnalytics } from '../../hooks/useAnalytics';
  * - Focus management with visible indicators
  * - Mobile accessibility with proper touch targets
  * - Dark mode support for all visual elements
+ *
+ * Value Propositions:
+ * - TrendingUp: Sales growth and performance metrics
+ * - Brain: AI-powered features and automation
+ * - ShieldCheck: Security and reliability guarantees
+ * - Smartphone: Mobile-first design and accessibility
+ *
+ * Components Used:
+ * - CTASection: Call-to-action section with primary buttons
+ * - useAnalytics: Analytics tracking for user interactions
  * - Animation respects accessibility preferences
  */
 export default function ValueProps(): React.JSX.Element {
@@ -142,20 +154,19 @@ export default function ValueProps(): React.JSX.Element {
             <article
               key={index}
               // Comprehensive styling with hover effects, focus states, dark mode, and conditional scroll animations
-              className={`group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-primary-200 hover:bg-gradient-to-br hover:from-white hover:to-primary-50 dark:hover:from-gray-800 dark:hover:to-gray-700 flex flex-col h-full focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-900 ${
+              className={`group bg-white dark:bg-gray-800 p-8 card-border transition-all duration-300 hover:border-primary-200 hover:bg-gradient-to-br hover:from-white hover:to-primary-50 dark:hover:from-gray-800 dark:hover:to-gray-700 flex flex-col h-full focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-900 ${
                 isInView ? 'animate-slide-in-fade' : 'opacity-0 translate-y-3'
               }`}
-              tabIndex={0}
-              role='article'
-              // ARIA attributes for screen reader accessibility
-              aria-labelledby={`title-${index}`}
-              aria-describedby={`desc-${index} stats-${index}`}
-              // Staggered animation timing - only applies when section is in view
               style={{
                 animationDelay: isInView ? `${index * 80}ms` : '0ms',
                 animationDuration: '600ms',
                 animationFillMode: 'both',
               }}
+              tabIndex={0}
+              role='article'
+              // ARIA attributes for screen reader accessibility
+              aria-labelledby={`title-${index}`}
+              aria-describedby={`desc-${index} stats-${index}`}
             >
               {/* Icon Container - Centered with hover effects and accessibility */}
               <div

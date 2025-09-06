@@ -5,15 +5,20 @@ import clsx from 'clsx';
 
 // Remove empty interface declaration
 
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'navbar-sm' | 'navbar-md';
 
-export interface VendeMasLogoProps extends React.HTMLAttributes<any> {
+export interface VendeMasLogoProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   /** Overall scale */
   size?: Size;
   /** Wrap in a link to "/" for nav usage */
   asLink?: boolean;
   /** Override aria-label if needed */
   label?: string;
+  /** Show small V$ icon instead of full VendeMá$ */
+  isSmall?: boolean;
+  /** Use navbar-optimized sizing */
+  navbar?: boolean;
 }
 
 /** Brand tokens (keep in sync with your Tailwind theme) */
@@ -32,42 +37,75 @@ const SIZE_MAP: Record<
   md: { vende: 40, mas: 36, dollar: 56, icon: 48 },
   lg: { vende: 56, mas: 50, dollar: 80, icon: 68 },
   xl: { vende: 72, mas: 64, dollar: 96, icon: 84 },
+  'navbar-sm': { vende: 24, mas: 22, dollar: 24, icon: 24 },
+  'navbar-md': { vende: 26, mas: 24, dollar: 26, icon: 26 },
 };
 
 /**
- * VendeMás brand logo – text + optional shop icon.
- * Colors pulled from Tailwind tokens: secondary (text), primary ($), tertiary (icon).
+ * VendeMás brand logo – text + optional shop icon
+ *
+ * Features:
+ * - Responsive variants: V$ (compact) and VendeMá$ (full branding)
+ * - Navbar-optimized sizing with consistent 42px container height
+ * - Card styling with 14px border radius and proper padding
+ * - Dark mode support with secondary background and proper text colors
+ * - CSS-based responsive behavior for screen size adaptation
+ * - Link wrapper option for navigation usage
+ *
+ * Sizing:
+ * - navbar-sm: 24px font size for mobile/medium screens
+ * - navbar-md: 26px font size for large screens
+ * - Container: Always 42px height with flex centering
+ *
+ * Responsive Behavior:
+ * - Mobile/Medium: Shows V$ when isSmall=true, VendeMá$ when isSmall=false
+ * - Large screens: Always shows VendeMá$ regardless of isSmall prop
+ * - Uses CSS classes for responsive visibility control
+ *
+ * Colors (from Tailwind tokens):
+ * - V: tertiary-500 (orange)
+ * - endeMá: secondary-500 (navy), white in dark mode
+ * - $: primary-500 (green)
  */
 export function VendeMasLogo({
   size = 'md',
   asLink = false,
   label = 'VendeMás — inicio',
+  isSmall = false,
+  navbar = false,
   className,
   ...rest
 }: VendeMasLogoProps): React.JSX.Element {
-  const s = SIZE_MAP[size];
+  // Use navbar-optimized sizing when navbar prop is true
+  const effectiveSize = navbar ? 'navbar-md' : size;
+  const s = SIZE_MAP[effectiveSize];
 
-  // Special layout for xs size
-  if (size === 'xs') {
-    const xsContent = (
-      <div
-        className={clsx(
-          'inline-block select-none leading-none',
-          '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
-          className
-        )}
-        aria-label={label}
-        {...rest}
-      >
-        {/* Single line: V$ */}
+  // Responsive logic: use isSmall prop, but on large screens always show full logo
+  const shouldShowSmall = isSmall;
+
+  // Always use card layout with VendeMá$ or V$ variants
+  const cardContent = (
+    <div
+      className={clsx(
+        'inline-block select-none leading-none',
+        '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
+        'bg-white dark:bg-secondary-800 card-border !rounded-[14px] px-4 z-50'
+      )}
+      style={{ height: '42px', display: 'flex', alignItems: 'center' }}
+      aria-label={label}
+      {...rest}
+    >
+      {/* V$ layout - shown when small, hidden on large screens */}
+      <div className={shouldShowSmall ? 'block lg:hidden' : 'hidden'}>
         <span
           className={clsx(
             'font-avenir-next-rounded font-extrabold',
             COLORS.tertiary
           )}
           style={{
-            fontSize: `${SIZE_MAP.sm.vende}px`,
+            fontSize: `${s.vende}px`,
             letterSpacing: '-0.02em',
+            lineHeight: 1,
           }}
         >
           V
@@ -76,54 +114,41 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${SIZE_MAP.sm.vende * 1.4}px`,
-            lineHeight: 0.9,
+            fontSize: `${s.vende}px`,
+            lineHeight: 1,
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
           }}
         >
           $
         </span>
       </div>
-    );
 
-    if (asLink) {
-      return (
-        <a href='/' aria-label={label} className='inline-block'>
-          {xsContent}
-        </a>
-      );
-    }
-    return xsContent;
-  }
-
-  // Layout for sm size (single line)
-  if (size === 'sm') {
-    const smContent = (
-      <div
-        className={clsx(
-          'inline-block select-none leading-none',
-          '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
-          className
-        )}
-        aria-label={label}
-        {...rest}
-      >
-        {/* Single line: VendeMá$ */}
+      {/* VendeMá$ layout - shown when not small OR on large screens */}
+      <div className={!shouldShowSmall ? 'block' : 'hidden lg:block'}>
         <span
           className={clsx(
             'font-avenir-next-rounded font-extrabold',
             COLORS.tertiary
           )}
-          style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+          style={{
+            fontSize: `${s.vende}px`,
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+          }}
         >
           V
         </span>
         <span
           className={clsx(
             'font-avenir-next-rounded font-extrabold',
-            COLORS.secondary
+            COLORS.secondary,
+            'dark:text-white'
           )}
-          style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
+          style={{
+            fontSize: `${s.vende}px`,
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+          }}
         >
           endeMá
         </span>
@@ -131,86 +156,8 @@ export function VendeMasLogo({
           aria-hidden
           className={clsx('font-quicksand font-bold italic', COLORS.primary)}
           style={{
-            fontSize: `${s.vende * 1.4}px`,
-            lineHeight: 0.9,
-            textShadow: '0 1px 0 rgba(0,0,0,0.15)',
-          }}
-        >
-          $
-        </span>
-      </div>
-    );
-
-    if (asLink) {
-      return (
-        <a href='/' aria-label={label} className='inline-block'>
-          {smContent}
-        </a>
-      );
-    }
-    return smContent;
-  }
-
-  // Original layout for other sizes (md, lg, xl)
-  const content = (
-    <div
-      className={clsx(
-        'relative inline-block select-none leading-none',
-        // helps crispness on retina
-        '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
-        className
-      )}
-      aria-label={label}
-      {...rest}
-    >
-      {/* Text content */}
-      <div className='flex items-end w-full relative z-10 px-10'>
-        {/* First column: Vende and Más stacked vertically */}
-        <div className='flex flex-col flex-1'>
-          <div className='flex'>
-            <span
-              className={clsx(
-                'font-avenir-next-rounded font-extrabold',
-                COLORS.tertiary
-              )}
-              style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
-            >
-              V
-            </span>
-            <span
-              className={clsx(
-                'font-avenir-next-rounded font-extrabold',
-                COLORS.secondary
-              )}
-              style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
-            >
-              ende
-            </span>
-          </div>
-          <div className='flex justify-end'>
-            <span
-              className={clsx(
-                'block font-avenir-next-rounded font-extrabold',
-                COLORS.secondary
-              )}
-              style={{
-                fontSize: `${s.mas}px`,
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Má
-            </span>
-          </div>
-        </div>
-
-        {/* Second column: Green $ - full height */}
-        <span
-          aria-hidden
-          className={clsx('font-quicksand font-bold italic', COLORS.primary)}
-          style={{
-            fontSize: `${s.vende * 1.4}px`,
-            lineHeight: 0.9,
-            // tiny shadow for edge crispness on light BGs
+            fontSize: `${s.vende}px`,
+            lineHeight: 1,
             textShadow: '0 1px 0 rgba(0,0,0,0.15)',
           }}
         >
@@ -221,14 +168,17 @@ export function VendeMasLogo({
   );
 
   if (asLink) {
-    // Lazy import avoids Next.js "use client" constraints in some layouts
     return (
-      <a href='/' aria-label={label} className='inline-block'>
-        {content}
+      <a
+        href='/'
+        aria-label={label}
+        className={clsx('inline-block', className)}
+      >
+        {cardContent}
       </a>
     );
   }
-  return content;
+  return <div className={className}>{cardContent}</div>;
 }
 
 export default VendeMasLogo;

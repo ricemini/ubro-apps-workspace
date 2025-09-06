@@ -58,7 +58,7 @@ export default function CTASection({
       <div className='block sm:hidden fixed bottom-4 left-4 right-4 z-50'>
         <button
           type='button'
-          className='w-full bg-gradient-primary text-white font-semibold px-6 py-4 rounded-xl shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
+          className='w-full card-border !rounded-[14px] bg-gradient-primary text-white font-semibold px-6 py-4 shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
           aria-label='Comenzar a usar VendeMás de forma gratuita'
           onClick={() => trackCTAClick('primary', 'value_props_mobile_cta')}
         >
@@ -72,7 +72,7 @@ export default function CTASection({
         {/* Quick start button with hover animations and accessibility */}
         <button
           type='button'
-          className='group rounded-full bg-gradient-to-r from-secondary-500 to-secondary-600 dark:bg-gradient-primary px-8 py-4 text-base font-semibold text-white shadow-xs inset-ring inset-ring-secondary-300 dark:inset-ring-primary-300 hover:opacity-90 flex items-center gap-3 mx-auto transition-all duration-200 animate-pulse-custom'
+          className='group rounded-[14px] bg-gradient-to-r from-secondary-500 to-secondary-600 dark:bg-gradient-primary px-8 py-4 text-base font-semibold text-white shadow-xs inset-ring inset-ring-secondary-300 dark:inset-ring-primary-300 hover:opacity-90 flex items-center gap-3 mx-auto transition-all duration-200 animate-pulse-custom'
           aria-label='Comenzar a usar VendeMás de forma gratuita en minutos'
           onClick={() => trackCTAClick('secondary', 'value_props_quick_start')}
         >

@@ -6,9 +6,9 @@ import ValueProps from './ValueProps';
 // Mock IntersectionObserver
 const mockIntersectionObserver = vi.fn();
 mockIntersectionObserver.mockReturnValue({
-  observe: (): void => null,
-  unobserve: (): void => null,
-  disconnect: (): void => null,
+  observe: () => null,
+  unobserve: () => null,
+  disconnect: () => null,
 });
 window.IntersectionObserver = mockIntersectionObserver;
 
@@ -24,8 +24,8 @@ vi.mock('lucide-react', () => ({
   Smartphone: (): React.JSX.Element => (
     <div data-testid='smartphone-icon'>📱</div>
   ),
-  ArrowRight: ({ className }: { className?: string }): React.JSX.Element => (
-    <div data-testid='arrow-right-icon' className={className}>
+  ArrowRight: (props: { className?: string }): React.JSX.Element => (
+    <div data-testid='arrow-right-icon' className={props.className}>
       →
     </div>
   ),
@@ -223,7 +223,7 @@ describe('ValueProps Component', () => {
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
-        expect(card.className).toContain('hover:shadow-xl');
+        expect(card.className).toContain('hover:border-primary-200');
         expect(card.className).toContain('hover:border-primary-200');
       });
     });
@@ -260,7 +260,7 @@ describe('ValueProps Component', () => {
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
         expect(card.className).toContain('dark:bg-gray-800');
-        expect(card.className).toContain('dark:border-gray-700');
+        expect(card.className).toContain('card-border');
       });
     });
   });
@@ -286,7 +286,7 @@ describe('ValueProps Component', () => {
       );
       expect(mobileButton?.className).toContain('w-full');
       expect(mobileButton?.className).toContain('bg-gradient-primary');
-      expect(mobileButton?.className).toContain('rounded-xl');
+      expect(mobileButton?.className).toContain('!rounded-[14px]');
       expect(mobileButton?.className).toContain('shadow-lg');
     });
 

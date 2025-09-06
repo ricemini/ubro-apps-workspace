@@ -5,10 +5,10 @@ import HowItWorks from './HowItWorks';
 
 // Mock the icons from lucide-react
 vi.mock('lucide-react', () => ({
-  Smartphone: ({ className, ...props }: any): React.JSX.Element => (
+  Smartphone: (props: any): React.JSX.Element => (
     <svg
       data-testid='smartphone-icon'
-      className={className}
+      className={props.className}
       aria-hidden='true'
       {...props}
       viewBox='0 0 24 24'
@@ -16,10 +16,10 @@ vi.mock('lucide-react', () => ({
       <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' />
     </svg>
   ),
-  QrCode: ({ className, ...props }: any): React.JSX.Element => (
+  QrCode: (props: any): React.JSX.Element => (
     <svg
       data-testid='qrcode-icon'
-      className={className}
+      className={props.className}
       aria-hidden='true'
       {...props}
       viewBox='0 0 24 24'
@@ -27,10 +27,10 @@ vi.mock('lucide-react', () => ({
       <path d='M3 3h7v7H3V3zm0 11h7v7H3v-7zm11 0h7v7h-7v-7z' />
     </svg>
   ),
-  TrendingUp: ({ className, ...props }: any): React.JSX.Element => (
+  TrendingUp: (props: any): React.JSX.Element => (
     <svg
       data-testid='trending-up-icon'
-      className={className}
+      className={props.className}
       aria-hidden='true'
       {...props}
       viewBox='0 0 24 24'
@@ -87,7 +87,7 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 describe('HowItWorks', () => {
-  beforeEach((): void => {
+  beforeEach(() => {
     vi.clearAllMocks();
     // Default to not preferring reduced motion
     mockMatchMedia.mockReturnValue({
@@ -99,7 +99,7 @@ describe('HowItWorks', () => {
     vi.useFakeTimers();
   });
 
-  afterEach((): void => {
+  afterEach(() => {
     vi.useRealTimers();
   });
 
@@ -476,7 +476,7 @@ describe('HowItWorks', () => {
         .getAllByText(/escanea tu menú/i)[1]
         .closest('.bg-white');
       expect(card?.className).toContain('dark:bg-gray-800');
-      expect(card?.className).toContain('dark:border-gray-700');
+      expect(card?.className).toContain('card-border');
     });
 
     it('applies dark mode classes to animation control button', () => {
