@@ -185,7 +185,7 @@ export default function Example(): React.JSX.Element {
             <VendeMasLogo
               size='xs'
               className='hidden md:block lg:hidden'
-              isSmall={false}
+              isSmall={true}
               asLink
             />
 
@@ -224,121 +224,124 @@ export default function Example(): React.JSX.Element {
         {/* Responsive behavior: hidden on mobile, visible on medium+ screens */}
         {/* Layout strategy: flex-1 + justify-center to distribute navigation items evenly */}
         {/* Gap spacing: compact on medium (16px), spacious on large (48px) for optimal layout */}
-        <PopoverGroup className='hidden md:flex md:gap-x-4 md:flex-1 md:justify-center lg:gap-x-12 lg:flex-1 lg:justify-center'>
-          {/* Products dropdown with mega menu */}
-          <Popover>
-            <PopoverButton
-              className='flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white'
-              aria-label='Herramientas dropdown menu'
-              aria-expanded={isProductsOpen}
-              aria-haspopup='true'
-            >
-              Herramientas
-              <ChevronDown
-                aria-hidden='true'
-                className='size-5 flex-none text-gray-400 dark:text-gray-500'
-              />
-            </PopoverButton>
+        <PopoverGroup className='hidden md:flex md:flex-1 md:justify-center lg:flex-1 lg:justify-center'>
+          {/* Navigation container with single card styling */}
+          <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-6'>
+            {/* Products dropdown with mega menu */}
+            <Popover>
+              <PopoverButton
+                className='flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+                aria-label='Herramientas dropdown menu'
+                aria-expanded={isProductsOpen}
+                aria-haspopup='true'
+              >
+                Herramientas
+                <ChevronDown
+                  aria-hidden='true'
+                  className='size-4 flex-none text-gray-400 dark:text-gray-500'
+                />
+              </PopoverButton>
 
-            {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
-            {/* - top-12 (48px): positioned below the 60px navbar */}
-            {/* - inset-x-0: spans full width of viewport for immersive experience */}
-            {/* - Transition classes: smooth enter/exit animations with different durations */}
-            <PopoverPanel
-              transition
-              className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
-              onFocus={() => setIsProductsOpen(true)}
-              onBlur={() => setIsProductsOpen(false)}
-            >
-              {/* Shadow overlay element for visual depth and separation */}
-              {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
-              {/* - Dark mode: no shadow, only ring for subtle separation */}
-              <div
-                aria-hidden='true'
-                className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
-              />
+              {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
+              {/* - top-12 (48px): positioned below the 60px navbar */}
+              {/* - inset-x-0: spans full width of viewport for immersive experience */}
+              {/* - Transition classes: smooth enter/exit animations with different durations */}
+              <PopoverPanel
+                transition
+                className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+                onFocus={() => setIsProductsOpen(true)}
+                onBlur={() => setIsProductsOpen(false)}
+              >
+                {/* Shadow overlay element for visual depth and separation */}
+                {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
+                {/* - Dark mode: no shadow, only ring for subtle separation */}
+                <div
+                  aria-hidden='true'
+                  className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
+                />
 
-              {/* Main dropdown content container */}
-              <div className='relative bg-white dark:bg-gray-950'>
-                {/* Product grid with 4 columns for feature showcase */}
-                <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
-                  {/* Map through products to display feature cards */}
-                  {products.map(item => (
-                    <div
-                      key={item.name}
-                      className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
-                    >
-                      {/* Icon container with hover effects */}
-                      <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
-                        <item.icon
-                          aria-hidden='true'
-                          className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
-                        />
-                      </div>
-
-                      {/* Feature title with full clickable area */}
-                      <a
-                        href={item.href}
-                        className='mt-6 block font-semibold text-gray-900 dark:text-white'
-                        aria-describedby={`${item.name.toLowerCase()}-description`}
+                {/* Main dropdown content container */}
+                <div className='relative bg-white dark:bg-gray-950'>
+                  {/* Product grid with 4 columns for feature showcase */}
+                  <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
+                    {/* Map through products to display feature cards */}
+                    {products.map(item => (
+                      <div
+                        key={item.name}
+                        className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
                       >
-                        {item.name}
-                        <span className='absolute inset-0' />
-                      </a>
-
-                      {/* Feature description */}
-                      <p
-                        id={`${item.name.toLowerCase()}-description`}
-                        className='mt-1 text-gray-600 dark:text-gray-400'
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bottom action section with call-to-action links */}
-                <div className='bg-gray-50 dark:bg-gray-900/50'>
-                  <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-                    {/* Grid layout for action items with dividers */}
-                    <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
-                      {/* Map through call-to-action items */}
-                      {callsToAction.map(item => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                          aria-label={`${item.name} - ${item.href}`}
-                        >
+                        {/* Icon container with hover effects */}
+                        <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                           <item.icon
                             aria-hidden='true'
-                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                            className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
                           />
+                        </div>
+
+                        {/* Feature title with full clickable area */}
+                        <a
+                          href={item.href}
+                          className='mt-6 block font-semibold text-gray-900 dark:text-white'
+                          aria-describedby={`${item.name.toLowerCase()}-description`}
+                        >
                           {item.name}
+                          <span className='absolute inset-0' />
                         </a>
-                      ))}
+
+                        {/* Feature description */}
+                        <p
+                          id={`${item.name.toLowerCase()}-description`}
+                          className='mt-1 text-gray-600 dark:text-gray-400'
+                        >
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom action section with call-to-action links */}
+                  <div className='bg-gray-50 dark:bg-gray-900/50'>
+                    <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+                      {/* Grid layout for action items with dividers */}
+                      <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
+                        {/* Map through call-to-action items */}
+                        {callsToAction.map(item => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
+                            aria-label={`${item.name} - ${item.href}`}
+                          >
+                            <item.icon
+                              aria-hidden='true'
+                              className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                            />
+                            {item.name}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </PopoverPanel>
-          </Popover>
+              </PopoverPanel>
+            </Popover>
 
-          {/* Direct navigation links - visible on medium+ screens */}
-          <a
-            href='/caracteristicas'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            aria-label='Ver características de la plataforma'
-          >
-            Features
-          </a>
-          <a
-            href='/faq'
-            className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            aria-label='Preguntas frecuentes'
-          >
-            FAQ
-          </a>
+            {/* Direct navigation links - visible on medium+ screens */}
+            <a
+              href='/caracteristicas'
+              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Ver características de la plataforma'
+            >
+              Features
+            </a>
+            <a
+              href='/faq'
+              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Preguntas frecuentes'
+            >
+              FAQ
+            </a>
+          </div>
         </PopoverGroup>
 
         {/* Right-side section: theme toggle, CTA button, and login link */}

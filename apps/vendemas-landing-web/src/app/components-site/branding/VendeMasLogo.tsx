@@ -56,7 +56,7 @@ export function VendeMasLogo({
       className={clsx(
         'inline-block select-none leading-none',
         '[text-rendering:geometricPrecision] [font-smoothing:antialiased]',
-        'bg-white card-border !rounded-[14px] px-4 py-2.5 z-50',
+        'bg-white dark:bg-secondary-800 card-border !rounded-[14px] px-4 py-2.5 z-50',
         className
       )}
       aria-label={label}
@@ -104,7 +104,8 @@ export function VendeMasLogo({
           <span
             className={clsx(
               'font-avenir-next-rounded font-extrabold',
-              COLORS.secondary
+              COLORS.secondary,
+              'dark:text-white'
             )}
             style={{ fontSize: `${s.vende}px`, letterSpacing: '-0.02em' }}
           >
