@@ -319,32 +319,68 @@ jobs:
       - name: Prepare for Vercel
         run: |
           echo "🔧 Preparing for Vercel deployment..."
-
-          # Create a package-lock.json for npm compatibility
-          echo "📦 Creating package-lock.json for Vercel compatibility..."
+          
+          # Create a complete package.json for Vercel deployment
+          echo "📦 Creating complete package.json for Vercel..."
           cd apps/vendemas-landing-web
-
-          # Copy package.json and create a clean npm setup
-          cp package.json package.json.backup
-
-          # Install dependencies with npm to create package-lock.json
-          npm install --package-lock-only
-
+          
+          # Create a comprehensive package.json with all dependencies
+          echo '{
+  "name": "vendemas-landing-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "gtag": "1.0.1",
+    "firebase": "12.2.1",
+    "@next/third-parties": "15.5.2",
+    "@headlessui/react": "^2.0.0",
+    "@heroicons/react": "^2.0.0",
+    "clsx": "^2.0.0",
+    "tailwindcss": "^3.0.0",
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^15.0.0"
+  }
+}' > package.json
+          
+          # Remove pnpm-lock.yaml to force npm usage
+          rm -f pnpm-lock.yaml
+          
+          # Install dependencies with npm
+          echo "📦 Installing dependencies with npm..."
+          npm install
+          
           # Check what's in the app directory
           echo "📁 Available files in apps/vendemas-landing-web/:"
           ls -la
-
+          
           # Ensure we have the necessary files
           if [ ! -f "package.json" ]; then
             echo "❌ package.json not found in app directory"
             exit 1
           fi
-
+          
           if [ ! -d "src" ]; then
             echo "❌ src directory not found in app directory"
             exit 1
           fi
-
+          
           echo "✅ App directory structure looks good"
 
       - name: Install Vercel CLI
