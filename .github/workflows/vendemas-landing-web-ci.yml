@@ -1,8 +1,8 @@
-name: VendeMás Landing Web - CI/CD Pipeline
+name: VendeMás Landing Web - CI/CD Pipeline (Updated)
 
 on:
   push:
-    branches: [main, feature/*]
+    branches: [main, feature/*] # Triggers on main and all feature branches
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/vendemas-shared-design/**'
