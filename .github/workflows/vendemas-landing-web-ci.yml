@@ -35,7 +35,6 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
-  # SETUP & AFFECTED DETECTION
   setup:
     name: Setup & Affected Detection
     runs-on: ubuntu-latest
@@ -108,7 +107,6 @@ jobs:
             echo "Affected projects: $AFFECTED_PROJECTS"
           fi
 
-  # LINT (PARALLEL)
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -159,7 +157,6 @@ jobs:
       - name: Lint vendemas-landing-web
         run: npx nx run vendemas-landing-web:lint
 
-  # TEST (PARALLEL)
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -218,7 +215,6 @@ jobs:
           path: coverage/
           retention-days: 30
 
-  # BUILD (SEQUENTIAL - AFTER LINT & TEST)
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -276,7 +272,6 @@ jobs:
           path: dist/
           retention-days: 7
 
-  # DEPLOY TO VERCEL (SEQUENTIAL - AFTER BUILD)
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
