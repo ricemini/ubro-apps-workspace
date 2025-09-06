@@ -166,7 +166,7 @@ const faqs = [
 export default function FeaturesPage() {
   return (
     <main className='mx-auto max-w-7xl px-6 py-12 space-y-12'>
-      <header className='space-y-4 text-center'>
+      <header className='space-y-6 text-center mt-14'>
         <h1 className='text-display text-4xl sm:text-5xl text-secondary-500'>
           Todas las funciones
         </h1>
@@ -232,7 +232,7 @@ export default function FeaturesPage() {
               className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
             >
               <div className='relative'>
-                <div className='aspect-video bg-gradient-to-br from-primary-100 to-tertiary-100 rounded-2xl shadow-xl flex items-center justify-center'>
+                <div className='aspect-video bg-gradient-to-br from-primary-100 to-tertiary-100 rounded-2xl card-border flex items-center justify-center'>
                   <div className='text-center space-y-3'>
                     <div className='w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto'>
                       <div className='w-8 h-8 bg-primary-500 rounded-lg'></div>
@@ -249,7 +249,7 @@ export default function FeaturesPage() {
       </div>
 
       {/* FAQ Section */}
-      <section className='bg-gray-50 rounded-2xl p-12'>
+      <section className='bg-gray-50 rounded-2xl p-12 card-border'>
         <h2 className='text-display text-3xl text-secondary-500 text-center mb-12'>
           Preguntas frecuentes sobre funciones
         </h2>
@@ -276,7 +276,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className='bg-gradient-primary rounded-2xl p-12 text-center text-white'>
+      <section className='bg-gradient-primary rounded-2xl p-12 text-center text-white card-border'>
         <h2 className='text-display text-3xl font-bold mb-4'>
           ¿Listo para modernizar tu negocio?
         </h2>
