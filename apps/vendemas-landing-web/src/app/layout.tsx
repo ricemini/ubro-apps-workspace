@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from './components-site/theme/ThemeProvider';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import FirebaseAnalytics from './components/FirebaseAnalytics';
+import Navbar from './components-site/Navbar';
 
 export const metadata: Metadata = {
   title: 'VendeMás - POS Móvil para Vendedores Ambulantes | México y LATAM',
@@ -80,7 +81,10 @@ export default function RootLayout({
         <meta name='theme-color' content='#4CAF50' />
       </head>
       <body className='font-body antialiased'>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar />
+          {children}
+        </ThemeProvider>
         {/* Analytics Components */}
         <GoogleAnalytics />
         <FirebaseAnalytics />

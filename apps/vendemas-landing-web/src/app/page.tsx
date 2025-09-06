@@ -1,6 +1,5 @@
 import React from 'react';
 import Hero from './components-site/Hero';
-import Navbar from './components-site/Navbar';
 import ValueProps from './components/ValueProps';
 import HowItWorks from './components/HowItWorks';
 import Pricing from './components/Pricing';
@@ -10,7 +9,6 @@ import Footer from './components/Footer';
 export default function Home(): React.JSX.Element {
   return (
     <>
-      <Navbar />
       <main id='main'>
         {/* Container with gradient for Hero and ValueProps sections only */}
         <div className='relative'>
