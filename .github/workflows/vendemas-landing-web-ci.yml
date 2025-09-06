@@ -320,20 +320,21 @@ jobs:
         run: |
           echo "🔧 Preparing for Vercel deployment..."
 
-          # Change to the app directory for Vercel deployment
-          cd apps/vendemas-landing-web
+          # Create a symlink to node_modules in the app directory
+          echo "🔗 Creating symlink to node_modules..."
+          ln -sf ../../node_modules apps/vendemas-landing-web/node_modules
 
           # Check what's in the app directory
           echo "📁 Available files in apps/vendemas-landing-web/:"
-          ls -la
+          ls -la apps/vendemas-landing-web/
 
           # Ensure we have the necessary files
-          if [ ! -f "package.json" ]; then
+          if [ ! -f "apps/vendemas-landing-web/package.json" ]; then
             echo "❌ package.json not found in app directory"
             exit 1
           fi
 
-          if [ ! -d "src" ]; then
+          if [ ! -d "apps/vendemas-landing-web/src" ]; then
             echo "❌ src directory not found in app directory"
             exit 1
           fi
@@ -349,16 +350,13 @@ jobs:
           # Deploy using Vercel's build process
           echo "🚀 Starting Vercel deployment..."
 
-          # Change to the app directory
-          cd apps/vendemas-landing-web
-
           # Use production deployment for main branch, preview for feature branches
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "📦 Deploying to production..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes 2>&1)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --cwd apps/vendemas-landing-web 2>&1)
           else
             echo "🔍 Deploying preview for feature branch..."
-            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes 2>&1)
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes --cwd apps/vendemas-landing-web 2>&1)
           fi
 
           echo "📄 Vercel deployment output:"
