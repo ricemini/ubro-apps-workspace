@@ -444,7 +444,7 @@ export default function Example(): React.JSX.Element {
                   {/* Primary CTA button with animation */}
                   <Link
                     href='/signup'
-                    className='-mx-3 mb-4 block card-border bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom rounded-[14px]'
+                    className='-mx-3 mb-4 block card-border !rounded-[14px] bg-primary-500 px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-primary-600 transition-colors duration-200 animate-pulse-custom'
                     data-analytics='nav_cta_signup'
                     aria-label='Comenzar a usar VendeMás gratis'
                   >

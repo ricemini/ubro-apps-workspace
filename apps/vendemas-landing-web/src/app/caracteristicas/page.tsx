@@ -222,7 +222,7 @@ export default function FeaturesPage() {
 
               <a
                 href='/signup'
-                className='inline-block rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 py-3 transition-colors duration-200 btn-focus'
+                className='inline-block card-border !rounded-[14px] bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 py-3 transition-colors duration-200 btn-focus'
               >
                 Comenzar gratis
               </a>
@@ -285,7 +285,7 @@ export default function FeaturesPage() {
         </p>
         <a
           href='/signup'
-          className='inline-block bg-white text-primary-500 hover:bg-gray-100 font-semibold px-8 py-4 rounded-lg transition-colors duration-200 btn-focus text-lg'
+          className='inline-block card-border !rounded-[14px] bg-white text-primary-500 hover:bg-gray-100 font-semibold px-8 py-4 transition-colors duration-200 btn-focus text-lg'
         >
           Comenzar gratis ahora
         </a>

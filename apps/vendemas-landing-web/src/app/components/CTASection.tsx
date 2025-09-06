@@ -58,7 +58,7 @@ export default function CTASection({
       <div className='block sm:hidden fixed bottom-4 left-4 right-4 z-50'>
         <button
           type='button'
-          className='w-full bg-gradient-primary text-white font-semibold px-6 py-4 rounded-[14px] shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
+          className='w-full card-border !rounded-[14px] bg-gradient-primary text-white font-semibold px-6 py-4 shadow-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2'
           aria-label='Comenzar a usar VendeMás de forma gratuita'
           onClick={() => trackCTAClick('primary', 'value_props_mobile_cta')}
         >

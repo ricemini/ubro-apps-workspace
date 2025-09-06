@@ -136,7 +136,7 @@ export default function Hero(): React.JSX.Element {
               {/* Primary CTA: Sign up button with pulsing animation */}
               <a
                 href='/signup'
-                className='rounded-[14px] bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom'
+                className='card-border !rounded-[14px] bg-primary-500 px-5 py-3 font-medium text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom'
                 data-analytics='cta_primary_hero'
                 role='button'
                 aria-describedby='cta-description'
