@@ -14,7 +14,7 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
-      "outputs": [".next"],
+      "outputs": ["{workspaceRoot}/apps/vendemas-landing-web/.next"],
       "defaultConfiguration": "production",
       "options": {
         "command": "npm run build",
@@ -65,7 +65,7 @@
     },
     "test": {
       "executor": "nx:run-commands",
-      "outputs": ["../coverage/vendemas-landing-web"],
+      "outputs": ["{workspaceRoot}/coverage/vendemas-landing-web"],
       "options": {
         "command": "npm run test",
         "cwd": "apps/vendemas-landing-web"
