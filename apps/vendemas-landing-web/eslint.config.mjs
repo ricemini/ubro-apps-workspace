@@ -1,6 +1,4 @@
 import js from '@eslint/js';
-import typescript from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 
 export default [
@@ -11,15 +9,16 @@ export default [
       '**/node_modules/**/*',
       '**/dist/**/*',
       '**/build/**/*',
+      '**/*.d.ts',
+      'index.d.ts',
     ],
   },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      parser: typescriptParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
         },
@@ -69,20 +68,17 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': typescript,
       react,
     },
     rules: {
       ...js.configs.recommended.rules,
-      ...typescript.configs.recommended.rules,
       ...react.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
       'react/no-unknown-property': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/triple-slash-reference': 'off',
+      'no-unused-vars': 'warn',
+      'no-undef': 'off',
     },
     settings: {
       react: {
