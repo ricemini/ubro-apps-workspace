@@ -2,7 +2,7 @@ name: VendeMás Landing Web - CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/*]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/vendemas-shared-design/**'
@@ -14,7 +14,7 @@ on:
       - 'vitest.setup.ts'
       - '.github/workflows/vendemas-landing-web-ci.yml'
   pull_request:
-    branches: [main]
+    branches: [main, feature/*]
     paths:
       - 'apps/vendemas-landing-web/**'
       - 'libs/vendemas-shared-design/**'
@@ -26,6 +26,11 @@ on:
       - 'vitest.setup.ts'
       - '.github/workflows/vendemas-landing-web-ci.yml'
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 env:
   NODE_VERSION: '20'
   PNPM_VERSION: '8.15.0'
@@ -35,9 +40,6 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
-  # =============================================================================
-  # SETUP & AFFECTED DETECTION
-  # =============================================================================
   setup:
     name: Setup & Affected Detection
     runs-on: ubuntu-latest
@@ -96,7 +98,6 @@ jobs:
         id: check-affected
         run: |
           AFFECTED_PROJECTS=$(npx nx show projects --affected --plain)
-          # Convert newlines to spaces and then to commas for GitHub Actions output
           AFFECTED_PROJECTS_COMMA=$(echo "$AFFECTED_PROJECTS" | tr '\n' ' ' | sed 's/ *$//' | sed 's/ /,/g')
           if [[ "$AFFECTED_PROJECTS" == *"vendemas-landing-web"* ]]; then
             echo "affected=true" >> $GITHUB_OUTPUT
@@ -110,9 +111,6 @@ jobs:
             echo "Affected projects: $AFFECTED_PROJECTS"
           fi
 
-  # =============================================================================
-  # LINT (PARALLEL)
-  # =============================================================================
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -163,9 +161,6 @@ jobs:
       - name: Lint vendemas-landing-web
         run: npx nx run vendemas-landing-web:lint
 
-  # =============================================================================
-  # TEST (PARALLEL)
-  # =============================================================================
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -224,74 +219,11 @@ jobs:
           path: coverage/
           retention-days: 30
 
-  # =============================================================================
-  # BUILD (SEQUENTIAL - AFTER LINT & TEST)
-  # =============================================================================
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: [setup, lint, test]
-    if: needs.setup.outputs.affected == 'true' && needs.lint.result == 'success' && needs.test.result == 'success'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Cache Nx
-        uses: actions/cache@v4
-        with:
-          path: |
-            .nx/cache
-            .nx/workspace-data
-          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            nx-${{ runner.os }}-
-
-      - name: Build vendemas-landing-web
-        run: npx nx run vendemas-landing-web:build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: dist/
-          retention-days: 7
-
-  # =============================================================================
-  # DEPLOY TO VERCEL (SEQUENTIAL - AFTER BUILD)
-  # =============================================================================
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    needs: [setup, build]
-    if: github.ref == 'refs/heads/main' && needs.build.result == 'success'
+    needs: [setup, lint, test]
+    if: needs.setup.outputs.affected == 'true' && needs.lint.result == 'success' && needs.test.result == 'success'
     environment:
       name: production
       url: ${{ steps.deploy.outputs.url }}
@@ -304,70 +236,56 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install pnpm
-        run: npm install -g pnpm@${{ env.PNPM_VERSION }}
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: dist/
-
-      - name: Prepare for Vercel
-        run: |
-          echo "🔧 Preparing build artifacts for Vercel deployment..."
-
-          # Create Vercel output directory structure
-          mkdir -p .vercel/output
-
-          # Check what's actually in the build output
-          echo "📁 Available files in dist/vendemas-landing-web/:"
-          ls -la dist/vendemas-landing-web/
-
-          # For standalone output, we need to copy the entire directory structure
-          if [ -d "dist/vendemas-landing-web" ]; then
-            echo "✅ Found vendemas-landing-web build output"
-
-            # Copy the entire build output to .vercel/output
-            cp -r dist/vendemas-landing-web/* .vercel/output/
-
-            # Ensure we have the necessary files for Vercel
-            if [ ! -f ".vercel/output/package.json" ]; then
-              echo "⚠️ package.json not found, copying from source"
-              cp apps/vendemas-landing-web/package.json .vercel/output/
-            fi
-
-            if [ ! -d ".vercel/output/public" ]; then
-              echo "⚠️ public directory not found, copying from source"
-              cp -r apps/vendemas-landing-web/public .vercel/output/ 2>/dev/null || echo "⚠️ No public directory in source"
-            fi
-
-            # Create Vercel config.json file
-            echo "📝 Creating Vercel config.json..."
-            echo '{"version":3,"functions":{"app/page.js":{"runtime":"nodejs20.x"},"app/layout.js":{"runtime":"nodejs20.x"}},"routes":[{"src":"/(.*)","dest":"/app/$1"}]}' > .vercel/output/config.json
-
-            echo "📁 Vercel output structure created in .vercel/output/"
-            ls -la .vercel/output/
-            echo "📄 Vercel config.json content:"
-            cat .vercel/output/config.json
-          else
-            echo "❌ vendemas-landing-web build output not found"
-            echo "📁 Available files in dist/:"
-            ls -la dist/
-            exit 1
-          fi
-
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Deploy to Vercel
         id: deploy
         run: |
-          # Deploy using the prepared structure with --prebuilt flag
-          vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes --prebuilt
+          echo "🚀 Starting Vercel deployment..."
+          
+          # Change to the app directory
+          cd apps/vendemas-landing-web
+          
+          # Use production deployment for main branch, preview for feature branches
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "📦 Deploying to production..."
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --prod --yes 2>&1)
+          else
+            echo "🔍 Deploying preview for feature branch..."
+            DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes 2>&1)
+          fi
+          
+          echo "📄 Vercel deployment output:"
+          echo "$DEPLOYMENT_OUTPUT"
+          
+          # Extract URL from the output using regex
+          DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*\.vercel\.app' | head -1)
+          
+          # Alternative extraction methods if the first one fails
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "⚠️ First extraction method failed, trying alternative..."
+            DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*' | grep -v 'vercel.com' | head -1)
+          fi
+          
+          # Try to extract from any URL pattern
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "⚠️ Alternative extraction failed, trying broader pattern..."
+            DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -oE 'https?://[^[:space:]]+' | head -1)
+          fi
+          
+          if [ -n "$DEPLOYMENT_URL" ] && [ "$DEPLOYMENT_URL" != "null" ]; then
+            echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+            echo "preview-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+            echo "✅ Deployment URL: $DEPLOYMENT_URL"
+          else
+            echo "❌ Failed to extract deployment URL"
+            echo "📄 Full output for debugging:"
+            echo "$DEPLOYMENT_OUTPUT"
+            echo "url=" >> $GITHUB_OUTPUT
+            echo "preview-url=" >> $GITHUB_OUTPUT
+            exit 1
+          fi
         env:
           VERCEL_TOKEN: ${{ env.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ env.VERCEL_ORG_ID }}
@@ -376,9 +294,18 @@ jobs:
       - name: Test Deployment with Bypass Token
         run: |
           echo "🧪 Testing deployment accessibility with bypass token..."
+          DEPLOYMENT_URL="${{ steps.deploy.outputs.url }}"
+          
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "❌ Deployment URL is empty, cannot test deployment"
+            exit 1
+          fi
+          
+          echo "🔗 Testing URL: $DEPLOYMENT_URL"
+          
           if [ -n "${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" ]; then
             # Test with bypass token
-            curl -f -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" "${{ steps.deploy.outputs.url }}" || {
+            curl -f -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" "$DEPLOYMENT_URL" || {
               echo "❌ Deployment test failed with bypass token"
               exit 1
             }
@@ -386,7 +313,7 @@ jobs:
           else
             echo "⚠️ VERCEL_AUTOMATION_BYPASS_SECRET not configured, skipping bypass test"
             # Test without bypass token (should return 401 if protection is enabled)
-            curl -f "${{ steps.deploy.outputs.url }}" || {
+            curl -f "$DEPLOYMENT_URL" || {
               echo "ℹ️ Deployment requires authentication (expected if protection is enabled)"
             }
           fi

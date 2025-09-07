@@ -13,56 +13,62 @@
   ],
   "targets": {
     "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/vendemas-landing-web/.next"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/vendemas-landing-web"
+        "command": "npm run build",
+        "cwd": "apps/vendemas-landing-web"
       },
       "configurations": {
         "development": {
-          "outputPath": "dist/vendemas-landing-web"
+          "command": "npm run build",
+          "cwd": "apps/vendemas-landing-web"
         },
         "production": {
-          "outputPath": "dist/vendemas-landing-web"
+          "command": "npm run build",
+          "cwd": "apps/vendemas-landing-web"
         }
       }
     },
     "serve": {
-      "executor": "@nx/next:server",
+      "executor": "nx:run-commands",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "vendemas-landing-web:build",
-        "dev": true,
-        "port": 3000
+        "command": "npm run dev",
+        "cwd": "apps/vendemas-landing-web"
       },
       "configurations": {
         "development": {
-          "buildTarget": "vendemas-landing-web:build:development",
-          "dev": true,
-          "port": 3000
+          "command": "npm run dev",
+          "cwd": "apps/vendemas-landing-web"
         },
         "production": {
-          "buildTarget": "vendemas-landing-web:build:production",
-          "dev": false,
-          "port": 3000
+          "command": "npm run start",
+          "cwd": "apps/vendemas-landing-web"
         }
       }
     },
     "export": {
-      "executor": "@nx/next:export",
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "vendemas-landing-web:build:production"
+        "command": "npm run build && npm run export",
+        "cwd": "apps/vendemas-landing-web"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run lint",
+        "cwd": "apps/vendemas-landing-web"
+      }
     },
     "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/vendemas-landing-web"],
       "options": {
-        "reportsDirectory": "../coverage/vendemas-landing-web"
+        "command": "npm run test",
+        "cwd": "apps/vendemas-landing-web"
       }
     }
   }
