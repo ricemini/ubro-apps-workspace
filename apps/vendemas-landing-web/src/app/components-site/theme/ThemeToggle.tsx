@@ -84,7 +84,7 @@ export default function ThemeToggle({
         {/* Compact mode - single button */}
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className='flex items-center justify-center card-border !rounded-[14px] border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 hover:bg-secondary-100 dark:hover:bg-white dark:hover:text-secondary-500'
+          className='flex items-center justify-center card-border !rounded-[14px] border border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-800 transition-all duration-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:bg-secondary-800 active:bg-white dark:active:bg-secondary-800'
           style={{
             height: '42px',
             width: '42px',
@@ -101,7 +101,7 @@ export default function ThemeToggle({
 
         {/* Dropdown menu */}
         {isDropdownOpen && (
-          <div className='absolute top-10 right-0 z-50 flex items-center gap-1 rounded-lg border border-secondary-200 bg-white p-1 shadow-lg dark:border-secondary-700 dark:bg-secondary-800'>
+          <div className='absolute top-12 right-0 z-50 flex flex-col gap-1 rounded-lg border border-secondary-200 bg-white p-1 shadow-lg dark:border-secondary-700 dark:bg-secondary-800'>
             {themes.map(({ value, icon: Icon, label }) => (
               <button
                 key={value}
@@ -112,7 +112,7 @@ export default function ThemeToggle({
                 className={`flex h-8 w-8 items-center justify-center rounded-[14px] transition-all duration-200 ${
                   theme === value
                     ? 'bg-secondary-500 text-white dark:bg-white dark:text-secondary-500 shadow-sm'
-                    : 'text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 dark:text-white dark:hover:bg-white dark:hover:text-secondary-500'
+                    : 'text-secondary-600 hover:bg-secondary-100 hover:text-secondary-900 dark:text-white'
                 }`}
                 aria-label={label}
                 title={label}

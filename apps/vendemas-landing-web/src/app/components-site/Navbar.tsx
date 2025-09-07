@@ -216,7 +216,7 @@ export default function Example(): React.JSX.Element {
             type='button'
             onClick={() => setMobileMenuOpen(true)}
             // Negative margins (-m-2.5) provide larger touch target while maintaining visual size
-            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] text-gray-700 dark:text-gray-400'
+            className='-m-2.5 inline-flex items-center justify-center card-border !rounded-[14px] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-400'
             style={{
               height: '42px',
               width: '42px',

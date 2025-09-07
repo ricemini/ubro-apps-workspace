@@ -126,7 +126,7 @@ describe('SecondaryCTA', () => {
 
       const link = screen.getByText('Test').closest('a');
       expect(link).toBeTruthy();
-      expect(link?.getAttribute('href')).toBe('');
+      expect(link?.getAttribute('href')).toBe('#');
     });
   });
 
@@ -215,7 +215,7 @@ describe('SecondaryCTA', () => {
       expect(link.className).toContain('focus:ring-2');
       expect(link.className).toContain('focus:ring-secondary-500');
       expect(link.className).toContain('focus:ring-offset-2');
-      expect(link.className).toContain('focus:rounded-lg');
+      expect(link.className).toContain('focus:card-border');
     });
 
     it('applies correct dark mode focus classes', () => {

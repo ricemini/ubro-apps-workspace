@@ -72,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang='es-MX'
-      className={`${inter.variable} ${jakarta.variable} scroll-smooth bg-white dark:bg-gray-950 scheme-light dark:scheme-dark`}
+      className={`${inter.variable} ${jakarta.variable} scroll-smooth bg-white dark:bg-gray-950 scheme-light dark:scheme-dark overflow-x-hidden`}
     >
       <head>
         <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />

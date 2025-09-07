@@ -26,8 +26,8 @@ export default function HeroBackground(): React.JSX.Element {
       <div
         className='
           absolute inset-y-0 left-0 w-[62%]
-          bg-gradient-to-r from-white via-white/90 to-white/0
-          dark:from-black dark:via-black/70 dark:to-transparent
+          bg-gradient-to-r from-white/80 via-white/60 to-white/0
+          dark:from-black/80 dark:via-black/50 dark:to-transparent
         '
       />
 

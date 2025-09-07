@@ -97,7 +97,7 @@ export default function HowItWorks(): React.JSX.Element {
 
     const interval = setInterval(() => {
       setActiveStep(prev => (prev + 1) % steps.length);
-    }, 2000); // Change every 2 seconds
+    }, 4000); // Change every 4 seconds
 
     return (): void => clearInterval(interval);
   }, [steps.length, isPaused]);
@@ -287,8 +287,9 @@ export default function HowItWorks(): React.JSX.Element {
           {/* Secondary CTA */}
           <SecondaryCTA
             text='Ver VendeMás en acción'
-            url='vendemas-en-accion'
-            description='Enlace para ver una demostración de VendeMás en acción'
+            showVendeMasModal={true}
+            youtubeVideoId='dQw4w9WgXcQ' // Replace with your actual YouTube video ID
+            description='Ver demostración en video de VendeMás en acción'
           />
         </div>
       </div>
