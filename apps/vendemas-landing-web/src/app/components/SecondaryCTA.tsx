@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import VideoModal from '../components-site/VideoModal';
+import ContentModal from '../components-site/ContentModal';
+import VendeMasEnAccionModal from '../components-site/VendeMasEnAccionModal';
 
 /**
  * SecondaryCTA Component Props
  */
 interface SecondaryCTAProps {
   text: string;
-  url: string;
+  url?: string;
   description?: string;
+  showVideoModal?: boolean;
+  videoTitle?: string;
+  videoSrc?: string;
+  posterSrc?: string;
+  showContentModal?: boolean;
+  contentModal?: {
+    type: 'video' | 'iframe' | 'youtube' | 'vimeo';
+    src: string;
+    posterSrc?: string;
+  };
+  showVendeMasModal?: boolean;
+  youtubeVideoId?: string;
 }
 
 /**
@@ -51,13 +66,32 @@ export default function SecondaryCTA({
   text,
   url,
   description = 'Enlace para ver más información',
+  showVideoModal = false,
+  videoTitle,
+  videoSrc,
+  posterSrc,
+  showContentModal = false,
+  contentModal,
+  showVendeMasModal = false,
+  youtubeVideoId,
 }: SecondaryCTAProps): React.JSX.Element {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = (e: React.MouseEvent): void => {
+    if (showVideoModal || showContentModal || showVendeMasModal) {
+      e.preventDefault();
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <>
       {/* Secondary CTA: Learn more link with hover effects */}
       <a
-        href={url}
-        className='group inline-flex items-center gap-x-2 text-sm font-semibold text-secondary-600 hover:text-secondary-700 transition-all duration-300 dark:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:rounded-lg dark:focus:ring-white dark:focus:ring-offset-gray-900'
+        href={url || '#'}
+        onClick={handleClick}
+        className='group inline-flex items-center gap-x-2 !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 text-sm font-semibold text-secondary-600 hover:text-secondary-700 hover:bg-gray-50 dark:text-white dark:hover:text-white dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:card-border focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 dark:focus:ring-white dark:focus:ring-offset-gray-900'
+        style={{ height: '42px' }}
         aria-describedby='secondary-cta-description'
       >
         <span className='relative'>
@@ -75,6 +109,33 @@ export default function SecondaryCTA({
       <span id='secondary-cta-description' className='sr-only'>
         {description}
       </span>
+
+      {/* Video Modal */}
+      {showVideoModal && isModalOpen && (
+        <VideoModal
+          onClose={() => setIsModalOpen(false)}
+          title={videoTitle}
+          videoSrc={videoSrc}
+          posterSrc={posterSrc}
+        />
+      )}
+
+      {/* Content Modal */}
+      {showContentModal && isModalOpen && contentModal && (
+        <ContentModal
+          onClose={() => setIsModalOpen(false)}
+          title={videoTitle || text}
+          content={contentModal}
+        />
+      )}
+
+      {/* VendeMás en Acción Modal */}
+      {showVendeMasModal && isModalOpen && (
+        <VendeMasEnAccionModal
+          onClose={() => setIsModalOpen(false)}
+          youtubeVideoId={youtubeVideoId}
+        />
+      )}
     </>
   );
 }

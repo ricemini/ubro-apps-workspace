@@ -107,6 +107,12 @@
 html {
   scroll-behavior: smooth;
   font-display: swap;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Prevent horizontal scrolling on body */
+body {
+  overflow-x: hidden;
 }
 
 /* Custom pulse animation for CTA button */

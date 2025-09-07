@@ -287,8 +287,9 @@ export default function HowItWorks(): React.JSX.Element {
           {/* Secondary CTA */}
           <SecondaryCTA
             text='Ver VendeMás en acción'
-            url='vendemas-en-accion'
-            description='Enlace para ver una demostración de VendeMás en acción'
+            showVendeMasModal={true}
+            youtubeVideoId='dQw4w9WgXcQ' // Replace with your actual YouTube video ID
+            description='Ver demostración en video de VendeMás en acción'
           />
         </div>
       </div>
