@@ -135,7 +135,7 @@ describe('VendeMasEnAccionModal', () => {
 
       const iframes = screen.getAllByTitle('VendeMás en acción');
       expect(iframes[0]).toBeTruthy();
-      expect(iframes[0].getAttribute('src')).toContain('dQw4w9WgXcQ');
+      expect(iframes[0].getAttribute('src')).toContain('NQN2w7KPeTs');
     });
 
     it('renders close button with proper accessibility', () => {
