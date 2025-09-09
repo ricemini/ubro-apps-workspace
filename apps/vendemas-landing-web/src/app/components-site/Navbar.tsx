@@ -343,11 +343,11 @@ export default function Example(): React.JSX.Element {
 
             {/* Direct navigation links - visible on medium+ screens */}
             <a
-              href='/funciones'
+              href='#precios'
               className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-              aria-label='Ver funciones de la plataforma'
+              aria-label='Ver beneficios de la plataforma'
             >
-              Funciones
+              Beneficios
             </a>
             <a
               href='/faq'
@@ -380,7 +380,7 @@ export default function Example(): React.JSX.Element {
             data-analytics='nav_cta_signup'
             aria-label='Comenzar a usar VendeMás gratis'
           >
-            Comenzar gratis
+            Regístrate
           </Link>
 
           {/* Secondary login link */}
@@ -478,11 +478,18 @@ export default function Example(): React.JSX.Element {
 
                   {/* Direct navigation links */}
                   <a
-                    href='/funciones'
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Ver funciones de la plataforma'
+                    href='#precios'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                    aria-label='Ver beneficios de la plataforma'
                   >
-                    Funciones
+                    Beneficios
+                  </a>
+                  <a
+                    href='/herramientas'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                    aria-label='Ver herramientas de la plataforma'
+                  >
+                    Herramientas
                   </a>
                   <a
                     href='#'
@@ -492,11 +499,11 @@ export default function Example(): React.JSX.Element {
                     Marketplace
                   </a>
                   <a
-                    href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Información de la empresa'
+                    href='/faq'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                    aria-label='Preguntas frecuentes'
                   >
-                    Company
+                    FAQ
                   </a>
                 </div>
 
@@ -505,7 +512,7 @@ export default function Example(): React.JSX.Element {
                   {/* Secondary login link */}
                   <a
                     href='#'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 rounded-[14px]'
+                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
                     aria-label='Iniciar sesión en VendeMás'
                   >
                     Log in

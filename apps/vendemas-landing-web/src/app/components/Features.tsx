@@ -11,7 +11,9 @@ import {
   PieChart,
   Bell,
   Headphones,
+  ArrowRight,
 } from 'lucide-react';
+import React from 'react';
 
 export default function Features() {
   const features = [
@@ -197,26 +199,68 @@ export default function Features() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className='mt-16 text-center'>
-          <div className='bg-gradient-to-r from-primary-50 to-tertiary-50 rounded-2xl p-12'>
-            <h3 className='text-display text-2xl sm:text-3xl font-bold text-gray-900 mb-4'>
-              ¿Necesitas alguna característica específica?
+        {/* Enterprise Section - Advanced solutions for larger businesses */}
+        <section
+          className='mt-16 bg-gradient-to-br from-secondary-500 via-secondary-600 to-primary-600 dark:from-secondary-600 dark:via-secondary-700 dark:to-primary-700 rounded-3xl p-12 text-center text-white shadow-2xl'
+          aria-labelledby='enterprise-title'
+          aria-describedby='enterprise-description'
+        >
+          <div className='max-w-4xl mx-auto'>
+            {/* Enterprise Section Header */}
+            <h3
+              id='enterprise-title'
+              className='text-display text-3xl sm:text-4xl font-bold mb-6'
+            >
+              ¿Necesitas algo más personalizado?
             </h3>
-            <p className='text-body text-lg text-gray-600 mb-8 max-w-2xl mx-auto'>
-              Nuestro equipo está constantemente mejorando VendeMás basado en
-              las necesidades de nuestros usuarios.
+            <p
+              id='enterprise-description'
+              className='text-body text-xl opacity-90 dark:opacity-80 mb-10 max-w-3xl mx-auto leading-relaxed'
+            >
+              Para cadenas de vendedores o necesidades específicas, creamos
+              soluciones a medida con soporte dedicado.
             </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <button className='bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 btn-focus'>
-                Solicitar característica
+
+            {/* Enterprise Action Buttons */}
+            <div
+              className='flex flex-col sm:flex-row gap-4 justify-center mb-8'
+              role='group'
+              aria-label='Acciones empresariales'
+            >
+              {/* Primary Enterprise CTA - Contact sales */}
+              <button
+                className='bg-white text-secondary-600 hover:bg-gray-100 dark:bg-gray-100 dark:text-secondary-700 dark:hover:bg-gray-200 font-bold px-10 py-4 rounded-2xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white'
+                aria-label='Contactar con el equipo de ventas para soluciones personalizadas'
+                type='button'
+              >
+                Hablar con ventas
               </button>
-              <button className='border-2 border-primary-500 text-primary-500 hover:bg-primary-50 font-semibold px-8 py-4 rounded-xl transition-all duration-200 btn-focus'>
-                Ver roadmap
+              {/* Secondary Enterprise CTA - View case studies */}
+              <button
+                className='border-2 border-white text-white hover:bg-white hover:text-secondary-600 dark:border-gray-300 dark:hover:bg-gray-100 dark:hover:text-secondary-700 font-bold px-10 py-4 rounded-2xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white'
+                aria-label='Ver casos de éxito de clientes empresariales'
+                type='button'
+              >
+                Ver casos de éxito
               </button>
             </div>
+
+            {/* FAQ Link - Additional support information */}
+            <div className='text-center'>
+              <a
+                href='/faq'
+                className='inline-flex items-center text-white hover:text-tertiary-300 dark:hover:text-tertiary-200 font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-white/10 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white'
+                aria-label='Ver preguntas frecuentes completas'
+              >
+                ¿Tienes más preguntas? Ver FAQ completo
+                {React.createElement(ArrowRight, {
+                  className: 'h-5 w-5 ml-2',
+                  'aria-hidden': 'true',
+                })}
+              </a>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </section>
   );

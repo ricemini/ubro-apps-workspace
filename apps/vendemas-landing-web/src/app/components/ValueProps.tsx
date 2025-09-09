@@ -92,34 +92,32 @@ export default function ValueProps(): React.JSX.Element {
   }> = [
     {
       icon: TrendingUp,
-      title: 'Aumenta tus ventas',
-      description: 'Acepta más formas de pago y nunca pierdas una venta.',
+      title: 'Vende más en cada transacción',
+      description: 'Acepta pagos sin límites y nunca pierdas una venta.',
       stat: '+40%',
-      statLabel: 'de aumento en ventas',
+      statLabel: 'aumento en ventas comprobado.',
     },
     {
       icon: Brain,
-      title: 'Inteligencia para Vender Más',
+      title: 'Promos automáticas que venden por ti',
       description:
-        'Entiende a tus clientes y optimiza tu catálogo con nuestro asistente de IA.',
+        'Nuestra IA analiza tus ventas y crea ofertas que generan más ingresos.',
       stat: 'Asistente IA',
-      statLabel: 'Análisis y Decisiones Inteligente',
+      statLabel: 'Decisiones en segundos.',
     },
     {
       icon: ShieldCheck,
-      title: 'Pagos seguros y sin límites',
-      description:
-        'Transacciones rápidas y protegidas, con o sin conexión a internet.',
+      title: 'Cobra con confianza siempre',
+      description: 'Transacciones rápidas y seguras, certificadas por CoDi.',
       stat: '100%',
-      statLabel: 'de transacciones seguras',
+      statLabel: 'operaciones protegidas.',
     },
     {
       icon: Smartphone,
-      title: 'Fácil de usar, siempre disponible',
-      description:
-        'Una interfaz intuitiva que funciona en cualquier dispositivo, en cualquier momento.',
+      title: 'Apréndelo en minutos, úsalo siempre',
+      description: 'Interfaz intuitiva que funciona en cualquier dispositivo.',
       stat: '< 5 minutos',
-      statLabel: 'Tiempo de aprendizaje',
+      statLabel: 'para empezar.',
     },
   ];
 
@@ -138,8 +136,7 @@ export default function ValueProps(): React.JSX.Element {
             ¿Por qué elegir VendeMás?
           </h2>
           <p className='text-body text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-            Diseñado para las necesidades de las PyMES y Vendedores Ambulantes
-            de México y Latinoamérica
+            Diseñado para PyMES y vendedores ambulantes de México y LATAM.
           </p>
         </div>
 
