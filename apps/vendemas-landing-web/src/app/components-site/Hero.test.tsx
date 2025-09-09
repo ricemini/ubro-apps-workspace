@@ -111,9 +111,11 @@ describe('Hero', () => {
     it('renders secondary CTA link', (): void => {
       render(<Hero />);
 
-      const secondaryCTA = screen.getByText('Conoce todas las funciones');
+      const secondaryCTA = screen.getByText('Conoce todas las Herramientas');
       expect(secondaryCTA).toBeTruthy();
-      expect(secondaryCTA.closest('a')?.getAttribute('href')).toBe('#');
+      expect(secondaryCTA.closest('a')?.getAttribute('href')).toBe(
+        '/herramientas'
+      );
     });
 
     it('renders chevron icon', (): void => {
@@ -149,9 +151,7 @@ describe('Hero', () => {
         screen.getByText(/Botón para comenzar a usar VendeMás/)
       ).toBeTruthy();
       expect(
-        screen.getByText(
-          /Ver demostración en video de todas las características/
-        )
+        screen.getByText(/Ver todas las herramientas disponibles en VendeMás/)
       ).toBeTruthy();
     });
   });

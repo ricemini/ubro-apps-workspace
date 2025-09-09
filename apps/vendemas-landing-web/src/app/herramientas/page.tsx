@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Todas las funciones — VendeMás',
+  title: 'Herramientas para tu negocio — VendeMás',
   description:
-    'Cobros CoDi, catálogo desde una foto, inventario, promociones y estadísticas con IA, facturación y más.',
+    'Herramientas completas para PyMES: cobros CoDi, catálogo desde una foto, inventario, promociones con IA, facturación y más.',
   openGraph: {
-    title: 'Todas las funciones — VendeMás',
+    title: 'Herramientas para tu negocio — VendeMás',
     description:
-      'Cobros CoDi, catálogo desde una foto, inventario, promociones y estadísticas con IA, facturación y más.',
+      'Herramientas completas para PyMES: cobros CoDi, catálogo desde una foto, inventario, promociones con IA, facturación y más.',
   },
   alternates: {
-    canonical: '/funciones',
+    canonical: '/herramientas',
   },
 };
 
@@ -163,15 +163,16 @@ const faqs = [
   },
 ];
 
-export default function FeaturesPage() {
+export default function HerramientasPage() {
   return (
     <main className='mx-auto max-w-7xl px-6 py-12 space-y-12'>
       <header className='space-y-6 text-center mt-14'>
         <h1 className='text-display text-4xl sm:text-5xl text-secondary-500'>
-          Todas las funciones
+          Herramientas para tu negocio
         </h1>
         <p className='text-body text-xl text-secondary-500/80 max-w-3xl mx-auto'>
-          Todo lo que necesitas para tu MiPyME, en una sola plataforma.
+          Todo lo que necesitas para hacer crecer tu MiPyME, en una sola
+          plataforma.
         </p>
       </header>
 
@@ -251,7 +252,7 @@ export default function FeaturesPage() {
       {/* FAQ Section */}
       <section className='bg-gray-50 rounded-2xl p-12 card-border'>
         <h2 className='text-display text-3xl text-secondary-500 text-center mb-12'>
-          Preguntas frecuentes sobre funciones
+          Preguntas frecuentes sobre herramientas
         </h2>
 
         <div className='grid md:grid-cols-2 gap-8 max-w-4xl mx-auto'>

@@ -2,7 +2,7 @@ import React from 'react';
 import Hero from './components-site/Hero';
 import ValueProps from './components/ValueProps';
 import HowItWorks from './components/HowItWorks';
-import Pricing from './components/Pricing';
+import Benefits from './components/Benefits';
 import CTABanner from './components/CTABanner';
 import Footer from './components/Footer';
 
@@ -45,7 +45,7 @@ export default function Home(): React.JSX.Element {
         </div>
 
         <HowItWorks />
-        <Pricing />
+        <Benefits />
         <CTABanner />
       </main>
       <Footer />

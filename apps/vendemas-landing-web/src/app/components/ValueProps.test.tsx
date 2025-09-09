@@ -49,10 +49,10 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const subtitle = screen.getByText(
-        /Diseñado para las necesidades de las PyMES/
+        /Diseñado para PyMES y vendedores ambulantes de México y LATAM/
       );
       expect(subtitle).toBeTruthy();
-      expect(subtitle.textContent).toContain('de México y Latinoamérica');
+      expect(subtitle.textContent).toContain('México y LATAM');
     });
 
     it('renders all four value proposition cards', () => {
@@ -81,11 +81,13 @@ describe('ValueProps Component', () => {
     it('displays correct titles for all cards', () => {
       renderComponent();
 
-      expect(screen.getByText('Aumenta tus ventas')).toBeTruthy();
-      expect(screen.getByText('Inteligencia para Vender Más')).toBeTruthy();
-      expect(screen.getByText('Pagos seguros y sin límites')).toBeTruthy();
+      expect(screen.getByText('Vende más en cada transacción')).toBeTruthy();
       expect(
-        screen.getByText('Fácil de usar, siempre disponible')
+        screen.getByText('Promos automáticas que venden por ti')
+      ).toBeTruthy();
+      expect(screen.getByText('Cobra con confianza siempre')).toBeTruthy();
+      expect(
+        screen.getByText('Apréndelo en minutos, úsalo siempre')
       ).toBeTruthy();
     });
 
@@ -93,17 +95,21 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       expect(
-        screen.getByText(/Acepta más formas de pago y nunca pierdas una venta/)
-      ).toBeTruthy();
-      expect(
-        screen.getByText(/Entiende a tus clientes y optimiza tu catálogo/)
-      ).toBeTruthy();
-      expect(
-        screen.getByText(/Transacciones rápidas y protegidas/)
+        screen.getByText(/Acepta pagos sin límites y nunca pierdas una venta/)
       ).toBeTruthy();
       expect(
         screen.getByText(
-          /Una interfaz intuitiva que funciona en cualquier dispositivo/
+          /Nuestra IA analiza tus ventas y crea ofertas que generan más ingresos/
+        )
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          /Transacciones rápidas y seguras, certificadas por CoDi/
+        )
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          /Interfaz intuitiva que funciona en cualquier dispositivo/
         )
       ).toBeTruthy();
     });
@@ -120,12 +126,10 @@ describe('ValueProps Component', () => {
     it('displays correct stat labels for all cards', () => {
       renderComponent();
 
-      expect(screen.getByText('de aumento en ventas')).toBeTruthy();
-      expect(
-        screen.getByText('Análisis y Decisiones Inteligente')
-      ).toBeTruthy();
-      expect(screen.getByText('de transacciones seguras')).toBeTruthy();
-      expect(screen.getByText('Tiempo de aprendizaje')).toBeTruthy();
+      expect(screen.getByText('aumento en ventas comprobado.')).toBeTruthy();
+      expect(screen.getByText('Decisiones en segundos.')).toBeTruthy();
+      expect(screen.getByText('operaciones protegidas.')).toBeTruthy();
+      expect(screen.getByText('para empezar.')).toBeTruthy();
     });
   });
 
@@ -156,10 +160,10 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const titles = [
-        'Aumenta tus ventas',
-        'Inteligencia para Vender Más',
-        'Pagos seguros y sin límites',
-        'Fácil de usar, siempre disponible',
+        'Vende más en cada transacción',
+        'Promos automáticas que venden por ti',
+        'Cobra con confianza siempre',
+        'Apréndelo en minutos, úsalo siempre',
       ];
 
       titles.forEach((title, index) => {
@@ -464,7 +468,7 @@ describe('ValueProps Component', () => {
       expect(titles).toHaveLength(4);
 
       const descriptions = screen.getAllByText(
-        /Acepta más formas|Entiende a tus clientes|Transacciones rápidas|Una interfaz intuitiva/
+        /Acepta pagos sin límites|Nuestra IA analiza|Transacciones rápidas|Interfaz intuitiva/
       );
       expect(descriptions).toHaveLength(4);
     });
