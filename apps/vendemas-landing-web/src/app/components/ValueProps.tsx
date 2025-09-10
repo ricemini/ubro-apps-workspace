@@ -126,10 +126,18 @@ export default function ValueProps(): React.JSX.Element {
     <section
       id='por-que-vendemas'
       ref={sectionRef}
-      className='py-20 bg-white dark:bg-gray-900'
+      className='py-20 bg-gradient-premium dark:bg-gradient-premium-dark relative'
     >
+      {/* Top section divider - barely visible */}
+      <div className='absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-700' />
+
+      {/* Bottom section divider - barely visible */}
+      <div className='absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-700' />
+
+      {/* Granular texture overlay for premium feel */}
+      <div className='absolute inset-0 bg-gradient-grain opacity-20 dark:opacity-40 pointer-events-none' />
       {/* Container with max width and responsive padding */}
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
         {/* Section Header - Main title and subtitle */}
         <div className='text-center mb-16'>
           <h2 className='text-display text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4'>

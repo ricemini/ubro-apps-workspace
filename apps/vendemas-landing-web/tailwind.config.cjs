@@ -198,6 +198,12 @@ module.exports = {
         'gradient-primary': 'linear-gradient(135deg, #4CAF50 0%, #1E3A5F 100%)',
         'gradient-secondary':
           'linear-gradient(135deg, #1E3A5F 0%, #F4B942 100%)',
+        'gradient-premium':
+          'radial-gradient(ellipse at top, rgba(139, 69, 255, 0.08) 0%, rgba(76, 175, 80, 0.05) 25%, rgba(30, 58, 95, 0.08) 50%, rgba(139, 69, 255, 0.03) 75%, transparent 100%), linear-gradient(135deg, rgba(139, 69, 255, 0.04) 0%, rgba(76, 175, 80, 0.06) 30%, rgba(30, 58, 95, 0.08) 60%, rgba(244, 185, 66, 0.04) 100%)',
+        'gradient-premium-dark':
+          'radial-gradient(ellipse at top, rgba(139, 69, 255, 0.25) 0%, rgba(76, 175, 80, 0.15) 25%, rgba(30, 58, 95, 0.3) 50%, rgba(139, 69, 255, 0.1) 75%, transparent 100%), linear-gradient(135deg, rgba(139, 69, 255, 0.12) 0%, rgba(76, 175, 80, 0.18) 30%, rgba(30, 58, 95, 0.22) 60%, rgba(244, 185, 66, 0.12) 100%)',
+        'gradient-grain':
+          'radial-gradient(circle at 20% 80%, rgba(139, 69, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(30, 58, 95, 0.15) 0%, transparent 50%)',
       },
     },
   },

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { X, Users, TrendingUp, Star } from 'lucide-react';
+import { X, Users, TrendingUp, Star, ChevronRight } from 'lucide-react';
 
 interface VendeMasEnAccionModalProps {
   onClose: () => void;
@@ -132,7 +132,7 @@ export default function VendeMasEnAccionModal({
       role='dialog'
       aria-modal='true'
       aria-label='VendeMás en acción'
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
+      className='fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
       onClick={onClose}
     >
       {/* Modal container with glassmorphism design */}
@@ -306,29 +306,43 @@ export default function VendeMasEnAccionModal({
           {/* Sticky CTA bar with conversion-focused design */}
           <div className='sticky bottom-0 bg-transparent backdrop-blur-md shadow-md p-4'>
             <div className='flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto'>
-              {/* Primary CTA button with Hero section styling */}
-              <div className='flex flex-col sm:flex-row gap-3 w-full sm:w-auto'>
-                <a
-                  href='/signup'
-                  className='card-border !rounded-[14px] bg-primary-500 px-6 py-4 text-lg font-semibold text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom text-center'
-                  style={{ minHeight: '52px' }}
-                >
-                  Comenzar gratis ahora
-                </a>
-                {/* Secondary CTA (currently commented out) */}
-                {/* <a
-                href='#'
-                className='inline-flex items-center justify-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium px-6 py-3 rounded-xl transition-colors duration-200 motion-reduce:transition-none'
-                style={{ minHeight: '44px' }}
-              >
-                <Phone className='h-4 w-4' />
-                Hablar con ventas
-              </a> */}
+              {/* CTA section with question and buttons on same line */}
+              <div className='flex flex-col lg:flex-row items-center justify-center gap-4 w-full'>
+                {/* Question text */}
+                <p className='text-base text-gray-600 dark:text-gray-400 text-center lg:text-left'>
+                  ¿Listo para transformar tu negocio?
+                </p>
+                {/* CTA buttons container */}
+                <div className='flex flex-col sm:flex-row items-center gap-3'>
+                  {/* Primary CTA button with Hero section styling */}
+                  <a
+                    href='/signup'
+                    className='card-border !rounded-[14px] bg-primary-500 px-6 py-4 text-lg font-semibold text-primary-on shadow hover:shadow-md transition focus:outline-none focus:ring-[14px] focus:ring-primary-600 focus:ring-offset-[14px] animate-pulse-custom text-center'
+                    style={{ minHeight: '52px' }}
+                  >
+                    Comenzar gratis ahora
+                  </a>
+
+                  {/* Secondary CTA */}
+                  <a
+                    href='/herramientas'
+                    className='group inline-flex items-center gap-x-2 !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 text-sm font-semibold text-secondary-600 hover:text-secondary-700 hover:bg-gray-50 dark:text-white dark:hover:text-white dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:card-border focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 dark:focus:ring-white dark:focus:ring-offset-gray-900'
+                    style={{ height: '42px' }}
+                    aria-describedby='secondary-cta-description'
+                  >
+                    <span className='relative'>
+                      Conoce todas las Herramientas
+                      {/* Animated underline that hides on focus */}
+                      <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-secondary-600 dark:bg-white transition-all duration-300 group-hover:w-full group-focus:w-0'></span>
+                    </span>
+                    <ChevronRight className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-focus:translate-x-0' />
+                  </a>
+                  {/* Screen reader description for the secondary CTA */}
+                  <span id='secondary-cta-description' className='sr-only'>
+                    Ver todas las herramientas disponibles en VendeMás
+                  </span>
+                </div>
               </div>
-              {/* Supporting question text for conversion */}
-              <p className='text-base text-gray-600 dark:text-gray-400 text-center'>
-                ¿Listo para transformar tu negocio?
-              </p>
             </div>
           </div>
         </div>

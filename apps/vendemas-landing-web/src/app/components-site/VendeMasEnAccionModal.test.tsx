@@ -60,6 +60,17 @@ vi.mock('lucide-react', () => ({
       <path d='M5 12h14m-7-7l7 7-7 7' />
     </svg>
   ),
+  ChevronRight: (props: any): React.JSX.Element => (
+    <svg
+      data-testid='chevron-right-icon'
+      className={props.className}
+      aria-hidden='true'
+      {...props}
+      viewBox='0 0 24 24'
+    >
+      <path d='M9 18l6-6-6-6' />
+    </svg>
+  ),
   Phone: (props: any): React.JSX.Element => (
     <svg
       data-testid='phone-icon'
@@ -464,7 +475,7 @@ describe('VendeMasEnAccionModal', () => {
       const backdrop = screen.getByRole('dialog');
       expect(backdrop.className).toContain('fixed');
       expect(backdrop.className).toContain('inset-0');
-      expect(backdrop.className).toContain('z-50');
+      expect(backdrop.className).toContain('z-40');
       expect(backdrop.className).toContain('bg-black/60');
     });
 
