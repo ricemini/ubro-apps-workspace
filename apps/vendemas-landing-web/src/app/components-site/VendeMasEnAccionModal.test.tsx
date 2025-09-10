@@ -475,7 +475,7 @@ describe('VendeMasEnAccionModal', () => {
       const backdrop = screen.getByRole('dialog');
       expect(backdrop.className).toContain('fixed');
       expect(backdrop.className).toContain('inset-0');
-      expect(backdrop.className).toContain('z-50');
+      expect(backdrop.className).toContain('z-40');
       expect(backdrop.className).toContain('bg-black/60');
     });
 
