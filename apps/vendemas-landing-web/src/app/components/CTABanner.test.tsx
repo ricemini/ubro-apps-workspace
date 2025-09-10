@@ -4,15 +4,15 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CTABanner from './CTABanner';
 
-// Mock the VendeMasEnAccionModal component
-vi.mock('../components-site/VendeMasEnAccionModal', () => ({
+// Mock the InActionModal component
+vi.mock('../components-site/InActionModal', () => ({
   default: ({
     onClose,
     youtubeVideoId,
   }: {
     onClose: () => void;
     youtubeVideoId: string;
-  }) => (
+  }): React.JSX.Element => (
     <div data-testid='vende-mas-modal' data-youtube-id={youtubeVideoId}>
       <button onClick={onClose} data-testid='modal-close'>
         Close Modal
@@ -54,7 +54,7 @@ vi.mock('lucide-react', () => ({
 
 describe('CTABanner Component', () => {
   // Helper function to render component
-  const renderCTABanner = () => {
+  const renderCTABanner = (): ReturnType<typeof render> => {
     return render(<CTABanner />);
   };
 

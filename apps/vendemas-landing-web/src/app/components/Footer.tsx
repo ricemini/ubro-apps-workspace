@@ -1,5 +1,7 @@
+'use client';
+
+import React, { useState } from 'react';
 import {
-  Smartphone,
   Mail,
   Phone,
   MapPin,
@@ -8,72 +10,95 @@ import {
   Instagram,
   Youtube,
 } from 'lucide-react';
+import InActionModal from '../components-site/InActionModal';
+import VendeMasLogo from '../components-site/branding/VendeMasLogo';
 
-export default function Footer() {
+/**
+ * Footer Component
+ *
+ * A comprehensive, conversion-oriented footer with MVP structure that includes:
+ * - Brand logo with custom stacked layout (size="lg")
+ * - Contact information with proper accessibility
+ * - Organized link sections (Producto, Soporte, Empresa, Legal)
+ * - Social media links with ARIA labels
+ * - Newsletter subscription form with validation
+ * - System status indicator
+ * - Full dark mode support
+ * - WCAG 2.1 AA accessibility compliance
+ *
+ * Features:
+ * - Modal integration for "Cómo funciona" link
+ * - Responsive design with mobile-first approach
+ * - Keyboard navigation and focus management
+ * - Screen reader friendly with proper ARIA attributes
+ * - Semantic HTML structure for better SEO
+ */
+export default function Footer(): React.JSX.Element {
+  // State for controlling the "VendeMás en acción" modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Footer navigation links organized by category for better UX and SEO
+  // Each section is limited to essential MVP links to reduce cognitive load
   const footerLinks = {
+    // Product-related links - core functionality and features
     producto: [
-      { name: 'Funciones', href: '/funciones' },
-      { name: 'Cómo funciona', href: '/#como-funciona' },
-      { name: 'Precios', href: '/#precios' },
-      { name: 'Casos de éxito', href: '/casos-exito' },
-      { name: 'Actualizaciones', href: '/actualizaciones' },
+      { name: 'Todas las Herramientas', href: '/herramientas' },
+      {
+        name: 'Cómo funciona',
+        href: '#',
+        onClick: (): void => setIsModalOpen(true),
+      }, // Opens modal instead of navigation
+      { name: 'Beneficios', href: '#beneficios' },
+      { name: 'Planes', href: '/planes' },
+      { name: 'Casos de éxito', href: '/casos-de-exito' },
     ],
+    // Support and help resources
     soporte: [
       { name: 'Centro de ayuda', href: '/ayuda' },
-      { name: 'Contacto', href: '/contacto' },
       { name: 'Preguntas frecuentes', href: '/faq' },
-      { name: 'Videos tutoriales', href: '/tutoriales' },
-      { name: 'Estado del sistema', href: '/estado' },
-      { name: 'Reportar problema', href: '/reporte' },
+      { name: 'Contacto', href: '/contacto' },
     ],
+    // Company information and media
     empresa: [
       { name: 'Acerca de VendeMás', href: '/acerca' },
-      { name: 'Carreras', href: '/carreras' },
       { name: 'Prensa', href: '/prensa' },
-      { name: 'Socios', href: '/socios' },
-      { name: 'Afiliados', href: '/afiliados' },
     ],
+    // Legal and compliance documents
     legal: [
-      { name: 'Términos de servicio', href: '/terminos' },
-      { name: 'Política de privacidad', href: '/privacidad' },
-      { name: 'Política de cookies', href: '/cookies' },
-      { name: 'Cumplimiento', href: '/cumplimiento' },
-      { name: 'GDPR', href: '/gdpr' },
+      { name: 'Términos y condiciones', href: '/legal/terminos' },
+      { name: 'Política de privacidad', href: '/legal/privacidad' },
+      { name: 'Política de cookies', href: '/legal/cookies' },
     ],
   };
 
+  // Social media links with descriptive ARIA labels for accessibility
   const socialLinks = [
-    { name: 'Facebook', href: '#', icon: Facebook },
-    { name: 'Twitter', href: '#', icon: Twitter },
-    { name: 'Instagram', href: '#', icon: Instagram },
-    { name: 'YouTube', href: '#', icon: Youtube },
+    { name: 'VendeMás en Facebook', href: '#', icon: Facebook },
+    { name: 'VendeMás en X (Twitter)', href: '#', icon: Twitter },
+    { name: 'VendeMás en Instagram', href: '#', icon: Instagram },
+    { name: 'VendeMás en YouTube', href: '#', icon: Youtube },
   ];
 
   return (
-    <footer className='bg-secondary-500 text-white'>
+    // Main footer container with dark mode support
+    <footer className='bg-secondary-500 dark:bg-gray-900 text-white'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8'>
-        {/* Main footer content */}
+        {/* Main footer content - responsive grid layout */}
         <div className='grid lg:grid-cols-5 gap-12'>
-          {/* Company info */}
-          <div className='lg:col-span-2 mt-8'>
-            <div className='flex items-center space-x-3 mb-6'>
-              <div className='bg-gradient-primary p-2 rounded-lg'>
-                <Smartphone className='h-6 w-6 text-white' />
-              </div>
-              <span className='app-name text-2xl text-white'>VendeMás</span>
+          {/* Company info section - brand logo, contact details, and social links */}
+          <div className='lg:col-span-2 mt-10'>
+            {/* Brand logo with custom stacked layout for footer */}
+            <div className='mb-6'>
+              <VendeMasLogo size='lg' asLink={true} label='VendeMás — inicio' />
             </div>
 
-            <p className='text-body text-secondary-200 mb-6 leading-relaxed'>
-              El sistema de punto de venta móvil diseñado especialmente para
-              vendedores ambulantes en México y Latinoamérica. Aumenta tus
-              ventas, acepta más formas de pago y controla tu negocio desde tu
-              smartphone.
-            </p>
-
-            {/* Contact info */}
+            {/* Contact information with proper accessibility and semantic markup */}
             <div className='space-y-3 mb-6'>
               <div className='flex items-center space-x-3'>
-                <Mail className='h-5 w-5 text-secondary-300' />
+                <Mail
+                  className='h-5 w-5 text-secondary-300 dark:text-gray-400'
+                  aria-hidden='true'
+                />
                 <a
                   href='mailto:hola@vendemas.mx'
                   className='text-white hover:text-tertiary-500 transition-colors btn-focus rounded px-2 py-1'
@@ -82,7 +107,10 @@ export default function Footer() {
                 </a>
               </div>
               <div className='flex items-center space-x-3'>
-                <Phone className='h-5 w-5 text-secondary-300' />
+                <Phone
+                  className='h-5 w-5 text-secondary-300 dark:text-gray-400'
+                  aria-hidden='true'
+                />
                 <a
                   href='tel:+525555551234'
                   className='text-white hover:text-tertiary-500 transition-colors btn-focus rounded px-2 py-1'
@@ -91,28 +119,28 @@ export default function Footer() {
                 </a>
               </div>
               <div className='flex items-center space-x-3'>
-                <MapPin className='h-5 w-5 text-secondary-300' />
-                <span className='text-white'>México, CDMX</span>
+                <MapPin className='h-5 w-5 text-secondary-300 dark:text-gray-400' />
+                <span className='text-white'>Ciudad de México, CDMX</span>
               </div>
             </div>
 
-            {/* Social links */}
+            {/* Social media links with larger touch targets and ARIA labels */}
             <div className='flex space-x-4'>
               {socialLinks.map(social => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className='bg-secondary-600 hover:bg-primary-500 p-2 rounded-lg transition-colors duration-200 btn-focus'
+                  className='bg-secondary-600 dark:bg-gray-800 hover:bg-primary-500 dark:hover:bg-primary-600 p-3 rounded-lg transition-colors duration-200 btn-focus'
                   aria-label={social.name}
                 >
-                  <social.icon className='h-5 w-5' />
+                  <social.icon className='h-6 w-6' />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Footer links */}
-          <div className='grid grid-cols-2 lg:grid-cols-3 lg:col-span-3 gap-8'>
+          {/* Footer navigation links organized in responsive grid */}
+          <div className='grid grid-cols-2 lg:grid-cols-3 lg:col-span-3 gap-8 mt-10'>
             <div>
               <h3 className='text-display font-semibold text-white mb-4'>
                 Producto
@@ -120,12 +148,21 @@ export default function Footer() {
               <ul className='space-y-3'>
                 {footerLinks.producto.map(link => (
                   <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className='text-body text-white hover:text-tertiary-500 transition-colors duration-200 btn-focus rounded px-2 py-1'
-                    >
-                      {link.name}
-                    </a>
+                    {link.onClick ? (
+                      <button
+                        onClick={link.onClick}
+                        className='text-body text-white hover:text-tertiary-500 transition-colors duration-200 btn-focus rounded px-2 py-1 text-left'
+                      >
+                        {link.name}
+                      </button>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className='text-body text-white hover:text-tertiary-500 transition-colors duration-200 btn-focus rounded px-2 py-1'
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -149,11 +186,11 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className='col-span-2 lg:col-span-1'>
+            <div>
               <h3 className='text-display font-semibold text-white mb-4'>
                 Empresa
               </h3>
-              <ul className='space-y-3 mb-6'>
+              <ul className='space-y-3'>
                 {footerLinks.empresa.map(link => (
                   <li key={link.name}>
                     <a
@@ -165,7 +202,9 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
+            </div>
 
+            <div>
               <h3 className='text-display font-semibold text-white mb-4'>
                 Legal
               </h3>
@@ -185,46 +224,72 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Newsletter signup */}
-        <div className='border-t border-secondary-400 mt-12 pt-8'>
+        {/* Newsletter subscription form with proper form semantics and accessibility */}
+        <div className='border-t border-secondary-400 dark:border-gray-700 mt-2'>
           <div className='max-w-md mx-auto lg:mx-0 text-center lg:text-left'>
             <h3 className='text-display font-semibold text-white mb-3'>
-              Mantente actualizado
+              Recibe novedades de VendeMás
             </h3>
-            <p className='text-body text-secondary-200 mb-4'>
-              Recibe tips, actualizaciones y ofertas especiales directo en tu
-              email.
+            <p
+              id='newsletter-description'
+              className='text-body text-secondary-200 dark:text-gray-300 mb-4'
+            >
+              Consejos para vender más y noticias de producto.
             </p>
-            <div className='flex flex-col sm:flex-row gap-3'>
+            {/* Accessible form with proper labels and ARIA attributes */}
+            <form
+              className='flex flex-col sm:flex-row gap-3'
+              aria-label='Newsletter subscription'
+            >
+              {/* Screen reader only label for email input */}
+              <label htmlFor='newsletter-email' className='sr-only'>
+                Correo electrónico para newsletter
+              </label>
+              {/* Email input with proper accessibility attributes */}
               <input
+                id='newsletter-email'
                 type='email'
                 placeholder='tu@email.com'
-                className='flex-1 px-4 py-3 rounded-lg bg-secondary-600 border border-secondary-400 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent'
+                className='flex-1 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent'
+                aria-describedby='newsletter-description'
+                required
               />
-              <button className='bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 btn-focus'>
-                Suscribirse
+              {/* Submit button with proper ARIA label */}
+              <button
+                type='submit'
+                className='bg-primary-500 hover:bg-primary-600 text-white font-semibold px-4 rounded-lg transition-colors duration-200 btn-focus'
+                style={{ height: '42px' }}
+                aria-label='Suscribirse al boletín'
+              >
+                Recibir novedades
               </button>
-            </div>
+            </form>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className='border-t border-secondary-400 mt-12 pt-8 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0'>
+        {/* Footer bottom bar with copyright, branding, and system status */}
+        <div className='border-t border-secondary-400 dark:border-gray-700 mt-4 pt-8 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0'>
           <div className='text-body text-white text-sm'>
             © 2025 VendeMás. Todos los derechos reservados.
           </div>
 
-          <div className='flex items-center space-x-6 text-sm'>
-            <span className='text-white'>
-              Hecho con ❤️ para vendedores mexicanos
-            </span>
-            <div className='flex items-center space-x-2'>
-              <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-              <span className='text-white'>Todos los sistemas operando</span>
-            </div>
+          <div className='text-body text-white text-sm'>
+            Hecho con ❤️ en México para PyMEs y vendedores de LATAM
+          </div>
+
+          {/* System status indicator with visual and text representation */}
+          <div className='flex items-center space-x-2 text-sm'>
+            <div
+              className='w-2 h-2 bg-green-500 rounded-full'
+              aria-hidden='true'
+            ></div>
+            <span className='text-white'>Todos los sistemas operando</span>
           </div>
         </div>
       </div>
+
+      {/* Conditional rendering of VendeMás en acción modal */}
+      {isModalOpen && <InActionModal onClose={() => setIsModalOpen(false)} />}
     </footer>
   );
 }

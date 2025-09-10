@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { X, Users, TrendingUp, Star, ChevronRight } from 'lucide-react';
 
-interface VendeMasEnAccionModalProps {
+interface InActionModalProps {
   onClose: () => void;
   youtubeVideoId?: string;
 }
 
 /**
- * VendeMasEnAccionModal Component
+ * InActionModal Component
  *
  * Premium conversion-focused modal for showcasing VendeMás in action with:
  *
@@ -31,17 +31,20 @@ interface VendeMasEnAccionModalProps {
  * - Screen reader friendly with semantic HTML and ARIA labels
  * - Touch targets meet minimum 44px requirements
  */
-export default function VendeMasEnAccionModal({
+export default function InActionModal({
   onClose,
   youtubeVideoId = 'NQN2w7KPeTs', // Default video ID, replace with actual
-}: VendeMasEnAccionModalProps): React.JSX.Element {
+}: InActionModalProps): React.JSX.Element {
   // State for tracking video loading status to show/hide loading spinner
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   // Keyboard accessibility: Close modal when Escape key is pressed
   useEffect(() => {
-    const onKey = (e: globalThis.KeyboardEvent): void =>
-      e.key === 'Escape' && onClose();
+    const onKey = (e: globalThis.KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', onKey);
     return (): void => window.removeEventListener('keydown', onKey);
   }, [onClose]);
@@ -132,7 +135,7 @@ export default function VendeMasEnAccionModal({
       role='dialog'
       aria-modal='true'
       aria-label='VendeMás en acción'
-      className='fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
+      className='fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
       onClick={onClose}
     >
       {/* Modal container with glassmorphism design */}
@@ -145,7 +148,7 @@ export default function VendeMasEnAccionModal({
         <div className='absolute inset-0 bg-[radial-gradient(60%_50%_at_20%_18%,theme(colors.primary.50)_0%,transparent_60%),radial-gradient(45%_45%_at_85%_20%,theme(colors.secondary.50)_0%,transparent_60%),radial-gradient(55%_55%_at_78%_82%,theme(colors.tertiary.50)_0%,transparent_55%)] dark:bg-[radial-gradient(60%_50%_at_20%_18%,theme(colors.primary.900)_0%,transparent_60%),radial-gradient(45%_45%_at_85%_20%,theme(colors.secondary.900)_0%,transparent_60%),radial-gradient(55%_55%_at_78%_82%,theme(colors.tertiary.900)_0%,transparent_55%)]' />
 
         {/* Main content container with proper z-index layering */}
-        <div className='relative z-10 flex flex-col h-full'>
+        <div className='relative z-[70] flex flex-col h-full'>
           {/* Modal header with title, subtitle, and close button */}
           <div className='flex items-center justify-between p-6'>
             <div>

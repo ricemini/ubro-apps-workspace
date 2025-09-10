@@ -40,14 +40,14 @@ import {
 import {
   Menu,
   BarChart3,
-  MousePointer,
-  Shield,
+  BrainCircuit,
+  SquareMenu,
   SquarePlus,
   X,
   ChevronDown,
-  Phone,
+  Blocks,
   PlayCircle,
-  Grid3X3,
+  HandCoins,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -62,27 +62,29 @@ import FocusTrap from './accessibility/FocusTrap';
  */
 const products = [
   {
-    name: 'Analytics',
-    description: 'Get a better understanding where your traffic is coming from',
-    href: '#',
+    name: 'Estadísticas con IA',
+    description:
+      'Análisis de ventas en tiempo real para tomar mejores decisiones.',
+    href: '/ia/#estadisticas',
     icon: BarChart3,
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers with our engagement tool',
-    href: '#',
-    icon: MousePointer,
+    name: 'Promos con IA',
+    description:
+      'Genera promociones personalizadas para vender más en los días más flojos.',
+    href: '/ia/#promos',
+    icon: BrainCircuit,
   },
   {
-    name: 'Security',
-    description: "Your customers' data will be safe and secure",
-    href: '#',
-    icon: Shield,
+    name: 'Catálogo / Menú Inteligente',
+    description: 'Crea tu catálogo automáticamente desde una foto.',
+    href: '/ia/#catalogo-menu',
+    icon: SquareMenu,
   },
   {
-    name: 'Integrations',
-    description: "Your customers' data will be safe and secure",
-    href: '#',
+    name: 'Todas las Herramientas',
+    description: 'Conoce todas las herramientas de VendeMás.',
+    href: '/herramientas',
     icon: SquarePlus,
   },
 ];
@@ -92,9 +94,9 @@ const products = [
  * Provides quick access to demo, sales contact, and product overview
  */
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircle },
-  { name: 'Contact sales', href: '#', icon: Phone },
-  { name: 'View all products', href: '#', icon: Grid3X3 },
+  { name: 'VendeMás en acción', href: '#', icon: PlayCircle },
+  { name: 'Beneficios', href: '#beneficios', icon: HandCoins },
+  { name: 'Planes', href: '/faq', icon: Blocks },
 ];
 
 /**
@@ -250,7 +252,7 @@ export default function Example(): React.JSX.Element {
                 aria-expanded={isProductsOpen}
                 aria-haspopup='true'
               >
-                Herramientas
+                Tu negocio impulsado por IA
                 <ChevronDown
                   aria-hidden='true'
                   className='size-4 flex-none text-gray-400 dark:text-gray-500'
@@ -342,13 +344,7 @@ export default function Example(): React.JSX.Element {
             </Popover>
 
             {/* Direct navigation links - visible on medium+ screens */}
-            <a
-              href='#precios'
-              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-              aria-label='Ver beneficios de la plataforma'
-            >
-              Beneficios
-            </a>
+
             <a
               href='/faq'
               className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
@@ -478,7 +474,7 @@ export default function Example(): React.JSX.Element {
 
                   {/* Direct navigation links */}
                   <a
-                    href='#precios'
+                    href='#beneficios'
                     className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
                     aria-label='Ver beneficios de la plataforma'
                   >
