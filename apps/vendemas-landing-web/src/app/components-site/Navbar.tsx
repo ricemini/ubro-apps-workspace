@@ -175,11 +175,11 @@ export default function Example(): React.JSX.Element {
     // Main header container with fixed positioning
     // - Always fixed positioning for consistent sticky navigation
     // - Transparent background for clean overlay effect
-    <header className='fixed top-0 left-0 right-0 bg-transparent isolate z-10 b-4'>
+    <header className='fixed top-0 left-0 right-0 bg-transparent isolate z-50 b-4'>
       {/* Skip link for keyboard navigation - appears only on focus */}
       <a
         href='#main-content'
-        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
+        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[90] focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-primary-600'
       >
         Saltar al contenido principal
       </a>
@@ -263,7 +263,7 @@ export default function Example(): React.JSX.Element {
               {/* - Transition classes: smooth enter/exit animations with different durations */}
               <PopoverPanel
                 transition
-                className='absolute inset-x-0 top-[50px] bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+                className='absolute inset-x-0 top-[50px] bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950 z-[60]'
                 onFocus={() => setIsProductsOpen(true)}
                 onBlur={() => setIsProductsOpen(false)}
               >
@@ -403,14 +403,14 @@ export default function Example(): React.JSX.Element {
         className='lg:hidden'
       >
         {/* Backdrop overlay */}
-        <div className='fixed inset-0 z-50' />
+        <div className='fixed inset-0 z-[70]' />
 
         {/* Mobile menu panel with slide-in animation */}
         <FocusTrap isActive={mobileMenuOpen} onEscape={handleMobileMenuClose}>
           <DialogPanel
             ref={mobileMenuRef}
             id='mobile-menu'
-            className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'
+            className='fixed inset-y-0 right-0 z-[80] w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10'
           >
             {/* Header with logo and close button */}
             <div className='flex -mt-3 -mr-0.5 justify-between'>
