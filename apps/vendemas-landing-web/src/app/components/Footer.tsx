@@ -55,7 +55,7 @@ export default function Footer() {
         {/* Main footer content */}
         <div className='grid lg:grid-cols-5 gap-12'>
           {/* Company info */}
-          <div className='lg:col-span-2'>
+          <div className='lg:col-span-2 mt-8'>
             <div className='flex items-center space-x-3 mb-6'>
               <div className='bg-gradient-primary p-2 rounded-lg'>
                 <Smartphone className='h-6 w-6 text-white' />

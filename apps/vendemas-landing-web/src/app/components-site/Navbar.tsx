@@ -263,7 +263,7 @@ export default function Example(): React.JSX.Element {
               {/* - Transition classes: smooth enter/exit animations with different durations */}
               <PopoverPanel
                 transition
-                className='absolute inset-x-0 top-12 bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
+                className='absolute inset-x-0 top-[50px] bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950'
                 onFocus={() => setIsProductsOpen(true)}
                 onBlur={() => setIsProductsOpen(false)}
               >

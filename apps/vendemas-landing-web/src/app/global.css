@@ -175,6 +175,12 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
+  .animate-wave-1,
+  .animate-wave-2,
+  .animate-wave-3 {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* Motion keyframes (non-gradient helpers kept) */
@@ -252,6 +258,79 @@ body {
     opacity: 0 !important;
     transform: translateY(12px) !important;
   }
+
+  /* Wave animations for CTA section */
+  @keyframes wave-1 {
+    0%,
+    100% {
+      transform: translateX(0) scaleX(1);
+    }
+    25% {
+      transform: translateX(-10px) scaleX(1.02);
+    }
+    50% {
+      transform: translateX(0) scaleX(1.05);
+    }
+    75% {
+      transform: translateX(10px) scaleX(1.02);
+    }
+  }
+
+  @keyframes wave-2 {
+    0%,
+    100% {
+      transform: translateX(0) scaleX(1);
+    }
+    33% {
+      transform: translateX(-5px) scaleX(1.03);
+    }
+    66% {
+      transform: translateX(5px) scaleX(1.01);
+    }
+  }
+
+  @keyframes wave-3 {
+    0%,
+    100% {
+      transform: translateX(0) scaleX(1);
+    }
+    50% {
+      transform: translateX(-3px) scaleX(1.01);
+    }
+  }
+
+  .animate-wave-1 {
+    animation: wave-1 12s ease-in-out infinite;
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  .animate-wave-2 {
+    animation: wave-2 10s ease-in-out infinite;
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  .animate-wave-3 {
+    animation: wave-3 8s ease-in-out infinite;
+    will-change: transform;
+    transform-origin: center;
+  }
+}
+
+/* Temporary wave animation for testing - remove after confirming it works */
+@keyframes test-wave {
+  0% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+.animate-wave-test {
+  animation: test-wave 4s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Gradient text helper (no animation here; add .animate-vm-gradient when needed) */

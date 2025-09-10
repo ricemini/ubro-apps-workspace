@@ -14,11 +14,20 @@ export default function HeroBackground(): React.JSX.Element {
   return (
     // Decorative background container - hidden from screen readers and no pointer events
     <div aria-hidden className='pointer-events-none absolute inset-0 -z-10'>
-      {/* Aurora mesh gradient using brand color tints for visual interest */}
+      {/* Premium gradient with purple tones and granular texture */}
       <div
         className='
           absolute inset-0
-          bg-[radial-gradient(60%_50%_at_20%_18%,theme(colors.primary.50)_0%,transparent_60%),radial-gradient(45%_45%_at_85%_20%,theme(colors.secondary.50)_0%,transparent_60%),radial-gradient(55%_55%_at_78%_82%,theme(colors.tertiary.50)_0%,transparent_55%)]
+          bg-gradient-premium dark:bg-gradient-premium-dark
+        '
+      />
+
+      {/* Granular texture overlay for premium feel */}
+      <div
+        className='
+          absolute inset-0
+          bg-gradient-grain
+          opacity-60 dark:opacity-80
         '
       />
 

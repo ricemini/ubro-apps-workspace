@@ -259,7 +259,7 @@ describe('ValueProps Component', () => {
       renderComponent();
 
       const section = screen.getByRole('region').closest('section');
-      expect(section?.className).toContain('dark:bg-gray-900');
+      expect(section?.className).toContain('dark:bg-gradient-premium-dark');
 
       const cards = screen.getAllByRole('article');
       cards.forEach(card => {
