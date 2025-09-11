@@ -67,7 +67,7 @@ const products = [
   {
     name: 'Estadísticas con IA',
     description:
-      'Descubre qué vendes y por qué. Decide en tiempo real para ganar más',
+      'Descubre qué vende más y por qué. Toma mejores decisiones en segundos.',
     href: '/ia/estadisticas',
     icon: BarChart3,
     analytics: 'nav_ia_stats',
@@ -75,28 +75,31 @@ const products = [
   {
     name: 'Promos con IA',
     description:
-      'Promociones automáticas según demanda y día. Llena tus horas flojas.',
+      'Llena tus horas flojas con promociones automáticas que aumentan ventas.',
     href: '/ia/promos',
     icon: BrainCircuit,
     analytics: 'nav_ia_promos',
   },
   {
     name: 'Catálogo / Menú Inteligente',
-    description: 'Escanea una foto y tu catálogo se crea en segundos con IA.',
+    description:
+      'Escanea tu menú y crea un catálogo digital en segundos con IA.',
     href: '/ia/catalogo',
     icon: SquareMenu,
     analytics: 'nav_ia_catalog',
   },
   {
-    name: 'CODI Certificado',
-    description: 'Cobra al instante, sin comisiones, directo en tu cuenta.',
+    name: 'CoDi Certificado',
+    description:
+      'Cobra sin comisiones y recibe tu dinero directo en tu cuenta bancaria.',
     href: '/codi',
     icon: QrCodeIcon,
     analytics: 'nav_codi',
   },
   {
     name: 'Todas las Herramientas',
-    description: 'Explora todo lo que puedes hacer con VendeMás.',
+    description:
+      'Explora todas las soluciones que VendeMás tiene para tu negocio.',
     href: '/herramientas',
     icon: SquarePlus,
     analytics: 'nav_all_features',
@@ -106,7 +109,7 @@ const products = [
 /**
  * Call-to-action items displayed in the dropdown footer
  * Provides quick access to demo, sales contact, and product overview
- * Updated with new mini-CTA for "Ver demo de IA" that opens the modal
+ * Updated with new mini-CTA for "VendeMás en acción" that opens the modal
  */
 const callsToAction = [
   {
@@ -117,7 +120,7 @@ const callsToAction = [
     analytics: 'nav_beneficios',
   },
   {
-    name: 'Ver demo de IA',
+    name: 'VendeMás en acción',
     href: '#',
     icon: PlayCircle,
     onClick: true,
@@ -273,7 +276,7 @@ export default function Example(): React.JSX.Element {
             {/* Products dropdown with Headless UI Popover */}
             <Popover className='relative'>
               <PopoverButton className='inline-flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'>
-                <span>Soluciones</span>
+                <span>Soluciones con IA</span>
                 <ChevronDownIcon
                   aria-hidden='true'
                   className='size-4 flex-none text-gray-400 dark:text-gray-500'
@@ -496,7 +499,7 @@ export default function Example(): React.JSX.Element {
                   {/* Collapsible products section */}
                   <Disclosure as='div' className='-mx-3'>
                     <DisclosureButton className='group flex w-full items-center justify-between card-border !rounded-[14px] py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
-                      Herramientas
+                      Soluciones con IA
                       <ChevronDown
                         aria-hidden='true'
                         className='size-5 flex-none group-data-open:rotate-180'
