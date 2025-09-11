@@ -50,7 +50,7 @@ import {
 import {
   ChevronDownIcon,
   QrCodeIcon,
-  CurrencyDollarIcon,
+  HandCoinsIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
@@ -107,7 +107,7 @@ const products = [
  */
 const callsToAction = [
   {
-    name: 'VendeMás en acción',
+    name: 'Ver video',
     href: '#',
     icon: PlayCircle,
     onClick: true,
@@ -116,12 +116,12 @@ const callsToAction = [
   {
     name: 'Beneficios',
     href: '#beneficios',
-    icon: CurrencyDollarIcon,
+    icon: HandCoinsIcon,
     onClick: false,
     analytics: 'nav_benefits',
   },
   {
-    name: 'Todas las Herramientas',
+    name: 'Herramientas',
     href: '/herramientas',
     icon: Blocks,
     onClick: false,
