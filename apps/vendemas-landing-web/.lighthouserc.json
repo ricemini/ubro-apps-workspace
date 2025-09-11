@@ -16,7 +16,6 @@
         "first-contentful-paint": ["warn", { "maxNumericValue": 1500 }],
         "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
         "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }],
-        "first-input-delay": ["warn", { "maxNumericValue": 100 }],
         "total-blocking-time": ["warn", { "maxNumericValue": 300 }],
         "speed-index": ["warn", { "maxNumericValue": 2000 }]
       }
