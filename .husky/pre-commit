@@ -12,7 +12,8 @@ if git diff --cached --name-only | grep -E "^(apps/vendemas-landing-web/|libs/)"
   fi
 
   # Run with local configuration (relaxed thresholds)
-  lhci autorun --config=./apps/vendemas-landing-web/.lighthouserc.local.json
+  cd apps/vendemas-landing-web
+  lhci autorun --config=./.lighthouserc.local.json
 
   if [ $? -ne 0 ]; then
     echo "❌ Quick Lighthouse check failed! Consider running full performance tests."

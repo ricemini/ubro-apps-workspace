@@ -12,7 +12,8 @@ if git diff --name-only HEAD~1 HEAD | grep -E "^(apps/vendemas-landing-web/|libs
   fi
 
   # Run Lighthouse CI
-  lhci autorun --config=./apps/vendemas-landing-web/.lighthouserc.json
+  cd apps/vendemas-landing-web
+  lhci autorun --config=./.lighthouserc.json
 
   if [ $? -ne 0 ]; then
     echo "❌ Lighthouse CI failed! Performance tests did not pass."

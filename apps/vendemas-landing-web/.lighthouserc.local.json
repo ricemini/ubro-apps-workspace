@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "url": ["http://localhost:3000"],
-      "startServerCommand": "npx nx serve vendemas-landing-web",
+      "startServerCommand": "cd ../../ && npx nx serve vendemas-landing-web",
       "startServerReadyPattern": "ready - started server on",
       "startServerReadyTimeout": 60000,
       "numberOfRuns": 1
