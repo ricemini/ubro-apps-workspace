@@ -297,7 +297,7 @@ export default function Example(): React.JSX.Element {
                         <div className='mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                           <item.icon
                             aria-hidden='true'
-                            className='size-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-400 dark:group-hover:text-white'
+                            className='size-6 text-gray-600 group-secondary:text-indigo-600 dark:text-gray-400 dark:group-secondary:text-white'
                           />
                         </div>
                         <div>
@@ -322,7 +322,7 @@ export default function Example(): React.JSX.Element {
                         <button
                           key={item.name}
                           onClick={() => setIsModalOpen(true)}
-                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 secondary:bg-gray-100 dark:text-white dark:secondary:bg-gray-700/50'
                           data-analytics={item.analytics}
                         >
                           <item.icon
@@ -335,7 +335,7 @@ export default function Example(): React.JSX.Element {
                         <a
                           key={item.name}
                           href={item.href}
-                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 secondary:bg-gray-100 dark:text-white dark:secondary:bg-gray-700/50'
                           data-analytics={item.analytics}
                         >
                           <item.icon
@@ -354,14 +354,14 @@ export default function Example(): React.JSX.Element {
             {/* Direct navigation links - visible on medium+ screens */}
             <a
               href='/planes'
-              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
               aria-label='Planes'
             >
               Planes
             </a>
             <a
               href='/faq'
-              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
               aria-label='Preguntas frecuentes'
             >
               FAQ
@@ -386,7 +386,7 @@ export default function Example(): React.JSX.Element {
           {/* Primary call-to-action button */}
           <Link
             href='/signup'
-            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white secondary:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:secondary:bg-primary-600'
             data-analytics='nav_cta_signup'
             aria-label='Comenzar a usar VendeMás gratis'
           >
@@ -506,24 +506,27 @@ export default function Example(): React.JSX.Element {
                       />
                     </DisclosureButton>
 
-                    {/* Collapsible content for products */}
-                    <DisclosurePanel className='mt-2 space-y-2 border-l-2 border-gray-200 dark:border-gray-700 ml-4 pl-4'>
-                      {products.map(item => (
-                        <DisclosureButton
-                          key={item.name}
-                          as='a'
-                          href={item.href}
-                          className='flex items-center gap-x-3 rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                          aria-label={`${item.name} - ${item.href}`}
-                          data-analytics={item.analytics}
-                        >
-                          <item.icon
-                            aria-hidden='true'
-                            className='size-4 flex-none text-gray-600 dark:text-gray-400'
-                          />
-                          {item.name}
-                        </DisclosureButton>
-                      ))}
+                    {/* Collapsible content for products - horizontal scroll */}
+                    <DisclosurePanel className='mt-2 overflow-x-auto'>
+                      <div className='flex space-x-3 pb-2'>
+                        {products.map(item => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className='flex flex-col items-center gap-y-2 min-w-[120px] p-3 rounded-lg text-center text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5 border border-gray-200 dark:border-gray-700'
+                            aria-label={`${item.name} - ${item.href}`}
+                            data-analytics={item.analytics}
+                          >
+                            <item.icon
+                              aria-hidden='true'
+                              className='size-6 flex-none text-gray-600 dark:text-gray-400'
+                            />
+                            <span className='text-xs leading-tight'>
+                              {item.name}
+                            </span>
+                          </a>
+                        ))}
+                      </div>
                     </DisclosurePanel>
                   </Disclosure>
 
