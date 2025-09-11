@@ -54,47 +54,61 @@ import Link from 'next/link';
 import VendeMasLogo from './branding/VendeMasLogo';
 import ThemeToggle from './theme/ThemeToggle';
 import FocusTrap from './accessibility/FocusTrap';
+import InActionModal from './InActionModal';
 
 /**
  * Product features data for the dropdown mega menu
  * Each product represents a key feature of the VendeMás platform
- * Used in the "Herramientas" dropdown navigation
+ * Used in the "Tu negocio impulsado por IA" dropdown navigation
+ * Updated with benefit-led, aspirational microcopy for better conversion
  */
 const products = [
   {
     name: 'Estadísticas con IA',
     description:
-      'Análisis de ventas en tiempo real para tomar mejores decisiones.',
-    href: '/ia/#estadisticas',
+      'Ve qué se vende, cuándo y por qué. Decide en tiempo real para ganar más.',
+    href: '/ia/estadisticas',
     icon: BarChart3,
+    analytics: 'nav_ia_stats',
   },
   {
     name: 'Promos con IA',
     description:
-      'Genera promociones personalizadas para vender más en los días más flojos.',
-    href: '/ia/#promos',
+      'Promociones automáticas según demanda y día. Llena tus horas flojas.',
+    href: '/ia/promos',
     icon: BrainCircuit,
+    analytics: 'nav_ia_promos',
   },
   {
     name: 'Catálogo / Menú Inteligente',
-    description: 'Crea tu catálogo automáticamente desde una foto.',
-    href: '/ia/#catalogo-menu',
+    description:
+      'Escanea una foto y la IA crea y mantiene tu catálogo en segundos.',
+    href: '/ia/catalogo',
     icon: SquareMenu,
+    analytics: 'nav_ia_catalog',
   },
   {
     name: 'Todas las Herramientas',
-    description: 'Conoce todas las herramientas de VendeMás.',
+    description: 'Explora todo lo que puedes hacer con VendeMás.',
     href: '/herramientas',
     icon: SquarePlus,
+    analytics: 'nav_ia_all_tools',
   },
 ];
 
 /**
  * Call-to-action items displayed in the dropdown footer
  * Provides quick access to demo, sales contact, and product overview
+ * Updated with new mini-CTA for "Ver demo de IA" that opens the modal
  */
 const callsToAction = [
-  { name: 'VendeMás en acción', href: '#', icon: PlayCircle },
+  {
+    name: 'Ver demo de IA',
+    href: '#',
+    icon: PlayCircle,
+    onClick: true,
+    analytics: 'nav_ia_demo_cta',
+  },
   { name: 'Beneficios', href: '#beneficios', icon: HandCoins },
   { name: 'Planes', href: '/faq', icon: Blocks },
 ];
@@ -127,6 +141,9 @@ export default function Example(): React.JSX.Element {
 
   // State for tracking dropdown menu open state
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+
+  // State for controlling the "VendeMás en acción" modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Refs for focus management
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -300,6 +317,7 @@ export default function Example(): React.JSX.Element {
                           href={item.href}
                           className='mt-6 block font-semibold text-gray-900 dark:text-white'
                           aria-describedby={`${item.name.toLowerCase()}-description`}
+                          data-analytics={item.analytics}
                         >
                           {item.name}
                           <span className='absolute inset-0' />
@@ -322,20 +340,37 @@ export default function Example(): React.JSX.Element {
                       {/* Grid layout for action items with dividers */}
                       <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
                         {/* Map through call-to-action items */}
-                        {callsToAction.map(item => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                            aria-label={`${item.name} - ${item.href}`}
-                          >
-                            <item.icon
-                              aria-hidden='true'
-                              className='size-5 flex-none text-gray-400 dark:text-gray-500'
-                            />
-                            {item.name}
-                          </a>
-                        ))}
+                        {callsToAction.map(item =>
+                          item.onClick ? (
+                            <button
+                              key={item.name}
+                              onClick={() => setIsModalOpen(true)}
+                              className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
+                              aria-label={`${item.name} - Abrir modal de demostración`}
+                              data-analytics={item.analytics}
+                            >
+                              <item.icon
+                                aria-hidden='true'
+                                className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                              />
+                              {item.name}
+                            </button>
+                          ) : (
+                            <a
+                              key={item.name}
+                              href={item.href}
+                              className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
+                              aria-label={`${item.name} - ${item.href}`}
+                              data-analytics={item.analytics}
+                            >
+                              <item.icon
+                                aria-hidden='true'
+                                className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                              />
+                              {item.name}
+                            </a>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
@@ -519,6 +554,14 @@ export default function Example(): React.JSX.Element {
           </DialogPanel>
         </FocusTrap>
       </Dialog>
+
+      {/* InActionModal for "Ver demo de IA" functionality */}
+      {isModalOpen && (
+        <InActionModal
+          onClose={() => setIsModalOpen(false)}
+          youtubeVideoId='dQw4w9WgXcQ'
+        />
+      )}
     </header>
   );
 }
