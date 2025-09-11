@@ -62,12 +62,15 @@ export default function FormAccessibility({
 
       {/* Form control with accessibility attributes */}
       <div>
-        {React.cloneElement(children as React.ReactElement<any>, {
-          id,
-          'aria-describedby': describedBy || undefined,
-          'aria-invalid': invalid,
-          'aria-required': required,
-        })}
+        {React.cloneElement(
+          children as React.ReactElement<Record<string, unknown>>,
+          {
+            id,
+            'aria-describedby': describedBy || undefined,
+            'aria-invalid': invalid,
+            'aria-required': required,
+          }
+        )}
       </div>
 
       {/* Description text */}

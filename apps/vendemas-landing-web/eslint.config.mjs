@@ -1,5 +1,7 @@
 import js from '@eslint/js';
 import react from 'eslint-plugin-react';
+import typescriptParser from '@typescript-eslint/parser';
+import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 
 export default [
   {
@@ -14,14 +16,36 @@ export default [
     ],
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
+      parser: typescriptParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
+        project: './tsconfig.json',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': typescriptPlugin,
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+        project: './tsconfig.json',
       },
       globals: {
         // Browser globals
@@ -69,15 +93,19 @@ export default [
     },
     plugins: {
       react,
+      '@typescript-eslint': typescriptPlugin,
     },
     rules: {
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
+      ...typescriptPlugin.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
       'react/no-unknown-property': 'off',
-      'no-unused-vars': 'warn',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
       'no-undef': 'off',
     },
     settings: {

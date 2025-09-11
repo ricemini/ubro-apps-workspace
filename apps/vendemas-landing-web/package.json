@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "lint": "echo 'Linting skipped due to compatibility issues' && exit 0",
+    "lint": "eslint src/ --max-warnings 20",
     "test": "echo 'Tests temporarily disabled due to React 19 compatibility issues' && exit 0"
   },
   "dependencies": {
