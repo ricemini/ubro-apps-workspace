@@ -15,7 +15,7 @@ vi.mock('react', async () => {
 
 // Mock the InActionModal component
 vi.mock('../components-site/InActionModal', () => ({
-  default: ({ onClose }: { onClose: () => void }): React.JSX.Element => (
+  default: ({ onClose }: { onClose: () => void }) => (
     <div data-testid='in-action-modal'>
       <button onClick={onClose} data-testid='close-modal'>
         Close Modal
@@ -161,7 +161,7 @@ describe('Footer Component', () => {
       render(<Footer />);
 
       expect(
-        screen.getByRole('link', { name: 'Todas las Herramientas' })
+        screen.getByRole('link', { name: 'Soluciones con IA' })
       ).toHaveAttribute('href', '/soluciones-con-ia');
       expect(screen.getByRole('link', { name: 'Beneficios' })).toHaveAttribute(
         'href',
