@@ -49,7 +49,7 @@ export default function Benefits(): React.JSX.Element {
       badgeColor: 'bg-primary-500',
       popular: true,
       description:
-        'Tu negocio no depende del WiFi: vende siempre, incluso offline.',
+        'Acepta pagos aun sin conexión. Tus ventas se registran y se confirman automáticamente al volver a estar en línea, siempre que el cliente tenga fondos disponibles.',
       primaryCta: 'Inicia gratis',
       secondaryCta: 'Ver más',
       gradient: 'from-primary-100 via-primary-50 to-white',
