@@ -46,12 +46,9 @@ import {
   ChevronDown,
   PlayCircle,
   Blocks,
+  HandCoins,
 } from 'lucide-react';
-import {
-  ChevronDownIcon,
-  QrCodeIcon,
-  HandCoinsIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronDownIcon, QrCodeIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
 import VendeMasLogo from './branding/VendeMasLogo';
@@ -116,7 +113,7 @@ const callsToAction = [
   {
     name: 'Beneficios',
     href: '#beneficios',
-    icon: HandCoinsIcon,
+    icon: HandCoins,
     onClick: false,
     analytics: 'nav_benefits',
   },
