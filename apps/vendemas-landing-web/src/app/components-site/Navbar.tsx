@@ -45,10 +45,13 @@ import {
   SquarePlus,
   X,
   ChevronDown,
-  Blocks,
-  PlayCircle,
-  HandCoins,
+  Barcode,
 } from 'lucide-react';
+import {
+  ChevronDownIcon,
+  PhoneIcon,
+  PlayCircleIcon,
+} from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
 import VendeMasLogo from './branding/VendeMasLogo';
@@ -88,11 +91,19 @@ const products = [
     analytics: 'nav_ia_catalog',
   },
   {
+    name: 'CODI Certificado',
+    description:
+      'Cobra sin comisiones y recibe cada peso directo en tu cuenta bancaria.',
+    href: '/codi',
+    icon: Barcode,
+    analytics: 'nav_codi',
+  },
+  {
     name: 'Todas las Herramientas',
     description: 'Explora todo lo que puedes hacer con VendeMás.',
     href: '/herramientas',
     icon: SquarePlus,
-    analytics: 'nav_ia_all_tools',
+    analytics: 'nav_all_features',
   },
 ];
 
@@ -105,12 +116,16 @@ const callsToAction = [
   {
     name: 'Ver demo de IA',
     href: '#',
-    icon: PlayCircle,
+    icon: PlayCircleIcon,
     onClick: true,
     analytics: 'nav_ia_demo_cta',
   },
-  { name: 'Beneficios', href: '#beneficios', icon: HandCoins },
-  { name: 'Planes', href: '/faq', icon: Blocks },
+  {
+    name: 'Contactar ventas',
+    href: '/contacto',
+    icon: PhoneIcon,
+    analytics: 'nav_contact_sales',
+  },
 ];
 
 /**
@@ -138,9 +153,6 @@ const callsToAction = [
 export default function Example(): React.JSX.Element {
   // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // State for tracking dropdown menu open state
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
 
   // State for controlling the "VendeMás en acción" modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -261,118 +273,79 @@ export default function Example(): React.JSX.Element {
         <PopoverGroup className='hidden md:flex md:flex-1 md:justify-center lg:flex-1 lg:justify-center'>
           {/* Navigation container with single card styling */}
           <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-4'>
-            {/* Products dropdown with mega menu */}
-            <Popover>
-              <PopoverButton
-                className='flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-                aria-label='Herramientas dropdown menu'
-                aria-expanded={isProductsOpen}
-                aria-haspopup='true'
-              >
-                Tu negocio impulsado por IA
-                <ChevronDown
+            {/* Products dropdown with Headless UI Popover */}
+            <Popover className='relative'>
+              <PopoverButton className='inline-flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'>
+                <span>Tu negocio impulsado por IA</span>
+                <ChevronDownIcon
                   aria-hidden='true'
                   className='size-4 flex-none text-gray-400 dark:text-gray-500'
                 />
               </PopoverButton>
 
-              {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
-              {/* - top-12 (48px): positioned below the 60px navbar */}
-              {/* - inset-x-0: spans full width of viewport for immersive experience */}
-              {/* - Transition classes: smooth enter/exit animations with different durations */}
               <PopoverPanel
                 transition
-                className='absolute inset-x-0 top-[50px] bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950 z-[60]'
-                onFocus={() => setIsProductsOpen(true)}
-                onBlur={() => setIsProductsOpen(false)}
+                className='absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 bg-transparent px-4 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in'
               >
-                {/* Shadow overlay element for visual depth and separation */}
-                {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
-                {/* - Dark mode: no shadow, only ring for subtle separation */}
-                <div
-                  aria-hidden='true'
-                  className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
-                />
-
-                {/* Main dropdown content container */}
-                <div className='relative bg-white dark:bg-gray-950'>
-                  {/* Product grid with 4 columns for feature showcase */}
-                  <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
-                    {/* Map through products to display feature cards */}
+                <div className='w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg outline-1 outline-gray-900/5 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10'>
+                  <div className='p-4'>
                     {products.map(item => (
                       <div
                         key={item.name}
-                        className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
+                        className='group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-white/5'
                       >
-                        {/* Icon container with hover effects */}
-                        <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
+                        <div className='mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                           <item.icon
                             aria-hidden='true'
-                            className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
+                            className='size-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-400 dark:group-hover:text-white'
                           />
                         </div>
-
-                        {/* Feature title with full clickable area */}
-                        <a
-                          href={item.href}
-                          className='mt-6 block font-semibold text-gray-900 dark:text-white'
-                          aria-describedby={`${item.name.toLowerCase()}-description`}
-                          data-analytics={item.analytics}
-                        >
-                          {item.name}
-                          <span className='absolute inset-0' />
-                        </a>
-
-                        {/* Feature description */}
-                        <p
-                          id={`${item.name.toLowerCase()}-description`}
-                          className='mt-1 text-gray-600 dark:text-gray-400'
-                        >
-                          {item.description}
-                        </p>
+                        <div>
+                          <a
+                            href={item.href}
+                            className='font-semibold text-gray-900 dark:text-white'
+                            data-analytics={item.analytics}
+                          >
+                            {item.name}
+                            <span className='absolute inset-0' />
+                          </a>
+                          <p className='mt-1 text-gray-600 dark:text-gray-400'>
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>
-
-                  {/* Bottom action section with call-to-action links */}
-                  <div className='bg-gray-50 dark:bg-gray-900/50'>
-                    <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-                      {/* Grid layout for action items with dividers */}
-                      <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
-                        {/* Map through call-to-action items */}
-                        {callsToAction.map(item =>
-                          item.onClick ? (
-                            <button
-                              key={item.name}
-                              onClick={() => setIsModalOpen(true)}
-                              className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                              aria-label={`${item.name} - Abrir modal de demostración`}
-                              data-analytics={item.analytics}
-                            >
-                              <item.icon
-                                aria-hidden='true'
-                                className='size-5 flex-none text-gray-400 dark:text-gray-500'
-                              />
-                              {item.name}
-                            </button>
-                          ) : (
-                            <a
-                              key={item.name}
-                              href={item.href}
-                              className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                              aria-label={`${item.name} - ${item.href}`}
-                              data-analytics={item.analytics}
-                            >
-                              <item.icon
-                                aria-hidden='true'
-                                className='size-5 flex-none text-gray-400 dark:text-gray-500'
-                              />
-                              {item.name}
-                            </a>
-                          )
-                        )}
-                      </div>
-                    </div>
+                  <div className='grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 dark:divide-white/10 dark:bg-gray-700/50'>
+                    {callsToAction.map(item =>
+                      item.onClick ? (
+                        <button
+                          key={item.name}
+                          onClick={() => setIsModalOpen(true)}
+                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                          />
+                          {item.name}
+                        </button>
+                      ) : (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                          />
+                          {item.name}
+                        </a>
+                      )
+                    )}
                   </div>
                 </div>
               </PopoverPanel>
