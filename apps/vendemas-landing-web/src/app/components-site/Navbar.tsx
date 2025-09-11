@@ -508,22 +508,29 @@ export default function Example(): React.JSX.Element {
 
                     {/* Collapsible content for products - horizontal scroll */}
                     <DisclosurePanel className='mt-2 overflow-x-auto'>
-                      <div className='flex space-x-3 pb-2'>
+                      <div className='flex space-x-4 pb-2'>
                         {products.map(item => (
                           <a
                             key={item.name}
                             href={item.href}
-                            className='flex flex-col items-center gap-y-2 min-w-[120px] p-3 rounded-lg text-center text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5 border border-gray-200 dark:border-gray-700'
+                            className='group relative flex flex-col gap-y-3 min-w-[200px] p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5'
                             aria-label={`${item.name} - ${item.href}`}
                             data-analytics={item.analytics}
                           >
-                            <item.icon
-                              aria-hidden='true'
-                              className='size-6 flex-none text-gray-600 dark:text-gray-400'
-                            />
-                            <span className='text-xs leading-tight'>
-                              {item.name}
-                            </span>
+                            <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
+                              <item.icon
+                                aria-hidden='true'
+                                className='size-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-400 dark:group-hover:text-white'
+                              />
+                            </div>
+                            <div className='flex flex-col gap-y-1'>
+                              <span className='font-semibold text-gray-900 dark:text-white text-sm'>
+                                {item.name}
+                              </span>
+                              <p className='text-xs text-gray-600 dark:text-gray-400 leading-tight'>
+                                {item.description}
+                              </p>
+                            </div>
                           </a>
                         ))}
                       </div>
