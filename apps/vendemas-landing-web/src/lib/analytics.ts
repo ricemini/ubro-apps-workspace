@@ -55,7 +55,10 @@ export const initializeFirebase = (): void => {
     console.log('Firebase Analytics initialized successfully');
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Failed to initialize Firebase Analytics:', error);
+    console.error(
+      'Failed to initialize Firebase Analytics:',
+      error instanceof Error ? error.message : String(error)
+    );
   }
 };
 
@@ -92,7 +95,10 @@ export const trackEvent = (
     logEvent(analytics, eventName, parameters);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Failed to track event:', error);
+    console.error(
+      'Failed to track event:',
+      error instanceof Error ? error.message : String(error)
+    );
   }
 };
 
@@ -214,3 +220,20 @@ export const analyticsConfig = {
   firebaseConfig: FIREBASE_CONFIG,
   isEnabled: isAnalyticsEnabled(),
 };
+
+// Global error handler to catch unhandled errors
+if (typeof window !== 'undefined') {
+  window.addEventListener('error', event => {
+    console.error('Global error caught:', {
+      message: event.message,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+      error: event.error,
+    });
+  });
+
+  window.addEventListener('unhandledrejection', event => {
+    console.error('Unhandled promise rejection:', event.reason);
+  });
+}
