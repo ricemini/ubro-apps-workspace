@@ -3,8 +3,8 @@
     "collect": {
       "url": ["http://localhost:3000"],
       "startServerCommand": "cd ../../ && npx nx serve vendemas-landing-web",
-      "startServerReadyPattern": "ready - started server on",
-      "startServerReadyTimeout": 60000,
+      "startServerReadyPattern": "Local:.*http://localhost:3000",
+      "startServerReadyTimeout": 120000,
       "numberOfRuns": 3
     },
     "assert": {

@@ -274,8 +274,7 @@ jobs:
       - name: Run Lighthouse CI
         run: |
           cd apps/vendemas-landing-web
-          lhci autorun
-          --config=./.lighthouserc.json
+          lhci autorun --config=./.lighthouserc.json
 
       - name: Upload Lighthouse results
         uses: actions/upload-artifact@v4
