@@ -495,7 +495,7 @@ export default function Example(): React.JSX.Element {
 
                   {/* Collapsible products section */}
                   <Disclosure as='div' className='-mx-3'>
-                    <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
+                    <DisclosureButton className='group flex w-full items-center justify-between card-border !rounded-[14px] py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
                       Herramientas
                       <ChevronDown
                         aria-hidden='true'
@@ -504,7 +504,7 @@ export default function Example(): React.JSX.Element {
                     </DisclosureButton>
 
                     {/* Collapsible content for products */}
-                    <DisclosurePanel className='mt-2 space-y-2'>
+                    <DisclosurePanel className='mt-2 space-y-2 border-l-2 border-gray-200 dark:border-gray-700 ml-4 pl-4'>
                       {products.map(item => (
                         <DisclosureButton
                           key={item.name}

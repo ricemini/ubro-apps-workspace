@@ -29,8 +29,8 @@ describe('Benefits Component', () => {
   describe('Component Rendering', () => {
     it('renders the main section with correct id', () => {
       renderBenefits();
-      const section = document.querySelector('#precios');
-      expect(section).toHaveAttribute('id', 'precios');
+      const section = document.querySelector('#beneficios');
+      expect(section).toHaveAttribute('id', 'beneficios');
     });
 
     it('renders the main heading', () => {
@@ -350,7 +350,7 @@ describe('Benefits Component', () => {
     it('has dark mode classes for section background', () => {
       renderBenefits();
 
-      const section = document.querySelector('#precios');
+      const section = document.querySelector('#beneficios');
       expect(section?.className).toContain('dark:from-gray-900');
       expect(section?.className).toContain('dark:to-gray-800');
     });
