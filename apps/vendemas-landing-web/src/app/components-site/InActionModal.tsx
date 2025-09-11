@@ -135,7 +135,7 @@ export default function InActionModal({
       role='dialog'
       aria-modal='true'
       aria-label='VendeMás en acción'
-      className='fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
+      className='fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
       onClick={onClose}
     >
       {/* Modal container with glassmorphism design */}
@@ -148,7 +148,7 @@ export default function InActionModal({
         <div className='absolute inset-0 bg-[radial-gradient(60%_50%_at_20%_18%,theme(colors.primary.50)_0%,transparent_60%),radial-gradient(45%_45%_at_85%_20%,theme(colors.secondary.50)_0%,transparent_60%),radial-gradient(55%_55%_at_78%_82%,theme(colors.tertiary.50)_0%,transparent_55%)] dark:bg-[radial-gradient(60%_50%_at_20%_18%,theme(colors.primary.900)_0%,transparent_60%),radial-gradient(45%_45%_at_85%_20%,theme(colors.secondary.900)_0%,transparent_60%),radial-gradient(55%_55%_at_78%_82%,theme(colors.tertiary.900)_0%,transparent_55%)]' />
 
         {/* Main content container with proper z-index layering */}
-        <div className='relative z-[70] flex flex-col h-full'>
+        <div className='relative z-10 flex flex-col h-full'>
           {/* Modal header with title, subtitle, and close button */}
           <div className='flex items-center justify-between p-6'>
             <div>
