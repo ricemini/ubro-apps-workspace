@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { X, Users, TrendingUp, Star, ChevronRight } from 'lucide-react';
 
-interface VendeMasEnAccionModalProps {
+interface InActionModalProps {
   onClose: () => void;
   youtubeVideoId?: string;
 }
 
 /**
- * VendeMasEnAccionModal Component
+ * InActionModal Component
  *
  * Premium conversion-focused modal for showcasing VendeMás in action with:
  *
@@ -31,17 +31,20 @@ interface VendeMasEnAccionModalProps {
  * - Screen reader friendly with semantic HTML and ARIA labels
  * - Touch targets meet minimum 44px requirements
  */
-export default function VendeMasEnAccionModal({
+export default function InActionModal({
   onClose,
   youtubeVideoId = 'NQN2w7KPeTs', // Default video ID, replace with actual
-}: VendeMasEnAccionModalProps): React.JSX.Element {
+}: InActionModalProps): React.JSX.Element {
   // State for tracking video loading status to show/hide loading spinner
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   // Keyboard accessibility: Close modal when Escape key is pressed
   useEffect(() => {
-    const onKey = (e: globalThis.KeyboardEvent): void =>
-      e.key === 'Escape' && onClose();
+    const onKey = (e: globalThis.KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', onKey);
     return (): void => window.removeEventListener('keydown', onKey);
   }, [onClose]);
@@ -132,7 +135,7 @@ export default function VendeMasEnAccionModal({
       role='dialog'
       aria-modal='true'
       aria-label='VendeMás en acción'
-      className='fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
+      className='fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:duration-250'
       onClick={onClose}
     >
       {/* Modal container with glassmorphism design */}
@@ -325,7 +328,7 @@ export default function VendeMasEnAccionModal({
 
                   {/* Secondary CTA */}
                   <a
-                    href='/herramientas'
+                    href='/soluciones-con-ia'
                     className='group inline-flex items-center gap-x-2 !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 text-sm font-semibold text-secondary-600 hover:text-secondary-700 hover:bg-gray-50 dark:text-white dark:hover:text-white dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:card-border focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 dark:focus:ring-white dark:focus:ring-offset-gray-900'
                     style={{ height: '42px' }}
                     aria-describedby='secondary-cta-description'

@@ -114,7 +114,7 @@ describe('Hero', () => {
       const secondaryCTA = screen.getByText('Conoce todas las Herramientas');
       expect(secondaryCTA).toBeTruthy();
       expect(secondaryCTA.closest('a')?.getAttribute('href')).toBe(
-        '/herramientas'
+        '/soluciones-con-ia'
       );
     });
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import VendeMasEnAccionModal from './VendeMasEnAccionModal';
+import InActionModal from './InActionModal';
 
 // Mock the lucide-react icons
 vi.mock('lucide-react', () => ({
-  X: (props: any): React.JSX.Element => (
+  X: (props: React.SVGProps<React.SVGSVGElement>): React.JSX.Element => (
     <svg
       data-testid='close-icon'
       className={props.className}
@@ -16,7 +16,7 @@ vi.mock('lucide-react', () => ({
       <path d='M18 6L6 18M6 6l12 12' />
     </svg>
   ),
-  Users: (props: any): React.JSX.Element => (
+  Users: (props: React.SVGProps<React.SVGSVGElement>): React.JSX.Element => (
     <svg
       data-testid='users-icon'
       className={props.className}
@@ -27,7 +27,9 @@ vi.mock('lucide-react', () => ({
       <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
     </svg>
   ),
-  TrendingUp: (props: any): React.JSX.Element => (
+  TrendingUp: (
+    props: React.SVGProps<React.SVGSVGElement>
+  ): React.JSX.Element => (
     <svg
       data-testid='trending-up-icon'
       className={props.className}
@@ -38,7 +40,7 @@ vi.mock('lucide-react', () => ({
       <path d='M22 7l-8.5 8.5-5-5L2 17' />
     </svg>
   ),
-  Star: (props: any): React.JSX.Element => (
+  Star: (props: React.SVGProps<React.SVGSVGElement>): React.JSX.Element => (
     <svg
       data-testid='star-icon'
       className={props.className}
@@ -49,7 +51,9 @@ vi.mock('lucide-react', () => ({
       <path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
     </svg>
   ),
-  ArrowRight: (props: any): React.JSX.Element => (
+  ArrowRight: (
+    props: React.SVGProps<React.SVGSVGElement>
+  ): React.JSX.Element => (
     <svg
       data-testid='arrow-right-icon'
       className={props.className}
@@ -60,7 +64,9 @@ vi.mock('lucide-react', () => ({
       <path d='M5 12h14m-7-7l7 7-7 7' />
     </svg>
   ),
-  ChevronRight: (props: any): React.JSX.Element => (
+  ChevronRight: (
+    props: React.SVGProps<React.SVGSVGElement>
+  ): React.JSX.Element => (
     <svg
       data-testid='chevron-right-icon'
       className={props.className}
@@ -71,7 +77,7 @@ vi.mock('lucide-react', () => ({
       <path d='M9 18l6-6-6-6' />
     </svg>
   ),
-  Phone: (props: any): React.JSX.Element => (
+  Phone: (props: React.SVGProps<React.SVGSVGElement>): React.JSX.Element => (
     <svg
       data-testid='phone-icon'
       className={props.className}
@@ -85,7 +91,7 @@ vi.mock('lucide-react', () => ({
 }));
 
 // Mock window.innerWidth for responsive tests
-const mockInnerWidth = (width: number) => {
+const mockInnerWidth = (width: number): void => {
   Object.defineProperty(window, 'innerWidth', {
     writable: true,
     configurable: true,
@@ -103,7 +109,7 @@ Object.defineProperty(document.body, 'style', {
   writable: true,
 });
 
-describe('VendeMasEnAccionModal', () => {
+describe('InActionModal', () => {
   const defaultProps = {
     onClose: vi.fn(),
     youtubeVideoId: 'test-video-id',
@@ -121,7 +127,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Component Rendering', () => {
     it('renders modal with required props', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Check modal backdrop
       const modal = screen.getByRole('dialog');
@@ -142,7 +148,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('renders with default youtubeVideoId when not provided', () => {
-      render(<VendeMasEnAccionModal onClose={defaultProps.onClose} />);
+      render(<InActionModal onClose={defaultProps.onClose} />);
 
       const iframes = screen.getAllByTitle('VendeMás en acción');
       expect(iframes[0]).toBeTruthy();
@@ -150,7 +156,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('renders close button with proper accessibility', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const closeButton = screen.getByLabelText('Cerrar');
       expect(closeButton).toBeTruthy();
@@ -162,7 +168,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('renders all stats with correct data', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Check all three stats are rendered
       expect(screen.getAllByText('10,000+ vendedores')[0]).toBeTruthy();
@@ -186,7 +192,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('renders CTA button with correct styling and link', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const ctaButton = screen.getByText('Comenzar gratis ahora');
       expect(ctaButton).toBeTruthy();
@@ -195,7 +201,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('renders supporting question text', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const question = screen.getByText('¿Listo para transformar tu negocio?');
       expect(question).toBeTruthy();
@@ -204,7 +210,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('YouTube Video Integration', () => {
     it('renders YouTube iframe with correct attributes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const iframes = screen.getAllByTitle('VendeMás en acción');
       expect(iframes[0]).toBeTruthy();
@@ -215,7 +221,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('shows loading spinner initially', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Should show loading spinner
       const loadingSpinner = document.querySelector('.animate-spin');
@@ -223,7 +229,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('hides loading spinner when video loads', async () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const iframes = screen.getAllByTitle('VendeMás en acción');
       const iframe = iframes[0];
@@ -240,7 +246,7 @@ describe('VendeMasEnAccionModal', () => {
     it('uses custom youtubeVideoId when provided', () => {
       const customVideoId = 'custom-video-123';
       render(
-        <VendeMasEnAccionModal
+        <InActionModal
           onClose={defaultProps.onClose}
           youtubeVideoId={customVideoId}
         />
@@ -253,7 +259,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Accessibility Features', () => {
     it('has proper ARIA attributes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modal = screen.getByRole('dialog');
       expect(modal.getAttribute('role')).toBe('dialog');
@@ -262,7 +268,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('has proper focus management', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const closeButton = screen.getByLabelText('Cerrar');
       expect(closeButton).toBeTruthy();
@@ -270,7 +276,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('has proper touch targets', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const closeButton = screen.getByLabelText('Cerrar');
       expect(closeButton.getAttribute('style')).toContain('height: 42px');
@@ -281,7 +287,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('has proper semantic HTML structure', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const title = screen.getByText('VendeMás en acción');
       expect(title.tagName).toBe('H2');
@@ -293,7 +299,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Keyboard Navigation', () => {
     it('closes modal when Escape key is pressed', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       fireEvent.keyDown(document, { key: 'Escape' });
 
@@ -301,7 +307,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('does not close modal when other keys are pressed', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       fireEvent.keyDown(document, { key: 'Enter' });
       fireEvent.keyDown(document, { key: 'Tab' });
@@ -311,7 +317,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('handles focus trap correctly', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modal = screen.getByRole('dialog');
       const focusableElements = modal.querySelectorAll(
@@ -324,7 +330,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Click Interactions', () => {
     it('closes modal when backdrop is clicked', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modal = screen.getByRole('dialog');
       fireEvent.click(modal);
@@ -333,7 +339,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('does not close modal when modal content is clicked', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modal = screen.getByRole('dialog');
       const modalContainer = modal.querySelector('.relative.z-10');
@@ -345,7 +351,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('closes modal when close button is clicked', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const closeButton = screen.getByLabelText('Cerrar');
       fireEvent.click(closeButton);
@@ -356,13 +362,13 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Body Scroll Lock', () => {
     it('disables body scroll when modal opens', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       expect(mockBodyStyle.overflow).toBe('hidden');
     });
 
     it('restores body scroll when modal closes', () => {
-      const { unmount } = render(<VendeMasEnAccionModal {...defaultProps} />);
+      const { unmount } = render(<InActionModal {...defaultProps} />);
 
       expect(mockBodyStyle.overflow).toBe('hidden');
 
@@ -374,7 +380,7 @@ describe('VendeMasEnAccionModal', () => {
     it('preserves original overflow style', () => {
       mockBodyStyle.overflow = 'scroll';
 
-      const { unmount } = render(<VendeMasEnAccionModal {...defaultProps} />);
+      const { unmount } = render(<InActionModal {...defaultProps} />);
 
       expect(mockBodyStyle.overflow).toBe('hidden');
 
@@ -387,7 +393,7 @@ describe('VendeMasEnAccionModal', () => {
   describe('Responsive Layout', () => {
     it('renders desktop layout on large screens', () => {
       mockInnerWidth(1024);
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Desktop layout should be visible
       const desktopLayout = document.querySelector('.hidden.lg\\:flex');
@@ -402,7 +408,7 @@ describe('VendeMasEnAccionModal', () => {
 
     it('renders mobile layout on small screens', () => {
       mockInnerWidth(768);
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Mobile layout should be visible
       const mobileLayout = document.querySelector(
@@ -413,7 +419,7 @@ describe('VendeMasEnAccionModal', () => {
 
     it('has proper mobile scrolling', () => {
       mockInnerWidth(768);
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const mobileLayout = document.querySelector(
         '.flex-1.flex.flex-col.lg\\:hidden.overflow-y-auto'
@@ -424,7 +430,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Stats Display', () => {
     it('renders all stat icons', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       expect(screen.getAllByTestId('users-icon')[0]).toBeTruthy();
       expect(screen.getAllByTestId('trending-up-icon')[0]).toBeTruthy();
@@ -432,7 +438,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('applies correct color classes to stats', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const usersStats = screen.getAllByText('10,000+ vendedores');
       expect(usersStats[0].className).toContain('text-secondary-600');
@@ -445,7 +451,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('has proper dark mode color classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const usersStats = screen.getAllByText('10,000+ vendedores');
       expect(usersStats[0].className).toContain('dark:text-secondary-400');
@@ -460,7 +466,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Styling and CSS Classes', () => {
     it('applies correct modal container classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modalContainer = document.querySelector('.w-\\[95vw\\]');
       expect(modalContainer).toBeTruthy();
@@ -470,7 +476,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('applies correct backdrop classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const backdrop = screen.getByRole('dialog');
       expect(backdrop.className).toContain('fixed');
@@ -480,7 +486,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('applies correct close button classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const closeButton = screen.getByLabelText('Cerrar');
       expect(closeButton.className).toContain('card-border');
@@ -490,7 +496,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('applies correct CTA button classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const ctaButton = screen.getByText('Comenzar gratis ahora');
       expect(ctaButton.className).toContain('card-border');
@@ -500,7 +506,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('applies correct stats card classes', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const statsCards = document.querySelectorAll('.group.p-4.rounded-xl');
       expect(statsCards.length).toBeGreaterThanOrEqual(3);
@@ -519,7 +525,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Gradient Background', () => {
     it('renders gradient background overlay', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const gradientOverlay = document.querySelector('.absolute.inset-0');
       expect(gradientOverlay).toBeTruthy();
@@ -527,7 +533,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('has proper z-index layering', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const contentOverlay = document.querySelector('.relative.z-10');
       expect(contentOverlay).toBeTruthy();
@@ -537,10 +543,7 @@ describe('VendeMasEnAccionModal', () => {
   describe('Edge Cases', () => {
     it('handles empty youtubeVideoId gracefully', () => {
       render(
-        <VendeMasEnAccionModal
-          onClose={defaultProps.onClose}
-          youtubeVideoId=''
-        />
+        <InActionModal onClose={defaultProps.onClose} youtubeVideoId='' />
       );
 
       const iframes = screen.getAllByTitle('VendeMás en acción');
@@ -550,7 +553,7 @@ describe('VendeMasEnAccionModal', () => {
     it('handles special characters in youtubeVideoId', () => {
       const specialVideoId = 'test-video-id-123_!@#';
       render(
-        <VendeMasEnAccionModal
+        <InActionModal
           onClose={defaultProps.onClose}
           youtubeVideoId={specialVideoId}
         />
@@ -561,11 +564,11 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('handles rapid open/close cycles', () => {
-      const { unmount } = render(<VendeMasEnAccionModal {...defaultProps} />);
+      const { unmount } = render(<InActionModal {...defaultProps} />);
 
       // Simulate rapid open/close
       unmount();
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
       unmount();
 
       // Should not throw errors
@@ -575,7 +578,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Component Integration', () => {
     it('renders all sections together correctly', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Header
       expect(screen.getByText('VendeMás en acción')).toBeTruthy();
@@ -597,7 +600,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('maintains proper DOM structure', () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       const modal = screen.getByRole('dialog');
       const modalContainer = modal.querySelector('.w-\\[95vw\\]');
@@ -617,7 +620,7 @@ describe('VendeMasEnAccionModal', () => {
 
   describe('Performance', () => {
     it('does not cause memory leaks on unmount', () => {
-      const { unmount } = render(<VendeMasEnAccionModal {...defaultProps} />);
+      const { unmount } = render(<InActionModal {...defaultProps} />);
 
       // Should clean up event listeners
       unmount();
@@ -627,7 +630,7 @@ describe('VendeMasEnAccionModal', () => {
     });
 
     it('handles video loading state efficiently', async () => {
-      render(<VendeMasEnAccionModal {...defaultProps} />);
+      render(<InActionModal {...defaultProps} />);
 
       // Initially should show loading spinner
       expect(document.querySelector('.animate-spin')).toBeTruthy();

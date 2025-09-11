@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import VideoModal from '../components-site/VideoModal';
 import ContentModal from '../components-site/ContentModal';
-import VendeMasEnAccionModal from '../components-site/VendeMasEnAccionModal';
+import InActionModal from '../components-site/InActionModal';
 
 /**
  * SecondaryCTA Component Props
@@ -131,7 +131,7 @@ export default function SecondaryCTA({
 
       {/* VendeMás en Acción Modal */}
       {showVendeMasModal && isModalOpen && (
-        <VendeMasEnAccionModal
+        <InActionModal
           onClose={() => setIsModalOpen(false)}
           youtubeVideoId={youtubeVideoId}
         />

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
-import VendeMasEnAccionModal from '../components-site/VendeMasEnAccionModal';
+import InActionModal from '../components-site/InActionModal';
 
 /**
  * CTABanner Component
@@ -17,7 +17,7 @@ import VendeMasEnAccionModal from '../components-site/VendeMasEnAccionModal';
  * - Dual CTA strategy: primary action + secondary "learn more" option
  * - Social proof through customer testimonial with specific results (+40% sales)
  * - Animated wave background for premium feel (desktop only, mobile static)
- * - Integrated VendeMasEnAccionModal for "Ver cómo funciona" button
+ * - Integrated InActionModal for "Ver cómo funciona" button
  *
  * Conversion Strategy:
  * - Headline: Urgent, benefit-focused ("Moderniza tu negocio hoy mismo")
@@ -36,7 +36,7 @@ import VendeMasEnAccionModal from '../components-site/VendeMasEnAccionModal';
  * - Screen reader friendly with descriptive labels and proper heading hierarchy
  * - A/B testing ready with commented variants
  */
-export default function CTABanner() {
+export default function CTABanner(): React.JSX.Element {
   // Modal state for "Ver cómo funciona" button
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -129,7 +129,7 @@ export default function CTABanner() {
             {/* Secondary CTA: Educational content via modal
                 Psychology: "Ver cómo funciona" reduces uncertainty and builds trust
                 Styling: Outline style (border) to indicate secondary importance
-                Functionality: Opens VendeMasEnAccionModal for product demonstration */}
+                Functionality: Opens InActionModal for product demonstration */}
             <button
               onClick={() => setIsModalOpen(true)}
               className='border-3 border-white dark:border-gray-300 text-white dark:text-gray-200 hover:bg-white dark:hover:bg-gray-200 hover:text-primary-500 dark:hover:text-primary-600 font-bold px-12 py-5 rounded-xl transition-all duration-200 btn-focus text-xl inline-flex items-center'
@@ -294,7 +294,7 @@ export default function CTABanner() {
           Content: Video demonstration, stats, and conversion-focused CTAs
           State: Controlled by isModalOpen state, triggered by secondary CTA button */}
       {isModalOpen && (
-        <VendeMasEnAccionModal
+        <InActionModal
           onClose={() => setIsModalOpen(false)}
           youtubeVideoId='NQN2w7KPeTs'
         />

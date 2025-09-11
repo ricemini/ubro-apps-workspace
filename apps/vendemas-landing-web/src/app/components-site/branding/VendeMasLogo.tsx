@@ -83,7 +83,93 @@ export function VendeMasLogo({
   // Responsive logic: use isSmall prop, but on large screens always show full logo
   const shouldShowSmall = isSmall;
 
-  // Always use card layout with VendeMá$ or V$ variants
+  // Special stacked layout for lg size
+  if (size === 'lg' && !navbar) {
+    const cardContent = (
+      <div
+        className={clsx(
+          'inline-block select-none leading-none',
+          '[text-rendering:geometricPrecision] [font-smoothing:antialiased]'
+        )}
+        aria-label={label}
+        {...rest}
+      >
+        {/* First row: Vende */}
+        <div className='flex items-center'>
+          <span
+            className={clsx(
+              'font-avenir-next-rounded font-extrabold',
+              COLORS.tertiary
+            )}
+            style={{
+              fontSize: `${s.vende}px`,
+              letterSpacing: '-0.02em',
+              lineHeight: 1,
+            }}
+          >
+            V
+          </span>
+          <span
+            className={clsx(
+              'font-avenir-next-rounded font-extrabold',
+              'text-white'
+            )}
+            style={{
+              fontSize: `${s.vende}px`,
+              letterSpacing: '-0.02em',
+              lineHeight: 1,
+            }}
+          >
+            ende
+          </span>
+        </div>
+        {/* Second row: Má and $ with specific alignment */}
+        <div className='flex items-center'>
+          {/* Spacer to align M under the 'd' in 'Vende' */}
+          <div style={{ width: `${s.vende * 1.6}px` }}></div>
+          <span
+            className={clsx(
+              'font-avenir-next-rounded font-extrabold',
+              'text-white'
+            )}
+            style={{
+              fontSize: `${s.mas}px`,
+              letterSpacing: '-0.02em',
+              lineHeight: 1,
+            }}
+          >
+            Má
+          </span>
+          <span
+            aria-hidden
+            className={clsx('font-quicksand font-bold italic', COLORS.primary)}
+            style={{
+              fontSize: `${s.mas}px`,
+              lineHeight: 1,
+              textShadow: '0 1px 0 rgba(0,0,0,0.15)',
+            }}
+          >
+            $
+          </span>
+        </div>
+      </div>
+    );
+
+    if (asLink) {
+      return (
+        <a
+          href='/'
+          aria-label={label}
+          className={clsx('inline-block', className)}
+        >
+          {cardContent}
+        </a>
+      );
+    }
+    return <div className={className}>{cardContent}</div>;
+  }
+
+  // Standard card layout for other sizes
   const cardContent = (
     <div
       className={clsx(

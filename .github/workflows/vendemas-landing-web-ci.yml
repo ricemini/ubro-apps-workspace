@@ -37,7 +37,6 @@ env:
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
   setup:
@@ -243,10 +242,10 @@ jobs:
         id: deploy
         run: |
           echo "🚀 Starting Vercel deployment..."
-          
+
           # Change to the app directory
           cd apps/vendemas-landing-web
-          
+
           # Use production deployment for main branch, preview for feature branches
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "📦 Deploying to production..."
@@ -255,25 +254,25 @@ jobs:
             echo "🔍 Deploying preview for feature branch..."
             DEPLOYMENT_OUTPUT=$(vercel --token ${{ env.VERCEL_TOKEN }} --yes 2>&1)
           fi
-          
+
           echo "📄 Vercel deployment output:"
           echo "$DEPLOYMENT_OUTPUT"
-          
+
           # Extract URL from the output using regex
           DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*\.vercel\.app' | head -1)
-          
+
           # Alternative extraction methods if the first one fails
           if [ -z "$DEPLOYMENT_URL" ]; then
             echo "⚠️ First extraction method failed, trying alternative..."
             DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -o 'https://[^[:space:]]*' | grep -v 'vercel.com' | head -1)
           fi
-          
+
           # Try to extract from any URL pattern
           if [ -z "$DEPLOYMENT_URL" ]; then
             echo "⚠️ Alternative extraction failed, trying broader pattern..."
             DEPLOYMENT_URL=$(echo "$DEPLOYMENT_OUTPUT" | grep -oE 'https?://[^[:space:]]+' | head -1)
           fi
-          
+
           if [ -n "$DEPLOYMENT_URL" ] && [ "$DEPLOYMENT_URL" != "null" ]; then
             echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
             echo "preview-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
@@ -295,14 +294,14 @@ jobs:
         run: |
           echo "🧪 Testing deployment accessibility with bypass token..."
           DEPLOYMENT_URL="${{ steps.deploy.outputs.url }}"
-          
+
           if [ -z "$DEPLOYMENT_URL" ]; then
             echo "❌ Deployment URL is empty, cannot test deployment"
             exit 1
           fi
-          
+
           echo "🔗 Testing URL: $DEPLOYMENT_URL"
-          
+
           if [ -n "${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" ]; then
             # Test with bypass token
             curl -f -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" "$DEPLOYMENT_URL" || {

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       'Herramientas completas para PyMES: cobros CoDi, catálogo desde una foto, inventario, promociones con IA, facturación y más.',
   },
   alternates: {
-    canonical: '/herramientas',
+    canonical: '/soluciones-con-ia',
   },
 };
 

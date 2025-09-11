@@ -40,61 +40,90 @@ import {
 import {
   Menu,
   BarChart3,
-  MousePointer,
-  Shield,
-  SquarePlus,
+  BrainCircuit,
+  SquareMenu,
   X,
   ChevronDown,
-  Phone,
   PlayCircle,
-  Grid3X3,
+  Blocks,
+  HandCoins,
 } from 'lucide-react';
+import { ChevronDownIcon, QrCodeIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
 import VendeMasLogo from './branding/VendeMasLogo';
 import ThemeToggle from './theme/ThemeToggle';
 import FocusTrap from './accessibility/FocusTrap';
+import InActionModal from './InActionModal';
 
 /**
  * Product features data for the dropdown mega menu
  * Each product represents a key feature of the VendeMás platform
- * Used in the "Herramientas" dropdown navigation
+ * Used in the "Producto" dropdown navigation
+ * Updated with benefit-led, aspirational microcopy for better conversion
  */
 const products = [
   {
-    name: 'Analytics',
-    description: 'Get a better understanding where your traffic is coming from',
-    href: '#',
+    name: 'Estadísticas con IA',
+    description:
+      'Descubre qué vende más y por qué. Toma mejores decisiones en segundos.',
+    href: '/ia/estadisticas',
     icon: BarChart3,
+    analytics: 'nav_ia_stats',
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers with our engagement tool',
-    href: '#',
-    icon: MousePointer,
+    name: 'Promos con IA',
+    description:
+      'Llena tus horas flojas con promociones automáticas que aumentan ventas.',
+    href: '/ia/promos',
+    icon: BrainCircuit,
+    analytics: 'nav_ia_promos',
   },
   {
-    name: 'Security',
-    description: "Your customers' data will be safe and secure",
-    href: '#',
-    icon: Shield,
+    name: 'Catálogo / Menú Inteligente',
+    description:
+      'Escanea tu menú y crea un catálogo digital en segundos con IA.',
+    href: '/ia/catalogo',
+    icon: SquareMenu,
+    analytics: 'nav_ia_catalog',
   },
   {
-    name: 'Integrations',
-    description: "Your customers' data will be safe and secure",
-    href: '#',
-    icon: SquarePlus,
+    name: 'CoDi Certificado',
+    description:
+      'Cobra sin comisiones y recibe tu dinero directo en tu cuenta bancaria.',
+    href: '/codi',
+    icon: QrCodeIcon,
+    analytics: 'nav_codi',
   },
 ];
 
 /**
  * Call-to-action items displayed in the dropdown footer
  * Provides quick access to demo, sales contact, and product overview
+ * Updated with new mini-CTA for "VendeMás en acción" that opens the modal
  */
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircle },
-  { name: 'Contact sales', href: '#', icon: Phone },
-  { name: 'View all products', href: '#', icon: Grid3X3 },
+  {
+    name: 'Ver demo',
+    href: '#',
+    icon: PlayCircle,
+    onClick: true,
+    analytics: 'nav_demo_ai',
+  },
+  {
+    name: 'Beneficios',
+    href: '#beneficios',
+    icon: HandCoins,
+    onClick: false,
+    analytics: 'nav_benefits',
+  },
+  {
+    name: 'Soluciones con IA',
+    href: '/soluciones-con-ia',
+    icon: Blocks,
+    onClick: false,
+    analytics: 'nav_features',
+  },
 ];
 
 /**
@@ -123,8 +152,8 @@ export default function Example(): React.JSX.Element {
   // State for controlling mobile menu visibility and slide-out dialog
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // State for tracking dropdown menu open state
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
+  // State for controlling the "VendeMás en acción" modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Refs for focus management
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -242,100 +271,79 @@ export default function Example(): React.JSX.Element {
         <PopoverGroup className='hidden md:flex md:flex-1 md:justify-center lg:flex-1 lg:justify-center'>
           {/* Navigation container with single card styling */}
           <div className='flex items-center card-border !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 gap-x-4'>
-            {/* Products dropdown with mega menu */}
-            <Popover>
-              <PopoverButton
-                className='flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-                aria-label='Herramientas dropdown menu'
-                aria-expanded={isProductsOpen}
-                aria-haspopup='true'
-              >
-                Herramientas
-                <ChevronDown
+            {/* Products dropdown with Headless UI Popover */}
+            <Popover className='relative'>
+              <PopoverButton className='inline-flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'>
+                <span>Soluciones con IA</span>
+                <ChevronDownIcon
                   aria-hidden='true'
                   className='size-4 flex-none text-gray-400 dark:text-gray-500'
                 />
               </PopoverButton>
 
-              {/* Mega menu dropdown panel with smooth transitions and proper positioning */}
-              {/* - top-12 (48px): positioned below the 60px navbar */}
-              {/* - inset-x-0: spans full width of viewport for immersive experience */}
-              {/* - Transition classes: smooth enter/exit animations with different durations */}
               <PopoverPanel
                 transition
-                className='absolute inset-x-0 top-[50px] bg-white transition data-closed:-translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-950 z-[60]'
-                onFocus={() => setIsProductsOpen(true)}
-                onBlur={() => setIsProductsOpen(false)}
+                className='absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 bg-transparent px-4 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in'
               >
-                {/* Shadow overlay element for visual depth and separation */}
-                {/* - top-1/2: positioned at middle of dropdown for balanced shadow */}
-                {/* - Dark mode: no shadow, only ring for subtle separation */}
-                <div
-                  aria-hidden='true'
-                  className='absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:shadow-none dark:ring-white/15'
-                />
-
-                {/* Main dropdown content container */}
-                <div className='relative bg-white dark:bg-gray-950'>
-                  {/* Product grid with 4 columns for feature showcase */}
-                  <div className='mx-auto grid max-w-7xl grid-cols-4 gap-x-4 px-6 py-10 lg:px-8 xl:gap-x-8'>
-                    {/* Map through products to display feature cards */}
+                <div className='w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg outline-1 outline-gray-900/5 lg:max-w-3xl dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10'>
+                  <div className='grid grid-cols-1 gap-x-6 gap-y-1 p-4 lg:grid-cols-2'>
                     {products.map(item => (
                       <div
                         key={item.name}
-                        className='group relative rounded-lg p-6 text-sm/6 hover:bg-gray-50 dark:hover:bg-white/5'
+                        className='group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-white/5'
                       >
-                        {/* Icon container with hover effects */}
-                        <div className='flex size-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
+                        <div className='mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
                           <item.icon
                             aria-hidden='true'
-                            className='size-6 text-gray-600 group-hover:text-secondary-600 dark:text-gray-400 dark:group-hover:text-white'
+                            className='size-6 text-gray-600 group-secondary:text-indigo-600 dark:text-gray-400 dark:group-secondary:text-white'
                           />
                         </div>
-
-                        {/* Feature title with full clickable area */}
-                        <a
-                          href={item.href}
-                          className='mt-6 block font-semibold text-gray-900 dark:text-white'
-                          aria-describedby={`${item.name.toLowerCase()}-description`}
-                        >
-                          {item.name}
-                          <span className='absolute inset-0' />
-                        </a>
-
-                        {/* Feature description */}
-                        <p
-                          id={`${item.name.toLowerCase()}-description`}
-                          className='mt-1 text-gray-600 dark:text-gray-400'
-                        >
-                          {item.description}
-                        </p>
+                        <div>
+                          <a
+                            href={item.href}
+                            className='font-semibold text-gray-900 dark:text-white'
+                            data-analytics={item.analytics}
+                          >
+                            {item.name}
+                            <span className='absolute inset-0' />
+                          </a>
+                          <p className='mt-1 text-gray-600 dark:text-gray-400'>
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>
-
-                  {/* Bottom action section with call-to-action links */}
-                  <div className='bg-gray-50 dark:bg-gray-900/50'>
-                    <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-                      {/* Grid layout for action items with dividers */}
-                      <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5 dark:divide-white/5 dark:border-white/10'>
-                        {/* Map through call-to-action items */}
-                        {callsToAction.map(item => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className='flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800'
-                            aria-label={`${item.name} - ${item.href}`}
-                          >
-                            <item.icon
-                              aria-hidden='true'
-                              className='size-5 flex-none text-gray-400 dark:text-gray-500'
-                            />
-                            {item.name}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
+                  <div className='flex divide-x divide-gray-900/5 bg-gray-50 dark:divide-white/10 dark:bg-gray-700/50'>
+                    {callsToAction.map(item =>
+                      item.onClick ? (
+                        <button
+                          key={item.name}
+                          onClick={() => setIsModalOpen(true)}
+                          className='flex flex-1 items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                          />
+                          {item.name}
+                        </button>
+                      ) : (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className='flex flex-1 items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700/50'
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-400 dark:text-gray-500'
+                          />
+                          {item.name}
+                        </a>
+                      )
+                    )}
                   </div>
                 </div>
               </PopoverPanel>
@@ -343,15 +351,15 @@ export default function Example(): React.JSX.Element {
 
             {/* Direct navigation links - visible on medium+ screens */}
             <a
-              href='#precios'
-              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
-              aria-label='Ver beneficios de la plataforma'
+              href='/planes'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Planes'
             >
-              Beneficios
+              Planes
             </a>
             <a
               href='/faq'
-              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
               aria-label='Preguntas frecuentes'
             >
               FAQ
@@ -376,7 +384,7 @@ export default function Example(): React.JSX.Element {
           {/* Primary call-to-action button */}
           <Link
             href='/signup'
-            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-600'
+            className='inline-flex items-center card-border !rounded-[14px] bg-primary-500 px-4 py-2.5 text-sm font-medium text-white secondary:bg-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:secondary:bg-primary-600'
             data-analytics='nav_cta_signup'
             aria-label='Comenzar a usar VendeMás gratis'
           >
@@ -450,54 +458,84 @@ export default function Example(): React.JSX.Element {
                   >
                     Comenzar gratis
                   </Link>
+
+                  {/* CTA buttons from dropdown with icons */}
+                  <div className='space-y-2 -mx-3'>
+                    {callsToAction.map(item =>
+                      item.onClick ? (
+                        <button
+                          key={item.name}
+                          onClick={() => setIsModalOpen(true)}
+                          className='flex w-full items-center gap-x-3 card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                          aria-label={`${item.name} - Abrir modal de demostración`}
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-600 dark:text-gray-400'
+                          />
+                          {item.name}
+                        </button>
+                      ) : (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className='flex w-full items-center gap-x-3 card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                          aria-label={`${item.name} - ${item.href}`}
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-600 dark:text-gray-400'
+                          />
+                          {item.name}
+                        </a>
+                      )
+                    )}
+                  </div>
+
                   {/* Collapsible products section */}
                   <Disclosure as='div' className='-mx-3'>
-                    <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
-                      Herramientas
+                    <DisclosureButton className='group flex w-full items-center justify-between card-border !rounded-[14px] py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
+                      Soluciones con IA
                       <ChevronDown
                         aria-hidden='true'
                         className='size-5 flex-none group-data-open:rotate-180'
                       />
                     </DisclosureButton>
 
-                    {/* Collapsible content for products and actions */}
-                    <DisclosurePanel className='mt-2 space-y-2'>
-                      {[...products, ...callsToAction].map(item => (
-                        <DisclosureButton
-                          key={item.name}
-                          as='a'
-                          href={item.href}
-                          className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                          aria-label={`${item.name} - ${item.href}`}
-                        >
-                          {item.name}
-                        </DisclosureButton>
-                      ))}
+                    {/* Collapsible content for products - horizontal scroll */}
+                    <DisclosurePanel className='mt-2 overflow-x-auto'>
+                      <div className='flex space-x-4 pb-2'>
+                        {products.map(item => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className='group relative flex flex-col gap-y-3 min-w-[200px] p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5'
+                            aria-label={`${item.name} - ${item.href}`}
+                            data-analytics={item.analytics}
+                          >
+                            <div className='flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-700/50 dark:group-hover:bg-gray-700'>
+                              <item.icon
+                                aria-hidden='true'
+                                className='size-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-400 dark:group-hover:text-white'
+                              />
+                            </div>
+                            <div className='flex flex-col gap-y-1'>
+                              <span className='font-semibold text-gray-900 dark:text-white text-sm'>
+                                {item.name}
+                              </span>
+                              <p className='text-xs text-gray-600 dark:text-gray-400 leading-tight'>
+                                {item.description}
+                              </p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                     </DisclosurePanel>
                   </Disclosure>
 
                   {/* Direct navigation links */}
-                  <a
-                    href='#precios'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
-                    aria-label='Ver beneficios de la plataforma'
-                  >
-                    Beneficios
-                  </a>
-                  <a
-                    href='/herramientas'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
-                    aria-label='Ver herramientas de la plataforma'
-                  >
-                    Herramientas
-                  </a>
-                  <a
-                    href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Explorar marketplace'
-                  >
-                    Marketplace
-                  </a>
                   <a
                     href='/faq'
                     className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
@@ -523,6 +561,14 @@ export default function Example(): React.JSX.Element {
           </DialogPanel>
         </FocusTrap>
       </Dialog>
+
+      {/* InActionModal for "Ver demo de IA" functionality */}
+      {isModalOpen && (
+        <InActionModal
+          onClose={() => setIsModalOpen(false)}
+          youtubeVideoId='zW3YZdPm'
+        />
+      )}
     </header>
   );
 }

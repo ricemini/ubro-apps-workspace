@@ -33,8 +33,11 @@ export default function VideoModal({
 }: VideoModalProps): React.JSX.Element {
   // Close on Escape key
   useEffect(() => {
-    const onKey = (e: globalThis.KeyboardEvent): void =>
-      e.key === 'Escape' && onClose();
+    const onKey = (e: globalThis.KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', onKey);
     return (): void => window.removeEventListener('keydown', onKey);
   }, [onClose]);
