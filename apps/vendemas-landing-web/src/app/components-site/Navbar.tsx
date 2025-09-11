@@ -47,7 +47,7 @@ import {
   ChevronDown,
   QrCodeIcon,
   HandCoinsIcon,
-  BlocksIcon,
+  PlayCircle,
 } from 'lucide-react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
@@ -60,14 +60,14 @@ import InActionModal from './InActionModal';
 /**
  * Product features data for the dropdown mega menu
  * Each product represents a key feature of the VendeMás platform
- * Used in the "Tu negocio impulsado por IA" dropdown navigation
+ * Used in the "Producto" dropdown navigation
  * Updated with benefit-led, aspirational microcopy for better conversion
  */
 const products = [
   {
     name: 'Estadísticas con IA',
     description:
-      'Ve qué se vende, cuándo y por qué. Decide en tiempo real para ganar más.',
+      'Descubre qué vendes y por qué. Decide en tiempo real para ganar más',
     href: '/ia/estadisticas',
     icon: BarChart3,
     analytics: 'nav_ia_stats',
@@ -82,16 +82,14 @@ const products = [
   },
   {
     name: 'Catálogo / Menú Inteligente',
-    description:
-      'Escanea una foto y la IA crea y mantiene tu catálogo en segundos.',
+    description: 'Escanea una foto y tu catálogo se crea en segundos con IA.',
     href: '/ia/catalogo',
     icon: SquareMenu,
     analytics: 'nav_ia_catalog',
   },
   {
     name: 'CODI Certificado',
-    description:
-      'Cobra sin comisiones y recibe cada peso directo en tu cuenta bancaria.',
+    description: 'Cobra al instante, sin comisiones, directo en tu cuenta.',
     href: '/codi',
     icon: QrCodeIcon,
     analytics: 'nav_codi',
@@ -115,14 +113,15 @@ const callsToAction = [
     name: 'Beneficios',
     href: '#beneficios',
     icon: HandCoinsIcon,
-    onClick: true,
-    analytics: 'nav_ia_demo_cta',
+    onClick: false,
+    analytics: 'nav_beneficios',
   },
   {
-    name: 'Planes',
-    href: '/planes',
-    icon: BlocksIcon,
-    analytics: 'nav_plans',
+    name: 'Ver demo de IA',
+    href: '#',
+    icon: PlayCircle,
+    onClick: true,
+    analytics: 'nav_demo_ia',
   },
 ];
 
@@ -274,7 +273,7 @@ export default function Example(): React.JSX.Element {
             {/* Products dropdown with Headless UI Popover */}
             <Popover className='relative'>
               <PopoverButton className='inline-flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'>
-                <span>Tu negocio impulsado por IA</span>
+                <span>Soluciones</span>
                 <ChevronDownIcon
                   aria-hidden='true'
                   className='size-4 flex-none text-gray-400 dark:text-gray-500'
@@ -350,7 +349,13 @@ export default function Example(): React.JSX.Element {
             </Popover>
 
             {/* Direct navigation links - visible on medium+ screens */}
-
+            <a
+              href='/planes'
+              className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
+              aria-label='Planes'
+            >
+              Planes
+            </a>
             <a
               href='/faq'
               className='text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'
@@ -452,6 +457,42 @@ export default function Example(): React.JSX.Element {
                   >
                     Comenzar gratis
                   </Link>
+
+                  {/* CTA buttons from dropdown with icons */}
+                  <div className='space-y-2 -mx-3'>
+                    {callsToAction.map(item =>
+                      item.onClick ? (
+                        <button
+                          key={item.name}
+                          onClick={() => setIsModalOpen(true)}
+                          className='flex w-full items-center gap-x-3 card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                          aria-label={`${item.name} - Abrir modal de demostración`}
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-600 dark:text-gray-400'
+                          />
+                          {item.name}
+                        </button>
+                      ) : (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className='flex w-full items-center gap-x-3 card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                          aria-label={`${item.name} - ${item.href}`}
+                          data-analytics={item.analytics}
+                        >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-5 flex-none text-gray-600 dark:text-gray-400'
+                          />
+                          {item.name}
+                        </a>
+                      )
+                    )}
+                  </div>
+
                   {/* Collapsible products section */}
                   <Disclosure as='div' className='-mx-3'>
                     <DisclosureButton className='group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'>
@@ -462,16 +503,21 @@ export default function Example(): React.JSX.Element {
                       />
                     </DisclosureButton>
 
-                    {/* Collapsible content for products and actions */}
+                    {/* Collapsible content for products */}
                     <DisclosurePanel className='mt-2 space-y-2'>
-                      {[...products, ...callsToAction].map(item => (
+                      {products.map(item => (
                         <DisclosureButton
                           key={item.name}
                           as='a'
                           href={item.href}
-                          className='block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
+                          className='flex items-center gap-x-3 rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
                           aria-label={`${item.name} - ${item.href}`}
+                          data-analytics={item.analytics}
                         >
+                          <item.icon
+                            aria-hidden='true'
+                            className='size-4 flex-none text-gray-600 dark:text-gray-400'
+                          />
                           {item.name}
                         </DisclosureButton>
                       ))}
@@ -479,27 +525,6 @@ export default function Example(): React.JSX.Element {
                   </Disclosure>
 
                   {/* Direct navigation links */}
-                  <a
-                    href='#beneficios'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
-                    aria-label='Ver beneficios de la plataforma'
-                  >
-                    Beneficios
-                  </a>
-                  <a
-                    href='/herramientas'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
-                    aria-label='Ver herramientas de la plataforma'
-                  >
-                    Herramientas
-                  </a>
-                  <a
-                    href='#'
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5'
-                    aria-label='Explorar marketplace'
-                  >
-                    Marketplace
-                  </a>
                   <a
                     href='/faq'
                     className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
