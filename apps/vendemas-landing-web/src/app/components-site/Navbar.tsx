@@ -45,13 +45,11 @@ import {
   SquarePlus,
   X,
   ChevronDown,
-  Barcode,
+  QrCodeIcon,
+  HandCoinsIcon,
+  BlocksIcon,
 } from 'lucide-react';
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
 import VendeMasLogo from './branding/VendeMasLogo';
@@ -95,7 +93,7 @@ const products = [
     description:
       'Cobra sin comisiones y recibe cada peso directo en tu cuenta bancaria.',
     href: '/codi',
-    icon: Barcode,
+    icon: QrCodeIcon,
     analytics: 'nav_codi',
   },
   {
@@ -114,17 +112,17 @@ const products = [
  */
 const callsToAction = [
   {
-    name: 'Ver demo de IA',
-    href: '#',
-    icon: PlayCircleIcon,
+    name: 'Beneficios',
+    href: '#beneficios',
+    icon: HandCoinsIcon,
     onClick: true,
     analytics: 'nav_ia_demo_cta',
   },
   {
-    name: 'Contactar ventas',
-    href: '/contacto',
-    icon: PhoneIcon,
-    analytics: 'nav_contact_sales',
+    name: 'Planes',
+    href: '/planes',
+    icon: BlocksIcon,
+    analytics: 'nav_plans',
   },
 ];
 
