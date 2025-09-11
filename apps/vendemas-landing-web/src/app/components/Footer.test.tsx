@@ -162,7 +162,7 @@ describe('Footer Component', () => {
 
       expect(
         screen.getByRole('link', { name: 'Todas las Herramientas' })
-      ).toHaveAttribute('href', '/herramientas');
+      ).toHaveAttribute('href', '/soluciones-con-ia');
       expect(screen.getByRole('link', { name: 'Beneficios' })).toHaveAttribute(
         'href',
         '#beneficios'

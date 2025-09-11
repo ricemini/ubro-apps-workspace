@@ -42,7 +42,7 @@ export default function Footer(): React.JSX.Element {
   const footerLinks = {
     // Product-related links - core functionality and features
     producto: [
-      { name: 'Todas las Herramientas', href: '/herramientas' },
+      { name: 'Soluciones con IA', href: '/soluciones-con-ia' },
       {
         name: 'Cómo funciona',
         href: '#',

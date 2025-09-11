@@ -328,7 +328,7 @@ export default function InActionModal({
 
                   {/* Secondary CTA */}
                   <a
-                    href='/herramientas'
+                    href='/soluciones-con-ia'
                     className='group inline-flex items-center gap-x-2 !rounded-[14px] bg-white dark:bg-gray-950 px-4 py-2.5 text-sm font-semibold text-secondary-600 hover:text-secondary-700 hover:bg-gray-50 dark:text-white dark:hover:text-white dark:hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:card-border focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 dark:focus:ring-white dark:focus:ring-offset-gray-900'
                     style={{ height: '42px' }}
                     aria-describedby='secondary-cta-description'

@@ -104,7 +104,7 @@ const products = [
  */
 const callsToAction = [
   {
-    name: 'Ver video',
+    name: 'Ver demo',
     href: '#',
     icon: PlayCircle,
     onClick: true,
@@ -118,8 +118,8 @@ const callsToAction = [
     analytics: 'nav_benefits',
   },
   {
-    name: 'Herramientas',
-    href: '/herramientas',
+    name: 'Soluciones con IA',
+    href: '/soluciones-con-ia',
     icon: Blocks,
     onClick: false,
     analytics: 'nav_features',
