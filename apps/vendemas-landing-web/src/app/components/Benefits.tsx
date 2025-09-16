@@ -26,13 +26,11 @@ export default function Benefits(): React.JSX.Element {
     {
       // Card 1: Commission-free payments (Secondary/Blue theme)
       name: 'Cobra sin comisiones',
-      price: 'Ahorra en cada venta',
-      headline: '',
+      headline: 'Ahorra en cada venta',
+      description: 'Cada peso es tuyo.',
       badge: 'Gratis para siempre',
       badgeColor: 'bg-secondary-500',
       popular: false,
-      description:
-        'Cada peso es tuyo al 100%, sin bancos ni comisiones escondidas.',
       primaryCta: 'Inicia gratis',
       secondaryCta: 'Ver más',
       gradient: 'from-secondary-100 via-secondary-50 to-white',
@@ -41,35 +39,31 @@ export default function Benefits(): React.JSX.Element {
       accentColor: 'secondary',
     },
     {
-      // Card 2: Offline selling capability (Primary/Green theme)
-      name: 'Vende sin internet',
-      price: 'Nunca te detengas',
-      headline: '',
-      badge: 'Más popular',
-      badgeColor: 'bg-primary-500',
-      popular: true,
-      description:
-        'Acepta pagos aun sin conexión. Tus ventas se registran y se confirman automáticamente al volver a estar en línea, siempre que el cliente tenga fondos disponibles.',
-      primaryCta: 'Inicia gratis',
-      secondaryCta: 'Ver más',
-      gradient: 'from-primary-100 via-primary-50 to-white',
-      borderColor: 'border-primary-200',
-      primaryCtaColor: 'bg-primary-500 hover:bg-primary-600',
-      accentColor: 'primary',
-    },
-    {
-      // Card 3: AI-powered growth (Tertiary/Orange theme)
+      // Card 2: AI-powered growth (Tertiary/Orange theme)
       name: 'IA para ganar más',
-      price: 'Predice. Optimiza. Crece.',
-      headline: '',
-      description:
-        'Nuestra IA analiza tus ventas y crea promociones inteligentes para que ganes más cada día.',
+      headline: 'Analiza y Crece',
+      description: 'Promos automáticas con IA.',
       primaryCta: 'Prueba gratis',
       secondaryCta: 'Ver más',
       gradient: 'from-tertiary-100 via-tertiary-50 to-white',
       borderColor: 'border-tertiary-200',
       primaryCtaColor: 'bg-tertiary-500 hover:bg-tertiary-600',
       accentColor: 'tertiary',
+    },
+    {
+      // Card 3: Offline selling capability (Primary/Green theme)
+      name: 'Vende sin internet',
+      headline: 'Nunca te detengas',
+      description: 'Ventas seguras, aún offline.',
+      badge: 'Más popular',
+      badgeColor: 'bg-primary-500',
+      popular: true,
+      primaryCta: 'Inicia gratis',
+      secondaryCta: 'Ver más',
+      gradient: 'from-primary-100 via-primary-50 to-white',
+      borderColor: 'border-primary-200',
+      primaryCtaColor: 'bg-primary-500 hover:bg-primary-600',
+      accentColor: 'primary',
     },
   ];
 
@@ -127,48 +121,107 @@ export default function Benefits(): React.JSX.Element {
               {/* Card Content Container - Relative positioning for overlay */}
               <div className='relative p-8 flex flex-col h-full'>
                 {/* Card Header - Title and main value proposition */}
-                <header className='mb-6'>
-                  <div className='mb-4'>
-                    <h3
-                      id={`benefit-${index}-title`}
-                      className='text-display text-3xl font-bold text-gray-900'
-                    >
-                      {plan.name}
-                    </h3>
-                  </div>
-
-                  <h4 className='text-2xl font-bold text-gray-900 mb-3'>
-                    {plan.headline}
-                  </h4>
-
-                  {/* Main Value Proposition - Large, colored text for impact */}
-                  <div
-                    className={`text-4xl font-bold mb-4 ${
-                      plan.accentColor === 'primary'
-                        ? 'text-primary-500'
-                        : plan.accentColor === 'secondary'
-                          ? 'text-secondary-500'
-                          : plan.accentColor === 'tertiary'
-                            ? 'text-tertiary-500'
-                            : 'text-gray-900'
-                    }`}
-                    aria-label={`Beneficio: ${plan.price}`}
+                <header className='mb-8'>
+                  {/* Headline - Main title */}
+                  <h3
+                    id={`benefit-${index}-title`}
+                    className='text-display text-3xl font-bold text-gray-900 mb-4'
                   >
-                    {plan.price}
+                    {plan.name}
+                  </h3>
+
+                  {/* Subheadline - Accent colored text with increased size */}
+                  {plan.headline && (
+                    <div
+                      className={`text-5xl font-bold ${
+                        plan.accentColor === 'primary'
+                          ? 'text-primary-500'
+                          : plan.accentColor === 'secondary'
+                            ? 'text-secondary-500'
+                            : plan.accentColor === 'tertiary'
+                              ? 'text-tertiary-500'
+                              : 'text-gray-900'
+                      }`}
+                      aria-label={`Beneficio: ${plan.headline}`}
+                    >
+                      {plan.headline}
+                    </div>
+                  )}
+
+                  {/* Illustration - Fixed height container for consistent alignment */}
+                  <div className='flex justify-center'>
+                    <div className='flex items-center justify-center w-full'>
+                      <picture>
+                        <img
+                          sizes='(max-width: 1024px) 100vw, 1024px'
+                          srcSet={
+                            index === 0
+                              ? `
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_200.png 200w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_411.png 411w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_574.png 574w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_692.png 692w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_795.png 795w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_888.png 888w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_976.png 976w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_1021.png 1021w,
+                            /images/illustrations/benefir_1_opcemz_c_scale,w_1024.png 1024w`
+                              : index === 1
+                                ? `
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_200.png 200w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_401.png 401w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_543.png 543w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_671.png 671w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_768.png 768w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_858.png 858w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_944.png 944w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_1017.png 1017w,
+                            /images/illustrations/benefit_2_cyre6w_c_scale,w_1024.png 1024w`
+                                : `
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_200.png 200w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_385.png 385w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_522.png 522w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_629.png 629w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_715.png 715w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_794.png 794w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_874.png 874w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_938.png 938w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_1003.png 1003w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_1020.png 1020w,
+                            /images/illustrations/benefit_3_f3kmhs_c_scale,w_1024.png 1024w`
+                          }
+                          src={
+                            index === 0
+                              ? '/images/illustrations/benefit-1_snkfv7_c_scale,w_1024.png'
+                              : index === 1
+                                ? '/images/illustrations/benefit-3_vadcpa_c_scale,w_1024.png'
+                                : '/images/illustrations/benefit-2_mumqze_c_scale,w_1024.png'
+                          }
+                          alt={
+                            index === 0
+                              ? 'Ilustración de cobro sin comisiones - dinero y monedas representando ahorro'
+                              : index === 1
+                                ? 'Ilustración de IA para ganar más - cerebro con engranajes representando inteligencia artificial'
+                                : 'Ilustración de venta sin internet - dispositivo móvil procesando pagos offline'
+                          }
+                          className='w-[70%] h-auto max-w-[320px] mx-auto object-contain'
+                        />
+                      </picture>
+                    </div>
                   </div>
                 </header>
 
-                {/* Card Description - Uses flex-grow to push CTAs to bottom for consistent alignment */}
-                <div className='flex-grow mb-8'>
+                {/* Card Description - Perfectly aligned descriptions */}
+                <div className='mb-4 -mt-16 flex items-center justify-center h-16'>
                   <p
                     id={`benefit-${index}-description`}
-                    className='text-body text-gray-700 leading-relaxed'
+                    className='text-base text-gray-700 leading-6 text-center font-medium'
                   >
                     {plan.description}
                   </p>
                 </div>
 
-                {/* Call-to-Action Buttons - Always positioned at bottom with equal width */}
+                {/* Call-to-Action Buttons - Perfectly aligned at bottom */}
                 <div
                   className='flex gap-3 mt-auto'
                   role='group'
