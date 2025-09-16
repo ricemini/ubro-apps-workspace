@@ -407,6 +407,7 @@ bundle-analyzer-report.html
 
 # Performance
 lighthouse-report.json
+.lighthouseci/
 
 # Security
 .npmrc
