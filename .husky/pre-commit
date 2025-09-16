@@ -1,3 +1,25 @@
-#!/usr/bin/env sh
-
+# Run lint-staged first
 npx lint-staged
+
+# Quick performance check for vendemas-landing-web changes
+if git diff --cached --name-only | grep -E "^(apps/vendemas-landing-web/|libs/)" > /dev/null; then
+  echo "🔍 Running quick Lighthouse performance check..."
+
+  # Install Lighthouse CI if not present
+  if ! command -v lhci &> /dev/null; then
+    echo "📦 Installing Lighthouse CI..."
+    npm install -g @lhci/cli@0.12.x
+  fi
+
+  # Run with local configuration (relaxed thresholds)
+  cd apps/vendemas-landing-web
+  lhci autorun --config=./.lighthouserc.local.json
+
+  if [ $? -ne 0 ]; then
+    echo "❌ Quick Lighthouse check failed! Consider running full performance tests."
+    echo "💡 Use 'git commit --no-verify' to skip, or fix performance issues."
+    exit 1
+  fi
+
+  echo "✅ Quick Lighthouse check passed!"
+fi

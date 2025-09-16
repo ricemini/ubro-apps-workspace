@@ -218,11 +218,77 @@ jobs:
           path: coverage/
           retention-days: 30
 
-  deploy:
-    name: Deploy to Vercel
+  performance:
+    name: Performance Testing (Lighthouse CI)
     runs-on: ubuntu-latest
     needs: [setup, lint, test]
     if: needs.setup.outputs.affected == 'true' && needs.lint.result == 'success' && needs.test.result == 'success'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Nx
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: nx-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
+      - name: Build vendemas-landing-web
+        run: npx nx build vendemas-landing-web
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.12.x
+
+      - name: Run Lighthouse CI
+        run: |
+          cd apps/vendemas-landing-web
+          lhci autorun --config=./.lighthouserc.json
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          retention-days: 30
+
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    needs: [setup, lint, test, performance]
+    if: needs.setup.outputs.affected == 'true' && needs.lint.result == 'success' && needs.test.result == 'success' && needs.performance.result == 'success'
     environment:
       name: production
       url: ${{ steps.deploy.outputs.url }}

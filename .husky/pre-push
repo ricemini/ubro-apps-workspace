@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check if vendemas-landing-web has changes
+if git diff --name-only HEAD~1 HEAD | grep -E "^(apps/vendemas-landing-web/|libs/)" > /dev/null; then
+  echo "🚀 Running Lighthouse CI performance tests..."
+
+  # Install Lighthouse CI if not present
+  if ! command -v lhci &> /dev/null; then
+    echo "📦 Installing Lighthouse CI..."
+    npm install -g @lhci/cli@0.12.x
+  fi
+
+  # Run Lighthouse CI
+  cd apps/vendemas-landing-web
+  lhci autorun --config=./.lighthouserc.json
+
+  if [ $? -ne 0 ]; then
+    echo "❌ Lighthouse CI failed! Performance tests did not pass."
+    echo "💡 Fix performance issues before pushing, or use --no-verify to skip."
+    exit 1
+  fi
+
+  echo "✅ Lighthouse CI passed! Performance tests successful."
+else
+  echo "⏭️ No changes to vendemas-landing-web, skipping Lighthouse CI."
+fi
