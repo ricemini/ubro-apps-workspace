@@ -71,11 +71,7 @@ describe('Benefits Component', () => {
       expect(screen.getByText('Ahorra en cada venta')).toBeInTheDocument();
 
       // Description
-      expect(
-        screen.getByText(
-          'Cada peso es tuyo al 100%, sin bancos ni comisiones escondidas.'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Cada peso es tuyo.')).toBeInTheDocument();
 
       // CTAs - use getAllByText since there are multiple buttons with same text
       expect(screen.getAllByText('Inicia gratis')).toHaveLength(2);
@@ -86,6 +82,24 @@ describe('Benefits Component', () => {
       renderBenefits();
 
       // Card title
+      expect(screen.getByText('IA para ganar más')).toBeInTheDocument();
+
+      // Main value proposition
+      expect(screen.getByText('Analiza y Crece')).toBeInTheDocument();
+
+      // Description
+      expect(
+        screen.getByText('Promos automáticas con IA.')
+      ).toBeInTheDocument();
+
+      // CTAs
+      expect(screen.getByText('Prueba gratis')).toBeInTheDocument();
+    });
+
+    it('renders the third card with correct content', () => {
+      renderBenefits();
+
+      // Card title
       expect(screen.getByText('Vende sin internet')).toBeInTheDocument();
 
       // Main value proposition
@@ -93,30 +107,8 @@ describe('Benefits Component', () => {
 
       // Description
       expect(
-        screen.getByText(
-          'Tu negocio no depende del WiFi: vende siempre, incluso offline.'
-        )
+        screen.getByText('Ventas seguras, aún offline.')
       ).toBeInTheDocument();
-    });
-
-    it('renders the third card with correct content', () => {
-      renderBenefits();
-
-      // Card title
-      expect(screen.getByText('IA para ganar más')).toBeInTheDocument();
-
-      // Main value proposition
-      expect(screen.getByText('Predice. Optimiza. Crece.')).toBeInTheDocument();
-
-      // Description
-      expect(
-        screen.getByText(
-          'Nuestra IA analiza tus ventas y crea promociones inteligentes para que ganes más cada día.'
-        )
-      ).toBeInTheDocument();
-
-      // CTAs
-      expect(screen.getByText('Prueba gratis')).toBeInTheDocument();
     });
   });
 
@@ -256,11 +248,11 @@ describe('Benefits Component', () => {
       // First card should have secondary colors
       expect(cards[0].className).toContain('border-secondary-500');
 
-      // Second card should have primary colors
-      expect(cards[1].className).toContain('border-primary-500');
+      // Second card should have tertiary colors
+      expect(cards[1].className).toContain('border-tertiary-500');
 
-      // Third card should have tertiary colors
-      expect(cards[2].className).toContain('border-tertiary-500');
+      // Third card should have primary colors
+      expect(cards[2].className).toContain('border-primary-500');
     });
 
     it('applies correct text colors for value propositions', () => {
@@ -268,12 +260,12 @@ describe('Benefits Component', () => {
 
       // Check value proposition text colors
       const valueProps = screen.getAllByText(
-        /Ahorra en cada venta|Nunca te detengas|Predice. Optimiza. Crece./
+        /Ahorra en cada venta|Nunca te detengas|Analiza y Crece/
       );
 
       expect(valueProps[0].className).toContain('text-secondary-500');
-      expect(valueProps[1].className).toContain('text-primary-500');
-      expect(valueProps[2].className).toContain('text-tertiary-500');
+      expect(valueProps[1].className).toContain('text-tertiary-500');
+      expect(valueProps[2].className).toContain('text-primary-500');
     });
 
     it('has proper card structure with flex layout', () => {
@@ -327,7 +319,7 @@ describe('Benefits Component', () => {
       // Verify all value propositions are present
       expect(screen.getByText('Ahorra en cada venta')).toBeDefined();
       expect(screen.getByText('Nunca te detengas')).toBeDefined();
-      expect(screen.getByText('Predice. Optimiza. Crece.')).toBeDefined();
+      expect(screen.getByText('Analiza y Crece')).toBeDefined();
     });
 
     it('has proper semantic HTML structure', () => {
