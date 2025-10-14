@@ -147,6 +147,11 @@ body {
   visibility: visible;
 }
 
+/* Feature chip styles for soluciones-con-ia page */
+.feature-chip {
+  @apply inline-flex flex-col items-center justify-center text-center px-2 py-3 rounded-xl text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 transition-colors duration-200 gap-1;
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .text-body {

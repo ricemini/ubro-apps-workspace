@@ -184,7 +184,7 @@ describe('Footer Component', () => {
       ).toHaveAttribute('href', '/ayuda');
       expect(
         screen.getByRole('link', { name: 'Preguntas frecuentes' })
-      ).toHaveAttribute('href', '/faq');
+      ).toHaveAttribute('href', '/preguntas-frecuentes');
       expect(screen.getByRole('link', { name: 'Contacto' })).toHaveAttribute(
         'href',
         '/contacto'

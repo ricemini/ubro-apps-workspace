@@ -248,7 +248,7 @@ export default function Features() {
             {/* FAQ Link - Additional support information */}
             <div className='text-center'>
               <a
-                href='/faq'
+                href='/preguntas-frecuentes'
                 className='inline-flex items-center text-white hover:text-tertiary-300 dark:hover:text-tertiary-200 font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-white/10 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white'
                 aria-label='Ver preguntas frecuentes completas'
               >

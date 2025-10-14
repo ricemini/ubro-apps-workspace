@@ -288,7 +288,7 @@ export default function BusinessOwnerPage() {
 
           <div className='text-center mt-12'>
             <a
-              href='/faq'
+              href='/preguntas-frecuentes'
               className='inline-block border-2 border-primary-500 text-primary-500 hover:bg-primary-50 font-semibold px-8 py-3 rounded-lg transition-all duration-200 btn-focus'
             >
               Ver todas las preguntas frecuentes

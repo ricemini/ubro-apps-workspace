@@ -47,6 +47,8 @@ import {
   PlayCircle,
   Blocks,
   HandCoins,
+  ListChecks,
+  HelpCircle,
 } from 'lucide-react';
 import { ChevronDownIcon, QrCodeIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
@@ -111,9 +113,9 @@ const callsToAction = [
     analytics: 'nav_demo_ai',
   },
   {
-    name: 'Beneficios',
-    href: '#beneficios',
-    icon: HandCoins,
+    name: 'Planes',
+    href: '/planes',
+    icon: ListChecks,
     onClick: false,
     analytics: 'nav_benefits',
   },
@@ -274,6 +276,7 @@ export default function Example(): React.JSX.Element {
             {/* Products dropdown with Headless UI Popover */}
             <Popover className='relative'>
               <PopoverButton className='inline-flex items-center gap-x-1 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 focus:outline-none'>
+                <BrainCircuit className='hidden lg:block w-4 h-4' />
                 <span>Soluciones con IA</span>
                 <ChevronDownIcon
                   aria-hidden='true'
@@ -351,18 +354,20 @@ export default function Example(): React.JSX.Element {
 
             {/* Direct navigation links - visible on medium+ screens */}
             <a
-              href='/planes'
-              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
-              aria-label='Planes'
+              href='#beneficios'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none flex items-center gap-x-1'
+              aria-label='Beneficios'
             >
-              Planes
+              <HandCoins className='hidden lg:block w-4 h-4' />
+              <span>Beneficios</span>
             </a>
             <a
-              href='/faq'
-              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none'
+              href='/preguntas-frecuentes'
+              className='text-sm font-medium text-gray-900 dark:text-white secondary:text-gray-600 dark:secondary:text-gray-300 transition-colors duration-200 focus:outline-none flex items-center gap-x-1'
               aria-label='Preguntas frecuentes'
             >
-              FAQ
+              <HelpCircle className='hidden lg:block w-4 h-4' />
+              <span>PF</span>
             </a>
           </div>
         </PopoverGroup>
@@ -537,11 +542,12 @@ export default function Example(): React.JSX.Element {
 
                   {/* Direct navigation links */}
                   <a
-                    href='/faq'
-                    className='-mx-3 block card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
+                    href='/preguntas-frecuentes'
+                    className='-mx-3 flex items-center gap-x-2 card-border bg-white px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:border-gray-600 rounded-[14px]'
                     aria-label='Preguntas frecuentes'
                   >
-                    FAQ
+                    <HelpCircle className='hidden lg:block w-4 h-4' />
+                    <span>FAQ</span>
                   </a>
                 </div>
 

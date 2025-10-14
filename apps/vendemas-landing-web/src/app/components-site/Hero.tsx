@@ -118,7 +118,8 @@ export default function Hero(): React.JSX.Element {
 
             {/* Description text with responsive sizing and high contrast support */}
             <p className='mt-3 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400 supports-[color-contrast(high)]:text-gray-700 dark:supports-[color-contrast(high)]:text-gray-200'>
-              Gestiona tu negocio con IA que analiza ventas e inventario y
+              La app de punto de venta con IA que gestiona tu negocio, analiza
+              tus ventas e inventario, te ayuda a crecer sin pagar comisiones y
               maximiza tus ingresos.
             </p>
 

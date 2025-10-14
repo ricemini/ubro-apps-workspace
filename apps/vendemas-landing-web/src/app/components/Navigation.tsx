@@ -13,7 +13,7 @@ export default function Navigation(): React.JSX.Element {
     { href: '/funciones', label: 'Funciones' },
     { href: '/mi-negocio', label: 'Mi Negocio' },
     { href: '#precios', label: 'Precios' },
-    { href: '/faq', label: 'FAQ' },
+    { href: '/preguntas-frecuentes', label: 'PF' },
   ];
 
   // Focus management for mobile menu

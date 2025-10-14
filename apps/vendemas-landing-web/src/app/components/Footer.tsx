@@ -55,7 +55,7 @@ export default function Footer(): React.JSX.Element {
     // Support and help resources
     soporte: [
       { name: 'Centro de ayuda', href: '/ayuda' },
-      { name: 'Preguntas frecuentes', href: '/faq' },
+      { name: 'Preguntas frecuentes', href: '/preguntas-frecuentes' },
       { name: 'Contacto', href: '/contacto' },
     ],
     // Company information and media

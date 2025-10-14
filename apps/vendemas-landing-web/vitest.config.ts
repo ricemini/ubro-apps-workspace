@@ -1,15 +1,18 @@
 import { defineConfig } from 'vitest/config';
-import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
+  plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
+    css: true,
   },
   resolve: {
     alias: {
-      '@vendemas': resolve(__dirname, '../../libs'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });

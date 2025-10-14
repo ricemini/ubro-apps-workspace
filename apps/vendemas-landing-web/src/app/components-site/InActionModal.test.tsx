@@ -481,7 +481,7 @@ describe('InActionModal', () => {
       const backdrop = screen.getByRole('dialog');
       expect(backdrop.className).toContain('fixed');
       expect(backdrop.className).toContain('inset-0');
-      expect(backdrop.className).toContain('z-40');
+      expect(backdrop.className).toContain('z-[60]');
       expect(backdrop.className).toContain('bg-black/60');
     });
 

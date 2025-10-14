@@ -33,7 +33,7 @@ This document describes the migration of a standalone Next.js application from t
 ### 3. New Routes
 
 - **`/caracteristicas`**: Features page
-- **`/faq`**: FAQ page
+- **`/preguntas-frecuentes`**: FAQ page
 - **Location**: `apps/vendemas-landing-web/src/app/`
 
 ### 4. Configuration Files

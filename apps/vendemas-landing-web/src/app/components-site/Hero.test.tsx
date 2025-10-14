@@ -95,7 +95,7 @@ describe('Hero', () => {
       render(<Hero />);
 
       expect(screen.getByText('Vende más, sin complicarte.')).toBeTruthy();
-      expect(screen.getByText(/Gestiona tu negocio/)).toBeTruthy();
+      expect(screen.getByText(/gestiona tu negocio/)).toBeTruthy();
     });
   });
 
