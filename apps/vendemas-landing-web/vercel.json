@@ -3,7 +3,7 @@
   "framework": "nextjs",
   "buildCommand": "pnpm run build",
   "devCommand": "pnpm run dev",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --frozen-lockfile --prefer-offline",
   "outputDirectory": ".next",
   "functions": {
     "src/app/api/**/*.ts": {
