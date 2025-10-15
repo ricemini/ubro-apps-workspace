@@ -133,13 +133,16 @@ export default function CyclingFeatureCard({
   const currentCategory = featureCategories[currentCategoryIndex];
 
   return (
-    <div className='rounded-2xl border border-accent-600 bg-transparent backdrop-blur-md transition-all duration-300 p-3 relative overflow-hidden min-h-[456px] max-w-[418px] flex -mt-12'>
-      <div className='rounded-lg border border-accent-600 bg-white/90 transition-all duration-300 p-6 md:p-8 relative overflow-hidden w-full flex flex-col'>
+    <section
+      className='rounded-2xl border border-accent-600 dark:border-accent-400 bg-transparent backdrop-blur-md transition-all duration-300 p-3 relative overflow-hidden min-h-[456px] max-w-[418px] flex -mt-12'
+      aria-label={`Características de ${currentCategory.name}`}
+    >
+      <div className='rounded-lg border border-accent-600 dark:border-accent-400 bg-white/90 dark:bg-gray-800/90 transition-all duration-300 p-6 md:p-8 relative overflow-hidden w-full flex flex-col'>
         {/* Animated background pattern */}
-        <div className='absolute inset-0 opacity-[0.02] pointer-events-none'>
-          <div className='absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,theme(colors.green.400),transparent_50%)] animate-pulse' />
+        <div className='absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none'>
+          <div className='absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,theme(colors.green.400),transparent_50%)] dark:bg-[radial-gradient(circle_at_20%_20%,theme(colors.green.300),transparent_50%)] animate-pulse' />
           <div
-            className='absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,theme(colors.purple.400),transparent_50%)] animate-pulse'
+            className='absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,theme(colors.purple.400),transparent_50%)] dark:bg-[radial-gradient(circle_at_80%_80%,theme(colors.purple.300),transparent_50%)] animate-pulse'
             style={{ animationDelay: '1s' }}
           />
         </div>
@@ -155,12 +158,12 @@ export default function CyclingFeatureCard({
             <div className='absolute inset-0 rounded-full bg-gradient-to-r from-primary-400 to-tertiary-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300' />
 
             {/* Button background */}
-            <div className='relative w-10 h-10 bg-white/95 backdrop-blur-md rounded-full shadow-sm border border-gray-200/60 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl group-focus:ring-2 group-focus:ring-primary-500 group-focus:ring-offset-2 group-active:scale-95'>
+            <div className='relative w-10 h-10 bg-white/95 dark:bg-gray-700/95 backdrop-blur-md rounded-full shadow-sm border border-gray-200/60 dark:border-gray-600/60 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl group-focus:ring-2 group-focus:ring-primary-500 group-focus:ring-offset-2 group-active:scale-95'>
               {/* Icon with smooth transition */}
               <div className='transition-all duration-300 group-hover:scale-110'>
                 {isPaused ? (
                   <svg
-                    className='w-4 h-4 text-primary-600 drop-shadow-sm'
+                    className='w-4 h-4 text-primary-600 dark:text-primary-400 drop-shadow-sm'
                     fill='currentColor'
                     viewBox='0 0 24 24'
                   >
@@ -168,7 +171,7 @@ export default function CyclingFeatureCard({
                   </svg>
                 ) : (
                   <svg
-                    className='w-4 h-4 text-primary-600 drop-shadow-sm'
+                    className='w-4 h-4 text-primary-600 dark:text-primary-400 drop-shadow-sm'
                     fill='currentColor'
                     viewBox='0 0 24 24'
                   >
@@ -184,7 +187,7 @@ export default function CyclingFeatureCard({
         <div className='h-20 flex flex-col justify-center'>
           <div className='flex items-center space-x-3'>
             <div className='w-1 h-8 bg-gradient-to-b from-primary-500 to-tertiary-500 rounded-full' />
-            <h2 className='text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent transition-all duration-500'>
+            <h2 className='text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent transition-all duration-500'>
               {currentCategory.name}
             </h2>
           </div>
@@ -198,8 +201,14 @@ export default function CyclingFeatureCard({
               return (
                 <button
                   key={index}
-                  className='group relative flex flex-col items-center justify-center bg-white border border-gray-200/60 rounded-lg p-4 hover:border-primary-200 hover:scale-105 hover:cursor-pointer transition-all duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2'
+                  className='group relative flex flex-col items-center justify-center bg-white dark:bg-gray-700 border border-gray-200/60 dark:border-gray-600/60 rounded-lg p-4 hover:border-primary-200 dark:hover:border-primary-400 hover:scale-105 hover:cursor-pointer transition-all duration-100 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800'
                   aria-label={feature.label}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      // Could add click handler here if needed
+                    }
+                  }}
                   style={{
                     position: 'relative',
                     display: 'flex',
@@ -210,7 +219,7 @@ export default function CyclingFeatureCard({
                     padding: 0,
                     border: '1px solid #ceceea',
                     borderRadius: '8px',
-                    backgroundColor: '#fff',
+                    backgroundColor: 'var(--tw-bg-opacity, 1)',
                     transition: 'transform .1s ease, box-shadow .1s ease',
                     transform: 'scale(1) translateZ(1px)',
                     transformOrigin: 'center',
@@ -241,10 +250,10 @@ export default function CyclingFeatureCard({
 
                   {/* Content */}
                   <div className='flex flex-col items-center space-y-2'>
-                    <div className='w-8 h-8 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg flex items-center justify-center group-hover:from-primary-100 group-hover:to-primary-200 transition-all duration-300'>
-                      <IconComponent className='w-4 h-4 text-primary-600 group-hover:text-primary-700 transition-colors duration-300' />
+                    <div className='w-8 h-8 bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/30 rounded-lg flex items-center justify-center group-hover:from-primary-100 group-hover:to-primary-200 dark:group-hover:from-primary-800/30 dark:group-hover:to-primary-700/40 transition-all duration-300'>
+                      <IconComponent className='w-4 h-4 text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors duration-300' />
                     </div>
-                    <span className='text-xs font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300 text-center leading-tight'>
+                    <span className='text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-300 text-center leading-tight'>
                       {feature.shortLabel}
                     </span>
                   </div>
@@ -264,7 +273,7 @@ export default function CyclingFeatureCard({
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -277,19 +286,29 @@ export function FeatureNavigationDots({
   onIndexChange: (index: number) => void;
 }): JSX.Element {
   return (
-    <div className='flex flex-col space-y-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-4 shadow-sm border border-gray-200/60'>
+    <nav
+      className='flex flex-col space-y-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full px-3 py-4 shadow-sm border border-gray-200/60 dark:border-gray-600/60'
+      aria-label='Navegación de categorías de características'
+    >
       {featureCategories.map((_, index) => (
         <button
           key={index}
           onClick={() => onIndexChange(index)}
-          className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1 ${
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onIndexChange(index);
+            }
+          }}
+          className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-gray-800 ${
             index === currentIndex
-              ? 'bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg'
-              : 'bg-gray-300 hover:bg-gray-400 hover:shadow-md'
+              ? 'bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-500 shadow-lg'
+              : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 hover:shadow-md'
           }`}
           aria-label={`Ir a ${featureCategories[index].name}`}
+          aria-current={index === currentIndex ? 'true' : 'false'}
         />
       ))}
-    </div>
+    </nav>
   );
 }

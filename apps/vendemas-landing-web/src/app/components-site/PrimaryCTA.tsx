@@ -46,7 +46,7 @@ export default function PrimaryCTA({
   analytics,
   ariaLabel,
 }: PrimaryCTAProps): React.JSX.Element {
-  const handleClick = () => {
+  const handleClick = (): void => {
     if (onClick) {
       onClick();
     }
@@ -55,7 +55,7 @@ export default function PrimaryCTA({
   return (
     <a
       href={href}
-      className={`group relative inline-flex w-full h-14 items-center justify-center rounded-2xl font-bold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden ${className}`}
+      className={`group relative inline-flex w-full h-14 items-center justify-center rounded-2xl font-bold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden ${className}`}
       style={{
         backgroundImage: 'linear-gradient(135deg, #2f7d32 0%, #8b5cf6 100%)',
       }}
